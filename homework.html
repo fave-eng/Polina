@@ -386,9 +386,29 @@
 </div>
 
 <script>
-  window.addEventListener('load', () => {
-    const score4   = localStorage.getItem('polina_hw4_score');
-    const isDone   = !!score4;
+  const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
+  const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
+
+  async function loadFromSupabase() {
+    try {
+      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=*`, {
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+      });
+      const data = await r.json();
+      if (data && data[0]) {
+        const d = data[0];
+        if (d.hw4_score) localStorage.setItem('polina_hw4_score', d.hw4_score);
+        if (d.hw4_done)  localStorage.setItem('polina_hw_done', '1');
+        if (d.words_learned) localStorage.setItem('polina_words_learned', d.words_learned);
+      }
+    } catch(e) {}
+  }
+
+  window.addEventListener('load', async () => {
+    await loadFromSupabase();
+
+    const score4 = localStorage.getItem('polina_hw4_score');
+    const isDone = !!score4;
 
     // ── Lesson 4 card state ──
     const num4  = document.getElementById('num-4');
