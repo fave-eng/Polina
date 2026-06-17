@@ -17,9 +17,10 @@
     body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding-bottom:110px; }
 
     /* HERO */
-    .hero { background:linear-gradient(135deg,#be185d 0%,#e11d48 45%,#f43f5e 100%); padding:36px 24px 90px; position:relative; }
-    .hero::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='24' cy='24' r='3' fill='%23ffffff' fill-opacity='0.07'/%3E%3C/svg%3E"); }
-    .hero::after { content:''; position:absolute; bottom:-2px; left:0; right:0; height:56px; background:var(--bg); border-radius:50% 50% 0 0/100% 100% 0 0; }
+    .hero { background:linear-gradient(135deg,#be185d 0%,#e11d48 45%,#f43f5e 100%); padding:36px 24px 48px; position:relative; }
+    .hero::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='24' cy='24' r='3' fill='%23ffffff' fill-opacity='0.07'/%3E%3C/svg%3E"); pointer-events:none; }
+    .hero-wave { display:block; width:100%; line-height:0; background:var(--bg); }
+    .hero-wave svg { display:block; width:100%; }
     .hero-back { display:inline-flex; align-items:center; gap:6px; color:rgba(255,255,255,.75); font-size:13px; font-weight:600; text-decoration:none; margin-bottom:18px; transition:color .2s; }
     .hero-back:hover { color:#fff; }
     .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.28); color:#fff; font-size:12px; font-weight:600; padding:5px 14px; border-radius:100px; margin-bottom:12px; }
@@ -141,45 +142,35 @@
 
 <div class="hero">
   <div class="page" style="position:relative;z-index:1">
-    <a href="vocabulary-hub.html" class="hero-back">← Vocabulary Hub</a>
+    <a href="./vocabulary-hub.html" class="hero-back">← Vocabulary Hub</a>
     <div class="hero-badge" id="heroBadge">💥 Everyday Problems · 30 слов</div>
     <h1 id="heroTitle">Everyday Minor Problems</h1>
     <p>Учи слова с карточками — в своём темпе</p>
-    <div class="hero-prog-row">
+    <div class="hero-prog-row" style="position:relative;z-index:1">
       <div class="hero-prog-bg"><div class="hero-prog-fill" id="heroProgFill" style="width:0%"></div></div>
       <div class="hero-prog-label" id="heroProgLabel">0 / 30 выучено</div>
     </div>
   </div>
 </div>
+<div class="hero-wave">
+  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:linear-gradient(135deg,#be185d,#e11d48 45%,#f43f5e)">
+    <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
+  </svg>
+</div>
 
 <div class="page">
 
-  <!-- TOPIC TABS -->
-  <div class="topic-tabs">
-    <div class="topic-tab active" id="ttab-problems" onclick="setTopic('problems')">
-      <div class="tt-icon">🔧</div>
-      <div class="tt-label">Everyday Problems</div>
-      <div class="tt-count">30 слов</div>
-    </div>
-    <div class="topic-tab" id="ttab-verbs" onclick="setTopic('verbs')">
-      <div class="tt-icon">📚</div>
-      <div class="tt-label">Irregular Verbs</div>
-      <div class="tt-count">48 глаголов</div>
-    </div>
+  <!-- MODE TABS -->
+  <div class="mode-tabs" style="margin-top:24px">
+    <div class="mode-tab active" id="tab-learn" onclick="setMode('learn')"><div class="mt-icon">📖</div><div class="mt-label">Учить</div></div>
+    <div class="mode-tab" id="tab-test"  onclick="setMode('test')"> <div class="mt-icon">✏️</div><div class="mt-label">Тест</div></div>
+    <div class="mode-tab" id="tab-hard"  onclick="setMode('hard')"> <div class="mt-icon">🔁</div><div class="mt-label">Сложные</div></div>
   </div>
 
-  <!-- ══ VOCAB SECTION ══ -->
-  <div id="section-problems">
-    <div class="mode-tabs">
-      <div class="mode-tab active" id="tab-learn" onclick="setMode('learn')"><div class="mt-icon">📖</div><div class="mt-label">Учить</div></div>
-      <div class="mode-tab" id="tab-test"  onclick="setMode('test')"> <div class="mt-icon">✏️</div><div class="mt-label">Тест</div></div>
-      <div class="mode-tab" id="tab-hard"  onclick="setMode('hard')"> <div class="mt-icon">🔁</div><div class="mt-label">Сложные</div></div>
-    </div>
-
-    <div class="card-counter" id="cardCounter">
-      <div class="cc-pos" id="ccPos">1 / 30</div>
-      <div id="learnedBadge" class="not-learned-badge">○ Не выучено</div>
-    </div>
+  <div class="card-counter" id="cardCounter">
+    <div class="cc-pos" id="ccPos">1 / 30</div>
+    <div id="learnedBadge" class="not-learned-badge">○ Не выучено</div>
+  </div>
 
     <div class="flashcard" id="flashcard">
       <div class="fc-image" id="fcImage"></div>
@@ -226,33 +217,6 @@
         <div class="fstat"><div class="fn" id="fsPct" style="color:var(--rose)">0%</div><div class="fl">Результат</div></div>
       </div>
       <button class="btn-restart" onclick="restartSession()">🔁 Ещё раз</button>
-    </div>
-  </div>
-
-  <!-- ══ IRREGULAR VERBS SECTION ══ -->
-  <div id="section-verbs" style="display:none">
-    <div class="verbs-table-wrap">
-      <div class="vt-header">
-        <span>📚</span>
-        <h3>Irregular Verbs — карточки и тест</h3>
-      </div>
-      <div class="vt-submode">
-        <button class="vt-sub-btn active" id="vsub-table" onclick="setVerbMode('table')">📋 Таблица</button>
-        <button class="vt-sub-btn" id="vsub-test"  onclick="setVerbMode('test')">✏️ Тест V2/V3</button>
-        <button class="vt-sub-btn" id="vsub-hard"  onclick="setVerbMode('hard')">🔁 Сложные</button>
-      </div>
-      <!-- TABLE VIEW -->
-      <div id="verbTableView">
-        <table class="vt" id="verbsTable">
-          <thead><tr><th>Infinitive (V1)</th><th>Past Simple (V2)</th><th>Past Participle (V3)</th><th>Перевод</th></tr></thead>
-          <tbody id="verbsBody"></tbody>
-        </table>
-      </div>
-      <!-- TEST VIEW -->
-      <div id="verbTestView" style="display:none">
-        <div class="verb-test-wrap" id="verbTestWrap"></div>
-        <button class="btn-check-verbs" onclick="checkVerbTest()">Проверить глаголы</button>
-      </div>
     </div>
   </div>
 
@@ -352,7 +316,35 @@ const irregularVerbs = [
 ];
 
 // ══════════════════ STATE ══════════════════
-const LS_KEY   = 'polina_vocab_everyday_state';
+const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
+const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
+
+async function syncWordsToSupabase(words) {
+  try {
+    await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SB_KEY,
+        'Authorization': `Bearer ${SB_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ words_learned: words, updated_at: new Date().toISOString() })
+    });
+  } catch(e) { console.error('Supabase sync error:', e); }
+}
+
+async function loadWordsFromSupabase() {
+  try {
+    const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=words_learned`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+    });
+    const data = await r.json();
+    if (data && data[0] && data[0].words_learned) {
+      localStorage.setItem('polina_words_learned', data[0].words_learned);
+    }
+  } catch(e) { console.error('Supabase load error:', e); }
+}
 const LS_VERBS = 'polina_verb_hard';
 let learnedSet = new Set();
 let hardSet    = new Set();
@@ -379,6 +371,7 @@ function saveState() {
   localStorage.setItem(LS_KEY, JSON.stringify({ learned:[...learnedSet], hard:[...hardSet] }));
   localStorage.setItem('polina_vocab_everyday', learnedSet.size);
   localStorage.setItem('polina_words_learned',  learnedSet.size);
+  syncWordsToSupabase(learnedSet.size);
 }
 function saveVerbState() {
   localStorage.setItem(LS_VERBS, JSON.stringify([...verbHardSet]));
@@ -611,7 +604,8 @@ function setVerbMode(m) {
 }
 
 // ══════════════════ INIT ══════════════════
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
+  await loadWordsFromSupabase();
   loadState();
   renderVerbTable(irregularVerbs);
   setMode('learn');
