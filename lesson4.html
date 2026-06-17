@@ -668,8 +668,64 @@
 </div>
 
 <script>
-  const BOT_TOKEN = "8604414786:AAEcyyQxHiYUi80PDZt7ZkQjomLfsm_VjKM";
-  const CHAT_ID   = "-1003908460669";
+  const BOT_TOKEN  = "8604414786:AAEcyyQxHiYUi80PDZt7ZkQjomLfsm_VjKM";
+  const CHAT_ID    = "-1003908460669";
+  const SB_URL     = "https://zqzgarvmpqqqaobeicpc.supabase.co";
+  const SB_KEY     = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
+
+  async function syncToSupabase(score, done) {
+    try {
+      // upsert — создаёт запись если нет, обновляет если есть
+      await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SB_KEY,
+          'Authorization': `Bearer ${SB_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          hw4_score: score,
+          hw4_done: done,
+          updated_at: new Date().toISOString()
+        })
+      }).then(async r => {
+        // если строки нет — вставляем
+        if (r.status === 404 || r.headers.get('content-range') === '*/0') {
+          await fetch(`${SB_URL}/rest/v1/progress`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SB_KEY,
+              'Authorization': `Bearer ${SB_KEY}`,
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({
+              student: 'polina',
+              hw4_score: score,
+              hw4_done: done,
+              words_learned: 0,
+              updated_at: new Date().toISOString()
+            })
+          });
+        }
+      });
+    } catch(e) { console.error('Supabase sync error:', e); }
+  }
+
+  async function loadFromSupabase() {
+    try {
+      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=*`, {
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+      });
+      const data = await r.json();
+      if (data && data[0]) {
+        const d = data[0];
+        if (d.hw4_score) localStorage.setItem('polina_hw4_score', d.hw4_score);
+        if (d.hw4_done)  localStorage.setItem('polina_hw_done', '1');
+      }
+    } catch(e) { console.error('Supabase load error:', e); }
+  }
 
   // ── Matrix click ──
   document.querySelectorAll('.cb-cell').forEach(cell => {
@@ -678,6 +734,9 @@
       this.textContent = this.classList.contains('checked') ? '✓' : '';
     });
   });
+
+  // Загружаем данные из Supabase при открытии страницы
+  loadFromSupabase();
 
   // ── Live score counter ──
   function updateLiveScore() {
@@ -770,6 +829,9 @@
     // Save to localStorage
     localStorage.setItem('polina_hw4_score', `${correct}/${total}`);
     localStorage.setItem('polina_hw_done', '1');
+
+    // Save to Supabase (облако)
+    syncToSupabase(`${correct}/${total}`, true);
 
     // Free answers
     let fullReport = report;
