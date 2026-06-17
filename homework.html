@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homework — Polina's English Space</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --indigo: #4f46e5;
+      --indigo-light: #6366f1;
+      --rose: #f43f5e;
+      --amber: #f59e0b;
+      --emerald: #10b981;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 20px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 100px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a855f7 100%);
+      padding: 40px 24px 90px;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 56px;
+      background: var(--bg);
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+    .hero-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.75);
+      font-size: 13px; font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: color 0.2s;
+    }
+    .hero-back:hover { color: #fff; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 12px; font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .hero p { color: rgba(255,255,255,0.75); font-size: 15px; }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-bar-wrap {
+      background: rgba(255,255,255,0.15);
+      border-radius: 100px;
+      height: 6px;
+      margin-top: 18px;
+      max-width: 340px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: #fff;
+      border-radius: 100px;
+      transition: width 0.8s ease;
+    }
+    .progress-label {
+      color: rgba(255,255,255,0.8);
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    /* ─── LAYOUT ─── */
+    .page { max-width: 700px; margin: 0 auto; padding: 0 20px; }
+
+    /* ─── STATS ROW ─── */
+    .stats-row {
+      display: flex; gap: 12px;
+      margin-top: -20px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .stat-chip {
+      background: var(--card);
+      border-radius: 14px;
+      border: 1.5px solid var(--border);
+      padding: 14px 20px;
+      flex: 1; min-width: 100px;
+      text-align: center;
+    }
+    .stat-chip .sc-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 24px; font-weight: 800;
+    }
+    .stat-chip .sc-lbl { font-size: 11px; color: var(--muted); font-weight: 600; margin-top: 2px; }
+    .stat-chip.done .sc-num  { color: var(--emerald); }
+    .stat-chip.total .sc-num { color: var(--indigo); }
+    .stat-chip.pct .sc-num   { color: var(--amber); }
+
+    /* ─── SECTION LABEL ─── */
+    .section-title {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin: 28px 0 14px;
+    }
+
+    /* ─── LESSON CARD ─── */
+    .lesson-card {
+      background: var(--card);
+      border-radius: 18px;
+      border: 1.5px solid var(--border);
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .lesson-card.active:hover {
+      border-color: var(--indigo-light);
+      box-shadow: 0 8px 28px rgba(79,70,229,0.1);
+      transform: translateY(-2px);
+    }
+    .lesson-card.locked {
+      opacity: 0.55;
+    }
+
+    .lc-main {
+      padding: 20px 22px;
+      display: flex; align-items: center; gap: 16px;
+    }
+
+    /* Number badge */
+    .lc-num {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 17px; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .lc-num.done-num   { background: #d1fae5; color: #065f46; }
+    .lc-num.active-num { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; }
+    .lc-num.locked-num { background: #f1f5f9; color: #94a3b8; }
+
+    .lc-info { flex: 1; min-width: 0; }
+    .lc-lesson-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 3px;
+    }
+    .lc-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 700;
+      margin-bottom: 4px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .lc-meta {
+      display: flex; align-items: center; gap: 8px;
+      flex-wrap: wrap;
+    }
+    .lc-status-pill {
+      font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 100px;
+    }
+    .pill-done     { background: #d1fae5; color: #065f46; }
+    .pill-current  { background: #ede9fe; color: #5b21b6; }
+    .pill-locked   { background: #f1f5f9; color: #94a3b8; }
+    .lc-score      { font-size: 12px; color: var(--muted); }
+
+    /* Arrow */
+    .lc-arrow {
+      font-size: 20px; color: var(--indigo);
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .lesson-card.active:hover .lc-arrow { opacity: 1; }
+    .lesson-card.locked .lc-arrow { display: none; }
+
+    /* Vocab strip */
+    .lc-vocab-strip {
+      border-top: 1px solid var(--border);
+      padding: 10px 22px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: #fafbff;
+    }
+    .lvs-left {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--muted);
+    }
+    .lvs-left span { font-weight: 600; color: var(--text); }
+    .lvs-link {
+      font-size: 12px; font-weight: 700;
+      color: var(--rose);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 4px;
+      transition: gap 0.2s;
+    }
+    .lvs-link:hover { gap: 8px; }
+
+    .locked-strip {
+      border-top: 1px solid var(--border);
+      padding: 10px 22px;
+      background: #f8fafc;
+      font-size: 12px; color: #94a3b8;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ─── FLOATING NAV ─── */
+    .nav-pill {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #0f172a;
+      border-radius: 100px;
+      padding: 12px 24px;
+      display: flex; gap: 4px;
+      box-shadow: 0 8px 32px rgba(15,23,42,0.3);
+      z-index: 900;
+      white-space: nowrap;
+    }
+    .nav-pill a {
+      color: rgba(255,255,255,0.6);
+      font-size: 12px; font-weight: 600;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+    .nav-pill a:hover, .nav-pill a.active {
+      background: var(--indigo);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="page">
+    <a href="index.html" class="hero-back">← На главную</a>
+    <div class="hero-badge">📝 Homework Board</div>
+    <h1>Домашние задания</h1>
+    <p>Выполняй и отслеживай прогресс по каждому уроку</p>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="heroProgress" style="width: 20%"></div>
+    </div>
+    <div class="progress-label" id="heroLabel">1 из 5 выполнено</div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-chip done">
+      <div class="sc-num" id="statDone">1</div>
+      <div class="sc-lbl">Выполнено</div>
+    </div>
+    <div class="stat-chip total">
+      <div class="sc-num">5</div>
+      <div class="sc-lbl">Всего уроков</div>
+    </div>
+    <div class="stat-chip pct">
+      <div class="sc-num" id="statPct">20%</div>
+      <div class="sc-lbl">Прогресс</div>
+    </div>
+  </div>
+
+  <!-- DONE -->
+  <div class="section-title">✅ Выполнено</div>
+
+  <!-- LESSON 4 — DONE -->
+  <div class="lesson-card active" id="card-4">
+    <a href="lesson4.html" style="text-decoration:none; color:inherit;">
+      <div class="lc-main">
+        <div class="lc-num done-num">✓</div>
+        <div class="lc-info">
+          <div class="lc-lesson-label">Lesson 4</div>
+          <div class="lc-title">Everyday Minor Problems</div>
+          <div class="lc-meta">
+            <span class="lc-status-pill pill-done">Сдано</span>
+            <span class="lc-score" id="score-4"></span>
+          </div>
+        </div>
+        <div class="lc-arrow">→</div>
+      </div>
+    </a>
+    <div class="lc-vocab-strip">
+      <div class="lvs-left">💥 <span>Лексика к уроку:</span> Everyday Problems</div>
+      <a href="vocab-everyday-problems.html" class="lvs-link">Тренировать <span>→</span></a>
+    </div>
+  </div>
+
+  <!-- UPCOMING -->
+  <div class="section-title">🔒 Предстоящие</div>
+
+  <!-- LESSON 5 -->
+  <div class="lesson-card locked" id="card-5">
+    <div class="lc-main">
+      <div class="lc-num locked-num">5</div>
+      <div class="lc-info">
+        <div class="lc-lesson-label">Lesson 5</div>
+        <div class="lc-title">Coming soon…</div>
+        <div class="lc-meta">
+          <span class="lc-status-pill pill-locked">🔒 Скоро</span>
+        </div>
+      </div>
+    </div>
+    <div class="locked-strip">🔒 Задание появится после урока 5</div>
+  </div>
+
+  <!-- LESSON 6 -->
+  <div class="lesson-card locked" id="card-6">
+    <div class="lc-main">
+      <div class="lc-num locked-num">6</div>
+      <div class="lc-info">
+        <div class="lc-lesson-label">Lesson 6</div>
+        <div class="lc-title">Coming soon…</div>
+        <div class="lc-meta">
+          <span class="lc-status-pill pill-locked">🔒 Скоро</span>
+        </div>
+      </div>
+    </div>
+    <div class="locked-strip">🔒 Задание появится после урока 6</div>
+  </div>
+
+  <!-- LESSON 7 -->
+  <div class="lesson-card locked" id="card-7">
+    <div class="lc-main">
+      <div class="lc-num locked-num">7</div>
+      <div class="lc-info">
+        <div class="lc-lesson-label">Lesson 7</div>
+        <div class="lc-title">Coming soon…</div>
+        <div class="lc-meta">
+          <span class="lc-status-pill pill-locked">🔒 Скоро</span>
+        </div>
+      </div>
+    </div>
+    <div class="locked-strip">🔒 Задание появится после урока 7</div>
+  </div>
+
+  <!-- LESSON 8 -->
+  <div class="lesson-card locked" id="card-8">
+    <div class="lc-main">
+      <div class="lc-num locked-num">8</div>
+      <div class="lc-info">
+        <div class="lc-lesson-label">Lesson 8</div>
+        <div class="lc-title">Coming soon…</div>
+        <div class="lc-meta">
+          <span class="lc-status-pill pill-locked">🔒 Скоро</span>
+        </div>
+      </div>
+    </div>
+    <div class="locked-strip">🔒 Задание появится после урока 8</div>
+  </div>
+
+</div><!-- /.page -->
+
+<!-- FLOATING NAV -->
+<div class="nav-pill">
+  <a href="index.html">🏠 Home</a>
+  <a href="homework.html" class="active">📝 HW</a>
+  <a href="vocabulary-hub.html">💥 Vocab</a>
+</div>
+
+<script>
+  // Pull score from localStorage if Polina already did lesson 4
+  window.addEventListener('load', () => {
+    const score4 = localStorage.getItem('polina_hw4_score');
+    if (score4) {
+      document.getElementById('score-4').textContent = `Результат: ${score4}`;
+    }
+
+    // Update counters dynamically
+    const done = parseInt(localStorage.getItem('polina_hw_done') || '1');
+    const total = 5;
+    const pct = Math.round((done / total) * 100);
+
+    document.getElementById('statDone').textContent = done;
+    document.getElementById('statPct').textContent = pct + '%';
+    document.getElementById('heroProgress').style.width = pct + '%';
+    document.getElementById('heroLabel').textContent = `${done} из ${total} выполнено`;
+  });
+</script>
+</body>
+</html>

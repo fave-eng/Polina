@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polina's English Space 🚀</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --indigo: #4f46e5;
+      --indigo-light: #6366f1;
+      --indigo-dark: #3730a3;
+      --rose: #f43f5e;
+      --amber: #f59e0b;
+      --emerald: #10b981;
+      --sky: #0ea5e9;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 20px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a855f7 100%);
+      padding: 50px 24px 70px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 13px; font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+    }
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      color: rgba(255,255,255,0.8);
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .hero-stars {
+      position: absolute; top: 20px; right: 30px;
+      font-size: 28px; opacity: 0.5;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+    /* ─── LAYOUT ─── */
+    .page { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 36px 0 16px;
+    }
+
+    /* ─── QUICK ACCESS CARDS ─── */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 500px) { .quick-grid { grid-template-columns: 1fr; } }
+
+    .quick-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border: 1.5px solid var(--border);
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .quick-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(79,70,229,0.12); border-color: var(--indigo-light); }
+    .quick-card .qc-icon { font-size: 32px; }
+    .quick-card .qc-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .quick-card h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px; font-weight: 700;
+    }
+    .quick-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .quick-card .qc-arrow {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 700;
+      margin-top: 8px;
+    }
+    .qc-hw { border-top: 4px solid var(--indigo); }
+    .qc-hw .qc-arrow { color: var(--indigo); }
+    .qc-vocab { border-top: 4px solid var(--rose); }
+    .qc-vocab .qc-arrow { color: var(--rose); }
+
+    /* ─── PROGRESS STRIP ─── */
+    .progress-strip {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 0;
+      flex-wrap: wrap;
+    }
+    .ps-stat { text-align: center; flex: 1; min-width: 80px; }
+    .ps-stat .num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 28px; font-weight: 800; color: #fff;
+    }
+    .ps-stat .lbl { font-size: 11px; color: #94a3b8; font-weight: 600; margin-top: 2px; }
+    .ps-divider { width: 1px; height: 40px; background: #334155; }
+
+    /* ─── THEORY SECTION ─── */
+    .theory-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 560px) { .theory-grid { grid-template-columns: 1fr; } }
+
+    .theory-card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1.5px solid var(--border);
+      padding: 22px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .theory-card:hover { border-color: var(--indigo-light); box-shadow: 0 8px 24px rgba(99,102,241,0.1); }
+    .theory-card .tc-tag {
+      display: inline-block;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+    .tag-grammar { background: #ede9fe; color: #6d28d9; }
+    .tag-tenses  { background: #fef3c7; color: #92400e; }
+    .tag-tips    { background: #d1fae5; color: #065f46; }
+    .theory-card h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .theory-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(15,23,42,0.65);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 24px;
+      padding: 36px;
+      max-width: 640px; width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 20px;
+      background: var(--bg); border: none;
+      width: 36px; height: 36px;
+      border-radius: 50%; font-size: 18px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .modal-tag {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 12px;
+      border-radius: 100px; margin-bottom: 14px;
+    }
+    .modal-box h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 22px; font-weight: 800;
+      margin-bottom: 18px;
+    }
+    .rule-block {
+      background: #f8fafc;
+      border-left: 4px solid var(--indigo);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .rule-block .rb-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+    .rule-block .rb-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .rule-block .rb-ex {
+      margin-top: 8px;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--indigo);
+      background: #ede9fe;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+    .modal-box hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    /* ─── IRREGULAR VERBS TABLE ─── */
+    .verbs-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+    }
+    .verbs-header {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      padding: 20px 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .verbs-header h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 700; color: #fff;
+    }
+    table.verbs-table { width: 100%; border-collapse: collapse; }
+    table.verbs-table th {
+      background: #f8fafc;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--muted);
+      padding: 12px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    table.verbs-table td {
+      padding: 13px 20px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    table.verbs-table tr:last-child td { border-bottom: none; }
+    table.verbs-table tr:hover td { background: #fafbff; }
+    table.verbs-table td:first-child { font-weight: 700; color: var(--indigo); }
+    table.verbs-table td:last-child  { color: var(--muted); font-size: 13px; }
+
+    .show-more-btn {
+      display: block;
+      background: var(--bg);
+      border: none;
+      width: 100%;
+      padding: 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--indigo);
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .show-more-btn:hover { background: #e0e7ff; }
+
+    /* Floating nav pill */
+    .nav-pill {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #0f172a;
+      border-radius: 100px;
+      padding: 12px 24px;
+      display: flex; gap: 4px;
+      box-shadow: 0 8px 32px rgba(15,23,42,0.3);
+      z-index: 900;
+    }
+    .nav-pill a {
+      color: rgba(255,255,255,0.6);
+      font-size: 12px; font-weight: 600;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+    .nav-pill a:hover, .nav-pill a.active {
+      background: var(--indigo);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-stars">✦ ✦ ✦</div>
+  <div class="hero-badge">✦ B1 Level · Individual Course</div>
+  <h1>Polina's English Space 🚀</h1>
+  <p>Твоё личное пространство для роста в английском</p>
+</div>
+
+<div class="page">
+
+  <!-- QUICK ACCESS -->
+  <div class="section-title">Быстрый доступ</div>
+  <div class="quick-grid">
+    <a href="homework.html" class="quick-card qc-hw">
+      <div class="qc-icon">📝</div>
+      <div class="qc-label">Lesson tasks</div>
+      <h3>Homework</h3>
+      <p>Интерактивные упражнения и задания по текущей теме</p>
+      <div class="qc-arrow">Open <span>→</span></div>
+    </a>
+    <a href="vocabulary-hub.html" class="quick-card qc-vocab">
+      <div class="qc-icon">💥</div>
+      <div class="qc-label">Word training</div>
+      <h3>Vocabulary Hub</h3>
+      <p>Карточки для запоминания слов и выражений юнита</p>
+      <div class="qc-arrow">Go to training <span>→</span></div>
+    </a>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="section-title">Прогресс</div>
+  <div class="progress-strip">
+    <div class="ps-stat">
+      <div class="num" id="hw-done">1</div>
+      <div class="lbl">ДЗ выполнено</div>
+    </div>
+    <div class="ps-divider"></div>
+    <div class="ps-stat">
+      <div class="num" id="words-learned">0</div>
+      <div class="lbl">Слов выучено</div>
+    </div>
+    <div class="ps-divider"></div>
+    <div class="ps-stat">
+      <div class="num">B1</div>
+      <div class="lbl">Уровень</div>
+    </div>
+    <div class="ps-divider"></div>
+    <div class="ps-stat">
+      <div class="num">4</div>
+      <div class="lbl">Текущий урок</div>
+    </div>
+  </div>
+
+  <!-- THEORY -->
+  <div class="section-title">Theory — база знаний</div>
+  <div class="theory-grid">
+
+    <div class="theory-card" onclick="openModal('modal-modal-verbs')">
+      <div class="tc-tag tag-grammar">Grammar</div>
+      <h4>Modal Verbs</h4>
+      <p>Can / can't, must / mustn't, should, have to — как правильно выбирать</p>
+    </div>
+
+    <div class="theory-card" onclick="openModal('modal-tenses')">
+      <div class="tc-tag tag-tenses">Tenses B1</div>
+      <h4>Времена глагола</h4>
+      <p>Present Perfect vs Past Simple, Past Continuous, Future forms — тонкости для B1</p>
+    </div>
+
+    <div class="theory-card" onclick="openModal('modal-conditionals')">
+      <div class="tc-tag tag-grammar">Grammar</div>
+      <h4>Conditionals 0, 1, 2</h4>
+      <p>Условные предложения: нулевое, первое и второе — разбор с примерами</p>
+    </div>
+
+    <div class="theory-card" onclick="openModal('modal-tips')">
+      <div class="tc-tag tag-tips">Tips</div>
+      <h4>Speaking Tips</h4>
+      <p>Фразы-связки, способы выиграть время, полезные клише для устной речи</p>
+    </div>
+
+  </div>
+
+  <!-- IRREGULAR VERBS TABLE -->
+  <div class="section-title">Irregular Verbs — справочник</div>
+  <div class="verbs-card">
+    <div class="verbs-header">
+      <span>📚</span>
+      <h3>Irregular Verbs (Spelling reference)</h3>
+    </div>
+    <table class="verbs-table">
+      <thead>
+        <tr>
+          <th>Infinitive (V1)</th>
+          <th>Past Simple (V2)</th>
+          <th>Past Participle (V3)</th>
+          <th>Перевод</th>
+        </tr>
+      </thead>
+      <tbody id="verbsBody">
+        <tr><td>bear</td><td>bore</td><td>borne</td><td>носить, выносить</td></tr>
+        <tr><td>beat</td><td>beat</td><td>beaten</td><td>бить, побеждать</td></tr>
+        <tr><td>begin</td><td>began</td><td>begun</td><td>начинать</td></tr>
+        <tr><td>break</td><td>broke</td><td>broken</td><td>ломать</td></tr>
+        <tr><td>bring</td><td>brought</td><td>brought</td><td>приносить</td></tr>
+        <tr><td>build</td><td>built</td><td>built</td><td>строить</td></tr>
+        <tr><td>buy</td><td>bought</td><td>bought</td><td>покупать</td></tr>
+        <tr><td>catch</td><td>caught</td><td>caught</td><td>ловить</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>choose</td><td>chose</td><td>chosen</td><td>выбирать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>come</td><td>came</td><td>come</td><td>приходить</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>do</td><td>did</td><td>done</td><td>делать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>drink</td><td>drank</td><td>drunk</td><td>пить</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>drive</td><td>drove</td><td>driven</td><td>водить</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>eat</td><td>ate</td><td>eaten</td><td>есть</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>fall</td><td>fell</td><td>fallen</td><td>падать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>feel</td><td>felt</td><td>felt</td><td>чувствовать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>find</td><td>found</td><td>found</td><td>находить</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>forget</td><td>forgot</td><td>forgotten</td><td>забывать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>get</td><td>got</td><td>got / gotten</td><td>получать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>give</td><td>gave</td><td>given</td><td>давать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>go</td><td>went</td><td>gone</td><td>идти, ехать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>grow</td><td>grew</td><td>grown</td><td>расти</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>have</td><td>had</td><td>had</td><td>иметь</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>hear</td><td>heard</td><td>heard</td><td>слышать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>keep</td><td>kept</td><td>kept</td><td>хранить, держать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>know</td><td>knew</td><td>known</td><td>знать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>leave</td><td>left</td><td>left</td><td>уходить, оставлять</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>lose</td><td>lost</td><td>lost</td><td>терять</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>make</td><td>made</td><td>made</td><td>делать, производить</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>meet</td><td>met</td><td>met</td><td>встречать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>put</td><td>put</td><td>put</td><td>класть</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>read</td><td>read</td><td>read</td><td>читать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>run</td><td>ran</td><td>run</td><td>бежать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>say</td><td>said</td><td>said</td><td>говорить</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>see</td><td>saw</td><td>seen</td><td>видеть</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>send</td><td>sent</td><td>sent</td><td>отправлять</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>sit</td><td>sat</td><td>sat</td><td>сидеть</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>speak</td><td>spoke</td><td>spoken</td><td>говорить</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>spend</td><td>spent</td><td>spent</td><td>тратить</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>stand</td><td>stood</td><td>stood</td><td>стоять</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>swim</td><td>swam</td><td>swum</td><td>плавать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>take</td><td>took</td><td>taken</td><td>брать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>teach</td><td>taught</td><td>taught</td><td>учить, преподавать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>tell</td><td>told</td><td>told</td><td>рассказывать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>think</td><td>thought</td><td>thought</td><td>думать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>understand</td><td>understood</td><td>understood</td><td>понимать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>wear</td><td>wore</td><td>worn</td><td>носить (одежду)</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>win</td><td>won</td><td>won</td><td>побеждать</td></tr>
+        <tr class="hidden-verb" style="display:none"><td>write</td><td>wrote</td><td>written</td><td>писать</td></tr>
+      </tbody>
+    </table>
+    <button class="show-more-btn" id="showMoreVerbs" onclick="toggleVerbs()">Показать все глаголы ↓</button>
+  </div>
+
+</div><!-- /.page -->
+
+<!-- FLOATING NAV -->
+<div class="nav-pill">
+  <a href="index.html" class="active">🏠 Home</a>
+  <a href="homework.html">📝 HW</a>
+  <a href="vocabulary-hub.html">💥 Vocab</a>
+</div>
+
+<!-- ══════════════ MODALS ══════════════ -->
+
+<!-- Modal: Modal Verbs -->
+<div class="modal-overlay" id="modal-modal-verbs">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-modal-verbs')">✕</button>
+    <div class="modal-tag tag-grammar">Grammar</div>
+    <h2>Modal Verbs</h2>
+
+    <div class="rule-block">
+      <div class="rb-title">CAN / CAN'T — способность, разрешение</div>
+      <div class="rb-desc">Используй <b>can</b> для выражения умения или разрешения, <b>can't</b> — для запрета или невозможности.</div>
+      <div class="rb-ex">She can swim very well. · You can't park here.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">MUST / MUSTN'T — сильная обязанность / запрет</div>
+      <div class="rb-desc"><b>Must</b> = ты обязан (внутреннее решение). <b>Mustn't</b> = категорически нельзя (не путать с don't have to!).</div>
+      <div class="rb-ex">You must study every day. · You mustn't smoke here.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">HAVE TO — внешняя обязанность</div>
+      <div class="rb-desc">Правило или требование со стороны (закон, работодатель). <b>Don't have to</b> = нет обязанности (но можно!).</div>
+      <div class="rb-ex">I have to wear a uniform. · You don't have to come if you're busy.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">SHOULD / SHOULDN'T — совет</div>
+      <div class="rb-desc">Используй для рекомендаций и советов, но не абсолютных правил.</div>
+      <div class="rb-ex">You should drink more water. · You shouldn't eat so much sugar.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">MIGHT / MAY — возможность (50/50)</div>
+      <div class="rb-desc">Событие возможно, но не гарантировано. <b>May</b> чуть формальнее <b>might</b>.</div>
+      <div class="rb-ex">It might rain later. · She may be at home.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Tenses B1 -->
+<div class="modal-overlay" id="modal-tenses">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-tenses')">✕</button>
+    <div class="modal-tag tag-tenses">Tenses B1</div>
+    <h2>Времена глагола — тонкости B1</h2>
+
+    <div class="rule-block">
+      <div class="rb-title">Present Perfect vs Past Simple</div>
+      <div class="rb-desc"><b>Past Simple</b> — конкретное время в прошлом. <b>Present Perfect</b> — связь с настоящим, результат важнее момента.</div>
+      <div class="rb-ex">I lost my keys yesterday. (когда — вчера) <br>I've lost my keys! (и сейчас не могу войти)</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">Past Continuous — фон прошедшего</div>
+      <div class="rb-desc">Длящееся действие в прошлом, которое прерывает другое событие (Past Simple).</div>
+      <div class="rb-ex">I was watching TV when the phone rang.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">Future: will vs going to</div>
+      <div class="rb-desc"><b>Will</b> = спонтанное решение / предсказание. <b>Going to</b> = уже запланированное / очевидно из ситуации.</div>
+      <div class="rb-ex">I'll answer the door! · I'm going to visit Paris next month.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">Present Perfect Continuous</div>
+      <div class="rb-desc">Действие началось в прошлом и всё ещё продолжается (или только что закончилось — виден результат).</div>
+      <div class="rb-ex">I've been studying English for 3 years. · She looks tired — she's been running.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Conditionals -->
+<div class="modal-overlay" id="modal-conditionals">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-conditionals')">✕</button>
+    <div class="modal-tag tag-grammar">Grammar</div>
+    <h2>Conditionals 0, 1, 2</h2>
+
+    <div class="rule-block">
+      <div class="rb-title">Zero Conditional — всегда правда</div>
+      <div class="rb-desc">If + Present Simple → Present Simple. Факты, законы природы, общие истины.</div>
+      <div class="rb-ex">If you heat water to 100°C, it boils.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">First Conditional — реальная ситуация</div>
+      <div class="rb-desc">If + Present Simple → will + V. Возможное будущее событие и его последствие.</div>
+      <div class="rb-ex">If it rains tomorrow, I'll take an umbrella.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">Second Conditional — воображаемая ситуация</div>
+      <div class="rb-desc">If + Past Simple → would + V. Нереальное или маловероятное условие. NB: после if → were, не was!</div>
+      <div class="rb-ex">If I had more time, I would travel the world. · If I were you, I'd apologise.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">⚠️ Ловушки</div>
+      <div class="rb-desc">Никогда не ставь <b>will</b> в if-клаузу! «If it <s>will rain</s>» — ошибка. Правильно: «If it rains».</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Speaking Tips -->
+<div class="modal-overlay" id="modal-tips">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-tips')">✕</button>
+    <div class="modal-tag tag-tips">Tips</div>
+    <h2>Speaking Tips — говори уверенно</h2>
+
+    <div class="rule-block">
+      <div class="rb-title">Фразы для выигрыша времени</div>
+      <div class="rb-desc">Не молчи — используй эти фразы пока думаешь:</div>
+      <div class="rb-ex">That's a great question… · Let me think about it for a second… · Well, to be honest… · I mean…</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">Связующие слова</div>
+      <div class="rb-desc">Соединяй идеи, чтобы речь звучала плавно:</div>
+      <div class="rb-ex">First of all… · On the other hand… · What's more… · However… · In addition… · As a result…</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">Когда не знаешь слово</div>
+      <div class="rb-desc">Опиши его вместо того, чтобы замолчать:</div>
+      <div class="rb-ex">It's a thing you use for… · It's like a… but smaller / bigger · The opposite of… · I can't remember the word but it means…</div>
+    </div>
+    <div class="rule-block">
+      <div class="rb-title">Выражение мнения</div>
+      <div class="rb-ex">In my opinion… · I believe that… · Personally, I think… · From my point of view… · I'm not sure, but…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', e => { if(e.target === m) closeModal(m.id); });
+  });
+
+  function toggleVerbs() {
+    const hidden = document.querySelectorAll('.hidden-verb');
+    const btn = document.getElementById('showMoreVerbs');
+    const showing = hidden[0].style.display !== 'none';
+    hidden.forEach(r => r.style.display = showing ? 'none' : '');
+    btn.textContent = showing ? 'Показать все глаголы ↓' : 'Свернуть ↑';
+  }
+
+  // Pull progress from localStorage
+  window.addEventListener('load', () => {
+    const words = parseInt(localStorage.getItem('polina_words_learned') || '0');
+    document.getElementById('words-learned').textContent = words;
+    const hw = parseInt(localStorage.getItem('polina_hw_done') || '1');
+    document.getElementById('hw-done').textContent = hw;
+  });
+</script>
+</body>
+</html>

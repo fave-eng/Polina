@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vocabulary Hub — Polina's English Space</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --indigo: #4f46e5;
+      --indigo-light: #6366f1;
+      --rose: #f43f5e;
+      --amber: #f59e0b;
+      --emerald: #10b981;
+      --sky: #0ea5e9;
+      --violet: #8b5cf6;
+      --orange: #f97316;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 20px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 100px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #be185d 0%, #e11d48 45%, #f43f5e 100%);
+      padding: 40px 24px 90px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='52' height='52' viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Ccircle cx='26' cy='26' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 56px;
+      background: var(--bg);
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+    .hero-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,.75); font-size: 13px; font-weight: 600;
+      text-decoration: none; margin-bottom: 20px; transition: color .2s;
+    }
+    .hero-back:hover { color: #fff; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.28);
+      color: #fff; font-size: 12px; font-weight: 600;
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(28px, 5vw, 42px); font-weight: 800;
+      color: #fff; letter-spacing: -.5px; margin-bottom: 6px;
+    }
+    .hero p { color: rgba(255,255,255,.78); font-size: 15px; }
+
+    /* total words strip */
+    .hero-stats {
+      display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;
+    }
+    .hs-item {
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 14px; padding: 12px 20px;
+      text-align: center; min-width: 90px;
+    }
+    .hs-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 26px; font-weight: 800; color: #fff;
+    }
+    .hs-lbl { font-size: 11px; color: rgba(255,255,255,.7); font-weight: 600; margin-top: 2px; }
+
+    /* ── LAYOUT ── */
+    .page { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+      margin: 32px 0 14px;
+    }
+
+    /* ── FILTER TABS ── */
+    .filter-row {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .filter-btn {
+      padding: 7px 16px; border-radius: 100px;
+      border: 1.5px solid var(--border);
+      background: var(--card); color: var(--muted);
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      transition: all .18s;
+    }
+    .filter-btn:hover  { border-color: var(--rose); color: var(--rose); }
+    .filter-btn.active { background: var(--rose); border-color: var(--rose); color: #fff; }
+
+    /* ── VOCAB CARD ── */
+    .vocab-card {
+      background: var(--card);
+      border-radius: 18px;
+      border: 1.5px solid var(--border);
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: all .2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .vocab-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,.08);
+      border-color: transparent;
+    }
+    .vocab-card.locked {
+      opacity: .52; pointer-events: none;
+    }
+
+    .vc-inner {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 20px;
+    }
+
+    /* colour strip on left */
+    .vc-accent {
+      width: 4px; height: 52px; border-radius: 100px;
+      flex-shrink: 0;
+    }
+
+    /* icon */
+    .vc-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; flex-shrink: 0;
+    }
+
+    .vc-body { flex: 1; min-width: 0; }
+    .vc-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; margin-bottom: 3px;
+    }
+    .vc-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 700; margin-bottom: 4px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .vc-meta {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .vc-count { font-size: 12px; color: var(--muted); }
+
+    /* progress mini bar */
+    .vc-progress-wrap {
+      width: 80px; height: 5px;
+      background: var(--border); border-radius: 100px; overflow: hidden;
+    }
+    .vc-progress-fill {
+      height: 100%; border-radius: 100px;
+      transition: width .5s ease;
+    }
+
+    .vc-right {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+      flex-shrink: 0;
+    }
+    .vc-pill {
+      font-size: 11px; font-weight: 700; padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .pill-linked  { background: #fce7f3; color: #9d174d; }
+    .pill-free    { background: #ede9fe; color: #5b21b6; }
+    .pill-locked  { background: #f1f5f9; color: #94a3b8; }
+    .pill-done    { background: #d1fae5; color: #065f46; }
+
+    .vc-arrow { font-size: 18px; color: var(--muted); }
+
+    /* linked badge on card */
+    .vc-linked-strip {
+      border-top: 1px solid var(--border);
+      background: #fdf2f8;
+      padding: 8px 20px;
+      font-size: 12px; color: #9d174d; font-weight: 600;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ── TOTAL PROGRESS BAR ── */
+    .total-progress-card {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      border-radius: 18px; padding: 22px 24px; margin-bottom: 4px;
+    }
+    .tpc-top {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 12px;
+    }
+    .tpc-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 700; color: #fff;
+    }
+    .tpc-count { font-size: 13px; color: #94a3b8; }
+    .tpc-bar-bg {
+      background: #334155; border-radius: 100px; height: 8px; overflow: hidden;
+    }
+    .tpc-bar-fill {
+      height: 100%; border-radius: 100px;
+      background: linear-gradient(90deg, var(--rose), var(--violet));
+      transition: width .8s ease;
+    }
+    .tpc-sublabels {
+      display: flex; justify-content: space-between;
+      margin-top: 8px; font-size: 11px; color: #64748b;
+    }
+
+    /* ── NAV PILL ── */
+    .nav-pill {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #0f172a; border-radius: 100px;
+      padding: 12px 24px; display: flex; gap: 4px;
+      box-shadow: 0 8px 32px rgba(15,23,42,.3); z-index: 900;
+      white-space: nowrap;
+    }
+    .nav-pill a {
+      color: rgba(255,255,255,.6); font-size: 12px; font-weight: 600;
+      text-decoration: none; padding: 6px 14px; border-radius: 100px;
+      transition: all .2s;
+    }
+    .nav-pill a:hover, .nav-pill a.active { background: var(--indigo); color: #fff; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="page">
+    <a href="index.html" class="hero-back">← На главную</a>
+    <div class="hero-badge">💥 Vocabulary Hub</div>
+    <h1>Словарный тренажёр</h1>
+    <p>Выбери тему и тренируй слова в своём темпе</p>
+    <div class="hero-stats">
+      <div class="hs-item">
+        <div class="hs-num" id="totalLearned">0</div>
+        <div class="hs-lbl">Выучено слов</div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-num" id="totalWords">30</div>
+        <div class="hs-lbl">Слов всего</div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-num" id="totalTopics">1</div>
+        <div class="hs-lbl">Активных тем</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- TOTAL PROGRESS -->
+  <div style="margin-top: -18px; margin-bottom: 0;">
+    <div class="total-progress-card">
+      <div class="tpc-top">
+        <div class="tpc-label">Общий прогресс</div>
+        <div class="tpc-count" id="progressText">0 / 60 слов</div>
+      </div>
+      <div class="tpc-bar-bg">
+        <div class="tpc-bar-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <div class="tpc-sublabels">
+        <span>0%</span>
+        <span id="progressPct">0% выучено</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="section-label">Все темы</div>
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="filterCards('all', this)">Все темы</button>
+    <button class="filter-btn" onclick="filterCards('done', this)">Завершённые</button>
+  </div>
+
+  <!-- ══ CARDS LINKED TO LESSONS ══ -->
+
+  <!-- Lesson 4 vocab -->
+  <a href="vocab-everyday-problems.html" class="vocab-card" data-type="lesson" id="vc-everyday">
+    <div class="vc-inner">
+      <div class="vc-accent" style="background: var(--rose)"></div>
+      <div class="vc-icon" style="background: #fff1f2;">🔧</div>
+      <div class="vc-body">
+        <div class="vc-tag" style="color: var(--rose)">Lesson 4</div>
+        <div class="vc-title">Everyday Minor Problems</div>
+        <div class="vc-meta">
+          <span class="vc-count">30 слов</span>
+          <div class="vc-progress-wrap">
+            <div class="vc-progress-fill" id="prog-everyday" style="background: var(--rose); width: 0%"></div>
+          </div>
+          <span id="pct-everyday" style="font-size:11px; color: var(--muted)">0%</span>
+        </div>
+      </div>
+      <div class="vc-right">
+        <span class="vc-pill pill-linked">📝 Урок 4</span>
+        <span class="vc-arrow">→</span>
+      </div>
+    </div>
+    <div class="vc-linked-strip">💥 Привязана к домашнему заданию Lesson 4</div>
+  </a>
+
+
+
+</div><!-- /.page -->
+
+<!-- FLOATING NAV -->
+<div class="nav-pill">
+  <a href="index.html">🏠 Home</a>
+  <a href="homework.html">📝 HW</a>
+  <a href="vocabulary-hub.html" class="active">💥 Vocab</a>
+</div>
+
+<script>
+  // ── Load word progress from localStorage ──
+  const TOPICS = [
+    { key: 'everyday', total: 30 },
+  ];
+  const GRAND_TOTAL = 30;
+
+  function loadProgress() {
+    let grandLearned = 0;
+
+    TOPICS.forEach(({ key, total }) => {
+      const learned = parseInt(localStorage.getItem(`polina_vocab_${key}`) || '0');
+      grandLearned += learned;
+      const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
+
+      const bar  = document.getElementById(`prog-${key}`);
+      const pctEl = document.getElementById(`pct-${key}`);
+      if (bar)   bar.style.width  = pct + '%';
+      if (pctEl) pctEl.textContent = pct + '%';
+    });
+
+    // Global stats
+    document.getElementById('totalLearned').textContent = grandLearned;
+    document.getElementById('progressText').textContent = `${grandLearned} / ${GRAND_TOTAL} слов`;
+    const globalPct = Math.round((grandLearned / GRAND_TOTAL) * 100);
+    document.getElementById('progressFill').style.width = globalPct + '%';
+    document.getElementById('progressPct').textContent  = globalPct + '% выучено';
+
+    // Also save for index page
+    localStorage.setItem('polina_words_learned', grandLearned);
+  }
+
+  // ── Filter ──
+  function filterCards(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.vocab-card').forEach(card => {
+      if (type === 'all') {
+        card.style.display = '';
+      } else if (type === 'done') {
+        const key = card.id ? card.id.replace('vc-', '') : null;
+        const learned = key ? parseInt(localStorage.getItem(`polina_vocab_${key}`) || '0') : 0;
+        const topicObj = TOPICS.find(t => t.key === key);
+        const total = topicObj ? topicObj.total : 0;
+        card.style.display = (learned >= total && total > 0) ? '' : 'none';
+      } else {
+        card.style.display = (card.dataset.type === type) ? '' : 'none';
+      }
+    });
+  }
+
+  window.addEventListener('load', loadProgress);
+</script>
+</body>
+</html>

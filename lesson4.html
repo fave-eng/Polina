@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesson 4 — Everyday Minor Problems</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --indigo: #4f46e5;
+      --indigo-light: #6366f1;
+      --rose: #f43f5e;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 20px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 120px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 60%, #a855f7 100%);
+      padding: 36px 24px 90px;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 56px;
+      background: var(--bg);
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+    .hero-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.75); font-size: 13px; font-weight: 600;
+      text-decoration: none; margin-bottom: 18px;
+      transition: color .2s;
+    }
+    .hero-back:hover { color: #fff; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.28);
+      color: #fff; font-size: 12px; font-weight: 600;
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(24px, 5vw, 38px); font-weight: 800;
+      color: #fff; letter-spacing: -.5px; margin-bottom: 6px;
+    }
+    .hero p { color: rgba(255,255,255,.75); font-size: 15px; }
+
+    /* score pill in hero */
+    .hero-score {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.15); border-radius: 12px;
+      padding: 10px 18px; margin-top: 18px; color: #fff;
+      font-size: 14px; font-weight: 600;
+    }
+    .hero-score .hs-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 22px; font-weight: 800;
+    }
+
+    /* ── LAYOUT ── */
+    .page { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── SCORE BANNER (top) ── */
+    .score-banner {
+      background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+      border: 1.5px solid #6ee7b7;
+      border-radius: 16px;
+      padding: 18px 22px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 17px; font-weight: 700; color: #064e3b;
+      text-align: center;
+      display: none;
+      margin-bottom: 24px;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin: 32px 0 14px;
+    }
+
+    /* ── EXERCISE CARD ── */
+    .ex-card {
+      background: var(--card);
+      border-radius: 18px;
+      border: 1.5px solid var(--border);
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+    .ex-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 22px 0;
+    }
+    .ex-num {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .ex-header h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 700;
+    }
+    .ex-body { padding: 14px 22px 22px; }
+    .instruction {
+      font-size: 13px; color: var(--muted); font-style: italic;
+      margin-bottom: 18px; line-height: 1.55;
+    }
+
+    /* ── Q-ROW ── */
+    .q-row { margin-bottom: 20px; font-size: 15px; line-height: 1.7; }
+    .q-row:last-of-type { margin-bottom: 0; }
+
+    /* text inputs */
+    input[type="text"] {
+      padding: 8px 12px; font-size: 14px; font-family: inherit;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      background: #fafbff; color: var(--text);
+      transition: border-color .2s;
+      vertical-align: middle;
+    }
+    input[type="text"]:focus { outline: none; border-color: var(--indigo); background: #fff; }
+    input[type="text"].block-input { display: block; width: 100%; max-width: 340px; margin-top: 6px; }
+    input[type="text"].inline-input { width: 200px; }
+
+    /* selects */
+    select {
+      padding: 8px 12px; font-size: 14px; font-family: inherit;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      background: #fafbff; color: var(--text);
+      margin-top: 6px; display: block;
+      transition: border-color .2s;
+    }
+    select:focus { outline: none; border-color: var(--indigo); }
+
+    /* feedback */
+    .feedback { font-size: 13px; font-weight: 600; margin-top: 5px; display: none; }
+    .feedback.correct { color: var(--emerald); display: block; }
+    .feedback.wrong   { color: var(--rose);    display: block; }
+
+    /* explanation */
+    .explanation {
+      font-size: 13px; color: #7f1d1d;
+      background: #fff5f5; padding: 8px 14px;
+      border-radius: 8px; margin-top: 6px;
+      border-left: 3px solid var(--rose);
+      display: none; line-height: 1.55;
+    }
+
+    /* ── MATRIX TABLE ── */
+    .matrix-wrap { overflow-x: auto; margin-top: 4px; }
+    table.matrix {
+      width: 100%; border-collapse: collapse;
+      font-size: 13px; min-width: 520px;
+    }
+    table.matrix th, table.matrix td {
+      border: 1px solid var(--border);
+      padding: 10px 12px; text-align: center;
+    }
+    table.matrix th {
+      background: #f8fafc; font-weight: 700;
+      font-size: 12px; color: var(--muted);
+    }
+    table.matrix td:first-child {
+      text-align: left; font-weight: 700;
+      color: var(--text); background: #fafbff;
+    }
+    .cb-cell {
+      cursor: pointer; font-size: 16px;
+      transition: background .15s;
+      user-select: none;
+    }
+    .cb-cell:hover    { background: #eff6ff; }
+    .cb-cell.checked  { background: #ede9fe; color: var(--indigo); font-weight: 700; }
+
+    /* ── TEXTAREA ── */
+    textarea {
+      width: 100%; min-height: 80px; padding: 12px 14px;
+      font-family: inherit; font-size: 14px;
+      border: 1.5px solid var(--border); border-radius: 12px;
+      background: #fafbff; resize: vertical; margin-top: 6px;
+      transition: border-color .2s;
+    }
+    textarea:focus { outline: none; border-color: var(--indigo); background: #fff; }
+    .free-q { margin-bottom: 16px; font-size: 15px; }
+
+    /* ── SUBMIT BTN ── */
+    .submit-btn {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff; border: none; border-radius: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 700;
+      cursor: pointer; margin-top: 10px;
+      transition: opacity .2s, transform .2s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .submit-btn:hover { opacity: .92; transform: translateY(-1px); }
+    .submit-btn:active { transform: translateY(0); }
+
+    /* vocab teaser */
+    .vocab-teaser {
+      background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+      border: 1.5px solid #fbcfe8;
+      border-radius: 18px;
+      padding: 22px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .vt-left h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 700; color: #831843;
+      margin-bottom: 4px;
+    }
+    .vt-left p { font-size: 13px; color: #9d174d; }
+    .vt-btn {
+      background: var(--rose); color: #fff;
+      border: none; border-radius: 12px;
+      padding: 12px 22px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer; text-decoration: none;
+      white-space: nowrap; transition: opacity .2s;
+    }
+    .vt-btn:hover { opacity: .88; }
+
+    /* nav pill */
+    .nav-pill {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #0f172a; border-radius: 100px;
+      padding: 12px 24px; display: flex; gap: 4px;
+      box-shadow: 0 8px 32px rgba(15,23,42,.3); z-index: 900;
+      white-space: nowrap;
+    }
+    .nav-pill a {
+      color: rgba(255,255,255,.6); font-size: 12px; font-weight: 600;
+      text-decoration: none; padding: 6px 14px; border-radius: 100px;
+      transition: all .2s;
+    }
+    .nav-pill a:hover, .nav-pill a.active { background: var(--indigo); color: #fff; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="page">
+    <a href="homework.html" class="hero-back">← Все задания</a>
+    <div class="hero-eyebrow">📝 Lesson 4 · Homework</div>
+    <h1>Everyday Minor Problems</h1>
+    <p>Полина · Уровень B1 · Лексический курс</p>
+    <div class="hero-score">
+      <div>
+        <div class="hs-num" id="liveScore">0 / 0</div>
+        <div style="font-size:11px; opacity:.75; margin-top:1px;">правильных ответов</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div id="scoreBanner" class="score-banner"></div>
+
+  <!-- ══ PART 1: KEY VOCABULARY ══ -->
+  <div class="section-label">Часть 1 — ключевая лексика</div>
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <h2>Ключевая лексика юнита</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">Переведи выделенные жирным слова на русский язык:</p>
+
+      <div class="q-row" data-num="1.1" data-ans="потерял,потеряла,положил не туда,потерять,временно потерять">
+        1. <b>mislaid</b>
+        <input type="text" class="block-input" placeholder="Перевод…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Положить вещь куда-то и забыть, где она (временно потерять).</div>
+      </div>
+
+      <div class="q-row" data-num="1.2" data-ans="пролил,пролила,пролить,разлить">
+        2. <b>spilt</b>
+        <input type="text" class="block-input" placeholder="Перевод…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Spilt (или spilled) — пролить жидкость случайно.</div>
+      </div>
+
+      <div class="q-row" data-num="1.3" data-ans="пятно,след">
+        3. <b>stain</b>
+        <input type="text" class="block-input" placeholder="Перевод…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Трудновыводимый след от грязи или кофе на ткани.</div>
+      </div>
+
+      <div class="q-row" data-num="1.4" data-ans="засорен,забился,забит,засорился">
+        4. <b>blocked</b>
+        <input type="text" class="block-input" placeholder="Перевод…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Вода не может уходить из-за засора.</div>
+      </div>
+
+      <div class="q-row" data-num="1.5" data-ans="помял,поставил вмятину,помяла,сделал вмятину,вмятина">
+        5. <b>dented</b>
+        <input type="text" class="block-input" placeholder="Перевод…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Погнуть металл кузова ударом — сделать вмятину.</div>
+      </div>
+
+      <div class="q-row" data-num="1.6" data-ans="перестала работать,сломалась,перестал работать,не работает">
+        6. <b>stopped working</b>
+        <input type="text" class="block-input" placeholder="Перевод…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Прекратить функционировать.</div>
+      </div>
+
+      <div class="q-row" data-num="1.7" data-ans="заперся снаружи,заперлась снаружи,остался без ключей,осталась без ключей">
+        7. <b>locked myself out</b>
+        <input type="text" class="block-input" placeholder="Перевод…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Остаться снаружи, случайно заперев ключи внутри.</div>
+      </div>
+
+      <div class="q-row" data-num="1.8" data-ans="не заводится,не заведётся,не запускается">
+        8. <b>won't start</b>
+        <input type="text" class="block-input" placeholder="Перевод…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Двигатель отказывается заводиться.</div>
+      </div>
+
+      <div class="q-row" data-num="1.9" data-ans="разряжен,разрядился,села,разряжена,сел">
+        9. <b>flat</b> (battery)
+        <input type="text" class="block-input" placeholder="Перевод…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Полностью разряженный аккумулятор.</div>
+      </div>
+
+      <div class="q-row" data-num="1.10" data-ans="отстают,спешат,остановились,медленно идут,быстро идут">
+        10. <b>slow / fast / stopped</b> (clock)
+        <input type="text" class="block-input" placeholder="Перевод…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Slow — отстают, fast — спешат, stopped — встали.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXERCISE 12.1 ══ -->
+  <div class="section-label">Упражнения из учебника</div>
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">12.1</div>
+      <h2>What do you think happened?</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">What do you think happened to make these people do / say what they did? Впиши подходящее слово или фразу:</p>
+
+      <div class="q-row" data-num="12.1.2" data-ans="mechanic,broke down,wouldn't start,won't start">
+        2. I had to call out a local mechanic. → Maybe the car&nbsp;
+        <input type="text" class="inline-input" placeholder="Ответ…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Механика зовут, если машина сломалась (broke down) или не заводится (won't start).</div>
+      </div>
+
+      <div class="q-row" data-num="12.1.3" data-ans="broken,stopped working,broken down">
+        3. Our neighbours let us use their washing machine. → Perhaps theirs had&nbsp;
+        <input type="text" class="inline-input" placeholder="Ответ…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Соседи делятся машиной, если их собственная сломалась. Помни про Past Perfect!</div>
+      </div>
+
+      <div class="q-row" data-num="12.1.4" data-ans="came off,fallen off,fell off">
+        4. Don't worry, the handle often does that — I'll fix it back on. → The handle&nbsp;
+        <input type="text" class="inline-input" placeholder="Ответ…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Ручку чинят обратно, если она отвалилась (came off / fell off).</div>
+      </div>
+
+      <div class="q-row" data-num="12.1.5" data-ans="cut,grazed">
+        5. Luckily, that was all it was; the skin was broken a bit, but there was no blood. → They had&nbsp;
+        <input type="text" class="inline-input" placeholder="Ответ…" />&nbsp;it.
+        <div class="feedback"></div>
+        <div class="explanation">💡 Если кожа повреждена слегка — это ссадина (grazed it).</div>
+      </div>
+
+      <div class="q-row" data-num="12.1.6" data-ans="flat,dead">
+        6. What type of batteries does it take? I'll get some for you. → The batteries must be&nbsp;
+        <input type="text" class="inline-input" placeholder="Ответ…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Новые батарейки нужны, если старые сели (flat / dead).</div>
+      </div>
+
+      <div class="q-row" data-num="12.1.7" data-ans="mislaid,lost">
+        7. I don't know where you've put them. Try the bedside table. → Someone has&nbsp;
+        <input type="text" class="inline-input" placeholder="Ответ…" />&nbsp;something.
+        <div class="feedback"></div>
+        <div class="explanation">💡 Потерял / запамятовал, куда положил вещи (mislaid / lost them).</div>
+      </div>
+
+      <div class="q-row" data-num="12.1.8" data-ans="burnt,burned">
+        8. I left it in the oven too long. It's all black on the top now! → The meal was&nbsp;
+        <input type="text" class="inline-input" placeholder="Ответ…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Еда стала чёрной в духовке — она сгорела (burnt / burned).</div>
+      </div>
+
+      <div class="q-row" data-num="12.1.9" data-ans="crash,crashed,lost">
+        9. I lost all my work — I know I should have saved it more often! → The computer&nbsp;
+        <input type="text" class="inline-input" placeholder="Ответ…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Работа теряется, если компьютер завис / вылетел (crashed).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXERCISE 12.2 ══ -->
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">12.2</div>
+      <h2>Odd one out</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">Выбери лишнее слово из трёх предложенных:</p>
+
+      <div class="q-row" data-num="12.2.2" data-ans="stain">
+        2. stain · graze · bruise
+        <select>
+          <option value="">— выбери лишнее —</option>
+          <option value="stain">stain</option>
+          <option value="graze">graze</option>
+          <option value="bruise">bruise</option>
+        </select>
+        <div class="feedback"></div>
+        <div class="explanation">💡 Graze (ссадина) и bruise (синяк) — травмы тела. Stain — пятно на ткани.</div>
+      </div>
+
+      <div class="q-row" data-num="12.2.3" data-ans="bump">
+        3. run out · bump · flat
+        <select>
+          <option value="">— выбери лишнее —</option>
+          <option value="run out">run out</option>
+          <option value="bump">bump</option>
+          <option value="flat">flat</option>
+        </select>
+        <div class="feedback"></div>
+        <div class="explanation">💡 Run out и flat применимы к батарейкам / ресурсам. Bump — удариться обо что-то.</div>
+      </div>
+
+      <div class="q-row" data-num="12.2.4" data-ans="smash">
+        4. leak · smash · chip
+        <select>
+          <option value="">— выбери лишнее —</option>
+          <option value="leak">leak</option>
+          <option value="smash">smash</option>
+          <option value="chip">chip</option>
+        </select>
+        <div class="feedback"></div>
+        <div class="explanation">💡 Leak и chip — мелкие дефекты. Smash — разбить вдребезги (полное разрушение).</div>
+      </div>
+
+      <div class="q-row" data-num="12.2.5" data-ans="dent">
+        5. leak · dent · flood
+        <select>
+          <option value="">— выбери лишнее —</option>
+          <option value="leak">leak</option>
+          <option value="dent">dent</option>
+          <option value="flood">flood</option>
+        </select>
+        <div class="feedback"></div>
+        <div class="explanation">💡 Leak и flood связаны с водой. Dent — вмятина на твёрдой поверхности.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXERCISE 12.3 ══ -->
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">12.3</div>
+      <h2>Collocations Matrix</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">Кликни по ячейкам, чтобы поставить ✓ там, где слова сочетаются друг с другом по смыслу:</p>
+      <div class="matrix-wrap">
+        <table class="matrix" id="matrix">
+          <thead>
+            <tr>
+              <th style="text-align:left">Проблема</th>
+              <th>car</th><th>vase</th><th>elbow</th>
+              <th>clock</th><th>printer</th><th>sink</th><th>a meal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-problem="banged">
+              <td>banged</td>
+              <td class="cb-cell" data-col="1"></td><td class="cb-cell" data-col="2"></td>
+              <td class="cb-cell" data-col="3"></td><td class="cb-cell" data-col="4"></td>
+              <td class="cb-cell" data-col="5"></td><td class="cb-cell" data-col="6"></td>
+              <td class="cb-cell" data-col="7"></td>
+            </tr>
+            <tr data-problem="ruined">
+              <td>ruined</td>
+              <td class="cb-cell" data-col="1"></td><td class="cb-cell" data-col="2"></td>
+              <td class="cb-cell" data-col="3"></td><td class="cb-cell" data-col="4"></td>
+              <td class="cb-cell" data-col="5"></td><td class="cb-cell" data-col="6"></td>
+              <td class="cb-cell" data-col="7"></td>
+            </tr>
+            <tr data-problem="cracked">
+              <td>cracked</td>
+              <td class="cb-cell" data-col="1"></td><td class="cb-cell" data-col="2"></td>
+              <td class="cb-cell" data-col="3"></td><td class="cb-cell" data-col="4"></td>
+              <td class="cb-cell" data-col="5"></td><td class="cb-cell" data-col="6"></td>
+              <td class="cb-cell" data-col="7"></td>
+            </tr>
+            <tr data-problem="broken down">
+              <td>broken down</td>
+              <td class="cb-cell" data-col="1"></td><td class="cb-cell" data-col="2"></td>
+              <td class="cb-cell" data-col="3"></td><td class="cb-cell" data-col="4"></td>
+              <td class="cb-cell" data-col="5"></td><td class="cb-cell" data-col="6"></td>
+              <td class="cb-cell" data-col="7"></td>
+            </tr>
+            <tr data-problem="dented">
+              <td>dented</td>
+              <td class="cb-cell" data-col="1"></td><td class="cb-cell" data-col="2"></td>
+              <td class="cb-cell" data-col="3"></td><td class="cb-cell" data-col="4"></td>
+              <td class="cb-cell" data-col="5"></td><td class="cb-cell" data-col="6"></td>
+              <td class="cb-cell" data-col="7"></td>
+            </tr>
+            <tr data-problem="stopped">
+              <td>stopped</td>
+              <td class="cb-cell" data-col="1"></td><td class="cb-cell" data-col="2"></td>
+              <td class="cb-cell" data-col="3"></td><td class="cb-cell" data-col="4"></td>
+              <td class="cb-cell" data-col="5"></td><td class="cb-cell" data-col="6"></td>
+              <td class="cb-cell" data-col="7"></td>
+            </tr>
+            <tr data-problem="blocked">
+              <td>blocked</td>
+              <td class="cb-cell" data-col="1"></td><td class="cb-cell" data-col="2"></td>
+              <td class="cb-cell" data-col="3"></td><td class="cb-cell" data-col="4"></td>
+              <td class="cb-cell" data-col="5"></td><td class="cb-cell" data-col="6"></td>
+              <td class="cb-cell" data-col="7"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="matrixFeedback" class="feedback" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- ══ EXERCISE 12.4 ══ -->
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">12.4</div>
+      <h2>Fill in the gaps</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">Заполни пропуски подходящими по смыслу фразами:</p>
+
+      <div class="q-row" data-num="12.4.2" data-ans="bumped my head,hit my head">
+        2. I didn't look where I was going as I walked through the low doorway and&nbsp;
+        <input type="text" class="inline-input" placeholder="фраза…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Удар о низкий дверной проём головой — bumped my head / hit my head.</div>
+      </div>
+
+      <div class="q-row" data-num="12.4.3" data-ans="locked myself out">
+        3. The wind blew the door shut and I realised I'd&nbsp;
+        <input type="text" class="inline-input" placeholder="фраза…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Дверь захлопнулась ветром — locked myself out. Обрати внимание на Past Perfect (I'd)!</div>
+      </div>
+
+      <div class="q-row" data-num="12.4.4" data-ans="mislaid her number,lost her number">
+        4. I would ring her but I'm afraid I've&nbsp;
+        <input type="text" class="inline-input" placeholder="фраза…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Потерял / положил не туда её номер (mislaid her number).</div>
+      </div>
+
+      <div class="q-row" data-num="12.4.5" data-ans="stopped working,broken">
+        5. I can't take a photo, my camera's&nbsp;
+        <input type="text" class="inline-input" placeholder="фраза…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Камера сломалась или перестала работать (stopped working / broken).</div>
+      </div>
+
+      <div class="q-row" data-num="12.4.6" data-ans="fell,fell off,grazed my leg,scratched my leg">
+        6. I tried to run over the rocks but I&nbsp;
+        <input type="text" class="inline-input" placeholder="фраза…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Бег по камням часто приводит к падению или ссадинам (fell / grazed my leg).</div>
+      </div>
+
+      <div class="q-row" data-num="12.4.7" data-ans="crushed them,smashed them">
+        7. I accidentally sat on my bag of crisps and they&nbsp;
+        <input type="text" class="inline-input" placeholder="фраза…" />
+        <div class="feedback"></div>
+        <div class="explanation">💡 Если сесть на чипсы, они раздавятся / раскрошатся (were crushed / smashed).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXERCISE 12.5 ══ -->
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">12.5</div>
+      <h2>Over to you ✍️</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">What would you do if… Напиши развёрнутые ответы на английском — обсудим на уроке!</p>
+
+      <div class="free-q">
+        1. …you mislaid your credit card?
+        <textarea id="free_1" placeholder="I would immediately freeze it via my bank app and then…"></textarea>
+      </div>
+      <div class="free-q">
+        2. …you noticed your guest's glass was chipped?
+        <textarea id="free_2" placeholder="I would apologise and replace the glass immediately because…"></textarea>
+      </div>
+      <div class="free-q">
+        3. …one of your coat buttons came off?
+        <textarea id="free_3" placeholder="Your answer…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <button class="submit-btn" onclick="submitHomework()">
+    <span>🚀</span> Проверить и отправить результаты
+  </button>
+
+  <!-- VOCAB TEASER -->
+  <div style="margin-top: 24px;">
+    <div class="vocab-teaser">
+      <div class="vt-left">
+        <h3>💥 Лексика к уроку 4</h3>
+        <p>30 слов по теме Everyday Problems — учи с карточками</p>
+      </div>
+      <a href="vocab-everyday-problems.html" class="vt-btn">Тренировать →</a>
+    </div>
+  </div>
+
+</div><!-- /.page -->
+
+<!-- FLOATING NAV -->
+<div class="nav-pill">
+  <a href="index.html">🏠 Home</a>
+  <a href="homework.html" class="active">📝 HW</a>
+  <a href="vocabulary-hub.html">💥 Vocab</a>
+</div>
+
+<script>
+  const BOT_TOKEN = "8604414786:AAEcyyQxHiYUi80PDZt7ZkQjomLfsm_VjKM";
+  const CHAT_ID   = "-1003908460669";
+
+  // ── Matrix click ──
+  document.querySelectorAll('.cb-cell').forEach(cell => {
+    cell.addEventListener('click', function() {
+      this.classList.toggle('checked');
+      this.textContent = this.classList.contains('checked') ? '✓' : '';
+    });
+  });
+
+  // ── Live score counter ──
+  function updateLiveScore() {
+    let correct = 0, total = 0;
+    document.querySelectorAll('.q-row').forEach(row => {
+      if (!row.getAttribute('data-ans')) return;
+      total++;
+      if (row.querySelector('.feedback.correct')) correct++;
+    });
+    document.getElementById('liveScore').textContent = `${correct} / ${total}`;
+  }
+
+  // ── Normalize ──
+  function norm(s) {
+    return s.toLowerCase().trim().replace(/[ё]/g,'е').replace(/[\s\.\,\-\!\?]/g,'');
+  }
+
+  // ── Check all ──
+  function checkAllRows() {
+    let correct = 0, total = 0;
+    let report  = '📝 *Отчёт по ДЗ Полины*\nТема: Everyday Minor Problems\n\n';
+
+    document.querySelectorAll('.q-row[data-ans]').forEach(row => {
+      total++;
+      const num    = row.getAttribute('data-num');
+      const input  = row.querySelector('input[type="text"]');
+      const sel    = row.querySelector('select');
+      const fb     = row.querySelector('.feedback');
+      const exp    = row.querySelector('.explanation');
+      let val = input ? input.value : (sel ? sel.value : '');
+      const answers = row.getAttribute('data-ans').split(',');
+      let ok = answers.some(a => norm(val).includes(norm(a)) && val.trim() !== '');
+
+      if (ok) {
+        correct++;
+        fb.textContent = '✓ Верно!';
+        fb.className = 'feedback correct';
+        if (exp) exp.style.display = 'none';
+      } else {
+        fb.textContent = '✗ Не совсем…';
+        fb.className = 'feedback wrong';
+        if (exp) exp.style.display = 'block';
+        report += `❌ Задание ${num}: "${val || 'нет ответа'}"\n`;
+      }
+    });
+
+    // Matrix
+    const validPairs = [
+      'banged-3','ruined-1','ruined-2','ruined-7',
+      'cracked-1','cracked-2','broken down-1','broken down-5',
+      'dented-1','stopped-4','stopped-5','blocked-6'
+    ];
+    let matrixOk = true;
+    document.querySelectorAll('.cb-cell').forEach(cell => {
+      const prob = cell.parentElement.getAttribute('data-problem');
+      const col  = cell.getAttribute('data-col');
+      const key  = `${prob}-${col}`;
+      const isChecked    = cell.classList.contains('checked');
+      const shouldCheck  = validPairs.includes(key);
+      if (isChecked !== shouldCheck) matrixOk = false;
+    });
+    total++;
+    const mfb = document.getElementById('matrixFeedback');
+    if (matrixOk) {
+      correct++;
+      mfb.textContent = '✓ Таблица заполнена верно!';
+      mfb.className = 'feedback correct';
+    } else {
+      mfb.textContent = '✗ Есть ошибки в сочетаемости — перепроверь collocations!';
+      mfb.className = 'feedback wrong';
+      report += `❌ Ошибки в таблице Ex 12.3\n`;
+    }
+
+    return { correct, total, report };
+  }
+
+  function submitHomework() {
+    const { correct, total, report } = checkAllRows();
+    updateLiveScore();
+
+    const pct   = Math.round((correct / total) * 100);
+    const emoji = pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪';
+
+    // Banner
+    const banner = document.getElementById('scoreBanner');
+    banner.textContent = `${emoji} Твой результат: ${correct} из ${total} (${pct}%). Отчёт отправлен преподавателю!`;
+    banner.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Save to localStorage
+    localStorage.setItem('polina_hw4_score', `${correct}/${total}`);
+    localStorage.setItem('polina_hw_done', '1');
+
+    // Free answers
+    let fullReport = report;
+    fullReport += `\n📊 *Итог:* ${correct} из ${total} (${pct}%)\n\n`;
+    fullReport += '✍️ *Over to you:*\n';
+    fullReport += `1. Credit card: ${document.getElementById('free_1').value || 'нет ответа'}\n\n`;
+    fullReport += `2. Chipped glass: ${document.getElementById('free_2').value || 'нет ответа'}\n\n`;
+    fullReport += `3. Button: ${document.getElementById('free_3').value || 'нет ответа'}\n`;
+
+    // Send to Telegram
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: CHAT_ID, text: fullReport, parse_mode: 'Markdown' })
+    }).catch(console.error);
+  }
+</script>
+</body>
+</html>
