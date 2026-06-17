@@ -631,10 +631,25 @@
   }
 
   // Pull progress from localStorage
-  window.addEventListener('load', () => {
+  window.addEventListener('load', async () => {
+    try {
+      const r = await fetch('https://zqzgarvmpqqqaobeicpc.supabase.co/rest/v1/progress?student=eq.polina&select=*', {
+        headers: {
+          'apikey': 'sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC',
+          'Authorization': 'Bearer sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC'
+        }
+      });
+      const data = await r.json();
+      if (data && data[0]) {
+        const d = data[0];
+        if (d.words_learned) localStorage.setItem('polina_words_learned', d.words_learned);
+        if (d.hw4_done)      localStorage.setItem('polina_hw_done', '1');
+      }
+    } catch(e) {}
+
     const words = parseInt(localStorage.getItem('polina_words_learned') || '0');
     document.getElementById('words-learned').textContent = words;
-    const hw = parseInt(localStorage.getItem('polina_hw_done') || '1');
+    const hw = parseInt(localStorage.getItem('polina_hw_done') || '0');
     document.getElementById('hw-done').textContent = hw;
   });
 </script>
