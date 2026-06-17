@@ -32,16 +32,11 @@
     /* ── HERO ── */
     .hero {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 60%, #a855f7 100%);
-      padding: 36px 24px 90px;
+      padding: 36px 24px 100px;
       position: relative;
     }
-    .hero::after {
-      content: '';
-      position: absolute; bottom: -2px; left: 0; right: 0;
-      height: 56px;
-      background: var(--bg);
-      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-    }
+    .hero-wave { position: absolute; bottom: -1px; left: 0; right: 0; line-height: 0; pointer-events: none; }
+    .hero-wave svg { display: block; width: 100%; }
     .hero-back {
       display: inline-flex; align-items: center; gap: 6px;
       color: rgba(255,255,255,0.75); font-size: 13px; font-weight: 600;
@@ -265,8 +260,8 @@
 
 <!-- HERO -->
 <div class="hero">
-  <div class="page">
-    <a href="homework.html" class="hero-back">← Все задания</a>
+  <div class="page" style="position:relative;z-index:1">
+    <a href="./homework.html" class="hero-back">← Все задания</a>
     <div class="hero-eyebrow">📝 Lesson 4 · Homework</div>
     <h1>Everyday Minor Problems</h1>
     <p>Полина · Уровень B1 · Лексический курс</p>
@@ -276,6 +271,11 @@
         <div style="font-size:11px; opacity:.75; margin-top:1px;">правильных ответов</div>
       </div>
     </div>
+  </div>
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
+    </svg>
   </div>
 </div>
 
