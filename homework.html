@@ -33,10 +33,10 @@
     /* ─── HERO ─── */
     .hero {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a855f7 100%);
-      padding: 40px 24px 100px;
+      padding: 40px 24px 48px;
       position: relative;
     }
-    .hero-wave { position: absolute; bottom: -1px; left: 0; right: 0; line-height: 0; pointer-events: none; }
+    .hero-wave { display: block; width: 100%; line-height: 0; background: var(--bg); }
     .hero-wave svg { display: block; width: 100%; }
     .hero-back {
       display: inline-flex; align-items: center; gap: 6px;
@@ -95,21 +95,22 @@
     /* ─── STATS ROW ─── */
     .stats-row {
       display: flex; gap: 12px;
-      margin-top: -20px;
-      margin-bottom: 32px;
+      margin-top: 24px;
+      margin-bottom: 28px;
       flex-wrap: wrap;
     }
     .stat-chip {
       background: var(--card);
-      border-radius: 14px;
+      border-radius: 20px;
       border: 1.5px solid var(--border);
-      padding: 14px 20px;
+      padding: 18px 20px;
       flex: 1; min-width: 100px;
       text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
     }
     .stat-chip .sc-num {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 24px; font-weight: 800;
+      font-size: 26px; font-weight: 800;
     }
     .stat-chip .sc-lbl { font-size: 11px; color: var(--muted); font-weight: 600; margin-top: 2px; }
     .stat-chip.done .sc-num  { color: var(--emerald); }
@@ -260,11 +261,11 @@
     </div>
     <div class="progress-label" id="heroLabel">1 из 5 выполнено</div>
   </div>
-  <div class="hero-wave">
-    <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
-    </svg>
-  </div>
+</div>
+<div class="hero-wave">
+  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:linear-gradient(135deg,#4f46e5,#7c3aed 50%,#a855f7)">
+    <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
+  </svg>
 </div>
 
 <div class="page">
