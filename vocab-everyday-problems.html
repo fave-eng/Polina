@@ -607,8 +607,17 @@ function setVerbMode(m) {
 window.addEventListener('load', async () => {
   await loadWordsFromSupabase();
   loadState();
-  renderVerbTable(irregularVerbs);
-  setMode('learn');
+  // сначала показываем карточки, потом рендерим
+  deck = [...vocab];
+  idx = 0;
+  mode = 'learn';
+  document.getElementById('tab-learn').classList.add('active');
+  document.getElementById('learnZone').style.display = '';
+  document.getElementById('testZone').style.display  = 'none';
+  document.getElementById('flashcard').style.display = 'block';
+  document.getElementById('finishScreen').style.display = 'none';
+  document.getElementById('cardCounter').style.display  = 'flex';
+  render();
 });
 </script>
 </body>
