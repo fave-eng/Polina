@@ -317,18 +317,25 @@
   <div class="section-title" id="section-upcoming">🔒 Предстоящие</div>
 
   <!-- LESSON 5 -->
-  <div class="lesson-card locked" id="card-5">
-    <div class="lc-main">
-      <div class="lc-num locked-num">5</div>
-      <div class="lc-info">
-        <div class="lc-lesson-label">Lesson 5</div>
-        <div class="lc-title">Coming soon…</div>
-        <div class="lc-meta">
-          <span class="lc-status-pill pill-locked">🔒 Скоро</span>
+  <div class="lesson-card active" id="card-5">
+    <a href="./lesson5.html" style="text-decoration:none; color:inherit;">
+      <div class="lc-main">
+        <div class="lc-num" id="num-5">5</div>
+        <div class="lc-info">
+          <div class="lc-lesson-label">Lesson 5</div>
+          <div class="lc-title">Talking My Language</div>
+          <div class="lc-meta">
+            <span class="lc-status-pill" id="pill-5">📝 Выполнить</span>
+            <span class="lc-score" id="score-5"></span>
+          </div>
         </div>
+        <div class="lc-arrow">→</div>
       </div>
+    </a>
+    <div class="lc-vocab-strip">
+      <div class="lvs-left">🌍 <span>Лексика к уроку:</span> Languages Vocabulary</div>
+      <a href="./vocab-languages.html" class="lvs-link">Тренировать <span>→</span></a>
     </div>
-    <div class="locked-strip">🔒 Задание появится после урока 5</div>
   </div>
 
   <!-- LESSON 6 -->
@@ -397,48 +404,52 @@
       const data = await r.json();
       if (data && data[0]) {
         const d = data[0];
-        if (d.hw4_score) localStorage.setItem('polina_hw4_score', d.hw4_score);
-        if (d.hw4_done)  localStorage.setItem('polina_hw_done', '1');
+        if (d.hw4_score && d.hw4_score !== '0/0') localStorage.setItem('polina_hw4_score', d.hw4_score);
+        if (d.hw5_score) localStorage.setItem('polina_hw5_score', d.hw5_score);
         if (d.words_learned) localStorage.setItem('polina_words_learned', d.words_learned);
       }
     } catch(e) {}
   }
 
+  function updateCard(num, scoreKey) {
+    const score  = localStorage.getItem(scoreKey);
+    const isDone = !!score && score !== '' && score !== '0/0';
+    const numEl  = document.getElementById(`num-${num}`);
+    const pill   = document.getElementById(`pill-${num}`);
+    const sc     = document.getElementById(`score-${num}`);
+    if (!numEl) return isDone;
+    if (isDone) {
+      numEl.className   = 'lc-num done-num';
+      numEl.textContent = '✓';
+      pill.className    = 'lc-status-pill pill-done';
+      pill.textContent  = 'Сдано';
+      if (sc) sc.textContent = 'Результат: ' + score;
+    } else {
+      numEl.className   = 'lc-num active-num';
+      numEl.textContent = String(num);
+      pill.className    = 'lc-status-pill pill-current';
+      pill.textContent  = '📝 Выполнить';
+    }
+    return isDone;
+  }
+
   window.addEventListener('load', async () => {
     await loadFromSupabase();
 
-    const score4 = localStorage.getItem('polina_hw4_score');
-    const isDone = !!score4;
+    const done4 = updateCard(4, 'polina_hw4_score');
+    const done5 = updateCard(5, 'polina_hw5_score');
 
-    // ── Lesson 4 card state ──
-    const num4  = document.getElementById('num-4');
-    const pill4 = document.getElementById('pill-4');
-    const sc4   = document.getElementById('score-4');
+    document.getElementById('section-done').style.display =
+      (done4 || done5) ? '' : 'none';
 
-    if (isDone) {
-      num4.className  = 'lc-num done-num';
-      num4.textContent = '✓';
-      pill4.className  = 'lc-status-pill pill-done';
-      pill4.textContent = 'Сдано';
-      sc4.textContent  = 'Результат: ' + score4;
-      document.getElementById('section-done').style.display = '';
-    } else {
-      num4.className  = 'lc-num active-num';
-      num4.textContent = '4';
-      pill4.className  = 'lc-status-pill pill-current';
-      pill4.textContent = '📝 Выполнить';
-      document.getElementById('section-done').style.display = 'none';
-    }
-
-    // ── Counters ──
-    const done  = isDone ? 1 : 0;
+    const done  = [done4, done5].filter(Boolean).length;
     const total = 5;
     const pct   = Math.round((done / total) * 100);
 
-    document.getElementById('statDone').textContent        = done;
-    document.getElementById('statPct').textContent         = pct + '%';
-    document.getElementById('heroProgress').style.width    = pct + '%';
-    document.getElementById('heroLabel').textContent       = `${done} из ${total} выполнено`;
+    document.getElementById('statDone').textContent     = done;
+    document.getElementById('statPct').textContent      = pct + '%';
+    document.getElementById('heroProgress').style.width = pct + '%';
+    document.getElementById('heroLabel').textContent    = `${done} из ${total} выполнено`;
   });
 </script>
 </body>
