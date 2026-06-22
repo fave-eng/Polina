@@ -354,26 +354,42 @@
   <div class="section-title">Прогресс</div>
   <div class="progress-strip">
     <div class="ps-stat">
-      <div class="num" id="hw-done">1</div>
+      <div class="num" id="hw-done">—</div>
       <div class="lbl">ДЗ выполнено</div>
     </div>
     <div class="ps-divider"></div>
     <div class="ps-stat">
-      <div class="num" id="words-learned">0</div>
+      <div class="num" id="words-learned">—</div>
       <div class="lbl">Слов выучено</div>
+    </div>
+    <div class="ps-divider"></div>
+    <div class="ps-stat">
+      <div class="num" id="verbs-learned">—</div>
+      <div class="lbl">Глаголов</div>
     </div>
     <div class="ps-divider"></div>
     <div class="ps-stat">
       <div class="num">B1</div>
       <div class="lbl">Уровень</div>
     </div>
-    <div class="ps-divider"></div>
-    <div class="ps-stat">
-      <div class="num">4</div>
-      <div class="lbl">Текущий урок</div>
+  </div>
+  <!-- mini progress bars -->
+  <div style="background:#fff; border-radius:16px; border:1.5px solid var(--border); padding:18px 22px; margin-top:12px;">
+    <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:8px;">
+      <span>📝 Домашние задания</span>
+      <span id="hw-pct" style="color:var(--indigo)">0 / 5</span>
+    </div>
+    <div style="background:#f1f5f9; border-radius:100px; height:7px; overflow:hidden; margin-bottom:16px;">
+      <div id="hw-bar" style="height:100%; border-radius:100px; background:linear-gradient(90deg,#4f46e5,#7c3aed); width:0%; transition:width .8s ease;"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:8px;">
+      <span>💥 Словарный запас</span>
+      <span id="vocab-pct" style="color:var(--rose)">0 / 78</span>
+    </div>
+    <div style="background:#f1f5f9; border-radius:100px; height:7px; overflow:hidden;">
+      <div id="vocab-bar" style="height:100%; border-radius:100px; background:linear-gradient(90deg,#f43f5e,#a855f7); width:0%; transition:width .8s ease;"></div>
     </div>
   </div>
-
   <!-- THEORY -->
   <div class="section-title">Theory — база знаний</div>
   <div class="theory-grid">
@@ -632,25 +648,45 @@
 
   // Pull progress from localStorage
   window.addEventListener('load', async () => {
+    const SB_URL = 'https://zqzgarvmpqqqaobeicpc.supabase.co';
+    const SB_KEY = 'sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC';
+
+    // Загружаем из Supabase
     try {
-      const r = await fetch('https://zqzgarvmpqqqaobeicpc.supabase.co/rest/v1/progress?student=eq.polina&select=*', {
-        headers: {
-          'apikey': 'sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC',
-          'Authorization': 'Bearer sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC'
-        }
+      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=*`, {
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
       });
       const data = await r.json();
       if (data && data[0]) {
         const d = data[0];
-        if (d.words_learned) localStorage.setItem('polina_words_learned', d.words_learned);
-        if (d.hw4_done)      localStorage.setItem('polina_hw_done', '1');
+        if (d.hw4_done)      localStorage.setItem('polina_hw_done',       '1');
+        if (d.words_learned) localStorage.setItem('polina_words_learned',  d.words_learned);
+        if (d.verbs_learned) localStorage.setItem('polina_verbs_learned',  d.verbs_learned);
       }
     } catch(e) {}
 
-    const words = parseInt(localStorage.getItem('polina_words_learned') || '0');
+    // Считаем ДЗ
+    const hwDone  = localStorage.getItem('polina_hw_done') === '1' ? 1 : 0;
+    const hwTotal = 5;
+    const hwPct   = Math.round(hwDone / hwTotal * 100);
+
+    // Считаем словарь
+    const words     = parseInt(localStorage.getItem('polina_words_learned') || '0');
+    const verbs     = parseInt(localStorage.getItem('polina_verbs_learned') || '0');
+    const vocabDone = words + verbs;
+    const vocabTotal = 78;
+    const vocabPct  = Math.round(vocabDone / vocabTotal * 100);
+
+    // Обновляем чипы
+    document.getElementById('hw-done').textContent      = hwDone;
     document.getElementById('words-learned').textContent = words;
-    const hw = parseInt(localStorage.getItem('polina_hw_done') || '0');
-    document.getElementById('hw-done').textContent = hw;
+    document.getElementById('verbs-learned').textContent = verbs;
+
+    // Обновляем прогресс-бары
+    document.getElementById('hw-pct').textContent    = `${hwDone} / ${hwTotal}`;
+    document.getElementById('hw-bar').style.width    = hwPct + '%';
+    document.getElementById('vocab-pct').textContent = `${vocabDone} / ${vocabTotal}`;
+    document.getElementById('vocab-bar').style.width = vocabPct + '%';
   });
 </script>
 </body>
