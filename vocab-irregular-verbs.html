@@ -416,10 +416,10 @@ function saveState() {
 
 async function syncVerbsToSupabase(n) {
   try {
-    await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina`, {
-      method:'PATCH',
-      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Prefer':'return=minimal'},
-      body: JSON.stringify({ verbs_learned: n, updated_at: new Date().toISOString() })
+    await fetch(`${SB_URL}/rest/v1/progress`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Prefer':'resolution=merge-duplicates,return=minimal'},
+      body: JSON.stringify({ student:'polina', verbs_learned: n, updated_at: new Date().toISOString() })
     });
   } catch(e) {}
 }
