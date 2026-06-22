@@ -321,15 +321,19 @@ const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
 
 async function syncWordsToSupabase(words) {
   try {
-    await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina`, {
-      method: 'PATCH',
+    await fetch(`${SB_URL}/rest/v1/progress`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'apikey': SB_KEY,
         'Authorization': `Bearer ${SB_KEY}`,
-        'Prefer': 'return=minimal'
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
       },
-      body: JSON.stringify({ words_learned: words, updated_at: new Date().toISOString() })
+      body: JSON.stringify({
+        student: 'polina',
+        words_learned: words,
+        updated_at: new Date().toISOString()
+      })
     });
   } catch(e) { console.error('Supabase sync error:', e); }
 }
