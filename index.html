@@ -659,27 +659,34 @@
       const data = await r.json();
       if (data && data[0]) {
         const d = data[0];
-        if (d.hw4_done)      localStorage.setItem('polina_hw_done',       '1');
-        if (d.words_learned) localStorage.setItem('polina_words_learned',  d.words_learned);
-        if (d.verbs_learned) localStorage.setItem('polina_verbs_learned',  d.verbs_learned);
+        // hw4_score — главный признак сдачи (заполняется при отправке ДЗ)
+        if (d.hw4_score && d.hw4_score !== '' && d.hw4_score !== '0/0') {
+          localStorage.setItem('polina_hw4_score', d.hw4_score);
+          localStorage.setItem('polina_hw_done', '1');
+        }
+        if (d.words_learned)     localStorage.setItem('polina_words_learned',    d.words_learned);
+        if (d.verbs_learned)     localStorage.setItem('polina_verbs_learned',    d.verbs_learned);
+        if (d.languages_learned) localStorage.setItem('polina_vocab_languages',  d.languages_learned);
       }
     } catch(e) {}
 
     // Считаем ДЗ
-    const hwDone  = localStorage.getItem('polina_hw_done') === '1' ? 1 : 0;
+    const hw4done = localStorage.getItem('polina_hw4_score');
+    const hwDone  = (hw4done && hw4done !== '' && hw4done !== '0/0') ? 1 : 0;
     const hwTotal = 5;
     const hwPct   = Math.round(hwDone / hwTotal * 100);
 
     // Считаем словарь
-    const words     = parseInt(localStorage.getItem('polina_words_learned') || '0');
-    const verbs     = parseInt(localStorage.getItem('polina_verbs_learned') || '0');
-    const vocabDone = words + verbs;
-    const vocabTotal = 78;
-    const vocabPct  = Math.round(vocabDone / vocabTotal * 100);
+    const words     = parseInt(localStorage.getItem('polina_words_learned')   || '0');
+    const verbs     = parseInt(localStorage.getItem('polina_verbs_learned')   || '0');
+    const langs     = parseInt(localStorage.getItem('polina_vocab_languages') || '0');
+    const vocabDone  = words + verbs + langs;
+    const vocabTotal = 109;
+    const vocabPct   = Math.round(vocabDone / vocabTotal * 100);
 
     // Обновляем чипы
-    document.getElementById('hw-done').textContent      = hwDone;
-    document.getElementById('words-learned').textContent = words;
+    document.getElementById('hw-done').textContent       = hwDone;
+    document.getElementById('words-learned').textContent = words + langs;
     document.getElementById('verbs-learned').textContent = verbs;
 
     // Обновляем прогресс-бары
