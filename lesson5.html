@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesson 5 — Talking My Language</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --indigo: #4f46e5; --indigo-light: #6366f1;
+      --rose: #f43f5e; --emerald: #10b981;
+      --amber: #f59e0b; --sky: #0ea5e9;
+      --bg: #f1f5f9; --card: #ffffff;
+      --text: #0f172a; --muted: #64748b; --border: #e2e8f0;
+    }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); padding-bottom:120px; }
+
+    /* HERO */
+    .hero { background:linear-gradient(135deg,#0ea5e9 0%,#4f46e5 60%,#7c3aed 100%); padding:36px 24px 48px; position:relative; }
+    .hero::before { content:''; position:absolute; inset:0; pointer-events:none; background:url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='24' cy='24' r='3' fill='%23ffffff' fill-opacity='0.06'/%3E%3C/svg%3E"); }
+    .hero-wave { display:block; width:100%; line-height:0; background:var(--bg); }
+    .hero-wave svg { display:block; width:100%; }
+    .hero-back { display:inline-flex; align-items:center; gap:6px; color:rgba(255,255,255,.75); font-size:13px; font-weight:600; text-decoration:none; margin-bottom:18px; transition:color .2s; position:relative; z-index:1; }
+    .hero-back:hover { color:#fff; }
+    .hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.28); color:#fff; font-size:12px; font-weight:600; padding:5px 14px; border-radius:100px; margin-bottom:12px; position:relative; z-index:1; }
+    .hero h1 { font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(22px,5vw,36px); font-weight:800; color:#fff; letter-spacing:-.5px; margin-bottom:6px; position:relative; z-index:1; }
+    .hero p { color:rgba(255,255,255,.75); font-size:14px; position:relative; z-index:1; }
+    .hero-score { display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,.15); border-radius:12px; padding:10px 18px; margin-top:18px; color:#fff; font-size:14px; font-weight:600; position:relative; z-index:1; }
+    .hs-num { font-family:'Plus Jakarta Sans',sans-serif; font-size:22px; font-weight:800; }
+
+    .page { max-width:780px; margin:0 auto; padding:0 20px; }
+
+    /* SCORE BANNER */
+    .score-banner { background:linear-gradient(135deg,#d1fae5,#a7f3d0); border:1.5px solid #6ee7b7; border-radius:16px; padding:18px 22px; font-family:'Plus Jakarta Sans',sans-serif; font-size:17px; font-weight:700; color:#064e3b; text-align:center; display:none; margin-bottom:24px; }
+
+    /* SECTION LABEL */
+    .section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin:32px 0 14px; }
+
+    /* TEXT BOX */
+    .text-box { background:var(--card); border-radius:18px; border:1.5px solid var(--border); padding:28px 28px; margin-bottom:18px; line-height:1.85; font-size:15px; }
+    .text-box h3 { font-family:'Plus Jakarta Sans',sans-serif; font-size:20px; font-weight:800; margin-bottom:6px; color:var(--indigo); }
+    .text-box .byline { font-size:13px; color:var(--muted); margin-bottom:18px; }
+    .text-box b { color:var(--text); background:#eef2ff; padding:1px 4px; border-radius:4px; }
+
+    /* TRANSLATION GRID */
+    .trans-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:4px; }
+    @media(max-width:500px){ .trans-grid { grid-template-columns:1fr; } }
+    .trans-item { background:var(--card); border:1.5px solid var(--border); border-radius:12px; padding:12px 16px; display:flex; align-items:center; gap:10px; }
+    .trans-word { font-weight:700; font-size:14px; color:var(--indigo); min-width:130px; }
+    .trans-ru { font-size:13px; color:var(--muted); }
+
+    /* EXERCISE CARD */
+    .ex-card { background:var(--card); border-radius:18px; border:1.5px solid var(--border); margin-bottom:18px; overflow:hidden; }
+    .ex-header { display:flex; align-items:center; gap:14px; padding:18px 22px 0; }
+    .ex-num { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--sky),var(--indigo)); color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .ex-header h2 { font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:700; }
+    .ex-body { padding:14px 22px 22px; }
+    .instruction { font-size:13px; color:var(--muted); font-style:italic; margin-bottom:16px; line-height:1.55; }
+
+    /* WORD BOX */
+    .word-box { background:#f8fafc; border:1.5px solid var(--border); border-radius:12px; padding:14px 18px; margin-bottom:18px; display:flex; flex-wrap:wrap; gap:10px; }
+    .word-chip { background:var(--card); border:1.5px solid var(--border); border-radius:8px; padding:5px 12px; font-size:13px; font-weight:600; color:var(--text); cursor:pointer; transition:all .18s; user-select:none; }
+    .word-chip:hover { border-color:var(--indigo); color:var(--indigo); }
+    .word-chip.used { opacity:.35; pointer-events:none; text-decoration:line-through; }
+
+    /* Q ROW */
+    .q-row { margin-bottom:18px; font-size:15px; line-height:1.8; }
+    .q-row:last-of-type { margin-bottom:0; }
+
+    input[type="text"] { padding:7px 12px; font-size:14px; font-family:inherit; border:1.5px solid var(--border); border-radius:10px; background:#fafbff; color:var(--text); transition:border-color .2s; vertical-align:middle; }
+    input[type="text"]:focus { outline:none; border-color:var(--indigo); background:#fff; }
+    input[type="text"].inline-input { width:180px; }
+    input[type="text"].block-input { display:block; width:100%; max-width:360px; margin-top:6px; }
+    input[type="text"].correct { border-color:var(--emerald) !important; background:#f0fdf4; }
+    input[type="text"].wrong   { border-color:var(--rose) !important; background:#fff5f5; }
+
+    select { padding:7px 12px; font-size:14px; font-family:inherit; border:1.5px solid var(--border); border-radius:10px; background:#fafbff; color:var(--text); transition:border-color .2s; vertical-align:middle; }
+    select:focus { outline:none; border-color:var(--indigo); }
+    select.correct { border-color:var(--emerald) !important; background:#f0fdf4; }
+    select.wrong   { border-color:var(--rose) !important; background:#fff5f5; }
+
+    .feedback { font-size:12px; font-weight:600; margin-top:4px; display:none; }
+    .feedback.correct { color:var(--emerald); display:block; }
+    .feedback.wrong   { color:var(--rose);    display:block; }
+
+    /* EX 2 — word type */
+    .type-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:14px; flex-wrap:wrap; }
+    .type-word { font-style:italic; color:var(--indigo); font-weight:600; min-width:120px; }
+
+    /* EX 3 — collocations */
+    .colloc-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    @media(max-width:480px){ .colloc-grid { grid-template-columns:1fr; } }
+
+    /* SUBMIT */
+    .submit-btn { width:100%; padding:16px; background:linear-gradient(135deg,var(--sky),var(--indigo)); color:#fff; border:none; border-radius:14px; font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:700; cursor:pointer; margin-top:10px; transition:opacity .2s, transform .2s; display:flex; align-items:center; justify-content:center; gap:10px; }
+    .submit-btn:hover { opacity:.92; transform:translateY(-1px); }
+
+    /* VOCAB TEASER */
+    .vocab-teaser { background:linear-gradient(135deg,#eff6ff,#dbeafe); border:1.5px solid #bfdbfe; border-radius:18px; padding:22px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:24px; }
+    .vt-left h3 { font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:700; color:#1e40af; margin-bottom:4px; }
+    .vt-left p { font-size:13px; color:#3b82f6; }
+    .vt-btn { background:var(--indigo); color:#fff; border:none; border-radius:12px; padding:12px 22px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:700; cursor:pointer; text-decoration:none; white-space:nowrap; transition:opacity .2s; }
+    .vt-btn:hover { opacity:.88; }
+
+    /* NAV */
+    .nav-pill { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#0f172a; border-radius:100px; padding:12px 24px; display:flex; gap:4px; box-shadow:0 8px 32px rgba(15,23,42,.3); z-index:900; white-space:nowrap; }
+    .nav-pill a { color:rgba(255,255,255,.6); font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border-radius:100px; transition:all .2s; }
+    .nav-pill a:hover, .nav-pill a.active { background:var(--indigo); color:#fff; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="page">
+    <a href="./homework.html" class="hero-back">← Все задания</a>
+    <div class="hero-eyebrow">📝 Lesson 5 · Homework</div>
+    <h1>Talking My Language</h1>
+    <p>Полина · Уровень B1 · Unit 1</p>
+    <div class="hero-score">
+      <div>
+        <div class="hs-num" id="liveScore">0 / 0</div>
+        <div style="font-size:11px;opacity:.75;margin-top:1px;">правильных ответов</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="hero-wave">
+  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:linear-gradient(135deg,#0ea5e9,#4f46e5 60%,#7c3aed)">
+    <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
+  </svg>
+</div>
+
+<div class="page">
+  <div id="scoreBanner" class="score-banner"></div>
+
+  <!-- TEXT FOR READING -->
+  <div class="section-label">Текст для чтения</div>
+  <div class="text-box">
+    <h3>The Google Translators in Human Form</h3>
+    <div class="byline">Michael Erard's new book investigates the master linguists or 'hyperglots' — Liam Scanlon</div>
+    <p>The 18th century Italian priest Cardinal Giuseppe Mezzofanti is a <b>legend</b> among linguists. They say he studied 72 languages, 30 of which he <b>mastered</b>. He spoke another nine <b>fluently</b>, though not perfectly, and could hold a basic <b>conversation</b> in at least eleven more. And all that without leaving Italy! One story suggests he picked up Ukrainian in just two weeks, after meeting a visitor from there.</p>
+    <br>
+    <p>But how <b>far</b> is this true? Certainly, the figure of 72 is too high and some people perhaps <b>exaggerated</b> how fluent he was. He lived at a time when travel was difficult and learning other languages was still unusual. Therefore, many reports of his <b>abilities</b> came from visitors who were probably struggling to express themselves in Italian. There were also those who, while appreciating his good <b>accent</b> and accurate grammar, described him as merely a <b>parrot</b> who said nothing of interest. However, according to Michael Erard, author of the book <i>Mezzofanti's Gift</i>, there is sufficient <b>evidence</b> to believe he could use many languages.</p>
+    <br>
+    <p>Erard also argues that there are many hyperglots in the world today and that, with <b>globalisation</b>, there will be a <b>growing</b> number in the future. For example, Alexander Arguelles is fluent in around twenty languages and has studied 60. He studies nine hours a day, down from fourteen before he got married! The Hungarian translator Kato Lomb worked with sixteen, and you can watch a YouTube video of Alex Rawling speaking eleven languages at the age of twenty.</p>
+    <br>
+    <p>A central question of the book is whether hyperglots are born or made. Are their <b>achievements</b> genetic or do hyperglots have secrets that normal language learners can learn from? Erard's conclusions agree with research on highly talented people in other areas such as sport and music. These people generally have <b>advantages</b> they are born with: top athletes may have <b>genes</b> that <b>allow</b> them to get the most from their training; hyperglots seem to possess excellent memories and have brains that are more efficient in processing <b>speech sounds</b>. However, becoming the best also requires a lot of hard work. Some argue that the difference between a top performer and someone who's just 'very good' is that the top performer has practised for 10,000 hours instead of 6,000.</p>
+    <br>
+    <p>The fact is that most ordinary language learners lack these natural advantages and simply don't have that much time. So is there any hope for us? Erard believes there is and that research on hyperglots can offer some useful lessons. For example, they often have limited <b>ambitions</b> in <b>terms</b> of individual languages: they're happy to get by, or to be only able to read, or not to have a perfect accent. They're practical: if they can't travel, they look for <b>opportunities</b> to use the language closer to home. Some simply imagine conversations in their heads. They also use other techniques like learning words in <b>context</b>. Finally, they're never afraid to make <b>mistakes</b> or appear stupid and so never give up.</p>
+  </div>
+
+  <!-- TRANSLATION OF BOLD WORDS -->
+  <div class="section-label">Слова из текста — перевод</div>
+  <div class="trans-grid">
+    <div class="trans-item"><span class="trans-word">legend</span><span class="trans-ru">легенда, легендарная личность</span></div>
+    <div class="trans-item"><span class="trans-word">mastered</span><span class="trans-ru">овладел, досконально изучил</span></div>
+    <div class="trans-item"><span class="trans-word">fluently</span><span class="trans-ru">свободно, бегло</span></div>
+    <div class="trans-item"><span class="trans-word">conversation</span><span class="trans-ru">разговор, беседа</span></div>
+    <div class="trans-item"><span class="trans-word">exaggerated</span><span class="trans-ru">преувеличивали</span></div>
+    <div class="trans-item"><span class="trans-word">abilities</span><span class="trans-ru">способности, умения</span></div>
+    <div class="trans-item"><span class="trans-word">accent</span><span class="trans-ru">акцент, произношение</span></div>
+    <div class="trans-item"><span class="trans-word">parrot</span><span class="trans-ru">попугай</span></div>
+    <div class="trans-item"><span class="trans-word">evidence</span><span class="trans-ru">доказательство, свидетельство</span></div>
+    <div class="trans-item"><span class="trans-word">globalisation</span><span class="trans-ru">глобализация</span></div>
+    <div class="trans-item"><span class="trans-word">growing</span><span class="trans-ru">растущий, увеличивающийся</span></div>
+    <div class="trans-item"><span class="trans-word">achievements</span><span class="trans-ru">достижения</span></div>
+    <div class="trans-item"><span class="trans-word">advantages</span><span class="trans-ru">преимущества</span></div>
+    <div class="trans-item"><span class="trans-word">genes</span><span class="trans-ru">гены</span></div>
+    <div class="trans-item"><span class="trans-word">allow</span><span class="trans-ru">позволять, давать возможность</span></div>
+    <div class="trans-item"><span class="trans-word">speech sounds</span><span class="trans-ru">звуки речи</span></div>
+    <div class="trans-item"><span class="trans-word">ambitions</span><span class="trans-ru">амбиции, стремления</span></div>
+    <div class="trans-item"><span class="trans-word">terms</span><span class="trans-ru">в плане чего-либо (in terms of)</span></div>
+    <div class="trans-item"><span class="trans-word">opportunities</span><span class="trans-ru">возможности</span></div>
+    <div class="trans-item"><span class="trans-word">context</span><span class="trans-ru">контекст</span></div>
+    <div class="trans-item"><span class="trans-word">mistakes</span><span class="trans-ru">ошибки (make mistakes)</span></div>
+    <div class="trans-item"><span class="trans-word">far</span><span class="trans-ru">насколько (how far = в какой мере)</span></div>
+  </div>
+
+  <!-- EX 1 — Replace underlined words -->
+  <div class="section-label">Упражнения</div>
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <h2>Replace the underlined words with the expressions</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">Замени подчёркнутые слова подходящим выражением из рамки. Вписывай в нужной форме!</p>
+      <div class="word-box">
+        <span class="word-chip" id="chip-getby">get by</span>
+        <span class="word-chip" id="chip-fluently">fluently</span>
+        <span class="word-chip" id="chip-express">express</span>
+        <span class="word-chip" id="chip-mastering">mastering</span>
+        <span class="word-chip" id="chip-myaccent">my accent</span>
+        <span class="word-chip" id="chip-accurate">accurate</span>
+        <span class="word-chip" id="chip-pickeditup">picked it up</span>
+        <span class="word-chip" id="chip-struggled">struggled</span>
+      </div>
+
+      <div class="q-row" data-num="1.1a" data-ans="struggled">
+        1. At first I really <u>had problems</u> speaking French at work. No-one understood <u>the way I said things</u>.<br>
+        <input type="text" class="block-input" placeholder="had problems → …" id="q1_1a" />
+        <div class="feedback" id="fb1_1a"></div>
+      </div>
+
+      <div class="q-row" data-num="1.1b" data-ans="my accent,accent">
+        <input type="text" class="block-input" placeholder="the way I said things → …" id="q1_1b" />
+        <div class="feedback" id="fb1_1b"></div>
+      </div>
+
+      <div class="q-row" data-num="1.2" data-ans="accurate,getting complete knowledge of,mastering">
+        2. It's hard to be <u>correct</u> all the time. <u>Getting complete knowledge of</u> a language can take years.<br>
+        <input type="text" class="block-input" placeholder="correct → …" id="q1_2a" /><div class="feedback" id="fb1_2a"></div>
+        <input type="text" class="block-input" placeholder="Getting complete knowledge of → …" id="q1_2b" style="margin-top:6px"/><div class="feedback" id="fb1_2b"></div>
+      </div>
+
+      <div class="q-row" data-num="1.3" data-ans="get by,survive in the language">
+        3. I'm not brilliant at German, but I can <u>survive in the language</u> in most everyday situations.<br>
+        <input type="text" class="block-input" placeholder="survive in the language → …" id="q1_3" /><div class="feedback" id="fb1_3"></div>
+      </div>
+
+      <div class="q-row" data-num="1.4" data-ans="picked it up,learnt it without formal lessons">
+        4. I'm pretty good at Japanese now. I <u>learnt it without formal lessons</u> by living in Kyoto for about 10 years.<br>
+        <input type="text" class="block-input" placeholder="learnt it without formal lessons → …" id="q1_4" /><div class="feedback" id="fb1_4"></div>
+      </div>
+
+      <div class="q-row" data-num="1.5" data-ans="express,get across">
+        5. I haven't been studying Italian for very long, so it's hard to <u>get across</u> what I want to say sometimes.<br>
+        <input type="text" class="block-input" placeholder="get across → …" id="q1_5" /><div class="feedback" id="fb1_5"></div>
+      </div>
+
+      <div class="q-row" data-num="1.6" data-ans="fluently,very well">
+        6. I was born in Greece but I went to an international school, so I speak English <u>very well</u>.<br>
+        <input type="text" class="block-input" placeholder="very well → …" id="q1_6" /><div class="feedback" id="fb1_6"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EX 2 — Word type -->
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <h2>Look at the underlined words. What type of word is each one?</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">Прочитай текст и определи часть речи каждого выделенного слова. Выбери из вариантов.</p>
+
+      <div style="background:#f8fafc; border-radius:12px; padding:16px 18px; margin-bottom:18px; font-size:14px; line-height:1.85; border-left:3px solid var(--indigo);">
+        I've just <sup>1</sup><u>taken up</u> painting at our local art college. To be honest, I'm no Van Gogh. Doing anything <sup>2</sup><u>for</u> the first time is <sup>3</sup><u>hard</u> and people always want to do <sup>4</sup><u>well</u>. But my <sup>5</sup><u>advice</u> is to concentrate on the activity. What I <sup>6</sup><u>mean</u> is, enjoy what <sup>7</sup><u>you</u> are doing and don't worry about the end result. And never compare yourself with anyone else. There will always be those <sup>8</sup><u>annoyingly</u> talented people who can <sup>9</sup><u>take</u> on any new challenge and succeed. Ignore them.
+      </div>
+
+      <div class="type-row" data-num="2.1" data-ans="phrasal verb">
+        <span class="type-word">1. taken up</span>
+        <select id="q2_1">
+          <option value="">— выбери —</option>
+          <option value="phrasal verb">phrasal verb</option>
+          <option value="preposition">preposition</option>
+          <option value="adjective">adjective</option>
+          <option value="adverb">adverb</option>
+          <option value="noun">noun</option>
+          <option value="verb">verb</option>
+          <option value="pronoun">pronoun</option>
+        </select>
+        <div class="feedback" id="fb2_1"></div>
+      </div>
+
+      <div class="type-row" data-num="2.2" data-ans="preposition">
+        <span class="type-word">2. for</span>
+        <select id="q2_2">
+          <option value="">— выбери —</option>
+          <option value="phrasal verb">phrasal verb</option>
+          <option value="preposition">preposition</option>
+          <option value="adjective">adjective</option>
+          <option value="adverb">adverb</option>
+          <option value="noun">noun</option>
+          <option value="verb">verb</option>
+          <option value="pronoun">pronoun</option>
+        </select>
+        <div class="feedback" id="fb2_2"></div>
+      </div>
+
+      <div class="type-row" data-num="2.3" data-ans="adjective">
+        <span class="type-word">3. hard</span>
+        <select id="q2_3">
+          <option value="">— выбери —</option>
+          <option value="phrasal verb">phrasal verb</option>
+          <option value="preposition">preposition</option>
+          <option value="adjective">adjective</option>
+          <option value="adverb">adverb</option>
+          <option value="noun">noun</option>
+          <option value="verb">verb</option>
+          <option value="pronoun">pronoun</option>
+        </select>
+        <div class="feedback" id="fb2_3"></div>
+      </div>
+
+      <div class="type-row" data-num="2.4" data-ans="adverb">
+        <span class="type-word">4. well</span>
+        <select id="q2_4">
+          <option value="">— выбери —</option>
+          <option value="phrasal verb">phrasal verb</option>
+          <option value="preposition">preposition</option>
+          <option value="adjective">adjective</option>
+          <option value="adverb">adverb</option>
+          <option value="noun">noun</option>
+          <option value="verb">verb</option>
+          <option value="pronoun">pronoun</option>
+        </select>
+        <div class="feedback" id="fb2_4"></div>
+      </div>
+
+      <div class="type-row" data-num="2.5" data-ans="noun">
+        <span class="type-word">5. advice</span>
+        <select id="q2_5">
+          <option value="">— выбери —</option>
+          <option value="phrasal verb">phrasal verb</option>
+          <option value="preposition">preposition</option>
+          <option value="adjective">adjective</option>
+          <option value="adverb">adverb</option>
+          <option value="noun">noun</option>
+          <option value="verb">verb</option>
+          <option value="pronoun">pronoun</option>
+        </select>
+        <div class="feedback" id="fb2_5"></div>
+      </div>
+
+      <div class="type-row" data-num="2.6" data-ans="verb">
+        <span class="type-word">6. mean</span>
+        <select id="q2_6">
+          <option value="">— выбери —</option>
+          <option value="phrasal verb">phrasal verb</option>
+          <option value="preposition">preposition</option>
+          <option value="adjective">adjective</option>
+          <option value="adverb">adverb</option>
+          <option value="noun">noun</option>
+          <option value="verb">verb</option>
+          <option value="pronoun">pronoun</option>
+        </select>
+        <div class="feedback" id="fb2_6"></div>
+      </div>
+
+      <div class="type-row" data-num="2.7" data-ans="pronoun">
+        <span class="type-word">7. you</span>
+        <select id="q2_7">
+          <option value="">— выбери —</option>
+          <option value="phrasal verb">phrasal verb</option>
+          <option value="preposition">preposition</option>
+          <option value="adjective">adjective</option>
+          <option value="adverb">adverb</option>
+          <option value="noun">noun</option>
+          <option value="verb">verb</option>
+          <option value="pronoun">pronoun</option>
+        </select>
+        <div class="feedback" id="fb2_7"></div>
+      </div>
+
+      <div class="type-row" data-num="2.8" data-ans="adverb">
+        <span class="type-word">8. annoyingly</span>
+        <select id="q2_8">
+          <option value="">— выбери —</option>
+          <option value="phrasal verb">phrasal verb</option>
+          <option value="preposition">preposition</option>
+          <option value="adjective">adjective</option>
+          <option value="adverb">adverb</option>
+          <option value="noun">noun</option>
+          <option value="verb">verb</option>
+          <option value="pronoun">pronoun</option>
+        </select>
+        <div class="feedback" id="fb2_8"></div>
+      </div>
+
+      <div class="type-row" data-num="2.9" data-ans="verb">
+        <span class="type-word">9. take</span>
+        <select id="q2_9">
+          <option value="">— выбери —</option>
+          <option value="phrasal verb">phrasal verb</option>
+          <option value="preposition">preposition</option>
+          <option value="adjective">adjective</option>
+          <option value="adverb">adverb</option>
+          <option value="noun">noun</option>
+          <option value="verb">verb</option>
+          <option value="pronoun">pronoun</option>
+        </select>
+        <div class="feedback" id="fb2_9"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EX 3 — Answer questions -->
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">3</div>
+      <h2>Answer the questions and test your knowledge</h2>
+    </div>
+    <div class="ex-body">
+
+      <!-- 3.1 Opposites -->
+      <p style="font-weight:700; font-size:14px; margin-bottom:10px;">3.1 — What's the opposite? Circle / choose the correct option.</p>
+      <p class="instruction">Выбери правильный антоним из двух вариантов.</p>
+
+      <div class="q-row" data-num="3.1.1" data-ans="hard">
+        easy → <select id="q3_1_1"><option value="">—</option><option value="hard">hard</option><option value="hardly">hardly</option></select>
+        <div class="feedback" id="fb3_1_1"></div>
+      </div>
+      <div class="q-row" data-num="3.1.2" data-ans="fast">
+        slowly → <select id="q3_1_2"><option value="">—</option><option value="fastly">fastly</option><option value="fast">fast</option></select>
+        <div class="feedback" id="fb3_1_2"></div>
+      </div>
+      <div class="q-row" data-num="3.1.3" data-ans="not very fluent">
+        fluent → <select id="q3_1_3"><option value="">—</option><option value="unfluent">unfluent</option><option value="not very fluent">not very fluent</option></select>
+        <div class="feedback" id="fb3_1_3"></div>
+      </div>
+      <div class="q-row" data-num="3.1.4" data-ans="a serious mistake">
+        a minor mistake → <select id="q3_1_4"><option value="">—</option><option value="a serious mistake">a serious mistake</option><option value="a large mistake">a large mistake</option></select>
+        <div class="feedback" id="fb3_1_4"></div>
+      </div>
+      <div class="q-row" data-num="3.1.5" data-ans="slow progress">
+        good progress → <select id="q3_1_5"><option value="">—</option><option value="slow progress">slow progress</option><option value="bad progress">bad progress</option></select>
+        <div class="feedback" id="fb3_1_5"></div>
+      </div>
+      <div class="q-row" data-num="3.1.6" data-ans="a high level">
+        a basic level of Japanese → <select id="q3_1_6"><option value="">—</option><option value="a high level">a high level</option><option value="a tall level">a tall level</option></select>
+        <div class="feedback" id="fb3_1_6"></div>
+      </div>
+
+      <hr style="border:none; border-top:1px solid var(--border); margin:22px 0;">
+
+      <!-- 3.2 Make or Do -->
+      <p style="font-weight:700; font-size:14px; margin-bottom:10px;">3.2 — Do these words collocate with <i>make</i> or <i>do</i>?</p>
+      <p class="instruction">Выбери make или do для каждого сочетания.</p>
+
+      <div class="colloc-grid">
+        <div class="q-row" data-num="3.2.1" data-ans="make">
+          a mistake → <select id="q3_2_1"><option value="">—</option><option value="make">make</option><option value="do">do</option></select>
+          <div class="feedback" id="fb3_2_1"></div>
+        </div>
+        <div class="q-row" data-num="3.2.2" data-ans="do">
+          an exercise → <select id="q3_2_2"><option value="">—</option><option value="make">make</option><option value="do">do</option></select>
+          <div class="feedback" id="fb3_2_2"></div>
+        </div>
+        <div class="q-row" data-num="3.2.3" data-ans="make">
+          progress → <select id="q3_2_3"><option value="">—</option><option value="make">make</option><option value="do">do</option></select>
+          <div class="feedback" id="fb3_2_3"></div>
+        </div>
+        <div class="q-row" data-num="3.2.4" data-ans="do">
+          your homework → <select id="q3_2_4"><option value="">—</option><option value="make">make</option><option value="do">do</option></select>
+          <div class="feedback" id="fb3_2_4"></div>
+        </div>
+        <div class="q-row" data-num="3.2.5" data-ans="do">
+          a course → <select id="q3_2_5"><option value="">—</option><option value="make">make</option><option value="do">do</option></select>
+          <div class="feedback" id="fb3_2_5"></div>
+        </div>
+        <div class="q-row" data-num="3.2.6" data-ans="make">
+          a fool of yourself → <select id="q3_2_6"><option value="">—</option><option value="make">make</option><option value="do">do</option></select>
+          <div class="feedback" id="fb3_2_6"></div>
+        </div>
+        <div class="q-row" data-num="3.2.7" data-ans="do">
+          a good job → <select id="q3_2_7"><option value="">—</option><option value="make">make</option><option value="do">do</option></select>
+          <div class="feedback" id="fb3_2_7"></div>
+        </div>
+        <div class="q-row" data-num="3.2.8" data-ans="make">
+          an effort → <select id="q3_2_8"><option value="">—</option><option value="make">make</option><option value="do">do</option></select>
+          <div class="feedback" id="fb3_2_8"></div>
+        </div>
+      </div>
+
+      <hr style="border:none; border-top:1px solid var(--border); margin:22px 0;">
+
+      <!-- 3.3 Prepositions -->
+      <p style="font-weight:700; font-size:14px; margin-bottom:10px;">3.3 — Write the correct prepositions</p>
+      <p class="instruction">Вставь нужный предлог: about / on / with / with / on</p>
+
+      <div class="q-row" data-num="3.3.1" data-ans="about">
+        worry <input type="text" class="inline-input" id="q3_3_1" placeholder="preposition…" /> your progress
+        <div class="feedback" id="fb3_3_1"></div>
+      </div>
+      <div class="q-row" data-num="3.3.2" data-ans="on">
+        rely <input type="text" class="inline-input" id="q3_3_2" placeholder="preposition…" /> your best friend
+        <div class="feedback" id="fb3_3_2"></div>
+      </div>
+      <div class="q-row" data-num="3.3.3" data-ans="on">
+        concentrate <input type="text" class="inline-input" id="q3_3_3" placeholder="preposition…" /> work
+        <div class="feedback" id="fb3_3_3"></div>
+      </div>
+      <div class="q-row" data-num="3.3.4" data-ans="with">
+        deal <input type="text" class="inline-input" id="q3_3_4" placeholder="preposition…" /> a problem
+        <div class="feedback" id="fb3_3_4"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <button class="submit-btn" onclick="submitHomework()">
+    <span>🚀</span> Проверить и отправить результаты
+  </button>
+
+  <!-- VOCAB TEASER -->
+  <div class="vocab-teaser">
+    <div class="vt-left">
+      <h3>🌍 Лексика к уроку 5</h3>
+      <p>Слова из текста и упражнений — тренируй до домашней работы!</p>
+    </div>
+    <a href="./vocab-languages.html" class="vt-btn">Тренировать →</a>
+  </div>
+
+</div><!-- /.page -->
+
+<div class="nav-pill">
+  <a href="./index.html">🏠 Home</a>
+  <a href="./homework.html" class="active">📝 HW</a>
+  <a href="./vocabulary-hub.html">💥 Vocab</a>
+</div>
+
+<script>
+  const BOT_TOKEN = "8604414786:AAEcyyQxHiYUi80PDZt7ZkQjomLfsm_VjKM";
+  const CHAT_ID   = "-1003908460669";
+  const SB_URL    = "https://zqzgarvmpqqqaobeicpc.supabase.co";
+  const SB_KEY    = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
+
+  // Словарь правильных ответов для отчёта
+  const correctAnswers = {
+    '1.1a': 'struggled', '1.1b': 'my accent', '1.2a': 'accurate', '1.2b': 'mastering',
+    '1.3': 'get by', '1.4': 'picked it up', '1.5': 'express', '1.6': 'fluently',
+    '2.1': 'phrasal verb', '2.2': 'preposition', '2.3': 'adjective',
+    '2.4': 'adverb', '2.5': 'noun', '2.6': 'verb', '2.7': 'pronoun',
+    '2.8': 'adverb', '2.9': 'verb',
+    '3.1.1': 'hard', '3.1.2': 'fast', '3.1.3': 'not very fluent',
+    '3.1.4': 'a serious mistake', '3.1.5': 'slow progress', '3.1.6': 'a high level',
+    '3.2.1': 'make', '3.2.2': 'do', '3.2.3': 'make', '3.2.4': 'do',
+    '3.2.5': 'do', '3.2.6': 'make', '3.2.7': 'do', '3.2.8': 'make',
+    '3.3.1': 'about', '3.3.2': 'on', '3.3.3': 'on', '3.3.4': 'with',
+  };
+
+  const questionLabels = {
+    '1.1a': 'Ex1 №1 — had problems',
+    '1.1b': 'Ex1 №1 — the way I said things',
+    '1.2a': 'Ex1 №2 — correct',
+    '1.2b': 'Ex1 №2 — Getting complete knowledge of',
+    '1.3': 'Ex1 №3 — survive in the language',
+    '1.4': 'Ex1 №4 — learnt it without formal lessons',
+    '1.5': 'Ex1 №5 — get across',
+    '1.6': 'Ex1 №6 — very well',
+    '2.1': 'Ex2 №1 — taken up', '2.2': 'Ex2 №2 — for', '2.3': 'Ex2 №3 — hard',
+    '2.4': 'Ex2 №4 — well', '2.5': 'Ex2 №5 — advice', '2.6': 'Ex2 №6 — mean',
+    '2.7': 'Ex2 №7 — you', '2.8': 'Ex2 №8 — annoyingly', '2.9': 'Ex2 №9 — take',
+    '3.1.1': 'Ex3.1 — opposite of easy', '3.1.2': 'Ex3.1 — opposite of slowly',
+    '3.1.3': 'Ex3.1 — opposite of fluent', '3.1.4': 'Ex3.1 — opposite of minor mistake',
+    '3.1.5': 'Ex3.1 — opposite of good progress', '3.1.6': 'Ex3.1 — opposite of basic level',
+    '3.2.1': 'Ex3.2 — make/do: a mistake', '3.2.2': 'Ex3.2 — make/do: an exercise',
+    '3.2.3': 'Ex3.2 — make/do: progress', '3.2.4': 'Ex3.2 — make/do: homework',
+    '3.2.5': 'Ex3.2 — make/do: a course', '3.2.6': 'Ex3.2 — make/do: a fool of yourself',
+    '3.2.7': 'Ex3.2 — make/do: a good job', '3.2.8': 'Ex3.2 — make/do: an effort',
+    '3.3.1': 'Ex3.3 — worry ___ your progress', '3.3.2': 'Ex3.3 — rely ___ your best friend',
+    '3.3.3': 'Ex3.3 — concentrate ___ work', '3.3.4': 'Ex3.3 — deal ___ a problem',
+  };
+
+  function norm(s){ return s.toLowerCase().trim().replace(/[ё]/g,'е'); }
+
+  // Маппинг id вопросов → элементы
+  const questions = [
+    { num:'1.1a',   el:'q1_1a',   fb:'fb1_1a',  ans:['struggled','had problems'] },
+    { num:'1.1b',   el:'q1_1b',   fb:'fb1_1b',  ans:['my accent','accent'] },
+    { num:'1.2a',   el:'q1_2a',   fb:'fb1_2a',  ans:['accurate'] },
+    { num:'1.2b',   el:'q1_2b',   fb:'fb1_2b',  ans:['mastering','getting complete knowledge of'] },
+    { num:'1.3',    el:'q1_3',    fb:'fb1_3',   ans:['get by'] },
+    { num:'1.4',    el:'q1_4',    fb:'fb1_4',   ans:['picked it up'] },
+    { num:'1.5',    el:'q1_5',    fb:'fb1_5',   ans:['express','get across'] },
+    { num:'1.6',    el:'q1_6',    fb:'fb1_6',   ans:['fluently'] },
+    { num:'2.1',    el:'q2_1',    fb:'fb2_1',   ans:['phrasal verb'],  sel:true },
+    { num:'2.2',    el:'q2_2',    fb:'fb2_2',   ans:['preposition'],   sel:true },
+    { num:'2.3',    el:'q2_3',    fb:'fb2_3',   ans:['adjective'],     sel:true },
+    { num:'2.4',    el:'q2_4',    fb:'fb2_4',   ans:['adverb'],        sel:true },
+    { num:'2.5',    el:'q2_5',    fb:'fb2_5',   ans:['noun'],          sel:true },
+    { num:'2.6',    el:'q2_6',    fb:'fb2_6',   ans:['verb'],          sel:true },
+    { num:'2.7',    el:'q2_7',    fb:'fb2_7',   ans:['pronoun'],       sel:true },
+    { num:'2.8',    el:'q2_8',    fb:'fb2_8',   ans:['adverb'],        sel:true },
+    { num:'2.9',    el:'q2_9',    fb:'fb2_9',   ans:['verb'],          sel:true },
+    { num:'3.1.1',  el:'q3_1_1',  fb:'fb3_1_1', ans:['hard'],          sel:true },
+    { num:'3.1.2',  el:'q3_1_2',  fb:'fb3_1_2', ans:['fast'],          sel:true },
+    { num:'3.1.3',  el:'q3_1_3',  fb:'fb3_1_3', ans:['not very fluent'], sel:true },
+    { num:'3.1.4',  el:'q3_1_4',  fb:'fb3_1_4', ans:['a serious mistake'], sel:true },
+    { num:'3.1.5',  el:'q3_1_5',  fb:'fb3_1_5', ans:['slow progress'], sel:true },
+    { num:'3.1.6',  el:'q3_1_6',  fb:'fb3_1_6', ans:['a high level'],  sel:true },
+    { num:'3.2.1',  el:'q3_2_1',  fb:'fb3_2_1', ans:['make'], sel:true },
+    { num:'3.2.2',  el:'q3_2_2',  fb:'fb3_2_2', ans:['do'],   sel:true },
+    { num:'3.2.3',  el:'q3_2_3',  fb:'fb3_2_3', ans:['make'], sel:true },
+    { num:'3.2.4',  el:'q3_2_4',  fb:'fb3_2_4', ans:['do'],   sel:true },
+    { num:'3.2.5',  el:'q3_2_5',  fb:'fb3_2_5', ans:['do'],   sel:true },
+    { num:'3.2.6',  el:'q3_2_6',  fb:'fb3_2_6', ans:['make'], sel:true },
+    { num:'3.2.7',  el:'q3_2_7',  fb:'fb3_2_7', ans:['do'],   sel:true },
+    { num:'3.2.8',  el:'q3_2_8',  fb:'fb3_2_8', ans:['make'], sel:true },
+    { num:'3.3.1',  el:'q3_3_1',  fb:'fb3_3_1', ans:['about'] },
+    { num:'3.3.2',  el:'q3_3_2',  fb:'fb3_3_2', ans:['on'] },
+    { num:'3.3.3',  el:'q3_3_3',  fb:'fb3_3_3', ans:['on'] },
+    { num:'3.3.4',  el:'q3_3_4',  fb:'fb3_3_4', ans:['with'] },
+  ];
+
+  function checkAll() {
+    let correct = 0, total = questions.length;
+    let errorsReport = '';
+
+    questions.forEach(q => {
+      const el = document.getElementById(q.el);
+      const fb = document.getElementById(q.fb);
+      if (!el || !fb) return;
+      const val = el.value ? el.value.trim() : '';
+      const ok  = q.ans.some(a => norm(val) === norm(a) || norm(val).includes(norm(a)));
+
+      if (ok) {
+        correct++;
+        el.classList.add('correct'); el.classList.remove('wrong');
+        fb.textContent = '✓'; fb.className = 'feedback correct';
+      } else {
+        el.classList.add('wrong'); el.classList.remove('correct');
+        fb.textContent = '✗'; fb.className = 'feedback wrong';
+        const label = questionLabels[q.num] || q.num;
+        errorsReport += `\n❌ *${label}*\n`;
+        errorsReport += `   Ответ: _${val || 'нет ответа'}_\n`;
+        errorsReport += `   Правильно: _${correctAnswers[q.num] || q.ans[0]}_\n`;
+      }
+    });
+
+    document.getElementById('liveScore').textContent = `${correct} / ${total}`;
+    return { correct, total, errorsReport };
+  }
+
+  function submitHomework() {
+    const { correct, total, errorsReport } = checkAll();
+    const pct   = Math.round(correct / total * 100);
+    const emoji = pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪';
+
+    const banner = document.getElementById('scoreBanner');
+    banner.textContent = `${emoji} Результат: ${correct} из ${total} (${pct}%). Отчёт отправлен!`;
+    banner.style.display = 'block';
+    window.scrollTo({ top:0, behavior:'smooth' });
+
+    localStorage.setItem('polina_hw5_score', `${correct}/${total}`);
+    localStorage.setItem('polina_hw_done', '2');
+
+    // Supabase upsert
+    fetch(`${SB_URL}/rest/v1/progress`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Prefer':'resolution=merge-duplicates,return=minimal'},
+      body: JSON.stringify({ student:'polina', hw5_score:`${correct}/${total}`, hw5_done:true, updated_at: new Date().toISOString() })
+    }).catch(console.error);
+
+    // Telegram
+    let report = `📝 *Отчёт по ДЗ Полины*\n`;
+    report += `Тема: Talking My Language (Lesson 5)\n`;
+    report += `📊 Результат: *${correct} из ${total} (${pct}%)* ${emoji}\n`;
+    if (errorsReport) {
+      report += `\n─────────────────\n⚠️ *Ошибки:*${errorsReport}`;
+    } else {
+      report += `\n✅ Все задания выполнены верно!`;
+    }
+
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ chat_id:CHAT_ID, text:report, parse_mode:'Markdown' })
+    }).catch(console.error);
+  }
+</script>
+</body>
+</html>
