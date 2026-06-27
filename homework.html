@@ -396,6 +396,10 @@
   const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
   const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
 
+  // 👉 Список уроков, для которых на странице есть карточка с номером.
+  // Добавили lesson6.html — впишите 6 в этот массив, больше ничего менять не нужно.
+  const LESSON_NUMS = [4, 5];
+
   async function loadFromSupabase() {
     try {
       const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=*`, {
@@ -404,15 +408,17 @@
       const data = await r.json();
       if (data && data[0]) {
         const d = data[0];
-        if (d.hw4_score && d.hw4_score !== '0/0') localStorage.setItem('polina_hw4_score', d.hw4_score);
-        if (d.hw5_score) localStorage.setItem('polina_hw5_score', d.hw5_score);
+        const scores = d.hw_scores || {};
+        localStorage.setItem('polina_hw_scores', JSON.stringify(scores));
         if (d.words_learned) localStorage.setItem('polina_words_learned', d.words_learned);
       }
-    } catch(e) {}
+    } catch(e) {
+      console.error('Не удалось загрузить прогресс из Supabase:', e);
+    }
   }
 
-  function updateCard(num, scoreKey) {
-    const score  = localStorage.getItem(scoreKey);
+  function updateCard(num, scores) {
+    const score  = scores[String(num)];
     const isDone = !!score && score !== '' && score !== '0/0';
     const numEl  = document.getElementById(`num-${num}`);
     const pill   = document.getElementById(`pill-${num}`);
@@ -429,6 +435,7 @@
       numEl.textContent = String(num);
       pill.className    = 'lc-status-pill pill-current';
       pill.textContent  = '📝 Выполнить';
+      if (sc) sc.textContent = '';
     }
     return isDone;
   }
@@ -436,13 +443,14 @@
   window.addEventListener('load', async () => {
     await loadFromSupabase();
 
-    const done4 = updateCard(4, 'polina_hw4_score');
-    const done5 = updateCard(5, 'polina_hw5_score');
+    const scores = JSON.parse(localStorage.getItem('polina_hw_scores') || '{}');
 
-    document.getElementById('section-done').style.display =
-      (done4 || done5) ? '' : 'none';
+    const doneFlags = LESSON_NUMS.map(num => updateCard(num, scores));
+    const anyDone = doneFlags.some(Boolean);
 
-    const done  = [done4, done5].filter(Boolean).length;
+    document.getElementById('section-done').style.display = anyDone ? '' : 'none';
+
+    const done  = doneFlags.filter(Boolean).length;
     const total = 5;
     const pct   = Math.round((done / total) * 100);
 
