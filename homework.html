@@ -277,7 +277,7 @@
       <div class="sc-lbl">Выполнено</div>
     </div>
     <div class="stat-chip total">
-      <div class="sc-num">5</div>
+      <div class="sc-num" id="statTotal">5</div>
       <div class="sc-lbl">Всего уроков</div>
     </div>
     <div class="stat-chip pct">
@@ -396,9 +396,15 @@
   const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
   const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
 
-  // 👉 Список уроков, для которых на странице есть карточка с номером.
-  // Добавили lesson6.html — впишите 6 в этот массив, больше ничего менять не нужно.
-  const LESSON_NUMS = [4, 5];
+  // Номера уроков определяются автоматически — по карточкам с классом
+  // "lesson-card active" на этой странице (а не вручную через список).
+  // Когда открываете новый урок: просто меняете класс карточки с "locked"
+  // на "active" и добавляете ссылку — счётчики обновятся сами, без правок JS.
+  function getAvailableLessonNums() {
+    return Array.from(document.querySelectorAll('.lesson-card.active'))
+      .map(card => card.id.replace('card-', ''))
+      .filter(Boolean);
+  }
 
   async function loadFromSupabase() {
     try {
@@ -444,17 +450,19 @@
     await loadFromSupabase();
 
     const scores = JSON.parse(localStorage.getItem('polina_hw_scores') || '{}');
+    const lessonNums = getAvailableLessonNums();
 
-    const doneFlags = LESSON_NUMS.map(num => updateCard(num, scores));
+    const doneFlags = lessonNums.map(num => updateCard(num, scores));
     const anyDone = doneFlags.some(Boolean);
 
     document.getElementById('section-done').style.display = anyDone ? '' : 'none';
 
     const done  = doneFlags.filter(Boolean).length;
-    const total = 5;
+    const total = lessonNums.length; // считаем от количества доступных уроков, а не зашитого числа
     const pct   = Math.round((done / total) * 100);
 
     document.getElementById('statDone').textContent     = done;
+    document.getElementById('statTotal').textContent    = total;
     document.getElementById('statPct').textContent      = pct + '%';
     document.getElementById('heroProgress').style.width = pct + '%';
     document.getElementById('heroLabel').textContent    = `${done} из ${total} выполнено`;
