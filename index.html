@@ -651,9 +651,24 @@
     const SB_URL = 'https://zqzgarvmpqqqaobeicpc.supabase.co';
     const SB_KEY = 'sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC';
 
-    // 👉 ЕДИНСТВЕННОЕ число, которое нужно менять руками — сколько ВСЕГО уроков
-    // (домашних заданий) сейчас задано в курсе. Добавили lesson6.html — поставьте 6.
-    const TOTAL_LESSONS = 5;
+    // Сколько ВСЕГО уроков сейчас доступно — узнаём автоматически,
+    // считая активные карточки на странице homework.html (не нужно
+    // ничего вписывать руками: откроете lesson6.html и поставите
+    // карточке класс "active" на homework.html — это число само вырастет).
+    async function getTotalLessonsCount() {
+      try {
+        const res = await fetch('./homework.html');
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const activeCards = doc.querySelectorAll('.lesson-card.active');
+        if (activeCards.length > 0) return activeCards.length;
+      } catch (e) {
+        console.error('Не удалось определить число уроков из homework.html:', e);
+      }
+      // Если не получилось прочитать homework.html — подстраховка,
+      // чтобы прогресс-бар не сломался визуально
+      return 5;
+    }
 
     // Считаем, сколько уроков реально сдано — по умолчанию 0, если Supabase не ответит
     let hwDone = 0;
@@ -690,7 +705,7 @@
     }
 
     // Считаем ДЗ
-    const hwTotal = TOTAL_LESSONS;
+    const hwTotal = await getTotalLessonsCount();
     const hwPct   = Math.round(hwDone / hwTotal * 100);
 
     // Считаем словарь
