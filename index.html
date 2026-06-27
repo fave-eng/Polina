@@ -224,24 +224,106 @@
       font-size: 22px; font-weight: 800;
       margin-bottom: 18px;
     }
+    .modal-intro {
+      font-size: 13px; color: var(--muted); line-height: 1.6;
+      margin-bottom: 18px; padding-bottom: 16px;
+      border-bottom: 1.5px dashed var(--border);
+    }
+
+    /* ─── RULE BLOCK — цветные карточки правил ─── */
     .rule-block {
-      background: #f8fafc;
-      border-left: 4px solid var(--indigo);
-      border-radius: 0 12px 12px 0;
-      padding: 14px 16px;
-      margin-bottom: 14px;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+      border: 1.5px solid transparent;
     }
-    .rule-block .rb-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
-    .rule-block .rb-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; }
-    .rule-block .rb-ex {
-      margin-top: 8px;
-      font-style: italic;
+    .rule-head {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 8px;
+    }
+    .rule-icon {
+      width: 30px; height: 30px; flex-shrink: 0;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+    .rb-title { font-weight: 800; font-size: 14.5px; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .rb-desc  { font-size: 13.5px; color: var(--text); line-height: 1.65; margin-bottom: 10px; }
+    .rb-desc b { font-weight: 800; }
+    .rb-ex {
       font-size: 13px;
-      color: var(--indigo);
-      background: #ede9fe;
-      padding: 6px 10px;
-      border-radius: 6px;
+      line-height: 1.7;
+      background: rgba(255,255,255,0.7);
+      border-radius: 10px;
+      padding: 9px 12px;
+      display: flex; align-items: flex-start; gap: 8px;
     }
+    .rb-ex::before { content: '💬'; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+    .rb-ex span { font-style: italic; }
+
+    /* Color themes — each maps to a meaning, not just a modal */
+    .rule-green   { background: #ecfdf5; border-color: #a7f3d0; }
+    .rule-green   .rule-icon { background: #10b981; color: #fff; }
+    .rule-green   .rb-title  { color: #065f46; }
+    .rule-green   .rb-ex     { color: #065f46; }
+
+    .rule-orange  { background: #fffbeb; border-color: #fde68a; }
+    .rule-orange  .rule-icon { background: #f59e0b; color: #fff; }
+    .rule-orange  .rb-title  { color: #92400e; }
+    .rule-orange  .rb-ex     { color: #92400e; }
+
+    .rule-red     { background: #fef2f2; border-color: #fecaca; }
+    .rule-red     .rule-icon { background: #f43f5e; color: #fff; }
+    .rule-red     .rb-title  { color: #9f1239; }
+    .rule-red     .rb-ex     { color: #9f1239; }
+
+    .rule-blue    { background: #eff6ff; border-color: #bfdbfe; }
+    .rule-blue    .rule-icon { background: #0ea5e9; color: #fff; }
+    .rule-blue    .rb-title  { color: #1e40af; }
+    .rule-blue    .rb-ex     { color: #1e40af; }
+
+    .rule-purple  { background: #f5f3ff; border-color: #ddd6fe; }
+    .rule-purple  .rule-icon { background: #7c3aed; color: #fff; }
+    .rule-purple  .rb-title  { color: #5b21b6; }
+    .rule-purple  .rb-ex     { color: #5b21b6; }
+
+    /* ─── TRAP BLOCK — отдельный явный стиль для "ловушек"/ошибок ─── */
+    .trap-block {
+      background: #fff1f2;
+      border: 1.5px dashed #fb7185;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-top: 18px;
+      margin-bottom: 12px;
+    }
+    .trap-head {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 800; font-size: 14px; color: #be123c;
+      margin-bottom: 8px;
+    }
+    .trap-block .rb-desc { color: #881337; }
+    .trap-wrong, .trap-right {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; padding: 6px 0;
+    }
+    .trap-wrong  { color: #be123c; }
+    .trap-right  { color: #15803d; }
+    .trap-wrong b, .trap-right b { font-weight: 700; }
+    .trap-wrong s { opacity: 0.8; }
+
+    /* ─── WORD CHIPS — для коротких списков фраз (Speaking Tips) ─── */
+    .phrase-list {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 4px;
+    }
+    .phrase-chip {
+      background: rgba(255,255,255,0.8);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 12.5px;
+      font-style: italic;
+    }
+
     .modal-box hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
     /* ─── IRREGULAR VERBS TABLE ─── */
@@ -508,31 +590,60 @@
     <button class="modal-close" onclick="closeModal('modal-modal-verbs')">✕</button>
     <div class="modal-tag tag-grammar">Grammar</div>
     <h2>Modal Verbs</h2>
+    <div class="modal-intro">Модальные глаголы показывают <b>отношение</b> к действию: можно ли, нужно ли, насколько вероятно. Цвет карточки подсказывает смысл: 🟢 разрешено · 🟠 обязанность · 🔴 запрет · 🔵 вероятность.</div>
 
-    <div class="rule-block">
-      <div class="rb-title">CAN / CAN'T — способность, разрешение</div>
-      <div class="rb-desc">Используй <b>can</b> для выражения умения или разрешения, <b>can't</b> — для запрета или невозможности.</div>
-      <div class="rb-ex">She can swim very well. · You can't park here.</div>
+    <div class="rule-block rule-green">
+      <div class="rule-head">
+        <div class="rule-icon">✅</div>
+        <div class="rb-title">CAN / CAN'T — способность, разрешение</div>
+      </div>
+      <div class="rb-desc">Используй <b>can</b> для умения или разрешения, <b>can't</b> — для запрета или невозможности.</div>
+      <div class="rb-ex"><span>She can swim very well. · You can't park here.</span></div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">MUST / MUSTN'T — сильная обязанность / запрет</div>
-      <div class="rb-desc"><b>Must</b> = ты обязан (внутреннее решение). <b>Mustn't</b> = категорически нельзя (не путать с don't have to!).</div>
-      <div class="rb-ex">You must study every day. · You mustn't smoke here.</div>
+
+    <div class="rule-block rule-orange">
+      <div class="rule-head">
+        <div class="rule-icon">⚡</div>
+        <div class="rb-title">MUST — сильная обязанность (внутренняя)</div>
+      </div>
+      <div class="rb-desc"><b>Must</b> = ты сам решил, что это важно и обязательно.</div>
+      <div class="rb-ex"><span>You must study every day.</span></div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">HAVE TO — внешняя обязанность</div>
-      <div class="rb-desc">Правило или требование со стороны (закон, работодатель). <b>Don't have to</b> = нет обязанности (но можно!).</div>
-      <div class="rb-ex">I have to wear a uniform. · You don't have to come if you're busy.</div>
+
+    <div class="rule-block rule-red">
+      <div class="rule-head">
+        <div class="rule-icon">⛔</div>
+        <div class="rb-title">MUSTN'T — категорический запрет</div>
+      </div>
+      <div class="rb-desc">Нельзя <b>ни в каком случае</b>. Не путай с <b>don't have to</b> (нет обязанности, но можно)!</div>
+      <div class="rb-ex"><span>You mustn't smoke here.</span></div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">SHOULD / SHOULDN'T — совет</div>
-      <div class="rb-desc">Используй для рекомендаций и советов, но не абсолютных правил.</div>
-      <div class="rb-ex">You should drink more water. · You shouldn't eat so much sugar.</div>
+
+    <div class="rule-block rule-orange">
+      <div class="rule-head">
+        <div class="rule-icon">📋</div>
+        <div class="rb-title">HAVE TO — внешняя обязанность</div>
+      </div>
+      <div class="rb-desc">Правило или требование со стороны (закон, работодатель, школа). <b>Don't have to</b> = нет обязанности.</div>
+      <div class="rb-ex"><span>I have to wear a uniform. · You don't have to come if you're busy.</span></div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">MIGHT / MAY — возможность (50/50)</div>
+
+    <div class="rule-block rule-green">
+      <div class="rule-head">
+        <div class="rule-icon">💡</div>
+        <div class="rb-title">SHOULD / SHOULDN'T — совет</div>
+      </div>
+      <div class="rb-desc">Для рекомендаций и советов, но не строгих правил — можно и не послушаться.</div>
+      <div class="rb-ex"><span>You should drink more water. · You shouldn't eat so much sugar.</span></div>
+    </div>
+
+    <div class="rule-block rule-blue">
+      <div class="rule-head">
+        <div class="rule-icon">🤔</div>
+        <div class="rb-title">MIGHT / MAY — возможность (50/50)</div>
+      </div>
       <div class="rb-desc">Событие возможно, но не гарантировано. <b>May</b> чуть формальнее <b>might</b>.</div>
-      <div class="rb-ex">It might rain later. · She may be at home.</div>
+      <div class="rb-ex"><span>It might rain later. · She may be at home.</span></div>
     </div>
   </div>
 </div>
@@ -543,26 +654,42 @@
     <button class="modal-close" onclick="closeModal('modal-tenses')">✕</button>
     <div class="modal-tag tag-tenses">Tenses B1</div>
     <h2>Времена глагола — тонкости B1</h2>
+    <div class="modal-intro">Главное на уровне B1 — не просто знать времена, а чувствовать <b>разницу между похожими</b>. Смотри на контраст в каждой карточке.</div>
 
-    <div class="rule-block">
-      <div class="rb-title">Present Perfect vs Past Simple</div>
-      <div class="rb-desc"><b>Past Simple</b> — конкретное время в прошлом. <b>Present Perfect</b> — связь с настоящим, результат важнее момента.</div>
-      <div class="rb-ex">I lost my keys yesterday. (когда — вчера) <br>I've lost my keys! (и сейчас не могу войти)</div>
+    <div class="rule-block rule-blue">
+      <div class="rule-head">
+        <div class="rule-icon">⏳</div>
+        <div class="rb-title">Present Perfect vs Past Simple</div>
+      </div>
+      <div class="rb-desc"><b>Past Simple</b> — конкретное время в прошлом. <b>Present Perfect</b> — связь с настоящим, важен результат, а не момент.</div>
+      <div class="rb-ex"><span>I lost my keys yesterday. <i>(когда — вчера)</i><br>I've lost my keys! <i>(и сейчас не могу войти)</i></span></div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">Past Continuous — фон прошедшего</div>
-      <div class="rb-desc">Длящееся действие в прошлом, которое прерывает другое событие (Past Simple).</div>
-      <div class="rb-ex">I was watching TV when the phone rang.</div>
+
+    <div class="rule-block rule-blue">
+      <div class="rule-head">
+        <div class="rule-icon">🎬</div>
+        <div class="rb-title">Past Continuous — фон прошедшего</div>
+      </div>
+      <div class="rb-desc">Длящееся действие в прошлом, которое прерывает другое, более короткое событие (Past Simple).</div>
+      <div class="rb-ex"><span>I was watching TV when the phone rang.</span></div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">Future: will vs going to</div>
-      <div class="rb-desc"><b>Will</b> = спонтанное решение / предсказание. <b>Going to</b> = уже запланированное / очевидно из ситуации.</div>
-      <div class="rb-ex">I'll answer the door! · I'm going to visit Paris next month.</div>
+
+    <div class="rule-block rule-purple">
+      <div class="rule-head">
+        <div class="rule-icon">🔮</div>
+        <div class="rb-title">Future: WILL vs GOING TO</div>
+      </div>
+      <div class="rb-desc"><b>Will</b> = спонтанное решение или предсказание. <b>Going to</b> = уже запланировано или очевидно из ситуации.</div>
+      <div class="rb-ex"><span>I'll answer the door! · I'm going to visit Paris next month.</span></div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">Present Perfect Continuous</div>
-      <div class="rb-desc">Действие началось в прошлом и всё ещё продолжается (или только что закончилось — виден результат).</div>
-      <div class="rb-ex">I've been studying English for 3 years. · She looks tired — she's been running.</div>
+
+    <div class="rule-block rule-blue">
+      <div class="rule-head">
+        <div class="rule-icon">🔁</div>
+        <div class="rb-title">Present Perfect Continuous</div>
+      </div>
+      <div class="rb-desc">Действие началось в прошлом и всё ещё продолжается — или только что закончилось, но виден результат.</div>
+      <div class="rb-ex"><span>I've been studying English for 3 years. · She looks tired — she's been running.</span></div>
     </div>
   </div>
 </div>
@@ -573,25 +700,46 @@
     <button class="modal-close" onclick="closeModal('modal-conditionals')">✕</button>
     <div class="modal-tag tag-grammar">Grammar</div>
     <h2>Conditionals 0, 1, 2</h2>
+    <div class="modal-intro">Каждый тип условного предложения отвечает на свой вопрос: всегда ли это правда, реально ли это в будущем, или это просто фантазия.</div>
 
-    <div class="rule-block">
-      <div class="rb-title">Zero Conditional — всегда правда</div>
+    <div class="rule-block rule-blue">
+      <div class="rule-head">
+        <div class="rule-icon">🌍</div>
+        <div class="rb-title">Zero Conditional — всегда правда</div>
+      </div>
       <div class="rb-desc">If + Present Simple → Present Simple. Факты, законы природы, общие истины.</div>
-      <div class="rb-ex">If you heat water to 100°C, it boils.</div>
+      <div class="rb-ex"><span>If you heat water to 100°C, it boils.</span></div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">First Conditional — реальная ситуация</div>
+
+    <div class="rule-block rule-green">
+      <div class="rule-head">
+        <div class="rule-icon">☂️</div>
+        <div class="rb-title">First Conditional — реальная ситуация</div>
+      </div>
       <div class="rb-desc">If + Present Simple → will + V. Возможное будущее событие и его последствие.</div>
-      <div class="rb-ex">If it rains tomorrow, I'll take an umbrella.</div>
+      <div class="rb-ex"><span>If it rains tomorrow, I'll take an umbrella.</span></div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">Second Conditional — воображаемая ситуация</div>
-      <div class="rb-desc">If + Past Simple → would + V. Нереальное или маловероятное условие. NB: после if → were, не was!</div>
-      <div class="rb-ex">If I had more time, I would travel the world. · If I were you, I'd apologise.</div>
+
+    <div class="rule-block rule-purple">
+      <div class="rule-head">
+        <div class="rule-icon">💭</div>
+        <div class="rb-title">Second Conditional — воображаемая ситуация</div>
+      </div>
+      <div class="rb-desc">If + Past Simple → would + V. Нереальное или маловероятное условие.</div>
+      <div class="rb-ex"><span>If I had more time, I would travel the world. · If I were you, I'd apologise.</span></div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">⚠️ Ловушки</div>
-      <div class="rb-desc">Никогда не ставь <b>will</b> в if-клаузу! «If it <s>will rain</s>» — ошибка. Правильно: «If it rains».</div>
+
+    <div class="trap-block">
+      <div class="trap-head">⚠️ Главная ловушка</div>
+      <div class="rb-desc">Никогда не ставь <b>will</b> в if-клаузу!</div>
+      <div class="trap-wrong">❌ <span>If it <s>will rain</s>…</span></div>
+      <div class="trap-right">✅ <b>If it rains</b>, I'll take an umbrella.</div>
+    </div>
+    <div class="trap-block">
+      <div class="trap-head">⚠️ Вторая ловушка</div>
+      <div class="rb-desc">После <b>if I</b> во Second Conditional пишем <b>were</b>, а не <b>was</b> — даже хотя обычно "I was".</div>
+      <div class="trap-wrong">❌ <span>If I <s>was</s> you…</span></div>
+      <div class="trap-right">✅ <b>If I were you</b>, I'd apologise.</div>
     </div>
   </div>
 </div>
@@ -602,25 +750,64 @@
     <button class="modal-close" onclick="closeModal('modal-tips')">✕</button>
     <div class="modal-tag tag-tips">Tips</div>
     <h2>Speaking Tips — говори уверенно</h2>
+    <div class="modal-intro">Эти фразы — твой "спасательный круг" на speaking-части: помогают не молчать, звучать естественно и выкручиваться, если забыла слово.</div>
 
-    <div class="rule-block">
-      <div class="rb-title">Фразы для выигрыша времени</div>
+    <div class="rule-block rule-purple">
+      <div class="rule-head">
+        <div class="rule-icon">⏱️</div>
+        <div class="rb-title">Фразы для выигрыша времени</div>
+      </div>
       <div class="rb-desc">Не молчи — используй эти фразы пока думаешь:</div>
-      <div class="rb-ex">That's a great question… · Let me think about it for a second… · Well, to be honest… · I mean…</div>
+      <div class="phrase-list">
+        <span class="phrase-chip">That's a great question…</span>
+        <span class="phrase-chip">Let me think about it for a second…</span>
+        <span class="phrase-chip">Well, to be honest…</span>
+        <span class="phrase-chip">I mean…</span>
+      </div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">Связующие слова</div>
+
+    <div class="rule-block rule-blue">
+      <div class="rule-head">
+        <div class="rule-icon">🔗</div>
+        <div class="rb-title">Связующие слова</div>
+      </div>
       <div class="rb-desc">Соединяй идеи, чтобы речь звучала плавно:</div>
-      <div class="rb-ex">First of all… · On the other hand… · What's more… · However… · In addition… · As a result…</div>
+      <div class="phrase-list">
+        <span class="phrase-chip">First of all…</span>
+        <span class="phrase-chip">On the other hand…</span>
+        <span class="phrase-chip">What's more…</span>
+        <span class="phrase-chip">However…</span>
+        <span class="phrase-chip">In addition…</span>
+        <span class="phrase-chip">As a result…</span>
+      </div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">Когда не знаешь слово</div>
+
+    <div class="rule-block rule-green">
+      <div class="rule-head">
+        <div class="rule-icon">🧩</div>
+        <div class="rb-title">Когда не знаешь слово</div>
+      </div>
       <div class="rb-desc">Опиши его вместо того, чтобы замолчать:</div>
-      <div class="rb-ex">It's a thing you use for… · It's like a… but smaller / bigger · The opposite of… · I can't remember the word but it means…</div>
+      <div class="phrase-list">
+        <span class="phrase-chip">It's a thing you use for…</span>
+        <span class="phrase-chip">It's like a… but smaller / bigger</span>
+        <span class="phrase-chip">The opposite of…</span>
+        <span class="phrase-chip">I can't remember the word but it means…</span>
+      </div>
     </div>
-    <div class="rule-block">
-      <div class="rb-title">Выражение мнения</div>
-      <div class="rb-ex">In my opinion… · I believe that… · Personally, I think… · From my point of view… · I'm not sure, but…</div>
+
+    <div class="rule-block rule-orange">
+      <div class="rule-head">
+        <div class="rule-icon">🗣️</div>
+        <div class="rb-title">Выражение мнения</div>
+      </div>
+      <div class="phrase-list">
+        <span class="phrase-chip">In my opinion…</span>
+        <span class="phrase-chip">I believe that…</span>
+        <span class="phrase-chip">Personally, I think…</span>
+        <span class="phrase-chip">From my point of view…</span>
+        <span class="phrase-chip">I'm not sure, but…</span>
+      </div>
     </div>
   </div>
 </div>
