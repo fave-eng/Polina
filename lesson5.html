@@ -71,6 +71,9 @@
     input[type="text"] { padding:7px 12px; font-size:14px; font-family:inherit; border:1.5px solid var(--border); border-radius:10px; background:#fafbff; color:var(--text); transition:border-color .2s; vertical-align:middle; }
     input[type="text"]:focus { outline:none; border-color:var(--indigo); background:#fff; }
     input[type="text"].inline-input { width:180px; }
+    input[type="text"]:disabled, select:disabled {
+      background:#f1f5f9; color:#475569; cursor:not-allowed; opacity:0.85;
+    }
     input[type="text"].block-input { display:block; width:100%; max-width:360px; margin-top:6px; }
     input[type="text"].correct { border-color:var(--emerald) !important; background:#f0fdf4; }
     input[type="text"].wrong   { border-color:var(--rose) !important; background:#fff5f5; }
@@ -595,22 +598,25 @@
     { num:'3.3.4',  el:'q3_3_4',  fb:'fb3_3_4', ans:['with'] },
   ];
 
-  // Универсальная функция сохранения результата ОДНОГО урока в общий JSON hw_scores.
-  // Работает для любого номера урока — для урока 6, 7 и т.д. достаточно
-  // вызвать saveLessonScore('6', '...', banner) — ничего больше менять не нужно.
-  async function saveLessonScore(lessonNum, scoreStr, bannerEl) {
+  // Универсальная функция сохранения результата ОДНОГО урока в общий JSON hw_scores,
+  // плюс сохранения всех введённых ответов в hw_answers (чтобы при повторном
+  // открытии страницы можно было всё восстановить и заблокировать).
+  // Для урока 6, 7 и т.д. достаточно вызвать saveLessonScore('6', '...', answersObj, banner).
+  async function saveLessonScore(lessonNum, scoreStr, answersObj, bannerEl) {
     try {
-      // 1. Читаем текущий hw_scores ученика
+      // 1. Читаем текущие hw_scores и hw_answers ученика
       const getRes = await fetch(
-        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores`,
+        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers`,
         { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
       );
       if (!getRes.ok) throw new Error(`Не удалось прочитать прогресс (HTTP ${getRes.status})`);
       const rows = await getRes.json();
-      const current = (rows[0] && rows[0].hw_scores) || {};
+      const currentScores  = (rows[0] && rows[0].hw_scores)  || {};
+      const currentAnswers = (rows[0] && rows[0].hw_answers) || {};
 
       // 2. Дописываем/обновляем только свой урок, остальные не трогаем
-      const updated = { ...current, [lessonNum]: scoreStr };
+      const updatedScores  = { ...currentScores,  [lessonNum]: scoreStr };
+      const updatedAnswers = { ...currentAnswers, [lessonNum]: answersObj };
 
       // 3. Сохраняем обратно (upsert по student)
       const putRes = await fetch(`${SB_URL}/rest/v1/progress?on_conflict=student`, {
@@ -623,7 +629,8 @@
         },
         body: JSON.stringify({
           student: 'polina',
-          hw_scores: updated,
+          hw_scores: updatedScores,
+          hw_answers: updatedAnswers,
           updated_at: new Date().toISOString(),
         }),
       });
@@ -631,7 +638,7 @@
         const errText = await putRes.text().catch(() => '');
         throw new Error(`Не удалось сохранить прогресс (HTTP ${putRes.status}) ${errText}`);
       }
-      console.log('Прогресс по уроку', lessonNum, 'сохранён:', updated);
+      console.log('Прогресс по уроку', lessonNum, 'сохранён:', updatedScores, updatedAnswers);
     } catch (e) {
       console.error('Ошибка сохранения прогресса в Supabase:', e);
       // Показываем предупреждение прямо на странице, чтобы это не осталось незамеченным
@@ -641,6 +648,63 @@
         warn.textContent = '⚠️ Результат отправлен в Telegram, но не сохранился на сайте. Сообщите учителю.';
         bannerEl.after(warn);
       }
+    }
+  }
+
+  // Собирает текущие значения всех полей ответа в простой объект {id: value}
+  function collectAnswers() {
+    const answers = {};
+    questions.forEach(q => {
+      const el = document.getElementById(q.el);
+      if (el) answers[q.el] = el.value || '';
+    });
+    return answers;
+  }
+
+  // Подставляет сохранённые ответы в поля и блокирует их от редактирования
+  function lockFormWithAnswers(answersObj) {
+    questions.forEach(q => {
+      const el = document.getElementById(q.el);
+      if (!el) return;
+      if (answersObj && answersObj[q.el] !== undefined) {
+        el.value = answersObj[q.el];
+      }
+      el.disabled = true;
+    });
+    const submitBtn = document.querySelector('.submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.5';
+      submitBtn.style.cursor = 'not-allowed';
+      submitBtn.innerHTML = '<span>✅</span> Домашка уже сдана';
+    }
+  }
+
+  // При открытии страницы — проверяем, не сдан ли урок 5 уже.
+  // Если сдан — восстанавливаем ответы, подсвечиваем ✓/✗ и блокируем форму.
+  async function loadAndLockIfDone() {
+    try {
+      const r = await fetch(
+        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers`,
+        { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+      );
+      if (!r.ok) return;
+      const rows = await r.json();
+      const scores  = (rows[0] && rows[0].hw_scores)  || {};
+      const answers = (rows[0] && rows[0].hw_answers) || {};
+      const score5 = scores['5'];
+      const isDone = score5 && score5 !== '' && score5 !== '0/0';
+      if (!isDone) return;
+
+      lockFormWithAnswers(answers['5'] || {});
+      const { correct, total } = checkAll(); // подставит ✓/✗ подсветку по реальным значениям
+      const pct = Math.round(correct / total * 100);
+      const emoji = pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪';
+      const banner = document.getElementById('scoreBanner');
+      banner.textContent = `${emoji} Домашка уже сдана. Результат: ${correct} из ${total} (${pct}%)`;
+      banner.style.display = 'block';
+    } catch (e) {
+      console.error('Не удалось проверить статус домашки:', e);
     }
   }
 
@@ -686,9 +750,26 @@
     localStorage.setItem('polina_hw5_score', `${correct}/${total}`);
     localStorage.setItem('polina_hw_done', '2');
 
-    // Сохраняем результат ЭТОГО урока (номер 5) внутрь общего JSON hw_scores,
+    // Собираем все ответы ученицы, чтобы при следующем открытии страницы
+    // их можно было восстановить и заблокировать форму
+    const answersObj = collectAnswers();
+
+    // Сохраняем результат ЭТОГО урока (номер 5) внутрь общего JSON hw_scores/hw_answers,
     // не затирая результаты других уроков.
-    saveLessonScore('5', `${correct}/${total}`, banner);
+    saveLessonScore('5', `${correct}/${total}`, answersObj, banner);
+
+    // Сразу блокируем форму на этой же странице — повторно отправить нельзя
+    questions.forEach(q => {
+      const el = document.getElementById(q.el);
+      if (el) el.disabled = true;
+    });
+    const submitBtn = document.querySelector('.submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.5';
+      submitBtn.style.cursor = 'not-allowed';
+      submitBtn.innerHTML = '<span>✅</span> Домашка уже сдана';
+    }
 
     // Telegram
     let report = `📝 *Отчёт по ДЗ Полины*\n`;
@@ -706,6 +787,11 @@
       body: JSON.stringify({ chat_id:CHAT_ID, text:report, parse_mode:'Markdown' })
     }).catch(console.error);
   }
+
+  // При открытии страницы проверяем — может, эта домашка уже сдана.
+  // Если да — восстанавливаем ответы, подсвечиваем результат и блокируем форму,
+  // чтобы нельзя было случайно отправить ответы повторно.
+  window.addEventListener('load', loadAndLockIfDone);
 </script>
 </body>
 </html>
