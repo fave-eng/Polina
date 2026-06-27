@@ -595,6 +595,55 @@
     { num:'3.3.4',  el:'q3_3_4',  fb:'fb3_3_4', ans:['with'] },
   ];
 
+  // Универсальная функция сохранения результата ОДНОГО урока в общий JSON hw_scores.
+  // Работает для любого номера урока — для урока 6, 7 и т.д. достаточно
+  // вызвать saveLessonScore('6', '...', banner) — ничего больше менять не нужно.
+  async function saveLessonScore(lessonNum, scoreStr, bannerEl) {
+    try {
+      // 1. Читаем текущий hw_scores ученика
+      const getRes = await fetch(
+        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores`,
+        { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+      );
+      if (!getRes.ok) throw new Error(`Не удалось прочитать прогресс (HTTP ${getRes.status})`);
+      const rows = await getRes.json();
+      const current = (rows[0] && rows[0].hw_scores) || {};
+
+      // 2. Дописываем/обновляем только свой урок, остальные не трогаем
+      const updated = { ...current, [lessonNum]: scoreStr };
+
+      // 3. Сохраняем обратно (upsert по student)
+      const putRes = await fetch(`${SB_URL}/rest/v1/progress?on_conflict=student`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SB_KEY,
+          Authorization: `Bearer ${SB_KEY}`,
+          Prefer: 'resolution=merge-duplicates,return=minimal',
+        },
+        body: JSON.stringify({
+          student: 'polina',
+          hw_scores: updated,
+          updated_at: new Date().toISOString(),
+        }),
+      });
+      if (!putRes.ok) {
+        const errText = await putRes.text().catch(() => '');
+        throw new Error(`Не удалось сохранить прогресс (HTTP ${putRes.status}) ${errText}`);
+      }
+      console.log('Прогресс по уроку', lessonNum, 'сохранён:', updated);
+    } catch (e) {
+      console.error('Ошибка сохранения прогресса в Supabase:', e);
+      // Показываем предупреждение прямо на странице, чтобы это не осталось незамеченным
+      if (bannerEl) {
+        const warn = document.createElement('div');
+        warn.style.cssText = 'margin-top:10px;font-size:13px;color:#b91c1c;font-weight:600;';
+        warn.textContent = '⚠️ Результат отправлен в Telegram, но не сохранился на сайте. Сообщите учителю.';
+        bannerEl.after(warn);
+      }
+    }
+  }
+
   function checkAll() {
     let correct = 0, total = questions.length;
     let errorsReport = '';
@@ -637,12 +686,9 @@
     localStorage.setItem('polina_hw5_score', `${correct}/${total}`);
     localStorage.setItem('polina_hw_done', '2');
 
-    // Supabase upsert
-    fetch(`${SB_URL}/rest/v1/progress`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Prefer':'resolution=merge-duplicates,return=minimal'},
-      body: JSON.stringify({ student:'polina', hw5_score:`${correct}/${total}`, hw5_done:true, updated_at: new Date().toISOString() })
-    }).catch(console.error);
+    // Сохраняем результат ЭТОГО урока (номер 5) внутрь общего JSON hw_scores,
+    // не затирая результаты других уроков.
+    saveLessonScore('5', `${correct}/${total}`, banner);
 
     // Telegram
     let report = `📝 *Отчёт по ДЗ Полины*\n`;
