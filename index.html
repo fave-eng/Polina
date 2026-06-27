@@ -651,6 +651,13 @@
     const SB_URL = 'https://zqzgarvmpqqqaobeicpc.supabase.co';
     const SB_KEY = 'sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC';
 
+    // 👉 ЕДИНСТВЕННОЕ число, которое нужно менять руками — сколько ВСЕГО уроков
+    // (домашних заданий) сейчас задано в курсе. Добавили lesson6.html — поставьте 6.
+    const TOTAL_LESSONS = 5;
+
+    // Считаем, сколько уроков реально сдано — по умолчанию 0, если Supabase не ответит
+    let hwDone = 0;
+
     // Загружаем из Supabase
     try {
       const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=*`, {
@@ -659,21 +666,31 @@
       const data = await r.json();
       if (data && data[0]) {
         const d = data[0];
-        // hw4_score — главный признак сдачи (заполняется при отправке ДЗ)
-        if (d.hw4_score && d.hw4_score !== '' && d.hw4_score !== '0/0') {
-          localStorage.setItem('polina_hw4_score', d.hw4_score);
-          localStorage.setItem('polina_hw_done', '1');
-        }
+
+        // hw_scores — единый JSON со всеми домашками: {"4":"12/29","5":"20/29",...}
+        // Считаем сданными те, где результат не пустой и не "0/0"
+        const scores = d.hw_scores || {};
+        const doneLessons = Object.entries(scores)
+          .filter(([num, score]) => score && score !== '' && score !== '0/0')
+          .map(([num]) => num);
+
+        hwDone = doneLessons.length;
+        localStorage.setItem('polina_hw_scores', JSON.stringify(scores));
+        localStorage.setItem('polina_hw_done', String(hwDone));
+
         if (d.words_learned)     localStorage.setItem('polina_words_learned',    d.words_learned);
         if (d.verbs_learned)     localStorage.setItem('polina_verbs_learned',    d.verbs_learned);
         if (d.languages_learned) localStorage.setItem('polina_vocab_languages',  d.languages_learned);
       }
-    } catch(e) {}
+    } catch(e) {
+      console.error('Не удалось загрузить прогресс из Supabase:', e);
+      // Если Supabase недоступен — берём последнее известное значение из localStorage,
+      // чтобы прогресс хотя бы не "обнулился" визуально
+      hwDone = parseInt(localStorage.getItem('polina_hw_done') || '0');
+    }
 
     // Считаем ДЗ
-    const hw4done = localStorage.getItem('polina_hw4_score');
-    const hwDone  = (hw4done && hw4done !== '' && hw4done !== '0/0') ? 1 : 0;
-    const hwTotal = 5;
+    const hwTotal = TOTAL_LESSONS;
     const hwPct   = Math.round(hwDone / hwTotal * 100);
 
     // Считаем словарь
