@@ -252,11 +252,11 @@
         <div class="hs-lbl">Выучено слов</div>
       </div>
       <div class="hs-item">
-        <div class="hs-num" id="totalWords">134</div>
+        <div class="hs-num" id="totalWords">114</div>
         <div class="hs-lbl">Слов всего</div>
       </div>
       <div class="hs-item">
-        <div class="hs-num" id="totalTopics">4</div>
+        <div class="hs-num" id="totalTopics">3</div>
         <div class="hs-lbl">Активных тем</div>
       </div>
     </div>
@@ -275,7 +275,7 @@
     <div class="total-progress-card">
       <div class="tpc-top">
         <div class="tpc-label">Общий прогресс</div>
-        <div class="tpc-count" id="progressText">0 / 134 слов</div>
+        <div class="tpc-count" id="progressText">0 / 60 слов</div>
       </div>
       <div class="tpc-bar-bg">
         <div class="tpc-bar-fill" id="progressFill" style="width: 0%"></div>
@@ -297,7 +297,7 @@
   <!-- ══ CARDS LINKED TO LESSONS ══ -->
 
   <!-- Lesson 4 vocab -->
-  <a href="./vocab-everyday-problems.html" class="vocab-card" data-type="lesson" id="vc-everyday">
+  <a href="./vocab-everyday-problems.html" class="vocab-card" data-type="lesson" data-key="everyday" data-page="vocab-everyday-problems.html" data-field="words_learned" id="vc-everyday">
     <div class="vc-inner">
       <div class="vc-accent" style="background: var(--rose)"></div>
       <div class="vc-icon" style="background: #fff1f2;">🔧</div>
@@ -305,7 +305,7 @@
         <div class="vc-tag" style="color: var(--rose)">Lesson 4</div>
         <div class="vc-title">Everyday Minor Problems</div>
         <div class="vc-meta">
-          <span class="vc-count">30 слов</span>
+          <span class="vc-count" id="count-everyday">… слов</span>
           <div class="vc-progress-wrap">
             <div class="vc-progress-fill" id="prog-everyday" style="background: var(--rose); width: 0%"></div>
           </div>
@@ -320,7 +320,7 @@
   </a>
 
   <!-- Languages vocab -->
-  <a href="./vocab-languages.html" class="vocab-card" data-type="lesson" id="vc-languages">
+  <a href="./vocab-languages.html" class="vocab-card" data-type="lesson" data-key="languages" data-page="vocab-languages.html" data-field="languages_learned" id="vc-languages">
     <div class="vc-inner">
       <div class="vc-accent" style="background: var(--sky)"></div>
       <div class="vc-icon" style="background: #f0f9ff;">🌍</div>
@@ -328,7 +328,7 @@
         <div class="vc-tag" style="color: var(--sky)">Unit 1</div>
         <div class="vc-title">Talking About Languages</div>
         <div class="vc-meta">
-          <span class="vc-count">36 слов</span>
+          <span class="vc-count" id="count-languages">… слов</span>
           <div class="vc-progress-wrap">
             <div class="vc-progress-fill" id="prog-languages" style="background: var(--sky); width: 0%"></div>
           </div>
@@ -342,31 +342,31 @@
     </div>
   </a>
 
-  <!-- Language Classes vocab -->
-  <a href="./vocab-language-classes.html" class="vocab-card" data-type="lesson" id="vc-language_classes">
+  <!-- Language Classes vocab (Lesson 6) -->
+  <a href="./vocab-language-classes.html" class="vocab-card" data-type="lesson" data-key="language_classes" data-page="vocab-language-classes.html" data-field="language_classes_learned" id="vc-language_classes">
     <div class="vc-inner">
-      <div class="vc-accent" style="background: var(--indigo)"></div>
-      <div class="vc-icon" style="background: #eef2ff;">🗣️</div>
+      <div class="vc-accent" style="background: var(--violet)"></div>
+      <div class="vc-icon" style="background: #f5f3ff;">🗣️</div>
       <div class="vc-body">
-        <div class="vc-tag" style="color: var(--indigo)">Unit 1</div>
-        <div class="vc-title">Language Classes</div>
+        <div class="vc-tag" style="color: var(--violet)">Lesson 6</div>
+        <div class="vc-title">Putting Your Words to Work</div>
         <div class="vc-meta">
-          <span class="vc-count">20 слов</span>
+          <span class="vc-count" id="count-language_classes">… слов</span>
           <div class="vc-progress-wrap">
-            <div class="vc-progress-fill" id="prog-language_classes" style="background: var(--indigo); width: 0%"></div>
+            <div class="vc-progress-fill" id="prog-language_classes" style="background: var(--violet); width: 0%"></div>
           </div>
           <span id="pct-language_classes" style="font-size:11px; color: var(--muted)">0%</span>
         </div>
       </div>
       <div class="vc-right">
-        <span class="vc-pill" style="background:#eef2ff; color:var(--indigo)">🗣️ Unit 1</span>
+        <span class="vc-pill pill-linked">📝 Урок 6</span>
         <span class="vc-arrow">→</span>
       </div>
     </div>
   </a>
 
   <!-- Irregular Verbs -->
-  <a href="./vocab-irregular-verbs.html" class="vocab-card" data-type="extra" id="vc-verbs">
+  <a href="./vocab-irregular-verbs.html" class="vocab-card" data-type="extra" data-key="verbs" data-page="vocab-irregular-verbs.html" data-field="verbs_learned" id="vc-verbs">
     <div class="vc-inner">
       <div class="vc-accent" style="background: #0f172a"></div>
       <div class="vc-icon" style="background: #f1f5f9;">📚</div>
@@ -374,7 +374,7 @@
         <div class="vc-tag" style="color: #0f172a">Грамматика</div>
         <div class="vc-title">Irregular Verbs</div>
         <div class="vc-meta">
-          <span class="vc-count">48 глаголов</span>
+          <span class="vc-count" id="count-verbs">… глаголов</span>
           <div class="vc-progress-wrap">
             <div class="vc-progress-fill" id="prog-verbs" style="background: #0f172a; width: 0%"></div>
           </div>
@@ -389,12 +389,15 @@
     </div>
   </a>
 
+
+
 </div><!-- /.page -->
 
 <!-- FLOATING NAV -->
 <div class="nav-pill">
   <a href="index.html">🏠 Home</a>
   <a href="homework.html">📝 HW</a>
+  <a href="grammar.html">📐 Grammar</a>
   <a href="vocabulary-hub.html" class="active">💥 Vocab</a>
 </div>
 
@@ -402,46 +405,86 @@
   const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
   const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
 
-  const TOPICS = [
-    { key: 'everyday',          total: 30 },
-    { key: 'languages',         total: 36 },
-    { key: 'language_classes',  total: 20 },
-    { key: 'verbs',             total: 48 },
-  ];
-  const GRAND_TOTAL = 134;
+  // Темы больше не зашиты вручную — читаем их прямо с карточек на этой странице
+  // (data-key / data-page / data-field). Чтобы добавить новую тему, достаточно
+  // добавить новую карточку с этими атрибутами — цифры посчитаются сами.
+  function getTopicsFromDOM() {
+    return Array.from(document.querySelectorAll('.vocab-card[data-key]')).map(card => ({
+      key:   card.dataset.key,
+      page:  card.dataset.page,
+      field: card.dataset.field,
+    }));
+  }
 
-  async function loadFromSupabase() {
+  // Узнаём «всего слов» для темы, скачивая её страницу и считая элементы
+  // массива const vocab = [...] прямо в её коде — никаких чисел руками.
+  async function getTotalForTopic(page) {
     try {
-      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=words_learned,languages_learned,language_classes_learned,verbs_learned`, {
+      const res = await fetch(`./${page}`);
+      const html = await res.text();
+      const match = html.match(/const\s+vocab\s*=\s*(\[[\s\S]*?\n\]);/);
+      if (!match) return null;
+      // Считаем количество объектов карточек по числу "id:" внутри массива —
+      // надёжнее, чем парсить JSON (в файле используются спецсимволы/кавычки).
+      const idMatches = match[1].match(/\{\s*id\s*:/g);
+      return idMatches ? idMatches.length : null;
+    } catch (e) {
+      console.error(`Не удалось определить количество слов в ${page}:`, e);
+      return null;
+    }
+  }
+
+  async function loadFromSupabase(fields) {
+    try {
+      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=${fields.join(',')}`, {
         headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
       });
       const data = await r.json();
-      if (data && data[0]) {
-        if (data[0].words_learned)             localStorage.setItem('polina_vocab_everyday',          data[0].words_learned);
-        if (data[0].languages_learned)         localStorage.setItem('polina_vocab_languages',         data[0].languages_learned);
-        if (data[0].language_classes_learned)  localStorage.setItem('polina_vocab_language_classes',  data[0].language_classes_learned);
-        if (data[0].verbs_learned)             localStorage.setItem('polina_vocab_verbs',             data[0].verbs_learned);
-      }
-    } catch(e) {}
+      return (data && data[0]) ? data[0] : {};
+    } catch(e) {
+      console.error('Не удалось загрузить прогресс из Supabase:', e);
+      return {};
+    }
   }
 
-  function loadProgress() {
-    let grandLearned = 0;
-    TOPICS.forEach(({ key, total }) => {
-      const learned = parseInt(localStorage.getItem(`polina_vocab_${key}`) || '0');
+  let TOPICS = []; // заполняется в init: [{key, page, field, total}]
+
+  async function loadProgress() {
+    const cards = getTopicsFromDOM();
+    const fields = cards.map(c => c.field);
+    const row = await loadFromSupabase(fields);
+
+    // Параллельно подгружаем "всего слов" для каждой темы из самих страниц
+    const totals = await Promise.all(cards.map(c => getTotalForTopic(c.page)));
+
+    TOPICS = cards.map((c, i) => ({ ...c, total: totals[i] || 0 }));
+
+    let grandLearned = 0, grandTotal = 0;
+    TOPICS.forEach(({ key, field, total }) => {
+      const learned = parseInt(row[field] || localStorage.getItem(`polina_vocab_${key}`) || '0');
+      localStorage.setItem(`polina_vocab_${key}`, learned);
       grandLearned += learned;
+      grandTotal   += total;
+
       const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
       const bar   = document.getElementById(`prog-${key}`);
       const pctEl = document.getElementById(`pct-${key}`);
+      const cntEl = document.getElementById(`count-${key}`);
       if (bar)   bar.style.width  = pct + '%';
       if (pctEl) pctEl.textContent = pct + '%';
+      if (cntEl) cntEl.textContent = (total || '…') + (key === 'verbs' ? ' глаголов' : ' слов');
     });
+
     document.getElementById('totalLearned').textContent = grandLearned;
-    document.getElementById('progressText').textContent = `${grandLearned} / ${GRAND_TOTAL} слов`;
-    const globalPct = Math.round((grandLearned / GRAND_TOTAL) * 100);
+    document.getElementById('totalWords').textContent   = grandTotal;
+    document.getElementById('totalTopics').textContent  = TOPICS.length;
+    document.getElementById('progressText').textContent = `${grandLearned} / ${grandTotal} слов`;
+    const globalPct = grandTotal > 0 ? Math.round((grandLearned / grandTotal) * 100) : 0;
     document.getElementById('progressFill').style.width = globalPct + '%';
     document.getElementById('progressPct').textContent  = globalPct + '% выучено';
-    localStorage.setItem('polina_words_learned', grandLearned);
+
+    // Общий счётчик для других страниц сайта (например, главной)
+    localStorage.setItem('polina_words_learned_total', grandLearned);
   }
 
   function filterCards(type, btn) {
@@ -451,7 +494,7 @@
       if (type === 'all') {
         card.style.display = '';
       } else if (type === 'done') {
-        const key = card.id ? card.id.replace('vc-', '') : null;
+        const key = card.dataset.key;
         const learned = key ? parseInt(localStorage.getItem(`polina_vocab_${key}`) || '0') : 0;
         const topicObj = TOPICS.find(t => t.key === key);
         const total = topicObj ? topicObj.total : 0;
@@ -463,8 +506,7 @@
   }
 
   window.addEventListener('load', async () => {
-    await loadFromSupabase();
-    loadProgress();
+    await loadProgress();
   });
 </script>
 </body>
