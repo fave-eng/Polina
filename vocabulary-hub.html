@@ -252,11 +252,11 @@
         <div class="hs-lbl">Выучено слов</div>
       </div>
       <div class="hs-item">
-        <div class="hs-num" id="totalWords">114</div>
+        <div class="hs-num" id="totalWords">134</div>
         <div class="hs-lbl">Слов всего</div>
       </div>
       <div class="hs-item">
-        <div class="hs-num" id="totalTopics">3</div>
+        <div class="hs-num" id="totalTopics">4</div>
         <div class="hs-lbl">Активных тем</div>
       </div>
     </div>
@@ -275,7 +275,7 @@
     <div class="total-progress-card">
       <div class="tpc-top">
         <div class="tpc-label">Общий прогресс</div>
-        <div class="tpc-count" id="progressText">0 / 60 слов</div>
+        <div class="tpc-count" id="progressText">0 / 134 слов</div>
       </div>
       <div class="tpc-bar-bg">
         <div class="tpc-bar-fill" id="progressFill" style="width: 0%"></div>
@@ -342,6 +342,29 @@
     </div>
   </a>
 
+  <!-- Language Classes vocab -->
+  <a href="./vocab-language-classes.html" class="vocab-card" data-type="lesson" id="vc-language_classes">
+    <div class="vc-inner">
+      <div class="vc-accent" style="background: var(--indigo)"></div>
+      <div class="vc-icon" style="background: #eef2ff;">🗣️</div>
+      <div class="vc-body">
+        <div class="vc-tag" style="color: var(--indigo)">Unit 1</div>
+        <div class="vc-title">Language Classes</div>
+        <div class="vc-meta">
+          <span class="vc-count">20 слов</span>
+          <div class="vc-progress-wrap">
+            <div class="vc-progress-fill" id="prog-language_classes" style="background: var(--indigo); width: 0%"></div>
+          </div>
+          <span id="pct-language_classes" style="font-size:11px; color: var(--muted)">0%</span>
+        </div>
+      </div>
+      <div class="vc-right">
+        <span class="vc-pill" style="background:#eef2ff; color:var(--indigo)">🗣️ Unit 1</span>
+        <span class="vc-arrow">→</span>
+      </div>
+    </div>
+  </a>
+
   <!-- Irregular Verbs -->
   <a href="./vocab-irregular-verbs.html" class="vocab-card" data-type="extra" id="vc-verbs">
     <div class="vc-inner">
@@ -366,8 +389,6 @@
     </div>
   </a>
 
-
-
 </div><!-- /.page -->
 
 <!-- FLOATING NAV -->
@@ -382,22 +403,24 @@
   const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
 
   const TOPICS = [
-    { key: 'everyday',  total: 30 },
-    { key: 'languages', total: 36 },
-    { key: 'verbs',     total: 48 },
+    { key: 'everyday',          total: 30 },
+    { key: 'languages',         total: 36 },
+    { key: 'language_classes',  total: 20 },
+    { key: 'verbs',             total: 48 },
   ];
-  const GRAND_TOTAL = 114;
+  const GRAND_TOTAL = 134;
 
   async function loadFromSupabase() {
     try {
-      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=words_learned,verbs_learned`, {
+      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=words_learned,languages_learned,language_classes_learned,verbs_learned`, {
         headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
       });
       const data = await r.json();
       if (data && data[0]) {
-        if (data[0].words_learned)      localStorage.setItem('polina_vocab_everyday',  data[0].words_learned);
-        if (data[0].languages_learned)  localStorage.setItem('polina_vocab_languages', data[0].languages_learned);
-        if (data[0].verbs_learned)      localStorage.setItem('polina_vocab_verbs',     data[0].verbs_learned);
+        if (data[0].words_learned)             localStorage.setItem('polina_vocab_everyday',          data[0].words_learned);
+        if (data[0].languages_learned)         localStorage.setItem('polina_vocab_languages',         data[0].languages_learned);
+        if (data[0].language_classes_learned)  localStorage.setItem('polina_vocab_language_classes',  data[0].language_classes_learned);
+        if (data[0].verbs_learned)             localStorage.setItem('polina_vocab_verbs',             data[0].verbs_learned);
       }
     } catch(e) {}
   }
