@@ -468,10 +468,29 @@
       <span>💥 Словарный запас</span>
       <span id="vocab-pct" style="color:var(--rose)">0 / 78</span>
     </div>
-    <div style="background:#f1f5f9; border-radius:100px; height:7px; overflow:hidden;">
+    <div style="background:#f1f5f9; border-radius:100px; height:7px; overflow:hidden; margin-bottom:16px;">
       <div id="vocab-bar" style="height:100%; border-radius:100px; background:linear-gradient(90deg,#f43f5e,#a855f7); width:0%; transition:width .8s ease;"></div>
     </div>
+    <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:8px;">
+      <span>📐 Грамматика (A1)</span>
+      <span id="grammar-pct" style="color:#0ea5e9">0 / 15</span>
+    </div>
+    <div style="background:#f1f5f9; border-radius:100px; height:7px; overflow:hidden;">
+      <div id="grammar-bar" style="height:100%; border-radius:100px; background:linear-gradient(90deg,#0ea5e9,#4f46e5); width:0%; transition:width .8s ease;"></div>
+    </div>
   </div>
+
+  <!-- Current grammar topic card -->
+  <a href="./grammar.html" id="grammar-current-card" style="display:flex; align-items:center; gap:14px; text-decoration:none; color:inherit; background:#fff; border-radius:16px; border:1.5px solid var(--border); padding:16px 20px; margin-top:12px;">
+    <div style="width:38px; height:38px; border-radius:11px; background:linear-gradient(135deg,#0ea5e9,#4f46e5); color:#fff; display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0;">📐</div>
+    <div style="flex:1; min-width:0;">
+      <div style="font-size:11px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.5px;">Текущая тема по грамматике</div>
+      <div id="grammar-current-title" style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:14px; margin-top:2px;">Загрузка…</div>
+      <div id="grammar-current-attempts" style="font-size:11.5px; color:var(--muted); margin-top:2px;"></div>
+    </div>
+    <div style="color:var(--indigo); font-size:18px;">→</div>
+  </a>
+
   <!-- THEORY -->
   <div class="section-title">Theory — база знаний</div>
   <div class="theory-grid">
@@ -579,6 +598,7 @@
 <div class="nav-pill">
   <a href="index.html" class="active">🏠 Home</a>
   <a href="homework.html">📝 HW</a>
+  <a href="grammar.html">📐 Grammar</a>
   <a href="vocabulary-hub.html">💥 Vocab</a>
 </div>
 
@@ -904,6 +924,52 @@
     const vocabDone  = words + verbs + langs + langClasses;
     const vocabTotal = 134;
     const vocabPct   = Math.round(vocabDone / vocabTotal * 100);
+
+    // Считаем грамматику (отдельно от ДЗ и словаря)
+    const A1_TOPICS = [
+      { id:'a1_1',  title:'1. Основы грамматики',      page:'grammar-a1-1-basics.html' },
+      { id:'a1_2',  title:'2. Артикли',                 page:'grammar-a1-2-articles.html' },
+      { id:'a1_3',  title:'3. Местоимения',              page:'grammar-a1-3-pronouns.html' },
+      { id:'a1_4',  title:'4. Настоящее время',          page:'grammar-a1-4-present.html' },
+      { id:'a1_5',  title:'5. Прошедшее время',          page:'grammar-a1-5-past.html' },
+      { id:'a1_6',  title:'6. Будущее время с will',     page:'grammar-a1-6-will.html' },
+      { id:'a1_7',  title:'7. Предлоги времени и места', page:'grammar-a1-7-prepositions.html' },
+      { id:'a1_8',  title:'8. Вопросительные структуры', page:'grammar-a1-8-questions.html' },
+      { id:'a1_9',  title:'9. Краткие ответы',           page:'grammar-a1-9-short-answers.html' },
+      { id:'a1_10', title:'10. There is / There are',    page:'grammar-a1-10-there-is-are.html' },
+      { id:'a1_11', title:'11. Союзы and, but, because', page:'grammar-a1-11-conjunctions.html' },
+      { id:'a1_12', title:'12. Порядок слов',            page:'grammar-a1-12-word-order.html' },
+      { id:'a1_13', title:'13. Неправильные глаголы',    page:'grammar-a1-13-irregular-verbs.html' },
+      { id:'a1_14', title:'14. Множественное число',     page:'grammar-a1-14-plurals.html' },
+      { id:'a1_15', title:'15. To be going to',          page:'grammar-a1-15-going-to.html' },
+    ];
+    let grammarProgress = {};
+    try {
+      const gr = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=grammar_progress`, {
+        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+      });
+      const grData = await gr.json();
+      grammarProgress = (grData && grData[0] && grData[0].grammar_progress) || {};
+    } catch (e) {
+      console.error('Не удалось загрузить прогресс по грамматике:', e);
+    }
+    const grammarDone = A1_TOPICS.filter(t => grammarProgress[t.id] && grammarProgress[t.id].passed).length;
+    const grammarTotal = A1_TOPICS.length;
+    const grammarPct = Math.round(grammarDone / grammarTotal * 100);
+    const currentTopic = A1_TOPICS.find(t => !(grammarProgress[t.id] && grammarProgress[t.id].passed));
+
+    document.getElementById('grammar-pct').textContent = `${grammarDone} / ${grammarTotal}`;
+    document.getElementById('grammar-bar').style.width  = grammarPct + '%';
+    if (currentTopic) {
+      const att = grammarProgress[currentTopic.id] ? grammarProgress[currentTopic.id].attempts : 0;
+      document.getElementById('grammar-current-title').textContent = currentTopic.title;
+      document.getElementById('grammar-current-attempts').textContent = att > 0 ? `Попыток: ${att}` : 'Ещё не начато';
+      document.getElementById('grammar-current-card').href = './' + currentTopic.page;
+    } else {
+      document.getElementById('grammar-current-title').textContent = '🎉 Уровень A1 пройден полностью!';
+      document.getElementById('grammar-current-attempts').textContent = '';
+      document.getElementById('grammar-current-card').href = './grammar.html';
+    }
 
     // Обновляем чипы
     document.getElementById('hw-done').textContent       = hwDone;
