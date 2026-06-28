@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A1 · Артикли — Polina's English Space</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --indigo: #4f46e5; --indigo-light: #6366f1;
+      --rose: #f43f5e; --amber: #f59e0b; --emerald: #10b981;
+      --violet: #8b5cf6; --sky: #0ea5e9;
+      --bg: #f1f5f9; --card: #ffffff;
+      --text: #0f172a; --muted: #64748b; --border: #e2e8f0;
+    }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); padding-bottom:120px; }
+
+    /* HERO */
+    .hero { background:linear-gradient(135deg,#10b981 0%,#0ea5e9 60%,#4f46e5 100%); padding:36px 24px 48px; position:relative; }
+    .hero-wave { display:block; width:100%; line-height:0; background:var(--bg); }
+    .hero-wave svg { display:block; width:100%; }
+    .hero-back { display:inline-flex; align-items:center; gap:6px; color:rgba(255,255,255,.75); font-size:13px; font-weight:600; text-decoration:none; margin-bottom:18px; transition:color .2s; position:relative; z-index:1; }
+    .hero-back:hover { color:#fff; }
+    .hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.28); color:#fff; font-size:12px; font-weight:600; padding:5px 14px; border-radius:100px; margin-bottom:12px; position:relative; z-index:1; }
+    .hero h1 { font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(22px,5vw,34px); font-weight:800; color:#fff; letter-spacing:-.5px; margin-bottom:6px; position:relative; z-index:1; }
+    .hero p { color:rgba(255,255,255,.75); font-size:14px; position:relative; z-index:1; }
+
+    .page { max-width:740px; margin:0 auto; padding:0 20px; }
+
+    .status-banner { border-radius:16px; padding:16px 20px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14.5px; font-weight:700; text-align:center; display:none; margin-bottom:22px; }
+    .status-banner.passed  { background:linear-gradient(135deg,#d1fae5,#a7f3d0); border:1.5px solid #6ee7b7; color:#064e3b; }
+    .status-banner.failed  { background:linear-gradient(135deg,#fee2e2,#fecaca); border:1.5px solid #fca5a5; color:#7f1d1d; }
+
+    .section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin:32px 0 14px; }
+
+    /* THEORY CARD */
+    .theory-intro { background:var(--card); border-radius:16px; border:1.5px solid var(--border); padding:18px 22px; font-size:14px; line-height:1.7; color:var(--muted); margin-bottom:18px; }
+
+    .pos-card { border-radius:16px; padding:20px 22px; margin-bottom:14px; border:1.5px solid transparent; }
+    .pos-head { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+    .pos-icon { width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+    .pos-title-wrap { flex:1; }
+    .pos-title { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:15.5px; }
+    .pos-eng   { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; opacity:.75; }
+    .pos-desc  { font-size:13.5px; line-height:1.7; margin-bottom:10px; }
+    .pos-desc b { font-weight:800; }
+    .pos-examples { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:10px; }
+    .pos-ex-chip { background:rgba(255,255,255,.75); border-radius:8px; padding:6px 12px; font-size:13px; font-weight:600; }
+    .pos-sentence { font-style:italic; font-size:13px; background:rgba(255,255,255,.7); border-radius:10px; padding:10px 13px; line-height:1.65; }
+    .pos-sentence b { text-decoration:underline; font-style:normal; }
+    .pos-nuance { font-size:12.5px; background:#fefce8; color:#78350f; border-radius:9px; padding:9px 12px; margin-top:10px; line-height:1.55; }
+
+    .pos-noun { background:#eff6ff; border-color:#bfdbfe; }
+    .pos-noun .pos-icon { background:#0ea5e9; color:#fff; }
+    .pos-noun .pos-title, .pos-noun .pos-eng { color:#1e40af; }
+
+    .pos-verb { background:#fef2f2; border-color:#fecaca; }
+    .pos-verb .pos-icon { background:#f43f5e; color:#fff; }
+    .pos-verb .pos-title, .pos-verb .pos-eng { color:#9f1239; }
+
+    .pos-adj { background:#f0fdf4; border-color:#bbf7d0; }
+    .pos-adj .pos-icon { background:#10b981; color:#fff; }
+    .pos-adj .pos-title, .pos-adj .pos-eng { color:#065f46; }
+
+    .pos-adv { background:#f5f3ff; border-color:#ddd6fe; }
+    .pos-adv .pos-icon { background:#8b5cf6; color:#fff; }
+    .pos-adv .pos-title, .pos-adv .pos-eng { color:#5b21b6; }
+
+    /* SUMMARY TABLE */
+    .summary-table { width:100%; border-collapse:collapse; background:var(--card); border-radius:16px; overflow:hidden; border:1.5px solid var(--border); margin-bottom:18px; font-size:13px; }
+    .summary-table th { background:#0f172a; color:#fff; padding:10px 12px; text-align:left; font-weight:700; font-size:12px; }
+    .summary-table td { padding:10px 12px; border-bottom:1px solid var(--border); }
+    .summary-table tr:last-child td { border-bottom:none; }
+    .summary-table td:first-child { font-weight:700; }
+
+    /* TRAP */
+    .trap-block { background:#fff1f2; border:1.5px dashed #fb7185; border-radius:14px; padding:16px 18px; margin-bottom:18px; }
+    .trap-head { display:flex; align-items:center; gap:8px; font-weight:800; font-size:14px; color:#be123c; margin-bottom:8px; }
+    .trap-block p { font-size:13.5px; color:#881337; line-height:1.65; margin-bottom:8px; }
+    .trap-example { font-size:13px; background:rgba(255,255,255,.7); border-radius:9px; padding:9px 12px; line-height:1.7; }
+
+    /* TEST */
+    .test-card { background:var(--card); border-radius:18px; border:1.5px solid var(--border); margin-bottom:18px; overflow:hidden; }
+    .test-header { display:flex; align-items:center; gap:14px; padding:18px 22px 0; }
+    .test-num { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--indigo),var(--violet)); color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .test-header h2 { font-family:'Plus Jakarta Sans',sans-serif; font-size:15.5px; font-weight:700; }
+    .test-body { padding:14px 22px 22px; }
+    .q-block { margin-bottom:22px; }
+    .q-block:last-child { margin-bottom:0; }
+    .q-text { font-size:14.5px; font-weight:600; margin-bottom:10px; line-height:1.6; }
+    .q-sentence { font-style:italic; color:var(--indigo); }
+
+    .opt-row { display:flex; flex-direction:column; gap:8px; }
+    .opt-label { display:flex; align-items:center; gap:10px; border:1.5px solid var(--border); border-radius:11px; padding:11px 14px; cursor:pointer; font-size:14px; transition:all .15s; background:#fafbff; }
+    .opt-label:hover { border-color:var(--indigo-light); }
+    .opt-label input { accent-color:var(--indigo); width:16px; height:16px; flex-shrink:0; }
+    .opt-label.correct { border-color:var(--emerald); background:#f0fdf4; }
+    .opt-label.wrong   { border-color:var(--rose); background:#fff5f5; }
+    .opt-label.disabled-look { cursor:default; opacity:.85; }
+
+    input[type="text"].q-input { width:100%; max-width:320px; padding:10px 14px; font-size:14px; font-family:inherit; border:1.5px solid var(--border); border-radius:10px; background:#fafbff; color:var(--text); }
+    input[type="text"].q-input:focus { outline:none; border-color:var(--indigo); background:#fff; }
+    input[type="text"].q-input.correct { border-color:var(--emerald) !important; background:#f0fdf4; }
+    input[type="text"].q-input.wrong   { border-color:var(--rose) !important; background:#fff5f5; }
+    input[type="text"].q-input:disabled { background:#f1f5f9; color:#475569; cursor:not-allowed; }
+
+    .explain-wrong { display:none; font-size:12.5px; color:#9f1239; background:#fff1f2; border-radius:9px; padding:9px 12px; margin-top:8px; line-height:1.55; }
+    .explain-wrong.show { display:block; }
+
+    .submit-btn { width:100%; padding:16px; background:linear-gradient(135deg,var(--indigo),var(--violet)); color:#fff; border:none; border-radius:14px; font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:700; cursor:pointer; margin-top:6px; transition:opacity .2s, transform .2s; display:flex; align-items:center; justify-content:center; gap:10px; }
+    .submit-btn:hover { opacity:.92; transform:translateY(-1px); }
+    .submit-btn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+
+    .nav-pill { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#0f172a; border-radius:100px; padding:12px 24px; display:flex; gap:4px; box-shadow:0 8px 32px rgba(15,23,42,.3); z-index:900; white-space:nowrap; }
+    .nav-pill a { color:rgba(255,255,255,.6); font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border-radius:100px; transition:all .2s; }
+    .nav-pill a:hover, .nav-pill a.active { background:var(--indigo); color:#fff; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="page">
+    <a href="./grammar.html" class="hero-back">← Путь по грамматике</a>
+    <div class="hero-eyebrow">📐 A1 · Тема 2 из 15</div>
+    <h1>Артикли</h1>
+    <p>a, an, the — когда и почему</p>
+  </div>
+</div>
+<div class="hero-wave">
+  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:linear-gradient(135deg,#10b981,#0ea5e9 60%,#4f46e5)">
+    <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
+  </svg>
+</div>
+
+<div class="page">
+
+  <div class="status-banner" id="statusBanner"></div>
+
+  <!-- THEORY -->
+  <div class="section-label">Теория</div>
+  <div class="theory-intro">
+    В русском языке артиклей нет, поэтому это одна из самых сложных тем для русскоговорящих. Артикль — маленькое слово перед существительным, которое показывает, <b>знаком ли собеседнику этот предмет</b> и идёт ли речь об одном предмете или о предметах вообще.
+  </div>
+
+  <div class="pos-card pos-noun">
+    <div class="pos-head">
+      <div class="pos-icon">1️⃣</div>
+      <div class="pos-title-wrap">
+        <div class="pos-title">A / An — неопределённый артикль</div>
+        <div class="pos-eng">Indefinite article</div>
+      </div>
+    </div>
+    <div class="pos-desc">Используется с исчисляемым существительным в <b>единственном числе</b>, когда мы говорим о предмете <b>в первый раз</b> или говорим о нём «один из многих», а не о каком-то конкретном.</div>
+    <div class="pos-sentence">I saw <b>a</b> cat in the garden. <span style="opacity:.7">— просто какой-то кот, неважно какой именно.</span></div>
+    <div class="pos-nuance">💡 Нюанс: выбор a/an зависит не от буквы, а от <b>звука</b> следующего слова! <b>An</b> apple (гласный звук), но <b>a</b> university (хотя пишется с "u", звучит как "ю" — согласный звук). И наоборот: <b>an</b> hour (буква "h" не произносится).</div>
+  </div>
+
+  <div class="pos-card pos-verb">
+    <div class="pos-head">
+      <div class="pos-icon">2️⃣</div>
+      <div class="pos-title-wrap">
+        <div class="pos-title">The — определённый артикль</div>
+        <div class="pos-eng">Definite article</div>
+      </div>
+    </div>
+    <div class="pos-desc">Используется, когда понятно, о <b>каком конкретном</b> предмете идёт речь — потому что мы его уже упомянули, он единственный в своём роде, или ситуация делает его очевидным.</div>
+    <div class="pos-sentence">I saw <b>a</b> cat. <b>The</b> cat was black. <span style="opacity:.7">— во 2-м предложении это уже ТОТ САМЫЙ кот, о котором говорили.</span></div>
+    <div class="pos-nuance">💡 Нюанс: the используется и для уникальных вещей (the sun, the Moon — солнце одно), и когда из контекста ясно, что имеется в виду (Close <b>the</b> door, please — дверь в комнате, где вы сейчас).</div>
+  </div>
+
+  <div class="pos-card pos-adj">
+    <div class="pos-head">
+      <div class="pos-icon">0️⃣</div>
+      <div class="pos-title-wrap">
+        <div class="pos-title">Без артикля</div>
+        <div class="pos-eng">Zero article</div>
+      </div>
+    </div>
+    <div class="pos-desc">Артикль <b>не нужен</b> с неисчисляемыми существительными в общем смысле, с существительными во множественном числе в общем смысле, и с именами собственными.</div>
+    <div class="pos-sentence">I like <b>music</b>. <b>Cats</b> are independent animals. <b>London</b> is big. <span style="opacity:.7">— говорим о музыке/котах/Лондоне вообще, без артикля.</span></div>
+    <div class="pos-nuance">💡 Нюанс: сравни — <i>I like <b>music</b></i> (музыка вообще, без артикля) и <i>I like <b>the</b> music in this film</i> (конкретная музыка именно в этом фильме — нужен the).</div>
+  </div>
+
+  <div class="section-label">Сводная таблица</div>
+  <table class="summary-table">
+    <tr><th>Артикль</th><th>Когда</th><th>Пример</th></tr>
+    <tr><td>a</td><td>1-й раз, перед согласным звуком</td><td>a book, a university</td></tr>
+    <tr><td>an</td><td>1-й раз, перед гласным звуком</td><td>an apple, an hour</td></tr>
+    <tr><td>the</td><td>конкретный, уже известный предмет</td><td>the cat (тот самый)</td></tr>
+    <tr><td>—</td><td>общий смысл, мн.ч., имена собств.</td><td>music, cats, London</td></tr>
+  </table>
+
+  <div class="trap-block">
+    <div class="trap-head">⚠️ Главная ловушка: a/an выбирается по звуку, а не по букве</div>
+    <p>Многие выбирают артикль глазами (по первой букве), но английский слышит звук:</p>
+    <div class="trap-example">
+      ❌ <s>a hour</s> → ✅ <b>an</b> hour <span style="opacity:.7">(h не произносится — звук "ауэ")</span><br>
+      ❌ <s>an university</s> → ✅ <b>a</b> university <span style="opacity:.7">(произносится "ю" — согласный звук)</span>
+    </div>
+  </div>
+
+  <!-- TEST -->
+  <div class="section-label">Проверь себя</div>
+  <div class="test-card">
+    <div class="test-header">
+      <div class="test-num">✓</div>
+      <h2>Тест по теме — нужно ответить верно на все 3 вопроса</h2>
+    </div>
+    <div class="test-body">
+
+      <div class="q-block">
+        <div class="q-text">1. Выбери правильный артикль:<br><span class="q-sentence">"She is ___ honest person — she never lies."</span></div>
+        <div class="opt-row" id="q1-options">
+          <label class="opt-label"><input type="radio" name="q1" value="a"> a</label>
+          <label class="opt-label"><input type="radio" name="q1" value="an"> an</label>
+          <label class="opt-label"><input type="radio" name="q1" value="the"> the</label>
+        </div>
+        <div class="explain-wrong" id="explain-q1">Подумай про ЗВУК, а не букву: слово "honest" начинается с буквы h, но эта h не произносится — слово звучит как "онест", то есть начинается со гласного звука.</div>
+      </div>
+
+      <div class="q-block">
+        <div class="q-text">2. Выбери правильный вариант:<br><span class="q-sentence">"I don't like ___ coffee in the morning — it makes me nervous."</span></div>
+        <div class="opt-row" id="q2-options">
+          <label class="opt-label"><input type="radio" name="q2" value="a"> a coffee</label>
+          <label class="opt-label"><input type="radio" name="q2" value="the"> the coffee</label>
+          <label class="opt-label"><input type="radio" name="q2" value="none"> coffee (без артикля)</label>
+        </div>
+        <div class="explain-wrong" id="explain-q2">Подумай: говорящий имеет в виду кофе вообще, как напиток в принципе (неисчисляемое существительное в общем смысле) — а не одну конкретную чашку и не один определённый кофе, о котором уже шла речь.</div>
+      </div>
+
+      <div class="q-block">
+        <div class="q-text">3. Заполни пропуск (a / an / the / — без артикля):<br><span class="q-sentence">"Look at ___ sky — it's so blue today!"</span></div>
+        <input type="text" class="q-input" id="q3" placeholder="введи артикль или поставь -…" />
+        <div class="explain-wrong" id="explain-q3">Подумай: небо — оно одно, уникальное, и собеседник точно понимает, о каком небе речь (как солнце или луна).</div>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="checkTest()">
+        <span>🚀</span> Проверить ответы
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav-pill">
+  <a href="./index.html">🏠 Home</a>
+  <a href="./homework.html">📝 HW</a>
+  <a href="./grammar.html" class="active">📐 Grammar</a>
+  <a href="./vocabulary-hub.html">💥 Vocab</a>
+</div>
+
+<script>
+  const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
+  const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
+  const TOPIC_ID = 'a1_2';
+
+  const correctAnswers = {
+    q1: 'an',
+    q2: 'none',
+    q3: 'the',
+  };
+
+  function norm(s){ return s.toLowerCase().trim().replace(/[ё]/g,'е'); }
+
+  async function getGrammarProgress() {
+    try {
+      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=grammar_progress`, {
+        headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+      });
+      const rows = await r.json();
+      return (rows[0] && rows[0].grammar_progress) || {};
+    } catch (e) {
+      console.error('Не удалось прочитать прогресс по грамматике:', e);
+      return {};
+    }
+  }
+
+  async function saveGrammarProgress(topicId, passed, attempts) {
+    try {
+      const current = await getGrammarProgress();
+      const updated = { ...current, [topicId]: { passed, attempts } };
+      await fetch(`${SB_URL}/rest/v1/progress?on_conflict=student`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SB_KEY,
+          Authorization: `Bearer ${SB_KEY}`,
+          Prefer: 'resolution=merge-duplicates,return=minimal',
+        },
+        body: JSON.stringify({ student:'polina', grammar_progress: updated, updated_at: new Date().toISOString() }),
+      });
+    } catch (e) {
+      console.error('Не удалось сохранить прогресс по грамматике:', e);
+    }
+  }
+
+  function lockTest() {
+    document.querySelectorAll('input[type="radio"], input[type="text"].q-input').forEach(el => el.disabled = true);
+    document.querySelectorAll('.opt-label').forEach(el => el.classList.add('disabled-look'));
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span>✅</span> Тема пройдена';
+  }
+
+  function showBanner(passed, attempts) {
+    const banner = document.getElementById('statusBanner');
+    banner.style.display = 'block';
+    if (passed) {
+      banner.className = 'status-banner passed';
+      banner.textContent = `🌟 Тема пройдена! Все ответы верны (попыток: ${attempts}).`;
+    } else {
+      banner.className = 'status-banner failed';
+      banner.textContent = `Есть ошибки — посмотри пояснения ниже и попробуй снова (попытка №${attempts}).`;
+    }
+  }
+
+  async function checkTest() {
+    let allCorrect = true;
+
+    // Q1, Q2 — radio
+    ['q1','q2'].forEach(qid => {
+      const selected = document.querySelector(`input[name="${qid}"]:checked`);
+      const val = selected ? selected.value : null;
+      const ok = val === correctAnswers[qid];
+      const explain = document.getElementById(`explain-${qid}`);
+      document.querySelectorAll(`input[name="${qid}"]`).forEach(input => {
+        const label = input.closest('.opt-label');
+        label.classList.remove('correct','wrong');
+        if (input.checked) label.classList.add(ok ? 'correct' : 'wrong');
+      });
+      if (ok) { explain.classList.remove('show'); }
+      else { explain.classList.add('show'); allCorrect = false; }
+    });
+
+    // Q3 — text input
+    const q3el = document.getElementById('q3');
+    const q3val = q3el.value.trim();
+    const q3ok = norm(q3val) === norm(correctAnswers.q3);
+    q3el.classList.remove('correct','wrong');
+    q3el.classList.add(q3ok ? 'correct' : 'wrong');
+    const explain3 = document.getElementById('explain-q3');
+    if (q3ok) explain3.classList.remove('show'); else { explain3.classList.add('show'); allCorrect = false; }
+
+    // Считаем попытки
+    const progress = await getGrammarProgress();
+    const prevAttempts = (progress[TOPIC_ID] && progress[TOPIC_ID].attempts) || 0;
+    const attempts = prevAttempts + 1;
+
+    await saveGrammarProgress(TOPIC_ID, allCorrect, attempts);
+    showBanner(allCorrect, attempts);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (allCorrect) lockTest();
+  }
+
+  // Если тема уже пройдена — блокируем форму при открытии страницы
+  window.addEventListener('load', async () => {
+    const progress = await getGrammarProgress();
+    const state = progress[TOPIC_ID];
+    if (state && state.passed) {
+      // Восстанавливаем правильные ответы визуально и блокируем
+      document.querySelector(`input[name="q1"][value="${correctAnswers.q1}"]`).checked = true;
+      document.querySelector(`input[name="q2"][value="${correctAnswers.q2}"]`).checked = true;
+      document.getElementById('q3').value = correctAnswers.q3;
+      document.querySelectorAll(`input[name="q1"]`).forEach(i => i.closest('.opt-label').classList.toggle('correct', i.checked));
+      document.querySelectorAll(`input[name="q2"]`).forEach(i => i.closest('.opt-label').classList.toggle('correct', i.checked));
+      document.getElementById('q3').classList.add('correct');
+      lockTest();
+      showBanner(true, state.attempts || 1);
+    }
+  });
+</script>
+</body>
+</html>
