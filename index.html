@@ -883,6 +883,7 @@
         if (d.words_learned)     localStorage.setItem('polina_words_learned',    d.words_learned);
         if (d.verbs_learned)     localStorage.setItem('polina_verbs_learned',    d.verbs_learned);
         if (d.languages_learned) localStorage.setItem('polina_vocab_languages',  d.languages_learned);
+        if (d.language_classes_learned) localStorage.setItem('polina_vocab_language_classes', d.language_classes_learned);
       }
     } catch(e) {
       console.error('Не удалось загрузить прогресс из Supabase:', e);
@@ -899,8 +900,9 @@
     const words     = parseInt(localStorage.getItem('polina_words_learned')   || '0');
     const verbs     = parseInt(localStorage.getItem('polina_verbs_learned')   || '0');
     const langs     = parseInt(localStorage.getItem('polina_vocab_languages') || '0');
-    const vocabDone  = words + verbs + langs;
-    const vocabTotal = 114;
+    const langClasses = parseInt(localStorage.getItem('polina_vocab_language_classes') || '0');
+    const vocabDone  = words + verbs + langs + langClasses;
+    const vocabTotal = 134;
     const vocabPct   = Math.round(vocabDone / vocabTotal * 100);
 
     // Обновляем чипы
