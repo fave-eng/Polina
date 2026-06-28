@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesson 6 — Putting Your Words to Work</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --indigo: #4f46e5; --indigo-light: #6366f1;
+      --rose: #f43f5e; --emerald: #10b981;
+      --amber: #f59e0b; --sky: #0ea5e9;
+      --bg: #f1f5f9; --card: #ffffff;
+      --text: #0f172a; --muted: #64748b; --border: #e2e8f0;
+    }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); padding-bottom:120px; }
+
+    /* HERO */
+    .hero { background:linear-gradient(135deg,#0ea5e9 0%,#4f46e5 60%,#7c3aed 100%); padding:36px 24px 48px; position:relative; }
+    .hero::before { content:''; position:absolute; inset:0; pointer-events:none; background:url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='24' cy='24' r='3' fill='%23ffffff' fill-opacity='0.06'/%3E%3C/svg%3E"); }
+    .hero-wave { display:block; width:100%; line-height:0; background:var(--bg); }
+    .hero-wave svg { display:block; width:100%; }
+    .hero-back { display:inline-flex; align-items:center; gap:6px; color:rgba(255,255,255,.75); font-size:13px; font-weight:600; text-decoration:none; margin-bottom:18px; transition:color .2s; position:relative; z-index:1; }
+    .hero-back:hover { color:#fff; }
+    .hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.28); color:#fff; font-size:12px; font-weight:600; padding:5px 14px; border-radius:100px; margin-bottom:12px; position:relative; z-index:1; }
+    .hero h1 { font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(22px,5vw,36px); font-weight:800; color:#fff; letter-spacing:-.5px; margin-bottom:6px; position:relative; z-index:1; }
+    .hero p { color:rgba(255,255,255,.75); font-size:14px; position:relative; z-index:1; }
+    .hero-score { display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,.15); border-radius:12px; padding:10px 18px; margin-top:18px; color:#fff; font-size:14px; font-weight:600; position:relative; z-index:1; }
+    .hs-num { font-family:'Plus Jakarta Sans',sans-serif; font-size:22px; font-weight:800; }
+
+    .page { max-width:780px; margin:0 auto; padding:0 20px; }
+
+    /* SCORE BANNER */
+    .score-banner { background:linear-gradient(135deg,#d1fae5,#a7f3d0); border:1.5px solid #6ee7b7; border-radius:16px; padding:18px 22px; font-family:'Plus Jakarta Sans',sans-serif; font-size:17px; font-weight:700; color:#064e3b; text-align:center; display:none; margin-bottom:24px; }
+
+    /* SECTION LABEL */
+    .section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin:32px 0 14px; }
+
+    /* TEXT BOX (4 stories) */
+    .story-grid { display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:18px; }
+    .story-card { background:var(--card); border-radius:16px; border:1.5px solid var(--border); padding:20px 22px; line-height:1.75; font-size:14.5px; }
+    .story-card .story-name { font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; color:var(--indigo); font-size:14px; margin-top:10px; }
+    .story-card b { color:var(--text); background:#eef2ff; padding:1px 4px; border-radius:4px; }
+
+    /* TRANSLATION GRID */
+    .trans-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:4px; }
+    @media(max-width:500px){ .trans-grid { grid-template-columns:1fr; } }
+    .trans-item { background:var(--card); border:1.5px solid var(--border); border-radius:12px; padding:12px 16px; display:flex; align-items:center; gap:10px; }
+    .trans-word { font-weight:700; font-size:14px; color:var(--indigo); min-width:130px; }
+    .trans-ru { font-size:13px; color:var(--muted); }
+
+    /* EXERCISE CARD */
+    .ex-card { background:var(--card); border-radius:18px; border:1.5px solid var(--border); margin-bottom:18px; overflow:hidden; }
+    .ex-header { display:flex; align-items:center; gap:14px; padding:18px 22px 0; }
+    .ex-num { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--sky),var(--indigo)); color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .ex-header h2 { font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:700; }
+    .ex-body { padding:14px 22px 22px; }
+    .instruction { font-size:13px; color:var(--muted); font-style:italic; margin-bottom:16px; line-height:1.55; }
+
+    /* Q ROW */
+    .q-row { margin-bottom:18px; font-size:15px; line-height:1.8; }
+    .q-row:last-of-type { margin-bottom:0; }
+
+    input[type="text"] { padding:7px 12px; font-size:14px; font-family:inherit; border:1.5px solid var(--border); border-radius:10px; background:#fafbff; color:var(--text); transition:border-color .2s; vertical-align:middle; }
+    input[type="text"]:focus { outline:none; border-color:var(--indigo); background:#fff; }
+    input[type="text"].inline-input { width:140px; }
+    input[type="text"]:disabled, select:disabled {
+      background:#f1f5f9; color:#475569; cursor:not-allowed; opacity:0.85;
+    }
+    input[type="text"].block-input { display:block; width:100%; max-width:360px; margin-top:6px; }
+    input[type="text"].correct { border-color:var(--emerald) !important; background:#f0fdf4; }
+    input[type="text"].wrong   { border-color:var(--rose) !important; background:#fff5f5; }
+
+    select { padding:7px 12px; font-size:14px; font-family:inherit; border:1.5px solid var(--border); border-radius:10px; background:#fafbff; color:var(--text); transition:border-color .2s; vertical-align:middle; }
+    select:focus { outline:none; border-color:var(--indigo); }
+    select.correct { border-color:var(--emerald) !important; background:#f0fdf4; }
+    select.wrong   { border-color:var(--rose) !important; background:#fff5f5; }
+
+    .feedback { font-size:12px; font-weight:600; margin-top:4px; display:none; }
+    .feedback.correct { color:var(--emerald); display:block; }
+    .feedback.wrong   { color:var(--rose);    display:block; }
+
+    /* EX 8 — names matching */
+    .name-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; font-size:14px; flex-wrap:wrap; }
+    .name-q { flex:1; min-width:220px; }
+
+    /* SUBMIT */
+    .submit-btn { width:100%; padding:16px; background:linear-gradient(135deg,var(--sky),var(--indigo)); color:#fff; border:none; border-radius:14px; font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:700; cursor:pointer; margin-top:10px; transition:opacity .2s, transform .2s; display:flex; align-items:center; justify-content:center; gap:10px; }
+    .submit-btn:hover { opacity:.92; transform:translateY(-1px); }
+
+    /* VOCAB TEASER */
+    .vocab-teaser { background:linear-gradient(135deg,#eff6ff,#dbeafe); border:1.5px solid #bfdbfe; border-radius:18px; padding:22px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:24px; }
+    .vt-left h3 { font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:700; color:#1e40af; margin-bottom:4px; }
+    .vt-left p { font-size:13px; color:#3b82f6; }
+    .vt-btn { background:var(--indigo); color:#fff; border:none; border-radius:12px; padding:12px 22px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:700; cursor:pointer; text-decoration:none; white-space:nowrap; transition:opacity .2s; }
+    .vt-btn:hover { opacity:.88; }
+
+    /* NAV */
+    .nav-pill { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#0f172a; border-radius:100px; padding:12px 24px; display:flex; gap:4px; box-shadow:0 8px 32px rgba(15,23,42,.3); z-index:900; white-space:nowrap; }
+    .nav-pill a { color:rgba(255,255,255,.6); font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border-radius:100px; transition:all .2s; }
+    .nav-pill a:hover, .nav-pill a.active { background:var(--indigo); color:#fff; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="page">
+    <a href="./homework.html" class="hero-back">← Все задания</a>
+    <div class="hero-eyebrow">📝 Lesson 6 · Homework</div>
+    <h1>Putting Your Words to Work</h1>
+    <p>Полина · Уровень B1 · Unit 1 (Workbook, стр. 12)</p>
+    <div class="hero-score">
+      <div>
+        <div class="hs-num" id="liveScore">0 / 0</div>
+        <div style="font-size:11px;opacity:.75;margin-top:1px;">правильных ответов</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="hero-wave">
+  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:linear-gradient(135deg,#0ea5e9,#4f46e5 60%,#7c3aed)">
+    <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
+  </svg>
+</div>
+
+<div class="page">
+  <div id="scoreBanner" class="score-banner"></div>
+
+  <!-- TEXTS FOR READING -->
+  <div class="section-label">Тексты для чтения — посты в чате</div>
+  <div class="story-grid">
+    <div class="story-card">
+      It wasn't really a class but I learnt a lot of words. Many years ago, I was on a cycling holiday in a remote part of Spain and I had an <b>accident</b>. I was taken to the nearest A&E department, where no-one spoke English. I could get by with everyday Spanish, but didn't know any <b>medical</b> words. The staff looked after me and, by the time I left, I knew the words for all the parts of the leg and how to describe pain in Spanish. And it has <b>stayed with me</b> to this day!
+      <div class="story-name">— Alex, US</div>
+    </div>
+    <div class="story-card">
+      On a ferry, of all places. We were on our way to France from the UK and suddenly a French lady appeared and gave us a leaflet about a language class on board. I must admit I was a bit <b>sceptical</b> about how much we could pick up in such a short time. But there was nothing much else to do so we went along. We practised ordering things in a shop and café, and it was great fun. The best thing was actually using the language on the other side of the Channel.
+      <div class="story-name">— Mike, UK</div>
+    </div>
+    <div class="story-card">
+      Not a class in the usual sense but I got a lot of speaking practice in a tunnel in Japan! I was on a packed train using my <i>teach yourself Japanese</i> book and CD. What I really wanted was to speak to a real person but I didn't feel <b>confident</b> to start up a conversation and everyone was very <b>reserved</b>. Suddenly, we broke down in the middle of a long tunnel. It was such an unusual thing that it got everyone talking. I found out that I knew more than I thought.
+      <div class="story-name">— Cerys, Wales</div>
+    </div>
+    <div class="story-card">
+      Under the stars! A new language school had opened in my town and I was really keen to sign up. I thought learning English with a native speaker would help me <b>top up</b> what I already knew from school. I arrived for the first class and found the place in darkness. The electricity had failed but rather than cancel the classes, the teachers used different spaces outside the school. All the local cafés were full of other students, so we ended up on the beach. It was a strange first lesson but it really broke the ice.
+      <div class="story-name">— Lydia, Greece</div>
+    </div>
+  </div>
+
+  <!-- TRANSLATION OF BOLD WORDS -->
+  <div class="section-label">Слова из текстов — перевод</div>
+  <div class="trans-grid">
+    <div class="trans-item"><span class="trans-word">accident</span><span class="trans-ru">несчастный случай, авария</span></div>
+    <div class="trans-item"><span class="trans-word">medical</span><span class="trans-ru">медицинский</span></div>
+    <div class="trans-item"><span class="trans-word">stayed with me</span><span class="trans-ru">осталось в памяти, не забылось</span></div>
+    <div class="trans-item"><span class="trans-word">sceptical</span><span class="trans-ru">скептический, сомневающийся</span></div>
+    <div class="trans-item"><span class="trans-word">confident</span><span class="trans-ru">уверенный (в себе)</span></div>
+    <div class="trans-item"><span class="trans-word">reserved</span><span class="trans-ru">сдержанный, замкнутый</span></div>
+    <div class="trans-item"><span class="trans-word">top up</span><span class="trans-ru">пополнить, дополнить (знания)</span></div>
+    <div class="trans-item"><span class="trans-word">broke the ice</span><span class="trans-ru">растопить лёд, снять неловкость</span></div>
+  </div>
+
+  <!-- EX 7 — main question -->
+  <div class="section-label">Упражнения</div>
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">7</div>
+      <h2>Read the posts quickly. What question are they answering?</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">Прочитай все 4 поста ещё раз и выбери, на какой общий вопрос они все отвечают.</p>
+      <div class="q-row" data-num="7">
+        <select id="q7">
+          <option value="">— выбери —</option>
+          <option value="a">a) Where's the best place to learn a second language?</option>
+          <option value="b">b) Where's the strangest place you've had a language class?</option>
+          <option value="c">c) Why do you like learning languages?</option>
+        </select>
+        <div class="feedback" id="fb7"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EX 8 — who... -->
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">8</div>
+      <h2>Read the posts again. Write the correct names.</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">Кто из четверых это сказал/сделал? Впиши имя (Alex / Mike / Cerys / Lydia).</p>
+
+      <div class="name-row">
+        <div class="name-q">1. didn't think they would learn much?</div>
+        <input type="text" class="inline-input" id="q8_1" placeholder="имя" />
+        <div class="feedback" id="fb8_1"></div>
+      </div>
+      <div class="name-row">
+        <div class="name-q">2. still remembers what they learnt?</div>
+        <input type="text" class="inline-input" id="q8_2" placeholder="имя" />
+        <div class="feedback" id="fb8_2"></div>
+      </div>
+      <div class="name-row">
+        <div class="name-q">3. was surprised by how much they knew?</div>
+        <input type="text" class="inline-input" id="q8_3" placeholder="имя" />
+        <div class="feedback" id="fb8_3"></div>
+      </div>
+      <div class="name-row">
+        <div class="name-q">4. wanted to improve on their current level?</div>
+        <input type="text" class="inline-input" id="q8_4" placeholder="имя" />
+        <div class="feedback" id="fb8_4"></div>
+      </div>
+      <div class="name-row">
+        <div class="name-q">5. didn't know specific vocabulary?</div>
+        <input type="text" class="inline-input" id="q8_5" placeholder="имя" />
+        <div class="feedback" id="fb8_5"></div>
+      </div>
+      <div class="name-row">
+        <div class="name-q">6. wasn't learning with a teacher?</div>
+        <input type="text" class="inline-input" id="q8_6" placeholder="имя" />
+        <div class="feedback" id="fb8_6"></div>
+      </div>
+      <div class="name-row">
+        <div class="name-q">7. practised again soon after the class?</div>
+        <input type="text" class="inline-input" id="q8_7" placeholder="имя" />
+        <div class="feedback" id="fb8_7"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EX 9 — prepositions -->
+  <div class="ex-card">
+    <div class="ex-header">
+      <div class="ex-num">9</div>
+      <h2>Complete the sentences with the missing prepositions</h2>
+    </div>
+    <div class="ex-body">
+      <p class="instruction">Вспомни фразовые выражения из постов и впиши пропущенный предлог.</p>
+
+      <div class="q-row" data-num="9.1">
+        1. It's funny how I forget some words but others stay <input type="text" class="inline-input" id="q9_1" placeholder="предлог…" /> me.
+        <div class="feedback" id="fb9_1"></div>
+      </div>
+      <div class="q-row" data-num="9.2">
+        2. An intensive course is a good way to top <input type="text" class="inline-input" id="q9_2" placeholder="предлог…" /> your English.
+        <div class="feedback" id="fb9_2"></div>
+      </div>
+      <div class="q-row" data-num="9.3">
+        3. I went <input type="text" class="inline-input" id="q9_3" placeholder="предлог…" /> to a German class with a friend and really enjoyed it.
+        <div class="feedback" id="fb9_3"></div>
+      </div>
+      <div class="q-row" data-num="9.4">
+        4. The most difficult thing is often starting <input type="text" class="inline-input" id="q9_4" placeholder="предлог…" /> a conversation.
+        <div class="feedback" id="fb9_4"></div>
+      </div>
+      <div class="q-row" data-num="9.5">
+        5. Where can I sign <input type="text" class="inline-input" id="q9_5" placeholder="предлог…" /> for Italian classes?
+        <div class="feedback" id="fb9_5"></div>
+      </div>
+      <div class="q-row" data-num="9.6">
+        6. We'd like to find <input type="text" class="inline-input" id="q9_6" placeholder="предлог…" /> about Russian classes in our area.
+        <div class="feedback" id="fb9_6"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <button class="submit-btn" onclick="submitHomework()">
+    <span>🚀</span> Проверить и отправить результаты
+  </button>
+
+  <!-- VOCAB TEASER -->
+  <div class="vocab-teaser">
+    <div class="vt-left">
+      <h3>🗣️ Лексика к уроку 6</h3>
+      <p>Слова из текстов про языковые классы — тренируй до домашней работы!</p>
+    </div>
+    <a href="./vocab-language-classes.html" class="vt-btn">Тренировать →</a>
+  </div>
+
+</div><!-- /.page -->
+
+<div class="nav-pill">
+  <a href="./index.html">🏠 Home</a>
+  <a href="./homework.html" class="active">📝 HW</a>
+  <a href="./vocabulary-hub.html">💥 Vocab</a>
+</div>
+
+<script>
+  const BOT_TOKEN = "8604414786:AAEcyyQxHiYUi80PDZt7ZkQjomLfsm_VjKM";
+  const CHAT_ID   = "-1003908460669";
+  const SB_URL    = "https://zqzgarvmpqqqaobeicpc.supabase.co";
+  const SB_KEY    = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
+
+  // Словарь правильных ответов для отчёта (проверено по Answer Key учебника, стр. 115)
+  const correctAnswers = {
+    '7': 'b) Where\'s the strangest place you\'ve had a language class?',
+    '8.1': 'Mike', '8.2': 'Alex', '8.3': 'Cerys', '8.4': 'Lydia',
+    '8.5': 'Alex', '8.6': 'Cerys', '8.7': 'Mike',
+    '9.1': 'with', '9.2': 'up', '9.3': 'off', '9.4': 'up', '9.5': 'up', '9.6': 'out',
+  };
+
+  const questionLabels = {
+    '7': 'Ex7 — главный вопрос постов',
+    '8.1': 'Ex8 №1 — didn\'t think they would learn much',
+    '8.2': 'Ex8 №2 — still remembers what they learnt',
+    '8.3': 'Ex8 №3 — was surprised by how much they knew',
+    '8.4': 'Ex8 №4 — wanted to improve on current level',
+    '8.5': 'Ex8 №5 — didn\'t know specific vocabulary',
+    '8.6': 'Ex8 №6 — wasn\'t learning with a teacher',
+    '8.7': 'Ex8 №7 — practised again soon after the class',
+    '9.1': 'Ex9 №1 — stay ___ me', '9.2': 'Ex9 №2 — top ___ your English',
+    '9.3': 'Ex9 №3 — went ___ to a German class', '9.4': 'Ex9 №4 — starting ___ a conversation',
+    '9.5': 'Ex9 №5 — sign ___ for Italian classes', '9.6': 'Ex9 №6 — find ___ about Russian classes',
+  };
+
+  function norm(s){ return s.toLowerCase().trim().replace(/[ё]/g,'е'); }
+
+  // Маппинг id вопросов → элементы
+  const questions = [
+    { num:'7',    el:'q7',    fb:'fb7',    ans:['b'], sel:true },
+    { num:'8.1',  el:'q8_1',  fb:'fb8_1',  ans:['mike'] },
+    { num:'8.2',  el:'q8_2',  fb:'fb8_2',  ans:['alex'] },
+    { num:'8.3',  el:'q8_3',  fb:'fb8_3',  ans:['cerys'] },
+    { num:'8.4',  el:'q8_4',  fb:'fb8_4',  ans:['lydia'] },
+    { num:'8.5',  el:'q8_5',  fb:'fb8_5',  ans:['alex'] },
+    { num:'8.6',  el:'q8_6',  fb:'fb8_6',  ans:['cerys'] },
+    { num:'8.7',  el:'q8_7',  fb:'fb8_7',  ans:['mike'] },
+    { num:'9.1',  el:'q9_1',  fb:'fb9_1',  ans:['with'] },
+    { num:'9.2',  el:'q9_2',  fb:'fb9_2',  ans:['up'] },
+    { num:'9.3',  el:'q9_3',  fb:'fb9_3',  ans:['off'] },
+    { num:'9.4',  el:'q9_4',  fb:'fb9_4',  ans:['up'] },
+    { num:'9.5',  el:'q9_5',  fb:'fb9_5',  ans:['up'] },
+    { num:'9.6',  el:'q9_6',  fb:'fb9_6',  ans:['out'] },
+  ];
+
+  async function saveLessonScore(lessonNum, scoreStr, answersObj, bannerEl) {
+    try {
+      const getRes = await fetch(
+        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers`,
+        { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+      );
+      if (!getRes.ok) throw new Error(`Не удалось прочитать прогресс (HTTP ${getRes.status})`);
+      const rows = await getRes.json();
+      const currentScores  = (rows[0] && rows[0].hw_scores)  || {};
+      const currentAnswers = (rows[0] && rows[0].hw_answers) || {};
+
+      const updatedScores  = { ...currentScores,  [lessonNum]: scoreStr };
+      const updatedAnswers = { ...currentAnswers, [lessonNum]: answersObj };
+
+      const putRes = await fetch(`${SB_URL}/rest/v1/progress?on_conflict=student`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SB_KEY,
+          Authorization: `Bearer ${SB_KEY}`,
+          Prefer: 'resolution=merge-duplicates,return=minimal',
+        },
+        body: JSON.stringify({
+          student: 'polina',
+          hw_scores: updatedScores,
+          hw_answers: updatedAnswers,
+          updated_at: new Date().toISOString(),
+        }),
+      });
+      if (!putRes.ok) {
+        const errText = await putRes.text().catch(() => '');
+        throw new Error(`Не удалось сохранить прогресс (HTTP ${putRes.status}) ${errText}`);
+      }
+      console.log('Прогресс по уроку', lessonNum, 'сохранён:', updatedScores, updatedAnswers);
+    } catch (e) {
+      console.error('Ошибка сохранения прогресса в Supabase:', e);
+      if (bannerEl) {
+        const warn = document.createElement('div');
+        warn.style.cssText = 'margin-top:10px;font-size:13px;color:#b91c1c;font-weight:600;';
+        warn.textContent = '⚠️ Результат отправлен в Telegram, но не сохранился на сайте. Сообщите учителю.';
+        bannerEl.after(warn);
+      }
+    }
+  }
+
+  function collectAnswers() {
+    const answers = {};
+    questions.forEach(q => {
+      const el = document.getElementById(q.el);
+      if (el) answers[q.el] = el.value || '';
+    });
+    return answers;
+  }
+
+  function lockFormWithAnswers(answersObj) {
+    questions.forEach(q => {
+      const el = document.getElementById(q.el);
+      if (!el) return;
+      if (answersObj && answersObj[q.el] !== undefined) {
+        el.value = answersObj[q.el];
+      }
+      el.disabled = true;
+    });
+    const submitBtn = document.querySelector('.submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.5';
+      submitBtn.style.cursor = 'not-allowed';
+      submitBtn.innerHTML = '<span>✅</span> Домашка уже сдана';
+    }
+  }
+
+  async function loadAndLockIfDone() {
+    try {
+      const r = await fetch(
+        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers`,
+        { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+      );
+      if (!r.ok) return;
+      const rows = await r.json();
+      const scores  = (rows[0] && rows[0].hw_scores)  || {};
+      const answers = (rows[0] && rows[0].hw_answers) || {};
+      const score6 = scores['6'];
+      const isDone = score6 && score6 !== '' && score6 !== '0/0';
+      if (!isDone) return;
+
+      lockFormWithAnswers(answers['6'] || {});
+      const { correct, total } = checkAll();
+      const pct = Math.round(correct / total * 100);
+      const emoji = pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪';
+      const banner = document.getElementById('scoreBanner');
+      banner.textContent = `${emoji} Домашка уже сдана. Результат: ${correct} из ${total} (${pct}%)`;
+      banner.style.display = 'block';
+    } catch (e) {
+      console.error('Не удалось проверить статус домашки:', e);
+    }
+  }
+
+  function checkAll() {
+    let correct = 0, total = questions.length;
+    let errorsReport = '';
+
+    questions.forEach(q => {
+      const el = document.getElementById(q.el);
+      const fb = document.getElementById(q.fb);
+      if (!el || !fb) return;
+      const val = el.value ? el.value.trim() : '';
+      const ok  = q.ans.some(a => norm(val) === norm(a) || norm(val).includes(norm(a)));
+
+      if (ok) {
+        correct++;
+        el.classList.add('correct'); el.classList.remove('wrong');
+        fb.textContent = '✓'; fb.className = 'feedback correct';
+      } else {
+        el.classList.add('wrong'); el.classList.remove('correct');
+        fb.textContent = '✗'; fb.className = 'feedback wrong';
+        const label = questionLabels[q.num] || q.num;
+        errorsReport += `\n❌ *${label}*\n`;
+        errorsReport += `   Ответ: _${val || 'нет ответа'}_\n`;
+        errorsReport += `   Правильно: _${correctAnswers[q.num] || q.ans[0]}_\n`;
+      }
+    });
+
+    document.getElementById('liveScore').textContent = `${correct} / ${total}`;
+    return { correct, total, errorsReport };
+  }
+
+  function submitHomework() {
+    const { correct, total, errorsReport } = checkAll();
+    const pct   = Math.round(correct / total * 100);
+    const emoji = pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪';
+
+    const banner = document.getElementById('scoreBanner');
+    banner.textContent = `${emoji} Результат: ${correct} из ${total} (${pct}%). Отчёт отправлен!`;
+    banner.style.display = 'block';
+    window.scrollTo({ top:0, behavior:'smooth' });
+
+    localStorage.setItem('polina_hw6_score', `${correct}/${total}`);
+
+    const answersObj = collectAnswers();
+    saveLessonScore('6', `${correct}/${total}`, answersObj, banner);
+
+    questions.forEach(q => {
+      const el = document.getElementById(q.el);
+      if (el) el.disabled = true;
+    });
+    const submitBtn = document.querySelector('.submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.5';
+      submitBtn.style.cursor = 'not-allowed';
+      submitBtn.innerHTML = '<span>✅</span> Домашка уже сдана';
+    }
+
+    let report = `📝 *Отчёт по ДЗ Полины*\n`;
+    report += `Тема: Putting Your Words to Work (Lesson 6)\n`;
+    report += `📊 Результат: *${correct} из ${total} (${pct}%)* ${emoji}\n`;
+    if (errorsReport) {
+      report += `\n─────────────────\n⚠️ *Ошибки:*${errorsReport}`;
+    } else {
+      report += `\n✅ Все задания выполнены верно!`;
+    }
+
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ chat_id:CHAT_ID, text:report, parse_mode:'Markdown' })
+    }).catch(console.error);
+  }
+
+  window.addEventListener('load', loadAndLockIfDone);
+</script>
+</body>
+</html>
