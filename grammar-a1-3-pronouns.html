@@ -15,8 +15,6 @@
       --text: #0f172a; --muted: #64748b; --border: #e2e8f0;
     }
     body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); padding-bottom:120px; }
-
-    /* HERO */
     .hero { background:linear-gradient(135deg,#10b981 0%,#0ea5e9 60%,#4f46e5 100%); padding:36px 24px 48px; position:relative; }
     .hero-wave { display:block; width:100%; line-height:0; background:var(--bg); }
     .hero-wave svg { display:block; width:100%; }
@@ -25,18 +23,12 @@
     .hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.28); color:#fff; font-size:12px; font-weight:600; padding:5px 14px; border-radius:100px; margin-bottom:12px; position:relative; z-index:1; }
     .hero h1 { font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(22px,5vw,34px); font-weight:800; color:#fff; letter-spacing:-.5px; margin-bottom:6px; position:relative; z-index:1; }
     .hero p { color:rgba(255,255,255,.75); font-size:14px; position:relative; z-index:1; }
-
     .page { max-width:740px; margin:0 auto; padding:0 20px; }
-
     .status-banner { border-radius:16px; padding:16px 20px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14.5px; font-weight:700; text-align:center; display:none; margin-bottom:22px; }
     .status-banner.passed  { background:linear-gradient(135deg,#d1fae5,#a7f3d0); border:1.5px solid #6ee7b7; color:#064e3b; }
     .status-banner.failed  { background:linear-gradient(135deg,#fee2e2,#fecaca); border:1.5px solid #fca5a5; color:#7f1d1d; }
-
     .section-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin:32px 0 14px; }
-
-    /* THEORY CARD */
     .theory-intro { background:var(--card); border-radius:16px; border:1.5px solid var(--border); padding:18px 22px; font-size:14px; line-height:1.7; color:var(--muted); margin-bottom:18px; }
-
     .pos-card { border-radius:16px; padding:20px 22px; margin-bottom:14px; border:1.5px solid transparent; }
     .pos-head { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
     .pos-icon { width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
@@ -50,37 +42,27 @@
     .pos-sentence { font-style:italic; font-size:13px; background:rgba(255,255,255,.7); border-radius:10px; padding:10px 13px; line-height:1.65; }
     .pos-sentence b { text-decoration:underline; font-style:normal; }
     .pos-nuance { font-size:12.5px; background:#fefce8; color:#78350f; border-radius:9px; padding:9px 12px; margin-top:10px; line-height:1.55; }
-
     .pos-noun { background:#eff6ff; border-color:#bfdbfe; }
     .pos-noun .pos-icon { background:#0ea5e9; color:#fff; }
     .pos-noun .pos-title, .pos-noun .pos-eng { color:#1e40af; }
-
     .pos-verb { background:#fef2f2; border-color:#fecaca; }
     .pos-verb .pos-icon { background:#f43f5e; color:#fff; }
     .pos-verb .pos-title, .pos-verb .pos-eng { color:#9f1239; }
-
     .pos-adj { background:#f0fdf4; border-color:#bbf7d0; }
     .pos-adj .pos-icon { background:#10b981; color:#fff; }
     .pos-adj .pos-title, .pos-adj .pos-eng { color:#065f46; }
-
     .pos-adv { background:#f5f3ff; border-color:#ddd6fe; }
     .pos-adv .pos-icon { background:#8b5cf6; color:#fff; }
     .pos-adv .pos-title, .pos-adv .pos-eng { color:#5b21b6; }
-
-    /* SUMMARY TABLE */
     .summary-table { width:100%; border-collapse:collapse; background:var(--card); border-radius:16px; overflow:hidden; border:1.5px solid var(--border); margin-bottom:18px; font-size:13px; }
     .summary-table th { background:#0f172a; color:#fff; padding:10px 12px; text-align:left; font-weight:700; font-size:12px; }
     .summary-table td { padding:10px 12px; border-bottom:1px solid var(--border); }
     .summary-table tr:last-child td { border-bottom:none; }
     .summary-table td:first-child { font-weight:700; }
-
-    /* TRAP */
     .trap-block { background:#fff1f2; border:1.5px dashed #fb7185; border-radius:14px; padding:16px 18px; margin-bottom:18px; }
     .trap-head { display:flex; align-items:center; gap:8px; font-weight:800; font-size:14px; color:#be123c; margin-bottom:8px; }
     .trap-block p { font-size:13.5px; color:#881337; line-height:1.65; margin-bottom:8px; }
     .trap-example { font-size:13px; background:rgba(255,255,255,.7); border-radius:9px; padding:9px 12px; line-height:1.7; }
-
-    /* TEST */
     .test-card { background:var(--card); border-radius:18px; border:1.5px solid var(--border); margin-bottom:18px; overflow:hidden; }
     .test-header { display:flex; align-items:center; gap:14px; padding:18px 22px 0; }
     .test-num { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--indigo),var(--violet)); color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
@@ -90,7 +72,6 @@
     .q-block:last-child { margin-bottom:0; }
     .q-text { font-size:14.5px; font-weight:600; margin-bottom:10px; line-height:1.6; }
     .q-sentence { font-style:italic; color:var(--indigo); }
-
     .opt-row { display:flex; flex-direction:column; gap:8px; }
     .opt-label { display:flex; align-items:center; gap:10px; border:1.5px solid var(--border); border-radius:11px; padding:11px 14px; cursor:pointer; font-size:14px; transition:all .15s; background:#fafbff; }
     .opt-label:hover { border-color:var(--indigo-light); }
@@ -98,20 +79,16 @@
     .opt-label.correct { border-color:var(--emerald); background:#f0fdf4; }
     .opt-label.wrong   { border-color:var(--rose); background:#fff5f5; }
     .opt-label.disabled-look { cursor:default; opacity:.85; }
-
     input[type="text"].q-input { width:100%; max-width:320px; padding:10px 14px; font-size:14px; font-family:inherit; border:1.5px solid var(--border); border-radius:10px; background:#fafbff; color:var(--text); }
     input[type="text"].q-input:focus { outline:none; border-color:var(--indigo); background:#fff; }
     input[type="text"].q-input.correct { border-color:var(--emerald) !important; background:#f0fdf4; }
     input[type="text"].q-input.wrong   { border-color:var(--rose) !important; background:#fff5f5; }
     input[type="text"].q-input:disabled { background:#f1f5f9; color:#475569; cursor:not-allowed; }
-
     .explain-wrong { display:none; font-size:12.5px; color:#9f1239; background:#fff1f2; border-radius:9px; padding:9px 12px; margin-top:8px; line-height:1.55; }
     .explain-wrong.show { display:block; }
-
     .submit-btn { width:100%; padding:16px; background:linear-gradient(135deg,var(--indigo),var(--violet)); color:#fff; border:none; border-radius:14px; font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:700; cursor:pointer; margin-top:6px; transition:opacity .2s, transform .2s; display:flex; align-items:center; justify-content:center; gap:10px; }
     .submit-btn:hover { opacity:.92; transform:translateY(-1px); }
     .submit-btn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
-
     .nav-pill { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#0f172a; border-radius:100px; padding:12px 24px; display:flex; gap:4px; box-shadow:0 8px 32px rgba(15,23,42,.3); z-index:900; white-space:nowrap; }
     .nav-pill a { color:rgba(255,255,255,.6); font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border-radius:100px; transition:all .2s; }
     .nav-pill a:hover, .nav-pill a.active { background:var(--indigo); color:#fff; }
@@ -204,7 +181,7 @@
   <div class="test-card">
     <div class="test-header">
       <div class="test-num">✓</div>
-      <h2>Коварный тест — нужно ответить верно на все 3 вопроса</h2>
+      <h2>Коварный тест — нужно ответить верно на все вопросы</h2>
     </div>
     <div class="test-body">
 
@@ -234,6 +211,22 @@
         <div class="explain-wrong" id="explain-q3">Ловушка: Кажется, что нужно сказать "its" (её собственный колпачок), но у "its" нет абсолютной формы, способной стоять в конце предложения без существительного. Единственное верное слово здесь — "one" (в значении 'its cap' ➔ 'one'). Подумай, какое слово заменяет ранее упомянутый предмет во избежание повтора.</div>
       </div>
 
+      <div class="q-block">
+        <div class="q-text">4. Какое из предложений написано БЕЗ орфографических и пунктуационных ошибок в притяжательных структурах?</div>
+        <div class="opt-row" id="q4-options">
+          <label class="opt-label"><input type="radio" name="q4" value="A"> I think this smartphone is their's, not her's.</label>
+          <label class="opt-label"><input type="radio" name="q4" value="B"> I think this smartphone is theirs, not hers.</label>
+          <label class="opt-label"><input type="radio" name="q4" value="C"> I think this smartphone is their, not her.</label>
+        </div>
+        <div class="explain-wrong" id="explain-q4">Ловушка: Запомни раз и навсегда — в абсолютных притяжательных местоимениях (*theirs, hers, ours, yours*) апостроф никогда не пишется! Попытка поставить его туда — классическая маркерная ошибка уровня Intermediate.</div>
+      </div>
+
+      <div class="q-block">
+        <div class="q-text">5. Заполни пропуск ОДНИМ словом, строго соблюдая правила конструкции Двойного Родительного падежа (double genitive):<br><span class="q-sentence">"Don't worry about the accommodation. A colleague of ___ has offered us a spare room in London."</span></div>
+        <input type="text" class="q-input" id="q5" placeholder="введи слово (my/me/mine/myself)…" />
+        <div class="explain-wrong" id="explain-q5">Ловушка: Студенты машинально пытаются подставить сюда объектный падеж *me* или притяжательное прилагательное *my*. Однако в устойчивых сочетаниях «существительное + of + местоимение» в значении «один из моих / его» употребляется исключительно абсолютная форма — *mine*.</div>
+      </div>
+
       <button class="submit-btn" id="submitBtn" onclick="checkTest()">
         <span>🚀</span> Проверить ответы
       </button>
@@ -258,6 +251,8 @@
     q1: 'their',
     q2: 'of theirs',
     q3: 'one',
+    q4: 'B',
+    q5: 'mine'
   };
 
   function norm(s){ return s.toLowerCase().trim().replace(/[ё]/g,'е'); }
@@ -317,8 +312,7 @@
   async function checkTest() {
     let allCorrect = true;
 
-    // Q1, Q2 — radio
-    ['q1','q2'].forEach(qid => {
+    ['q1','q2','q4'].forEach(qid => {
       const selected = document.querySelector(`input[name="${qid}"]:checked`);
       const val = selected ? selected.value : null;
       const ok = val === correctAnswers[qid];
@@ -332,16 +326,17 @@
       else { explain.classList.add('show'); allCorrect = false; }
     });
 
-    // Q3 — text input
-    const q3el = document.getElementById('q3');
-    const q3val = q3el.value.trim();
-    const q3ok = norm(q3val) === norm(correctAnswers.q3);
-    q3el.classList.remove('correct','wrong');
-    q3el.classList.add(q3ok ? 'correct' : 'wrong');
-    const explain3 = document.getElementById('explain-q3');
-    if (q3ok) explain3.classList.remove('show'); else { explain3.classList.add('show'); allCorrect = false; }
+    ['q3','q5'].forEach(qid => {
+      const el = document.getElementById(qid);
+      const val = el.value.trim();
+      const ok = norm(val) === norm(correctAnswers[qid]);
+      el.classList.remove('correct','wrong');
+      el.classList.add(ok ? 'correct' : 'wrong');
+      const explain = document.getElementById(`explain-${qid}`);
+      if (ok) { explain.classList.remove('show'); }
+      else { explain.classList.add('show'); allCorrect = false; }
+    });
 
-    // Считаем попытки
     const progress = await getGrammarProgress();
     const prevAttempts = (progress[TOPIC_ID] && progress[TOPIC_ID].attempts) || 0;
     const attempts = prevAttempts + 1;
@@ -357,12 +352,17 @@
     const progress = await getGrammarProgress();
     const state = progress[TOPIC_ID];
     if (state && state.passed) {
-      document.querySelector(`input[name="q1"][value="${correctAnswers.q1}"]`).checked = true;
-      document.querySelector(`input[name="q2"][value="${correctAnswers.q2}"]`).checked = true;
+      ['q1','q2','q4'].forEach(qid => {
+        const rb = document.querySelector(`input[name="${qid}"][value="${correctAnswers[qid]}"]`);
+        if(rb) {
+          rb.checked = true;
+          rb.closest('.opt-label').classList.add('correct');
+        }
+      });
       document.getElementById('q3').value = correctAnswers.q3;
-      document.querySelectorAll(`input[name="q1"]`).forEach(i => i.closest('.opt-label').classList.toggle('correct', i.checked));
-      document.querySelectorAll(`input[name="q2"]`).forEach(i => i.closest('.opt-label').classList.toggle('correct', i.checked));
       document.getElementById('q3').classList.add('correct');
+      document.getElementById('q5').value = correctAnswers.q5;
+      document.getElementById('q5').classList.add('correct');
       lockTest();
       showBanner(true, state.attempts || 1);
     }
