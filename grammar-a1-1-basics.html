@@ -72,6 +72,18 @@
     .q-block:last-child { margin-bottom:0; }
     .q-text { font-size:14.5px; font-weight:600; margin-bottom:10px; line-height:1.6; }
     .q-sentence { font-style:italic; color:var(--indigo); }
+    
+    /* Добавленный стиль для выделения коварных слов в тесте */
+    .q-highlight {
+      background-color: #e0e7ff;
+      color: var(--indigo);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-style: normal;
+      box-shadow: 0 1px 2px rgba(79, 70, 229, 0.1);
+    }
+
     .opt-row { display:flex; flex-direction:column; gap:8px; }
     .opt-label { display:flex; align-items:center; gap:10px; border:1.5px solid var(--border); border-radius:11px; padding:11px 14px; cursor:pointer; font-size:14px; transition:all .15s; background:#fafbff; }
     .opt-label:hover { border-color:var(--indigo-light); }
@@ -172,7 +184,7 @@
         <div class="pos-eng">The -ly shifting meanings</div>
       </div>
     </div>
-    <div class="pos-desc">Добавление суффика <b>-ly</b> к некоторым словам не делает их способом выполнения действия, а меняет их семантику на абстрактную или временную.</div>
+    <div class="pos-desc">Добавление суффикса <b>-ly</b> к некоторым словам не делает их способом выполнения действия, а меняет их семантику на абстрактную или временную.</div>
     <div class="pos-examples">
       <span class="pos-ex-chip">hardly (едва ли)</span>
       <span class="pos-ex-chip">shortly (скоро)</span>
@@ -205,51 +217,46 @@
   <div class="test-card">
     <div class="test-header">
       <div class="test-num">✓</div>
-      <h2>Коварный тест — задания от легкого к сложному</h2>
+      <h2>Коварный тест — нужно ответить верно на все вопросы</h2>
     </div>
     <div class="test-body">
 
-      <!-- Задание 1 (Самое легкое: Выбор 50/50 по позиции слова) -->
       <div class="q-block">
-        <div class="q-text">1. Какую роль играет выделенное слово в предложении?<br><span class="q-sentence">"Don't drive so <b>fast</b> on this icy road."</span></div>
+        <div class="q-text">1. Какова часть речи выделенного слова в данном предложении?<br><span class="q-sentence">"The <span class="q-highlight">customs</span> official asked everyone to open their bags."</span></div>
         <div class="opt-row" id="q1-options">
           <label class="opt-label"><input type="radio" name="q1" value="adjective"> Adjective (Прилагательное)</label>
+          <label class="opt-label"><input type="radio" name="q1" value="noun"> Noun (Существительное)</label>
           <label class="opt-label"><input type="radio" name="q1" value="adverb"> Adverb (Наречие)</label>
         </div>
-        <div class="explain-wrong" id="explain-q1">Ловушка: Слово *fast* уникально — у него нет формы *fastly*. Здесь оно описывает глагол *drive* (как именно ехать?), соответственно, синтаксически это наречие (flat adverb), несмотря на отсутствие суффикса -ly.</div>
+        <div class="explain-wrong" id="explain-q1">Ловушка: Да, слово стоит перед другим существительным и описывает его роль (какой именно офицер). Однако морфологически это существительное во множественном числе (Noun Adjunct). В английском языке существительные часто выполняют атрибутивную функцию, не превращаясь в прилагательные.</div>
       </div>
 
-      <!-- Задание 2 (Легкое: Исключение лишнего по суффиксу) -->
       <div class="q-block">
-        <div class="q-text">2. Исключи лишнее. Какое из этих слов НЕ может выступать в роли наречия ни в каком контексте?</div>
+        <div class="q-text">2. Какова часть речи выделенного слова в данном предложении?<br><span class="q-sentence">"Don't drive so <span class="q-highlight">fast</span> on this icy road."</span></div>
         <div class="opt-row" id="q2-options">
-          <label class="opt-label"><input type="radio" name="q2" value="shortly"> shortly</label>
-          <label class="opt-label"><input type="radio" name="q2" value="hardly"> hardly</label>
-          <label class="opt-label"><input type="radio" name="q2" value="costly"> costly</label>
-          <label class="opt-label"><input type="radio" name="q2" value="lately"> lately</label>
+          <label class="opt-label"><input type="radio" name="q2" value="adjective"> Adjective (Прилагательное)</label>
+          <label class="opt-label"><input type="radio" name="q2" value="adverb"> Adverb (Наречие)</label>
         </div>
-        <div class="explain-wrong" id="explain-q2">Ловушка: Слова *shortly, hardly, lately* — это полноценные абстрактные наречия времени или степени. А вот слово *costly* (дорогой/дорогостоящий) является чистым прилагательным (существительное cost + ly). Вместо наречия нужно использовать конструкцию "at a high cost".</div>
+        <div class="explain-wrong" id="explain-q2">Ловушка: Слово *fast* уникально — у него нет формы *fastly*. Здесь оно описывает глагол *drive* (как именно ехать?), соответственно, синтаксически это наречие (flat adverb), несмотря на отсутствие суффикса -ly.</div>
       </div>
 
-      <!-- Задание 3 (Среднее: Определение части речи для Noun Adjunct) -->
       <div class="q-block">
-        <div class="q-text">3. Какова часть речи выделенного слова в данном предложении?<br><span class="q-sentence">"The <b>customs</b> official asked everyone to open their bags."</span></div>
-        <div class="opt-row" id="q3-options">
-          <label class="opt-label"><input type="radio" name="q3" value="adjective"> Adjective (Прилагательное)</label>
-          <label class="opt-label"><input type="radio" name="q3" value="noun"> Noun (Существительное)</label>
-          <label class="opt-label"><input type="radio" name="q3" value="adverb"> Adverb (Наречие)</label>
+        <div class="q-text">3. Заполни пропуск наречием, подходящим по смыслу контекста:<br><span class="q-sentence">"I can't access the database; the servers are down and I can ___ load the login page."</span></div>
+        <input type="text" class="q-input" id="q3" placeholder="введи слово…" />
+        <div class="explain-wrong" id="explain-q3">Ловушка: Студенты часто пишут здесь "hardly", думая про «тяжело». Но нужно слово со значением «едва ли / почти не могу загрузить страницу». Подумай, какое наречие с суффиксом -ly идеально передает смысл полного бессилия или минимального действия. (Подсказка: слово "hardly" переводится как «едва ли»).</div>
+      </div>
+
+      <div class="q-block">
+        <div class="q-text">4. Исключи лишнее. Какое из этих слов НЕ может выступать в роли наречия ни в каком контексте?</div>
+        <div class="opt-row" id="q4-options">
+          <label class="opt-label"><input type="radio" name="q4" value="shortly"> shortly</label>
+          <label class="opt-label"><input type="radio" name="q4" value="hardly"> hardly</label>
+          <label class="opt-label"><input type="radio" name="q4" value="costly"> costly</label>
+          <label class="opt-label"><input type="radio" name="q4" value="lately"> lately</label>
         </div>
-        <div class="explain-wrong" id="explain-q3">Ловушка: Да, слово стоит перед другим существительным и описывает его роль (какой именно офицер). Однако морфологически это существительное во множественном числе (Noun Adjunct). В английском языке существительные часто выполняют атрибутивную функцию, не превращаясь в прилагательные.</div>
+        <div class="explain-wrong" id="explain-q4">Ловушка: Слова *shortly, hardly, lately* — это полноценные абстрактные наречия времени или степени. А вот слово *costly* (дорогой/дорогостоящий) является чистым прилагательным (существительное cost + ly). Вместо наречия нужно использовать конструкцию "at a high cost".</div>
       </div>
 
-      <!-- Задание 4 (Сложное: Самостоятельный ввод слова по смысловому контексту) -->
-      <div class="q-block">
-        <div class="q-text">4. Заполни пропуск наречием, подходящим по смыслу контекста:<br><span class="q-sentence">"I can't access the database; the servers are down and I can ___ load the login page."</span></div>
-        <input type="text" class="q-input" id="q4" placeholder="введи слово…" />
-        <div class="explain-wrong" id="explain-q4">Ловушка: Студенты часто пишут здесь "hard", думая про «тяжело». Но нужно слово со значением «едва ли / почти не могу загрузить страницу». Подумай, какое наречие с суффиксом -ly идеально передает смысл полного бессилия или минимального действия. (Подсказка: слово "hardly" переводится как «едва ли»).</div>
-      </div>
-
-      <!-- Задание 5 (Самое сложное: Анализ прагматики и динамики стативных глаголов) -->
       <div class="q-block">
         <div class="q-text">5. Соотнеси контекст. В каком предложении глагол выражает временное НАРОЧИТОЕ поведение (динамику действия), а не стабильное внутреннее состояние? Введи букву правильного ответа (A или B):<br>
         <span class="q-sentence">A) "She is always very quiet and shy during meetings."</span><br>
@@ -278,12 +285,11 @@
   const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
   const TOPIC_ID = 'a1_1';
 
-  // Порядок ключей приведен в соответствие новой нумерации заданий
   const correctAnswers = {
-    q1: 'adverb',
-    q2: 'costly',
-    q3: 'noun',
-    q4: 'hardly',
+    q1: 'noun',
+    q2: 'adverb',
+    q3: 'hardly',
+    q4: 'costly',
     q5: 'b'
   };
 
@@ -344,8 +350,7 @@
   async function checkTest() {
     let allCorrect = true;
 
-    // Сверяем radio-вопросы (q1, q2, q3)
-    ['q1','q2','q3'].forEach(qid => {
+    ['q1','q2','q4'].forEach(qid => {
       const selected = document.querySelector(`input[name="${qid}"]:checked`);
       const val = selected ? selected.value : null;
       const ok = val === correctAnswers[qid];
@@ -359,8 +364,7 @@
       else { explain.classList.add('show'); allCorrect = false; }
     });
 
-    // Сверяем текстовые ответы (q4, q5)
-    ['q4','q5'].forEach(qid => {
+    ['q3','q5'].forEach(qid => {
       const el = document.getElementById(qid);
       const val = el.value.trim();
       const ok = norm(val) === norm(correctAnswers[qid]);
@@ -386,15 +390,15 @@
     const progress = await getGrammarProgress();
     const state = progress[TOPIC_ID];
     if (state && state.passed) {
-      ['q1','q2','q3'].forEach(qid => {
+      ['q1','q2','q4'].forEach(qid => {
         const rb = document.querySelector(`input[name="${qid}"][value="${correctAnswers[qid]}"]`);
         if(rb) {
           rb.checked = true;
           rb.closest('.opt-label').classList.add('correct');
         }
       });
-      document.getElementById('q4').value = correctAnswers.q4;
-      document.getElementById('q4').classList.add('correct');
+      document.getElementById('q3').value = correctAnswers.q3;
+      document.getElementById('q3').classList.add('correct');
       document.getElementById('q5').value = correctAnswers.q5.toUpperCase();
       document.getElementById('q5').classList.add('correct');
       lockTest();
