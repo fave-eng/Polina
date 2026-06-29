@@ -181,22 +181,24 @@
   <div class="test-card">
     <div class="test-header">
       <div class="test-num">✓</div>
-      <h2>Коварный тест — нужно ответить верно на все вопросы</h2>
+      <h2>Коварный тест — задания от легкого к сложному</h2>
     </div>
     <div class="test-body">
 
+      <!-- Задание 1 (Самое легкое: Базовая орфография абсолютных местоимений) -->
       <div class="q-block">
-        <div class="q-text">1. Выбери наиболее естественный вариант в контексте бизнес-переписки:<br><span class="q-sentence">"Every doctor must renew ___ license annually, regardless of where ___ practice."</span></div>
+        <div class="q-text">1. Какое из предложений написано БЕЗ орфографических и пунктуационных ошибок в притяжательных структурах?</div>
         <div class="opt-row" id="q1-options">
-          <label class="opt-label"><input type="radio" name="q1" value="his"> his ... he</label>
-          <label class="opt-label"><input type="radio" name="q1" value="his/her"> his or her ... he or she</label>
-          <label class="opt-label"><input type="radio" name="q1" value="their"> their ... they</label>
+          <label class="opt-label"><input type="radio" name="q1" value="A"> I think this smartphone is their's, not her's.</label>
+          <label class="opt-label"><input type="radio" name="q1" value="B"> I think this smartphone is theirs, not hers.</label>
+          <label class="opt-label"><input type="radio" name="q1" value="C"> I think this smartphone is their, not her.</label>
         </div>
-        <div class="explain-wrong" id="explain-q1">Ловушка: Конструкция "his or her" грамматически верна, но считается устаревшей и громоздкой. В современном корпоративном и живом английском для абстрактного человека в единственном числе используется Singular 'they/their'.</div>
+        <div class="explain-wrong" id="explain-q1">Ловушка: Запомни раз и навсегда — в абсолютных притяжательных местоимениях (*theirs, hers, ours, yours*) апостроф никогда не пишется! Попытка поставить его туда — классическая маркерная ошибка уровня Intermediate.</div>
       </div>
 
+      <!-- Задание 2 (Легкое: Выбор правильного формата Double Genitive) -->
       <div class="q-block">
-        <div class="q-text">2. Какое слово идеально дополнит пропуск?<br><span class="q-sentence">"I found an old notebook. I'm certain it's not yours, so it must be a copy ___."</span></div>
+        <div class="q-text">2. Какое сочетание слов идеально дополнит пропуск?<br><span class="q-sentence">"I found an old notebook. I'm certain it's not yours, so it must be a copy ___."</span></div>
         <div class="opt-row" id="q2-options">
           <label class="opt-label"><input type="radio" name="q2" value="of theirs"> of theirs</label>
           <label class="opt-label"><input type="radio" name="q2" value="of them"> of them</label>
@@ -205,26 +207,29 @@
         <div class="explain-wrong" id="explain-q2">Ловушка: Здесь нужна конструкция "существительное + of + абсолютное притяжательное местоимение" (double genitive), означающая «одна из их копий». Вариант "of their" требует существительного дальше, а "of them" меняет смысл на «копия, сделанная с них самих».</div>
       </div>
 
+      <!-- Задание 3 (Среднее: Современный инклюзивный контекст Singular They) -->
       <div class="q-block">
-        <div class="q-text">3. Заполни пропуск ОДНИМ словом:<br><span class="q-sentence">"This camera doesn't have a lens cap. Does the other one have ___?"</span></div>
-        <input type="text" class="q-input" id="q3" placeholder="введи слово…" />
-        <div class="explain-wrong" id="explain-q3">Ловушка: Кажется, что нужно сказать "its" (её собственный колпачок), но у "its" нет абсолютной формы, способной стоять в конце предложения без существительного. Единственное верное слово здесь — "one" (в значении 'its cap' ➔ 'one'). Подумай, какое слово заменяет ранее упомянутый предмет во избежание повтора.</div>
-      </div>
-
-      <div class="q-block">
-        <div class="q-text">4. Какое из предложений написано БЕЗ орфографических и пунктуационных ошибок в притяжательных структурах?</div>
-        <div class="opt-row" id="q4-options">
-          <label class="opt-label"><input type="radio" name="q4" value="A"> I think this smartphone is their's, not her's.</label>
-          <label class="opt-label"><input type="radio" name="q4" value="B"> I think this smartphone is theirs, not hers.</label>
-          <label class="opt-label"><input type="radio" name="q4" value="C"> I think this smartphone is their, not her.</label>
+        <div class="q-text">3. Выбери наиболее естественный вариант в контексте современной бизнес-переписки:<br><span class="q-sentence">"Every doctor must renew ___ license annually, regardless of where ___ practice."</span></div>
+        <div class="opt-row" id="q3-options">
+          <label class="opt-label"><input type="radio" name="q3" value="his"> his ... he</label>
+          <label class="opt-label"><input type="radio" name="q3" value="his/her"> his or her ... he or she</label>
+          <label class="opt-label"><input type="radio" name="q3" value="their"> their ... they</label>
         </div>
-        <div class="explain-wrong" id="explain-q4">Ловушка: Запомни раз и навсегда — в абсолютных притяжательных местоимениях (*theirs, hers, ours, yours*) апостроф никогда не пишется! Попытка поставить его туда — классическая маркерная ошибка уровня Intermediate.</div>
+        <div class="explain-wrong" id="explain-q3">Ловушка: Конструкция "his or her" грамматически верна, но считается устаревшей и громоздкой. В современном корпоративном и живом английском для абстрактного человека в единственном числе используется Singular 'they/their'.</div>
       </div>
 
+      <!-- Задание 4 (Сложное: Самостоятельный ввод абсолютной формы в Double Genitive) -->
       <div class="q-block">
-        <div class="q-text">5. Заполни пропуск ОДНИМ словом, строго соблюдая правила конструкции Двойного Родительного падежа (double genitive):<br><span class="q-sentence">"Don't worry about the accommodation. A colleague of ___ has offered us a spare room in London."</span></div>
-        <input type="text" class="q-input" id="q5" placeholder="введи слово (my/me/mine/myself)…" />
-        <div class="explain-wrong" id="explain-q5">Ловушка: Студенты машинально пытаются подставить сюда объектный падеж *me* или притяжательное прилагательное *my*. Однако в устойчивых сочетаниях «существительное + of + местоимение» в значении «один из моих / его» употребляется исключительно абсолютная форма — *mine*.</div>
+        <div class="q-text">4. Заполни пропуск ОДНИМ словом, строго соблюдая правила конструкции Двойного Родительного падежа (double genitive):<br><span class="q-sentence">"Don't worry about the accommodation. A colleague of ___ has offered us a spare room in London."</span></div>
+        <input type="text" class="q-input" id="q4" placeholder="введи слово (my/me/mine/myself)…" />
+        <div class="explain-wrong" id="explain-q4">Ловушка: Студенты машинально пытаются подставить сюда объектный падеж *me* или притяжательное прилагательное *my*. Однако в устойчивых сочетаниях «существительное + of + местоимение» в значении «один из моих / его» употребляется исключительно абсолютная форма — *mine*.</div>
+      </div>
+
+      <!-- Задание 5 (Самое сложное: Ловушка на отсутствие абсолютной формы у местоимения its) -->
+      <div class="q-block">
+        <div class="q-text">5. Заполни пропуск ОДНИМ словом, заменяющим ранее упомянутый предмет во избежание тавтологии:<br><span class="q-sentence">"This camera doesn't have a lens cap. Does the other one have ___?"</span></div>
+        <input type="text" class="q-input" id="q5" placeholder="введи слово…" />
+        <div class="explain-wrong" id="explain-q5">Ловушка: Кажется, что нужно сказать "its" (её собственный колпачок), но у "its" нет абсолютной формы, способной стоять в конце предложения без существительного. Единственное верное слово здесь — "one" (в значении 'its cap' ➔ 'one'). Подумай, какое слово заменяет ранее упомянутый предмет во избежание повтора.</div>
       </div>
 
       <button class="submit-btn" id="submitBtn" onclick="checkTest()">
@@ -247,12 +252,13 @@
   const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
   const TOPIC_ID = 'a1_3';
 
+  // Порядок ключей обновлен под новые позиции задач по уровню сложности
   const correctAnswers = {
-    q1: 'their',
+    q1: 'B',
     q2: 'of theirs',
-    q3: 'one',
-    q4: 'B',
-    q5: 'mine'
+    q3: 'their',
+    q4: 'mine',
+    q5: 'one'
   };
 
   function norm(s){ return s.toLowerCase().trim().replace(/[ё]/g,'е'); }
@@ -312,7 +318,7 @@
   async function checkTest() {
     let allCorrect = true;
 
-    ['q1','q2','q4'].forEach(qid => {
+    ['q1','q2','q3'].forEach(qid => {
       const selected = document.querySelector(`input[name="${qid}"]:checked`);
       const val = selected ? selected.value : null;
       const ok = val === correctAnswers[qid];
@@ -326,7 +332,7 @@
       else { explain.classList.add('show'); allCorrect = false; }
     });
 
-    ['q3','q5'].forEach(qid => {
+    ['q4','q5'].forEach(qid => {
       const el = document.getElementById(qid);
       const val = el.value.trim();
       const ok = norm(val) === norm(correctAnswers[qid]);
@@ -352,15 +358,15 @@
     const progress = await getGrammarProgress();
     const state = progress[TOPIC_ID];
     if (state && state.passed) {
-      ['q1','q2','q4'].forEach(qid => {
+      ['q1','q2','q3'].forEach(qid => {
         const rb = document.querySelector(`input[name="${qid}"][value="${correctAnswers[qid]}"]`);
         if(rb) {
           rb.checked = true;
           rb.closest('.opt-label').classList.add('correct');
         }
       });
-      document.getElementById('q3').value = correctAnswers.q3;
-      document.getElementById('q3').classList.add('correct');
+      document.getElementById('q4').value = correctAnswers.q4;
+      document.getElementById('q4').classList.add('correct');
       document.getElementById('q5').value = correctAnswers.q5;
       document.getElementById('q5').classList.add('correct');
       lockTest();
