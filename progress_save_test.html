@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supabase Progress Save Test</title>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:#f1f5f9; color:#0f172a; padding:24px; }
+    .wrap { max-width:880px; margin:0 auto; }
+    .card { background:white; border:1px solid #e2e8f0; border-radius:18px; padding:22px; margin-bottom:16px; box-shadow:0 8px 22px rgba(15,23,42,.05); }
+    h1 { margin:0 0 8px; font-size:28px; }
+    p { color:#475569; line-height:1.55; }
+    button { border:0; border-radius:12px; padding:13px 18px; font-weight:700; cursor:pointer; margin:6px 8px 6px 0; }
+    .primary { background:#4f46e5; color:white; }
+    .secondary { background:#e0e7ff; color:#3730a3; }
+    .danger { background:#fee2e2; color:#991b1b; }
+    pre { background:#0f172a; color:#d1fae5; padding:16px; border-radius:14px; overflow:auto; min-height:260px; white-space:pre-wrap; }
+    .ok { color:#047857; font-weight:800; }
+    .bad { color:#be123c; font-weight:800; }
+    input { padding:10px 12px; border:1px solid #cbd5e1; border-radius:10px; min-width:230px; }
+    label { display:block; font-weight:700; margin:12px 0 6px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Тест сохранения прогресса</h1>
+    <p>Эта страница не является домашкой ученика. Она только проверяет чтение и запись в таблицу <b>progress</b>, поля <b>hw_scores</b> и <b>hw_answers</b>.</p>
+    <p><b>Что делает тест:</b> добавляет временную запись <code>save_test</code> в JSON <code>hw_scores</code> и <code>hw_answers</code> для student = <code>polina</code>. Старые значения 4 и 5 не должны исчезнуть.</p>
+  </div>
+
+  <div class="card">
+    <label>Ключ теста</label>
+    <input id="testKey" value="save_test" />
+    <label>Тестовый результат</label>
+    <input id="testScore" value="TEST_OK" />
+    <br><br>
+    <button class="secondary" onclick="readProgress()">1. Прочитать текущий прогресс</button>
+    <button class="primary" onclick="writeTestProgress()">2. Записать тест</button>
+    <button class="secondary" onclick="readProgress()">3. Проверить после записи</button>
+    <button class="danger" onclick="removeTestProgress()">Удалить тестовый ключ</button>
+  </div>
+
+  <div class="card">
+    <h2>Лог</h2>
+    <pre id="log">Нажмите «Прочитать текущий прогресс».</pre>
+  </div>
+</div>
+
+<script>
+  const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
+  const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
+  const STUDENT = "polina";
+
+  function log(msg, obj) {
+    const box = document.getElementById('log');
+    const time = new Date().toLocaleTimeString();
+    let line = `[${time}] ${msg}`;
+    if (obj !== undefined) line += "
+" + JSON.stringify(obj, null, 2);
+    box.textContent += "
+
+" + line;
+    box.scrollTop = box.scrollHeight;
+    console.log(msg, obj || '');
+  }
+
+  function resetLog(msg) {
+    document.getElementById('log').textContent = msg;
+  }
+
+  async function supabaseFetch(url, options) {
+    const res = await fetch(url, options);
+    const text = await res.text();
+    let data = null;
+    try { data = text ? JSON.parse(text) : null; } catch(e) { data = text; }
+    return { res, status: res.status, ok: res.ok, data, text };
+  }
+
+  async function readProgress() {
+    resetLog('Читаем progress...');
+    try {
+      const out = await supabaseFetch(
+        `${SB_URL}/rest/v1/progress?student=eq.${STUDENT}&select=student,hw_scores,hw_answers,updated_at`,
+        { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+      );
+      log(`GET status: ${out.status} / ok: ${out.ok}`, out.data);
+      if (!out.ok) alert('Ошибка чтения Supabase: ' + out.status + '
+' + out.text);
+    } catch(e) {
+      log('Ошибка JS при чтении', String(e));
+      alert('Ошибка JS при чтении: ' + e.message);
+    }
+  }
+
+  async function writeTestProgress() {
+    resetLog('Начинаем тестовую запись...');
+    const key = document.getElementById('testKey').value.trim() || 'save_test';
+    const score = document.getElementById('testScore').value.trim() || 'TEST_OK';
+
+    try {
+      const get = await supabaseFetch(
+        `${SB_URL}/rest/v1/progress?student=eq.${STUDENT}&select=hw_scores,hw_answers`,
+        { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+      );
+      log(`GET before write status: ${get.status} / ok: ${get.ok}`, get.data);
+      if (!get.ok) {
+        alert('Не удалось прочитать перед записью: ' + get.status + '
+' + get.text);
+        return;
+      }
+
+      const row = Array.isArray(get.data) ? get.data[0] : null;
+      const currentScores = row && row.hw_scores && typeof row.hw_scores === 'object' ? row.hw_scores : {};
+      const currentAnswers = row && row.hw_answers && typeof row.hw_answers === 'object' ? row.hw_answers : {};
+
+      const updatedScores = { ...currentScores, [key]: score };
+      const updatedAnswers = { ...currentAnswers, [key]: { test: true, saved_at: new Date().toISOString(), note: 'diagnostic test only' } };
+      const payload = { student: STUDENT, hw_scores: updatedScores, hw_answers: updatedAnswers, updated_at: new Date().toISOString() };
+      log('Payload для POST:', payload);
+
+      const post = await supabaseFetch(
+        `${SB_URL}/rest/v1/progress?on_conflict=student`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            apikey: SB_KEY,
+            Authorization: `Bearer ${SB_KEY}`,
+            Prefer: 'resolution=merge-duplicates,return=representation',
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+      log(`POST status: ${post.status} / ok: ${post.ok}`, post.data);
+      if (!post.ok) {
+        alert('❌ Ошибка записи Supabase: ' + post.status + '
+
+' + post.text);
+        return;
+      }
+      alert('✅ Тестовая запись успешно сохранена. Теперь проверьте hw_scores в Supabase: должен появиться ключ "' + key + '".');
+    } catch(e) {
+      log('Ошибка JS при записи', String(e));
+      alert('Ошибка JS при записи: ' + e.message);
+    }
+  }
+
+  async function removeTestProgress() {
+    resetLog('Удаляем тестовый ключ...');
+    const key = document.getElementById('testKey').value.trim() || 'save_test';
+    try {
+      const get = await supabaseFetch(
+        `${SB_URL}/rest/v1/progress?student=eq.${STUDENT}&select=hw_scores,hw_answers`,
+        { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+      );
+      log(`GET before cleanup status: ${get.status} / ok: ${get.ok}`, get.data);
+      if (!get.ok) { alert('Не удалось прочитать: ' + get.status + '
+' + get.text); return; }
+
+      const row = Array.isArray(get.data) ? get.data[0] : null;
+      const updatedScores = { ...((row && row.hw_scores) || {}) };
+      const updatedAnswers = { ...((row && row.hw_answers) || {}) };
+      delete updatedScores[key];
+      delete updatedAnswers[key];
+      const payload = { student: STUDENT, hw_scores: updatedScores, hw_answers: updatedAnswers, updated_at: new Date().toISOString() };
+      log('Payload cleanup:', payload);
+
+      const post = await supabaseFetch(
+        `${SB_URL}/rest/v1/progress?on_conflict=student`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            apikey: SB_KEY,
+            Authorization: `Bearer ${SB_KEY}`,
+            Prefer: 'resolution=merge-duplicates,return=representation',
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+      log(`Cleanup POST status: ${post.status} / ok: ${post.ok}`, post.data);
+      if (!post.ok) alert('❌ Ошибка очистки: ' + post.status + '
+
+' + post.text);
+      else alert('✅ Тестовый ключ удалён.');
+    } catch(e) {
+      log('Ошибка JS при очистке', String(e));
+      alert('Ошибка JS при очистке: ' + e.message);
+    }
+  }
+</script>
+</body>
+</html>
