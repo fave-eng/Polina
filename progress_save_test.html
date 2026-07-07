@@ -15,10 +15,9 @@
     .secondary { background:#e0e7ff; color:#3730a3; }
     .danger { background:#fee2e2; color:#991b1b; }
     pre { background:#0f172a; color:#d1fae5; padding:16px; border-radius:14px; overflow:auto; min-height:260px; white-space:pre-wrap; }
-    .ok { color:#047857; font-weight:800; }
-    .bad { color:#be123c; font-weight:800; }
     input { padding:10px 12px; border:1px solid #cbd5e1; border-radius:10px; min-width:230px; }
     label { display:block; font-weight:700; margin:12px 0 6px; }
+    code { background:#eef2ff; padding:2px 5px; border-radius:5px; }
   </style>
 </head>
 <body>
@@ -26,7 +25,7 @@
   <div class="card">
     <h1>Тест сохранения прогресса</h1>
     <p>Эта страница не является домашкой ученика. Она только проверяет чтение и запись в таблицу <b>progress</b>, поля <b>hw_scores</b> и <b>hw_answers</b>.</p>
-    <p><b>Что делает тест:</b> добавляет временную запись <code>save_test</code> в JSON <code>hw_scores</code> и <code>hw_answers</code> для student = <code>polina</code>. Старые значения 4 и 5 не должны исчезнуть.</p>
+    <p><b>Что делает тест:</b> добавляет временную запись <code>save_test</code> в JSON <code>hw_scores</code> и <code>hw_answers</code> для student = <code>polina</code>. Старые значения не должны исчезнуть.</p>
   </div>
 
   <div class="card">
@@ -35,15 +34,15 @@
     <label>Тестовый результат</label>
     <input id="testScore" value="TEST_OK" />
     <br><br>
-    <button class="secondary" onclick="readProgress()">1. Прочитать текущий прогресс</button>
-    <button class="primary" onclick="writeTestProgress()">2. Записать тест</button>
-    <button class="secondary" onclick="readProgress()">3. Проверить после записи</button>
-    <button class="danger" onclick="removeTestProgress()">Удалить тестовый ключ</button>
+    <button class="secondary" id="btnRead">1. Прочитать текущий прогресс</button>
+    <button class="primary" id="btnWrite">2. Записать тест</button>
+    <button class="secondary" id="btnCheck">3. Проверить после записи</button>
+    <button class="danger" id="btnRemove">Удалить тестовый ключ</button>
   </div>
 
   <div class="card">
     <h2>Лог</h2>
-    <pre id="log">Нажмите «Прочитать текущий прогресс».</pre>
+    <pre id="log">Страница загружена. Нажмите «Прочитать текущий прогресс».</pre>
   </div>
 </div>
 
@@ -56,11 +55,8 @@
     const box = document.getElementById('log');
     const time = new Date().toLocaleTimeString();
     let line = `[${time}] ${msg}`;
-    if (obj !== undefined) line += "
-" + JSON.stringify(obj, null, 2);
-    box.textContent += "
-
-" + line;
+    if (obj !== undefined) line += "\n" + JSON.stringify(obj, null, 2);
+    box.textContent += "\n\n" + line;
     box.scrollTop = box.scrollHeight;
     console.log(msg, obj || '');
   }
@@ -85,8 +81,7 @@
         { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
       );
       log(`GET status: ${out.status} / ok: ${out.ok}`, out.data);
-      if (!out.ok) alert('Ошибка чтения Supabase: ' + out.status + '
-' + out.text);
+      if (!out.ok) alert('Ошибка чтения Supabase: ' + out.status + '\n' + out.text);
     } catch(e) {
       log('Ошибка JS при чтении', String(e));
       alert('Ошибка JS при чтении: ' + e.message);
@@ -105,8 +100,7 @@
       );
       log(`GET before write status: ${get.status} / ok: ${get.ok}`, get.data);
       if (!get.ok) {
-        alert('Не удалось прочитать перед записью: ' + get.status + '
-' + get.text);
+        alert('Не удалось прочитать перед записью: ' + get.status + '\n' + get.text);
         return;
       }
 
@@ -134,9 +128,7 @@
       );
       log(`POST status: ${post.status} / ok: ${post.ok}`, post.data);
       if (!post.ok) {
-        alert('❌ Ошибка записи Supabase: ' + post.status + '
-
-' + post.text);
+        alert('❌ Ошибка записи Supabase: ' + post.status + '\n\n' + post.text);
         return;
       }
       alert('✅ Тестовая запись успешно сохранена. Теперь проверьте hw_scores в Supabase: должен появиться ключ "' + key + '".');
@@ -155,8 +147,7 @@
         { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
       );
       log(`GET before cleanup status: ${get.status} / ok: ${get.ok}`, get.data);
-      if (!get.ok) { alert('Не удалось прочитать: ' + get.status + '
-' + get.text); return; }
+      if (!get.ok) { alert('Не удалось прочитать: ' + get.status + '\n' + get.text); return; }
 
       const row = Array.isArray(get.data) ? get.data[0] : null;
       const updatedScores = { ...((row && row.hw_scores) || {}) };
@@ -180,15 +171,18 @@
         }
       );
       log(`Cleanup POST status: ${post.status} / ok: ${post.ok}`, post.data);
-      if (!post.ok) alert('❌ Ошибка очистки: ' + post.status + '
-
-' + post.text);
+      if (!post.ok) alert('❌ Ошибка очистки: ' + post.status + '\n\n' + post.text);
       else alert('✅ Тестовый ключ удалён.');
     } catch(e) {
       log('Ошибка JS при очистке', String(e));
       alert('Ошибка JS при очистке: ' + e.message);
     }
   }
+
+  document.getElementById('btnRead').addEventListener('click', readProgress);
+  document.getElementById('btnWrite').addEventListener('click', writeTestProgress);
+  document.getElementById('btnCheck').addEventListener('click', readProgress);
+  document.getElementById('btnRemove').addEventListener('click', removeTestProgress);
 </script>
 </body>
 </html>
