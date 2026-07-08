@@ -195,26 +195,26 @@
 
       <div class="q-dialogue">
         <b>1. A:</b> Are you OK?<br>
-        <b>B:</b> No, I feel <input type="text" class="inline-input" id="q2_1a" /> at the moment. I'm so <input type="text" class="inline-input" id="q2_1b" /> out at work that I can't sleep at night.
+        <b>B:</b> No, I feel <input type="text" class="inline-input" id="q2_1a" /><span class="feedback" id="fb2_1a" style="display:inline-block;margin-left:6px;"></span> at the moment. I'm so <input type="text" class="inline-input" id="q2_1b" /><span class="feedback" id="fb2_1b" style="display:inline-block;margin-left:6px;"></span> out at work that I can't sleep at night.
         <div class="feedback" id="fb2_1"></div>
       </div>
 
       <div class="q-dialogue">
         <b>2. A:</b> Is Magda OK? I think she's been crying.<br>
-        <b>B:</b> She's <input type="text" class="inline-input" id="q2_2a" /> because her sister's in hospital. She must be really <input type="text" class="inline-input" id="q2_2b" /> about her.
+        <b>B:</b> She's <input type="text" class="inline-input" id="q2_2a" /><span class="feedback" id="fb2_2a" style="display:inline-block;margin-left:6px;"></span> because her sister's in hospital. She must be really <input type="text" class="inline-input" id="q2_2b" /><span class="feedback" id="fb2_2b" style="display:inline-block;margin-left:6px;"></span> about her.
         <div class="feedback" id="fb2_2"></div>
       </div>
 
       <div class="q-dialogue">
-        <b>3. A:</b> Why are you <input type="text" class="wide-input" id="q2_3a" />?<br>
-        <b>B:</b> I crashed my dad's sports car last night and he's absolutely <input type="text" class="inline-input" id="q2_3b" /> with me.
+        <b>3. A:</b> Why are you <input type="text" class="wide-input" id="q2_3a" /><span class="feedback" id="fb2_3a" style="display:inline-block;margin-left:6px;"></span>?<br>
+        <b>B:</b> I crashed my dad's sports car last night and he's absolutely <input type="text" class="inline-input" id="q2_3b" /><span class="feedback" id="fb2_3b" style="display:inline-block;margin-left:6px;"></span> with me.
         <div class="feedback" id="fb2_3"></div>
       </div>
 
       <div class="q-dialogue">
         <b>4. A:</b> Don't speak to Eddie. He isn't in a very good mood today.<br>
-        <b>B:</b> How come he's so <input type="text" class="inline-input" id="q2_4a" />?<br>
-        <b>A:</b> He hasn't scored a goal for weeks and he says he's really <input type="text" class="inline-input" id="q2_4b" /> with training.
+        <b>B:</b> How come he's so <input type="text" class="inline-input" id="q2_4a" /><span class="feedback" id="fb2_4a" style="display:inline-block;margin-left:6px;"></span>?<br>
+        <b>A:</b> He hasn't scored a goal for weeks and he says he's really <input type="text" class="inline-input" id="q2_4b" /><span class="feedback" id="fb2_4b" style="display:inline-block;margin-left:6px;"></span> with training.
         <div class="feedback" id="fb2_4"></div>
       </div>
     </div>
@@ -347,14 +347,14 @@
     { num:'1.6', el:'q1_6', fb:'fb1_6', ans:['disappointed'] },
     { num:'1.7', el:'q1_7', fb:'fb1_7', ans:['pleased'] },
     
-    { num:'2.1a', el:'q2_1a', fb:'fb2_1', ans:['terrible'] },
-    { num:'2.1b', el:'q2_1b', fb:'fb2_1', ans:['stressed'] },
-    { num:'2.2a', el:'q2_2a', fb:'fb2_2', ans:['upset'] },
-    { num:'2.2b', el:'q2_2b', fb:'fb2_2', ans:['worried'] },
-    { num:'2.3a', el:'q2_3a', fb:'fb2_3', ans:['in such a bad mood'] },
-    { num:'2.3b', el:'q2_3b', fb:'fb2_3', ans:['furious'] },
-    { num:'2.4a', el:'q2_4a', fb:'fb2_4', ans:['down'] },
-    { num:'2.4b', el:'q2_4b', fb:'fb2_4', ans:['fed up'] },
+    { num:'2.1a', el:'q2_1a', fb:'fb2_1a', ans:['terrible'] },
+    { num:'2.1b', el:'q2_1b', fb:'fb2_1b', ans:['stressed'] },
+    { num:'2.2a', el:'q2_2a', fb:'fb2_2a', ans:['upset'] },
+    { num:'2.2b', el:'q2_2b', fb:'fb2_2b', ans:['worried'] },
+    { num:'2.3a', el:'q2_3a', fb:'fb2_3a', ans:['in such a bad mood'] },
+    { num:'2.3b', el:'q2_3b', fb:'fb2_3b', ans:['furious'] },
+    { num:'2.4a', el:'q2_4a', fb:'fb2_4a', ans:['down'] },
+    { num:'2.4b', el:'q2_4b', fb:'fb2_4b', ans:['fed up'] },
     
     { num:'43.1_1', el:'q43_1_1', fb:'fb43_1_1', ans:['max'] },
     { num:'43.1_2', el:'q43_1_2', fb:'fb43_1_2', ans:['carlos'] },
@@ -450,11 +450,11 @@
       const rows = await r.json();
       const scores  = (rows[0] && rows[0].hw_scores)  || {};
       const answers = (rows[0] && rows[0].hw_answers) || {};
-      const scoreKey = scores['feelings_u2'];
+      const scoreKey = scores['7'] || scores['feelings_u2'];
       const isDone = scoreKey && scoreKey !== '' && scoreKey !== '0/0';
       if (!isDone) return;
 
-      lockFormWithAnswers(answers['feelings_u2'] || {});
+      lockFormWithAnswers(answers['7'] || answers['feelings_u2'] || {});
       const { correct, total } = checkAll();
       const pct = Math.round(correct / total * 100);
       const emoji = pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪';
@@ -504,7 +504,7 @@
     window.scrollTo({ top:0, behavior:'smooth' });
 
     const answersObj = collectAnswers();
-    await saveLessonScore('feelings_u2', `${correct}/${total}`, answersObj, banner);
+    await saveLessonScore('7', `${correct}/${total}`, answersObj, banner);
 
     questions.forEach(q => {
       const el = document.getElementById(q.el);
@@ -518,7 +518,7 @@
       submitBtn.innerHTML = '<span>✅</span> Домашка уже сдана';
     }
 
-    let report = `📝 *Отчёт по ДЗ Полины*\nТема: Feelings (Unit 2 & 43)\n📊 Результат: *${correct} из ${total} (${pct}%)* ${emoji}\n`;
+    let report = `📝 *Отчёт по ДЗ Полины*\nТема: Feelings & Emotions (Lesson 7)\n📊 Результат: *${correct} из ${total} (${pct}%)* ${emoji}\n`;
     if (errorsReport) report += `\n─────────────────\n⚠️ *Ошибки:*${errorsReport}`;
     else report += `\n✅ Все задания выполнены верно!`;
 
