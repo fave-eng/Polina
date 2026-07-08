@@ -6,489 +6,248 @@
   <title>Homework — Polina's English Space</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --indigo: #4f46e5;
-      --indigo-light: #6366f1;
-      --rose: #f43f5e;
-      --amber: #f59e0b;
-      --emerald: #10b981;
-      --bg: #f1f5f9;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --radius: 20px;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding-bottom: 100px;
-    }
-
-    /* ─── HERO ─── */
-    .hero {
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a855f7 100%);
-      padding: 40px 24px 48px;
-      position: relative;
-    }
-    .hero-wave { display: block; width: 100%; line-height: 0; background: var(--bg); }
-    .hero-wave svg { display: block; width: 100%; }
-    .hero-back {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: rgba(255,255,255,0.75);
-      font-size: 13px; font-weight: 600;
-      text-decoration: none;
-      margin-bottom: 20px;
-      transition: color 0.2s;
-    }
-    .hero-back:hover { color: #fff; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: #fff;
-      font-size: 12px; font-weight: 600;
-      padding: 5px 14px;
-      border-radius: 100px;
-      margin-bottom: 16px;
-    }
-    .hero h1 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(28px, 5vw, 42px);
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-    }
-    .hero p { color: rgba(255,255,255,0.75); font-size: 15px; }
-
-    /* ─── PROGRESS BAR ─── */
-    .progress-bar-wrap {
-      background: rgba(255,255,255,0.15);
-      border-radius: 100px;
-      height: 6px;
-      margin-top: 18px;
-      max-width: 340px;
-      overflow: hidden;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      background: #fff;
-      border-radius: 100px;
-      transition: width 0.8s ease;
-    }
-    .progress-label {
-      color: rgba(255,255,255,0.8);
-      font-size: 12px;
-      font-weight: 600;
-      margin-top: 6px;
-    }
-
-    /* ─── LAYOUT ─── */
-    .page { max-width: 700px; margin: 0 auto; padding: 0 20px; }
-
-    /* ─── STATS ROW ─── */
-    .stats-row {
-      display: flex; gap: 12px;
-      margin-top: 24px;
-      margin-bottom: 28px;
-      flex-wrap: wrap;
-    }
-    .stat-chip {
-      background: var(--card);
-      border-radius: 20px;
-      border: 1.5px solid var(--border);
-      padding: 18px 20px;
-      flex: 1; min-width: 100px;
-      text-align: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-    }
-    .stat-chip .sc-num {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 26px; font-weight: 800;
-    }
-    .stat-chip .sc-lbl { font-size: 11px; color: var(--muted); font-weight: 600; margin-top: 2px; }
-    .stat-chip.done .sc-num  { color: var(--emerald); }
-    .stat-chip.total .sc-num { color: var(--indigo); }
-    .stat-chip.pct .sc-num   { color: var(--amber); }
-
-    /* ─── SECTION LABEL ─── */
-    .section-title {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--muted); margin: 28px 0 14px;
-    }
-
-    /* ─── LESSON CARD ─── */
-    .lesson-card {
-      background: var(--card);
-      border-radius: 18px;
-      border: 1.5px solid var(--border);
-      margin-bottom: 14px;
-      overflow: hidden;
-      transition: all 0.2s;
-    }
-    .lesson-card.active:hover {
-      border-color: var(--indigo-light);
-      box-shadow: 0 8px 28px rgba(79,70,229,0.1);
-      transform: translateY(-2px);
-    }
-    .lesson-card.locked {
-      opacity: 0.55;
-    }
-
-    .lc-main {
-      padding: 20px 22px;
-      display: flex; align-items: center; gap: 16px;
-    }
-
-    /* Number badge */
-    .lc-num {
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 17px; font-weight: 800;
-      flex-shrink: 0;
-    }
-    .lc-num.done-num   { background: #d1fae5; color: #065f46; }
-    .lc-num.active-num { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; }
-    .lc-num.locked-num { background: #f1f5f9; color: #94a3b8; }
-
-    .lc-info { flex: 1; min-width: 0; }
-    .lc-lesson-label {
-      font-size: 11px; font-weight: 700; letter-spacing: 1px;
-      text-transform: uppercase; color: var(--muted);
-      margin-bottom: 3px;
-    }
-    .lc-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 16px; font-weight: 700;
-      margin-bottom: 4px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .lc-meta {
-      display: flex; align-items: center; gap: 8px;
-      flex-wrap: wrap;
-    }
-    .lc-status-pill {
-      font-size: 11px; font-weight: 700;
-      padding: 3px 10px; border-radius: 100px;
-    }
-    .pill-done     { background: #d1fae5; color: #065f46; }
-    .pill-current  { background: #ede9fe; color: #5b21b6; }
-    .pill-locked   { background: #f1f5f9; color: #94a3b8; }
-    .lc-score      { font-size: 12px; color: var(--muted); }
-
-    /* Arrow */
-    .lc-arrow {
-      font-size: 20px; color: var(--indigo);
-      opacity: 0; transition: opacity 0.2s;
-    }
-    .lesson-card.active:hover .lc-arrow { opacity: 1; }
-    .lesson-card.locked .lc-arrow { display: none; }
-
-    /* Vocab strip */
-    .lc-vocab-strip {
-      border-top: 1px solid var(--border);
-      padding: 10px 22px;
-      display: flex; align-items: center; justify-content: space-between;
-      background: #fafbff;
-    }
-    .lvs-left {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 13px; color: var(--muted);
-    }
-    .lvs-left span { font-weight: 600; color: var(--text); }
-    .lvs-link {
-      font-size: 12px; font-weight: 700;
-      color: var(--rose);
-      text-decoration: none;
-      display: flex; align-items: center; gap: 4px;
-      transition: gap 0.2s;
-    }
-    .lvs-link:hover { gap: 8px; }
-
-    .locked-strip {
-      border-top: 1px solid var(--border);
-      padding: 10px 22px;
-      background: #f8fafc;
-      font-size: 12px; color: #94a3b8;
-      display: flex; align-items: center; gap: 6px;
-    }
-
-    /* ─── FLOATING NAV ─── */
-    .nav-pill {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      background: #0f172a;
-      border-radius: 100px;
-      padding: 12px 24px;
-      display: flex; gap: 4px;
-      box-shadow: 0 8px 32px rgba(15,23,42,0.3);
-      z-index: 900;
-      white-space: nowrap;
-    }
-    .nav-pill a {
-      color: rgba(255,255,255,0.6);
-      font-size: 12px; font-weight: 600;
-      text-decoration: none;
-      padding: 6px 14px;
-      border-radius: 100px;
-      transition: all 0.2s;
-    }
-    .nav-pill a:hover, .nav-pill a.active {
-      background: var(--indigo);
-      color: #fff;
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--indigo:#4f46e5;--indigo-light:#6366f1;--rose:#f43f5e;--amber:#f59e0b;--emerald:#10b981;--bg:#f1f5f9;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0}
+    body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:110px}
+    .hero{background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 50%,#a855f7 100%);padding:40px 24px 48px;position:relative}
+    .hero-wave{display:block;width:100%;line-height:0;background:var(--bg)}
+    .hero-wave svg{display:block;width:100%}
+    .hero-back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.75);font-size:13px;font-weight:600;text-decoration:none;margin-bottom:20px}
+    .hero-back:hover{color:#fff}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:12px;font-weight:600;padding:5px 14px;border-radius:100px;margin-bottom:16px}
+    .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,5vw,42px);font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:8px}
+    .hero p{color:rgba(255,255,255,.75);font-size:15px}
+    .progress-bar-wrap{background:rgba(255,255,255,.15);border-radius:100px;height:6px;margin-top:18px;max-width:340px;overflow:hidden}
+    .progress-bar-fill{height:100%;background:#fff;border-radius:100px;transition:width .8s ease}
+    .progress-label{color:rgba(255,255,255,.8);font-size:12px;font-weight:600;margin-top:6px}
+    .page{max-width:700px;margin:0 auto;padding:0 20px}
+    .stats-row{display:flex;gap:12px;margin-top:24px;margin-bottom:28px;flex-wrap:wrap}
+    .stat-chip{background:var(--card);border-radius:20px;border:1.5px solid var(--border);padding:18px 20px;flex:1;min-width:100px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+    .stat-chip .sc-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800}
+    .stat-chip .sc-lbl{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+    .stat-chip.done .sc-num{color:var(--emerald)}
+    .stat-chip.total .sc-num{color:var(--indigo)}
+    .stat-chip.pct .sc-num{color:var(--amber)}
+    .section-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:28px 0 14px}
+    .lesson-card{background:var(--card);border-radius:18px;border:1.5px solid var(--border);margin-bottom:14px;overflow:hidden;transition:all .2s}
+    .lesson-card.active:hover{border-color:var(--indigo-light);box-shadow:0 8px 28px rgba(79,70,229,.1);transform:translateY(-2px)}
+    .lesson-card.locked{opacity:.55}
+    .lc-main{padding:20px 22px;display:flex;align-items:center;gap:16px}
+    .lc-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:800;flex-shrink:0}
+    .done-num{background:#d1fae5;color:#065f46}
+    .active-num{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+    .locked-num{background:#f1f5f9;color:#94a3b8}
+    .lc-info{flex:1;min-width:0}
+    .lc-lesson-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+    .lc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .lc-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .lc-status-pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
+    .pill-done{background:#d1fae5;color:#065f46}
+    .pill-current{background:#ede9fe;color:#5b21b6}
+    .pill-locked{background:#f1f5f9;color:#94a3b8}
+    .lc-score{font-size:12px;color:var(--muted)}
+    .lc-arrow{font-size:20px;color:var(--indigo);opacity:0;transition:opacity .2s}
+    .lesson-card.active:hover .lc-arrow{opacity:1}
+    .lesson-card.locked .lc-arrow{display:none}
+    .lc-vocab-strip{border-top:1px solid var(--border);padding:10px 22px;display:flex;align-items:center;justify-content:space-between;background:#fafbff}
+    .lvs-left{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+    .lvs-left span{font-weight:600;color:var(--text)}
+    .lvs-link{font-size:12px;font-weight:700;color:var(--rose);text-decoration:none;display:flex;align-items:center;gap:4px}
+    .lvs-link:hover{gap:8px}
+    .locked-strip{border-top:1px solid var(--border);padding:10px 22px;background:#f8fafc;font-size:12px;color:#94a3b8;display:flex;align-items:center;gap:6px}
+    .empty-note{background:#fff;border:1.5px dashed var(--border);border-radius:16px;padding:18px 20px;color:var(--muted);font-size:14px;margin-bottom:14px}
+    .small-warn{font-size:12px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:10px 12px;margin-bottom:14px;display:none}
+    .nav-pill{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f172a;border-radius:100px;padding:12px 24px;display:flex;gap:4px;box-shadow:0 8px 32px rgba(15,23,42,.3);z-index:900;white-space:nowrap}
+    .nav-pill a{color:rgba(255,255,255,.6);font-size:12px;font-weight:600;text-decoration:none;padding:6px 14px;border-radius:100px}
+    .nav-pill a:hover,.nav-pill a.active{background:var(--indigo);color:#fff}
+    @media(max-width:560px){.lc-vocab-strip{align-items:flex-start;gap:10px;flex-direction:column}.nav-pill{padding:10px 14px}.nav-pill a{padding:6px 10px}}
   </style>
 </head>
 <body>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="page" style="position:relative;z-index:1">
-    <a href="./index.html" class="hero-back">← На главную</a>
-    <div class="hero-badge">📝 Homework Board</div>
-    <h1>Домашние задания</h1>
-    <p>Выполняй и отслеживай прогресс по каждому уроку</p>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="heroProgress" style="width: 75%"></div>
-    </div>
-    <div class="progress-label" id="heroLabel">3 из 4 выполнено</div>
-  </div>
-</div>
-<div class="hero-wave">
-  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:linear-gradient(135deg,#4f46e5,#7c3aed 50%,#a855f7)">
-    <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
-  </svg>
-</div>
-
-<div class="page">
-
-  <!-- STATS -->
-  <div class="stats-row">
-    <div class="stat-chip done">
-      <div class="sc-num" id="statDone">3</div>
-      <div class="sc-lbl">Выполнено</div>
-    </div>
-    <div class="stat-chip total">
-      <div class="sc-num" id="statTotal">4</div>
-      <div class="sc-lbl">Всего уроков</div>
-    </div>
-    <div class="stat-chip pct">
-      <div class="sc-num" id="statPct">75%</div>
-      <div class="sc-lbl">Прогресс</div>
+  <div class="hero">
+    <div class="page" style="position:relative;z-index:1">
+      <a href="./index.html" class="hero-back">← На главную</a>
+      <div class="hero-badge">📝 Homework Board</div>
+      <h1>Домашние задания</h1>
+      <p>Выполняй и отслеживай прогресс по каждому уроку</p>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="heroProgress" style="width:0%"></div></div>
+      <div class="progress-label" id="heroLabel">0 из 0 выполнено</div>
     </div>
   </div>
-
-  <!-- DONE / ACTIVE — динамически -->
-  <div id="section-done" style="display:none">
-    <div class="section-title">✅ Выполнено</div>
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:linear-gradient(135deg,#4f46e5,#7c3aed 50%,#a855f7)">
+      <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
+    </svg>
   </div>
 
-  <!-- LESSON 4 -->
-  <div class="lesson-card active" id="card-4">
-    <a href="./lesson4.html" style="text-decoration:none; color:inherit;">
-      <div class="lc-main">
-        <div class="lc-num" id="num-4">4</div>
-        <div class="lc-info">
-          <div class="lc-lesson-label">Lesson 4</div>
-          <div class="lc-title">Everyday Minor Problems</div>
-          <div class="lc-meta">
-            <span class="lc-status-pill" id="pill-4">📝 Выполнить</span>
-            <span class="lc-score" id="score-4"></span>
+  <div class="page">
+    <div class="stats-row">
+      <div class="stat-chip done"><div class="sc-num" id="statDone">0</div><div class="sc-lbl">Выполнено</div></div>
+      <div class="stat-chip total"><div class="sc-num" id="statTotal">0</div><div class="sc-lbl">Доступно</div></div>
+      <div class="stat-chip pct"><div class="sc-num" id="statPct">0%</div><div class="sc-lbl">Прогресс</div></div>
+    </div>
+
+    <div id="loadWarn" class="small-warn">Не удалось загрузить данные из Supabase. Показаны уроки по умолчанию.</div>
+
+    <div id="doneSection">
+      <div class="section-title">✅ Выполнено</div>
+      <div id="doneList"></div>
+    </div>
+
+    <div id="activeSection">
+      <div class="section-title">📝 Доступные задания</div>
+      <div id="activeList"></div>
+    </div>
+
+    <div id="lockedSection">
+      <div class="section-title">🔒 Предстоящие</div>
+      <div id="lockedList"></div>
+    </div>
+  </div>
+
+  <div class="nav-pill">
+    <a href="index.html">🏠 Home</a>
+    <a href="homework.html" class="active">📝 HW</a>
+    <a href="grammar.html">📐 Grammar</a>
+    <a href="vocabulary-hub.html">💥 Vocab</a>
+  </div>
+
+  <script src="./config.js"></script>
+  <script>
+    const { SB_URL, SB_KEY, STUDENT } = window.APP_CONFIG || {};
+
+    const LESSONS = {
+      '4': { lesson:'4', title:'Everyday Minor Problems', homework_url:'lesson4.html', vocab_url:'vocab-everyday-problems.html', vocab_title:'Everyday Problems', emoji:'💥', published:true },
+      '5': { lesson:'5', title:'Talking My Language', homework_url:'lesson5.html', vocab_url:'vocab-languages.html', vocab_title:'Languages Vocabulary', emoji:'🌍', published:true },
+      '6': { lesson:'6', title:'Putting Your Words to Work', homework_url:'lesson6.html', vocab_url:'vocab-language-classes.html', vocab_title:'Language Classes', emoji:'🗣️', published:true },
+      '7': { lesson:'7', title:'Feelings & Emotions', homework_url:'lesson7.html', vocab_url:'vocab-feelings.html', vocab_title:'Feelings & Emotions', emoji:'😊', published:true },
+      '8': { lesson:'8', title:'Coming soon…', homework_url:'lesson8.html', vocab_url:'vocabulary-hub.html', vocab_title:'Vocabulary', emoji:'💥', published:false },
+      '9': { lesson:'9', title:'Coming soon…', homework_url:'lesson9.html', vocab_url:'vocabulary-hub.html', vocab_title:'Vocabulary', emoji:'💥', published:false },
+      '10': { lesson:'10', title:'Coming soon…', homework_url:'lesson10.html', vocab_url:'vocabulary-hub.html', vocab_title:'Vocabulary', emoji:'💥', published:false }
+    };
+
+    const PRELOADED_HW_SCORES = { '4':'12/29', '5':'32/35', '6':'12/14' };
+
+    function scoreDone(score){
+      return !!score && String(score).trim() !== '' && String(score).trim() !== '0/0';
+    }
+
+    function safePath(path){
+      if(!path) return '#';
+      return String(path).startsWith('http') ? path : './' + String(path).replace(/^\.?\//,'');
+    }
+
+    function activeCardHTML(l, score){
+      const done = scoreDone(score);
+      const num = String(l.lesson);
+      return `
+        <div class="lesson-card active" id="card-${num}">
+          <a href="${safePath(l.homework_url)}" style="text-decoration:none;color:inherit">
+            <div class="lc-main">
+              <div class="lc-num ${done ? 'done-num' : 'active-num'}">${done ? '✓' : num}</div>
+              <div class="lc-info">
+                <div class="lc-lesson-label">Lesson ${num}</div>
+                <div class="lc-title">${l.title}</div>
+                <div class="lc-meta">
+                  <span class="lc-status-pill ${done ? 'pill-done' : 'pill-current'}">${done ? 'Сдано' : '📝 Выполнить'}</span>
+                  <span class="lc-score">${done ? 'Результат: ' + score : ''}</span>
+                </div>
+              </div>
+              <div class="lc-arrow">→</div>
+            </div>
+          </a>
+          <div class="lc-vocab-strip">
+            <div class="lvs-left">${l.emoji || '💥'} <span>Лексика к уроку:</span> ${l.vocab_title || l.title}</div>
+            <a href="${safePath(l.vocab_url)}" class="lvs-link">Тренировать <span>→</span></a>
           </div>
-        </div>
-        <div class="lc-arrow">→</div>
-      </div>
-    </a>
-    <div class="lc-vocab-strip">
-      <div class="lvs-left">💥 <span>Лексика к уроку:</span> Everyday Problems</div>
-      <a href="./vocab-everyday-problems.html" class="lvs-link">Тренировать <span>→</span></a>
-    </div>
-  </div>
+        </div>`;
+    }
 
-  <!-- UPCOMING -->
-  <div class="section-title" id="section-upcoming">🔒 Предстоящие</div>
-
-  <!-- LESSON 5 -->
-  <div class="lesson-card active" id="card-5">
-    <a href="./lesson5.html" style="text-decoration:none; color:inherit;">
-      <div class="lc-main">
-        <div class="lc-num" id="num-5">5</div>
-        <div class="lc-info">
-          <div class="lc-lesson-label">Lesson 5</div>
-          <div class="lc-title">Talking My Language</div>
-          <div class="lc-meta">
-            <span class="lc-status-pill" id="pill-5">📝 Выполнить</span>
-            <span class="lc-score" id="score-5"></span>
+    function lockedCardHTML(l){
+      const num = String(l.lesson);
+      return `
+        <div class="lesson-card locked" id="card-${num}">
+          <div class="lc-main">
+            <div class="lc-num locked-num">${num}</div>
+            <div class="lc-info">
+              <div class="lc-lesson-label">Lesson ${num}</div>
+              <div class="lc-title">${l.title || 'Coming soon…'}</div>
+              <div class="lc-meta"><span class="lc-status-pill pill-locked">🔒 Скоро</span></div>
+            </div>
           </div>
-        </div>
-        <div class="lc-arrow">→</div>
-      </div>
-    </a>
-    <div class="lc-vocab-strip">
-      <div class="lvs-left">🌍 <span>Лексика к уроку:</span> Languages Vocabulary</div>
-      <a href="./vocab-languages.html" class="lvs-link">Тренировать <span>→</span></a>
-    </div>
-  </div>
+          <div class="locked-strip">🔒 Задание появится после урока ${num}</div>
+        </div>`;
+    }
 
-  <!-- LESSON 6 -->
-  <div class="lesson-card active" id="card-6">
-    <a href="./lesson6.html" style="text-decoration:none; color:inherit;">
-      <div class="lc-main">
-        <div class="lc-num" id="num-6">6</div>
-        <div class="lc-info">
-          <div class="lc-lesson-label">Lesson 6</div>
-          <div class="lc-title">Putting Your Words to Work</div>
-          <div class="lc-meta">
-            <span class="lc-status-pill" id="pill-6">📝 Выполнить</span>
-            <span class="lc-score" id="score-6"></span>
-          </div>
-        </div>
-        <div class="lc-arrow">→</div>
-      </div>
-    </a>
-    <div class="lc-vocab-strip">
-      <div class="lvs-left">🗣️ <span>Лексика к уроку:</span> Language Classes</div>
-      <a href="./vocab-language-classes.html" class="lvs-link">Тренировать <span>→</span></a>
-    </div>
-  </div>
+    async function loadData(){
+      let lessons = {...LESSONS};
+      let scores = {...PRELOADED_HW_SCORES};
 
-  <!-- LESSON 7 -->
-  <div class="lesson-card active" id="card-7">
-    <a href="./lesson7.html" style="text-decoration:none; color:inherit;">
-      <div class="lc-main">
-        <div class="lc-num" id="num-7">7</div>
-        <div class="lc-info">
-          <div class="lc-lesson-label">Lesson 7</div>
-          <div class="lc-title">Feelings & Emotions</div>
-          <div class="lc-meta">
-            <span class="lc-status-pill" id="pill-7">📝 Выполнить</span>
-            <span class="lc-score" id="score-7"></span>
-          </div>
-        </div>
-        <div class="lc-arrow">→</div>
-      </div>
-    </a>
-    <div class="lc-vocab-strip">
-      <div class="lvs-left">😊 <span>Лексика к уроку:</span> Feelings & Emotions</div>
-      <a href="./vocab-feelings.html" class="lvs-link">Тренировать <span>→</span></a>
-    </div>
-  </div>
+      try{
+        if(!SB_URL || !SB_KEY || !STUDENT) throw new Error('config.js is missing data');
 
-  <!-- LESSON 8 -->
-  <div class="lesson-card locked" id="card-8">
-    <div class="lc-main">
-      <div class="lc-num locked-num">8</div>
-      <div class="lc-info">
-        <div class="lc-lesson-label">Lesson 8</div>
-        <div class="lc-title">Coming soon…</div>
-        <div class="lc-meta">
-          <span class="lc-status-pill pill-locked">🔒 Скоро</span>
-        </div>
-      </div>
-    </div>
-    <div class="locked-strip">🔒 Задание появится после урока 8</div>
-  </div>
+        const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.${STUDENT}&select=*`, {
+          headers:{ apikey:SB_KEY, Authorization:`Bearer ${SB_KEY}` }
+        });
+        if(!r.ok) throw new Error('HTTP ' + r.status);
 
-</div><!-- /.page -->
+        const rows = await r.json();
+        const d = rows[0] || {};
 
-<!-- FLOATING NAV -->
-<div class="nav-pill">
-  <a href="index.html">🏠 Home</a>
-  <a href="homework.html" class="active">📝 HW</a>
-  <a href="grammar.html">📐 Grammar</a>
-  <a href="vocabulary-hub.html">💥 Vocab</a>
-</div>
+        lessons = { ...lessons, ...(d.published_homeworks || {}) };
 
-<script src="./config.js"></script>
-<script>
-  const { SB_URL, SB_KEY, STUDENT } = window.APP_CONFIG;
-  const PRELOADED_HW_SCORES = { '4': '12/29', '5': '32/35', '6': '12/14' };
+        scores = { ...scores, ...(d.hw_scores || {}) };
+        if(d.hw4_score) scores['4'] = scores['4'] || d.hw4_score;
+        if(d.hw5_score) scores['5'] = scores['5'] || d.hw5_score;
+        if(d.hw6_score) scores['6'] = scores['6'] || d.hw6_score;
+        if(d.hw7_score) scores['7'] = scores['7'] || d.hw7_score;
 
-  // Номера уроков определяются автоматически — по карточкам с классом
-  // "lesson-card active" на этой странице (а не вручную через список).
-  // Когда открываете новый урок: просто меняете класс карточки с "locked"
-  // на "active" и добавляете ссылку — счётчики обновятся сами, без правок JS.
-  function getAvailableLessonNums() {
-    return Array.from(document.querySelectorAll('.lesson-card.active'))
-      .map(card => card.id.replace('card-', ''))
-      .filter(Boolean);
-  }
-
-  async function loadFromSupabase() {
-    try {
-      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.${STUDENT}&select=*`, {
-        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
-      });
-      const data = await r.json();
-      if (data && data[0]) {
-        const d = data[0];
-        // Основной формат: общий JSON со всеми результатами по урокам.
-        // Legacy fallback нужен для старых страниц, которые сохраняли hw4_score/hw5_score/hw6_score отдельно.
-        const scores = { ...(d.hw_scores || {}) };
-        if (!scores['4'] && d.hw4_score) scores['4'] = d.hw4_score;
-        if (!scores['5'] && d.hw5_score) scores['5'] = d.hw5_score;
-        if (!scores['6'] && d.hw6_score) scores['6'] = d.hw6_score;
-        if (!scores['7'] && d.hw7_score) scores['7'] = d.hw7_score;
         localStorage.setItem('polina_hw_scores', JSON.stringify(scores));
-        if (d.words_learned) localStorage.setItem('polina_words_learned', d.words_learned);
+      }catch(e){
+        console.error('Не удалось загрузить данные:', e);
+        document.getElementById('loadWarn').style.display = 'block';
+        try{
+          scores = { ...scores, ...JSON.parse(localStorage.getItem('polina_hw_scores') || '{}') };
+        }catch(_){}
       }
-    } catch(e) {
-      console.error('Не удалось загрузить прогресс из Supabase:', e);
+
+      render(lessons, scores);
     }
-  }
 
-  function updateCard(num, scores) {
-    const score  = scores[String(num)];
-    const isDone = !!score && score !== '' && score !== '0/0';
-    const numEl  = document.getElementById(`num-${num}`);
-    const pill   = document.getElementById(`pill-${num}`);
-    const sc     = document.getElementById(`score-${num}`);
-    if (!numEl) return isDone;
-    if (isDone) {
-      numEl.className   = 'lc-num done-num';
-      numEl.textContent = '✓';
-      pill.className    = 'lc-status-pill pill-done';
-      pill.textContent  = 'Сдано';
-      if (sc) sc.textContent = 'Результат: ' + score;
-    } else {
-      numEl.className   = 'lc-num active-num';
-      numEl.textContent = String(num);
-      pill.className    = 'lc-status-pill pill-current';
-      pill.textContent  = '📝 Выполнить';
-      if (sc) sc.textContent = '';
+    function render(lessons, scores){
+      const all = Object.values(lessons)
+        .filter(Boolean)
+        .sort((a,b) => Number(a.lesson) - Number(b.lesson));
+
+      const published = all.filter(l => l.published);
+      const done = published.filter(l => scoreDone(scores[String(l.lesson)]));
+      const active = published.filter(l => !scoreDone(scores[String(l.lesson)]));
+      const locked = all.filter(l => !l.published);
+
+      document.getElementById('doneList').innerHTML = done.length
+        ? done.map(l => activeCardHTML(l, scores[String(l.lesson)])).join('')
+        : '<div class="empty-note">Пока нет выполненных домашних работ.</div>';
+
+      document.getElementById('activeList').innerHTML = active.length
+        ? active.map(l => activeCardHTML(l, scores[String(l.lesson)])).join('')
+        : '<div class="empty-note">Сейчас нет новых домашних заданий.</div>';
+
+      document.getElementById('lockedList').innerHTML = locked.length
+        ? locked.map(lockedCardHTML).join('')
+        : '<div class="empty-note">Все уроки уже открыты.</div>';
+
+      const total = published.length;
+      const doneCount = done.length;
+      const pct = total ? Math.round(doneCount / total * 100) : 0;
+
+      document.getElementById('statDone').textContent = doneCount;
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statPct').textContent = pct + '%';
+      document.getElementById('heroProgress').style.width = pct + '%';
+      document.getElementById('heroLabel').textContent = `${doneCount} из ${total} выполнено`;
     }
-    return isDone;
-  }
 
-  window.addEventListener('load', async () => {
-    await loadFromSupabase();
-
-    const scores = { ...PRELOADED_HW_SCORES, ...JSON.parse(localStorage.getItem('polina_hw_scores') || '{}') };
-    const lessonNums = getAvailableLessonNums();
-
-    const doneFlags = lessonNums.map(num => updateCard(num, scores));
-    const anyDone = doneFlags.some(Boolean);
-
-    document.getElementById('section-done').style.display = anyDone ? '' : 'none';
-
-    const done  = doneFlags.filter(Boolean).length;
-    const total = lessonNums.length; // считаем от количества доступных уроков, а не зашитого числа
-    const pct   = total ? Math.round((done / total) * 100) : 0;
-
-    document.getElementById('statDone').textContent     = done;
-    document.getElementById('statTotal').textContent    = total;
-    document.getElementById('statPct').textContent      = pct + '%';
-    document.getElementById('heroProgress').style.width = pct + '%';
-    document.getElementById('heroLabel').textContent    = `${done} из ${total} выполнено`;
-  });
-</script>
+    window.addEventListener('load', loadData);
+  </script>
 </body>
 </html>
