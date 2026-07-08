@@ -254,6 +254,21 @@
       transition: all .2s;
     }
     .nav-pill a:hover, .nav-pill a.active { background: var(--indigo); color: #fff; }
+
+
+    /* checked/locked homework view */
+    input[type="text"]:disabled, textarea:disabled, select:disabled {
+      background:#f1f5f9; color:#475569; cursor:not-allowed; opacity:0.95;
+    }
+    input[type="text"].correct, textarea.correct, select.correct {
+      border-color:var(--emerald) !important; background:#f0fdf4 !important;
+    }
+    input[type="text"].wrong, textarea.wrong, select.wrong {
+      border-color:var(--rose) !important; background:#fff5f5 !important;
+    }
+    .cb-cell.correct-cell { background:#dcfce7 !important; color:#166534; font-weight:800; }
+    .cb-cell.wrong-cell { background:#fee2e2 !important; color:#991b1b; font-weight:800; }
+    .submit-btn:disabled { opacity:.55; cursor:not-allowed; transform:none; }
   </style>
 </head>
 <body>
@@ -673,268 +688,212 @@
   const SB_URL     = "https://zqzgarvmpqqqaobeicpc.supabase.co";
   const SB_KEY     = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
   const LESSON_NUM = '4';
-
-  const PRELOADED_SCORES = { '4': '12/29', '5': '32/35', '6': '12/14' };
-  const PRELOADED_ANSWERS = {
-    '4': {"q_1_1": "потерянный", "q_1_2": "расколоть/разделить", "q_1_3": "пятно", "q_1_4": "заблокировано ", "q_1_5": "помял", "q_1_6": "перестала работать", "q_1_7": "запер сам себя", "q_1_8": "не заводится", "q_1_9": "разряжен", "q_1_10": "медленно быстро остановился ", "q_12_1_2": "wont start ", "q_12_1_3": "broken", "q_12_1_4": "blocked", "q_12_1_5": "", "q_12_1_6": "flat", "q_12_1_7": "mislaid", "q_12_1_8": "mislaid", "q_12_1_9": "blocked", "q_12_2_2": "stain", "q_12_2_3": "run out", "q_12_2_4": "leak", "q_12_2_5": "dent", "q_12_4_2": "banged my head", "q_12_4_3": "locked myself out", "q_12_4_4": "mislaid her number", "q_12_4_5": "wont start", "q_12_4_6": "cut my foot", "q_12_4_7": "they were crushed", "free_1": "I would immediately freeze it via my bank app and then check where I had last used it. If I couldn't find it, I would contact the bank and order a new card.", "free_2": "I would apologise and replace the glass immediately because it could be dangerous and someone might cut themselves.", "free_3": "I would sew the button back on if I had a needle and thread. If not, I would take the coat to a tailor or buy a replacement button.", "matrix": []},
-    '5': {"q1_1a": "struggled", "q1_1b": "my accent", "q1_2a": "accurate", "q1_2b": "mastering", "q1_3": "get by", "q1_4": "picked it up", "q1_5": "express", "q1_6": "fluently", "q2_1": "phrasal verb", "q2_2": "preposition", "q2_3": "adjective", "q2_4": "adverb", "q2_5": "noun", "q2_6": "verb", "q2_7": "pronoun", "q2_8": "adverb", "q2_9": "verb", "q3_1_1": "hard", "q3_1_2": "fast", "q3_1_3": "unfluent", "q3_1_4": "a large mistake", "q3_1_5": "bad progress", "q3_1_6": "a high level", "q3_2_1": "make", "q3_2_2": "do", "q3_2_3": "make", "q3_2_4": "do", "q3_2_5": "do", "q3_2_6": "make", "q3_2_7": "do", "q3_2_8": "make", "q3_3_1": "about", "q3_3_2": "on", "q3_3_3": "on", "q3_3_4": "with"},
-    '6': {"q7": "a", "q8_1": "Mike", "q8_2": "Alex", "q8_3": "Cerys", "q8_4": "Lydia", "q8_5": "Alex", "q8_6": "Cerys", "q8_7": "Mike", "q9_1": "with", "q9_2": "up", "q9_3": "along to", "q9_4": "up", "q9_5": "up", "q9_6": "out"}
-  };
-
-  const questionLabels = {
-    '1.1':  'Ч.1 — mislaid', '1.2':  'Ч.1 — spilt', '1.3':  'Ч.1 — stain',
-    '1.4':  'Ч.1 — blocked', '1.5':  'Ч.1 — dented', '1.6':  'Ч.1 — stopped working',
-    '1.7':  'Ч.1 — locked myself out', '1.8':  'Ч.1 — won\'t start',
-    '1.9':  'Ч.1 — flat (battery)', '1.10': 'Ч.1 — slow/fast/stopped',
-    '12.1.2': 'Ex 12.1 №2 — I had to call out a local mechanic. Maybe the car…',
-    '12.1.3': 'Ex 12.1 №3 — Our neighbours let us use their washing machine. Perhaps theirs had…',
-    '12.1.4': 'Ex 12.1 №4 — The handle…',
-    '12.1.5': 'Ex 12.1 №5 — They had… it.',
-    '12.1.6': 'Ex 12.1 №6 — The batteries must be…',
-    '12.1.7': 'Ex 12.1 №7 — Someone has… something.',
-    '12.1.8': 'Ex 12.1 №8 — The meal was…',
-    '12.1.9': 'Ex 12.1 №9 — The computer…',
-    '12.2.2': 'Ex 12.2 №2 — Odd one out: stain / graze / bruise',
-    '12.2.3': 'Ex 12.2 №3 — Odd one out: run out / bump / flat',
-    '12.2.4': 'Ex 12.2 №4 — Odd one out: leak / smash / chip',
-    '12.2.5': 'Ex 12.2 №5 — Odd one out: leak / dent / flood',
-    '12.4.2': 'Ex 12.4 №2 — bumped my head',
-    '12.4.3': 'Ex 12.4 №3 — locked myself out',
-    '12.4.4': 'Ex 12.4 №4 — mislaid her number',
-    '12.4.5': 'Ex 12.4 №5 — camera stopped working',
-    '12.4.6': 'Ex 12.4 №6 — rocks',
-    '12.4.7': 'Ex 12.4 №7 — crisps',
-  };
+  const SAVED_SCORE = '12/29';
 
   const correctAnswer = {
-    '1.1':  'положить не туда / временно потерять', '1.2': 'пролить', '1.3': 'пятно',
-    '1.4':  'засорён', '1.5': 'сделать вмятину / помять', '1.6': 'перестала работать',
-    '1.7':  'заперся снаружи', '1.8': 'не заводится', '1.9': 'разряжен / сел',
+    '1.1':  'положить не туда / временно потерять',
+    '1.2':  'пролить',
+    '1.3':  'пятно',
+    '1.4':  'засорён',
+    '1.5':  'вмятина',
+    '1.6':  'перестала работать',
+    '1.7':  'заперся снаружи',
+    '1.8':  'не заводится',
+    '1.9':  'разряжен',
     '1.10': 'slow — отстают, fast — спешат, stopped — остановились',
-    '12.1.2': 'broke down / wouldn\'t start', '12.1.3': 'broken down / stopped working',
-    '12.1.4': 'came off / fell off', '12.1.5': 'grazed', '12.1.6': 'flat / dead',
-    '12.1.7': 'mislaid / lost', '12.1.8': 'burnt / burned', '12.1.9': 'crashed',
-    '12.2.2': 'stain', '12.2.3': 'bump', '12.2.4': 'smash', '12.2.5': 'dent',
-    '12.4.2': 'bumped my head', '12.4.3': 'locked myself out', '12.4.4': 'mislaid her number',
-    '12.4.5': 'stopped working / broken', '12.4.6': 'fell / grazed my leg', '12.4.7': 'were crushed / smashed',
+    '12.1.2': 'won\'t start',
+    '12.1.3': 'broken down',
+    '12.1.4': 'came off',
+    '12.1.5': 'grazed',
+    '12.1.6': 'flat',
+    '12.1.7': 'mislaid',
+    '12.1.8': 'burnt',
+    '12.1.9': 'crashed',
+    '12.2.2': 'stain',
+    '12.2.3': 'bump',
+    '12.2.4': 'smash',
+    '12.2.5': 'dent',
+    '12.4.2': 'bumped my head',
+    '12.4.3': 'locked myself out',
+    '12.4.4': 'mislaid her number',
+    '12.4.5': 'stopped working',
+    '12.4.6': 'fell',
+    '12.4.7': 'crushed them',
   };
 
+  // Ответы из отчёта Полины. Вопросы, которых нет в отчёте, были правильными,
+  // поэтому туда подставлены правильные ответы.
+  const embeddedAnswers = {
+    '1.1':  'потерянный',
+    '1.2':  'расколоть/разделить',
+    '1.3':  'пятно',
+    '1.4':  'заблокировано',
+    '1.5':  'вмятина',
+    '1.6':  'перестала работать',
+    '1.7':  'запер сам себя',
+    '1.8':  'не заводится',
+    '1.9':  'разряжен',
+    '1.10': 'медленно быстро остановился',
+    '12.1.2': 'wont start',
+    '12.1.3': 'broken down',
+    '12.1.4': 'blocked',
+    '12.1.5': '',
+    '12.1.6': 'flat',
+    '12.1.7': 'mislaid',
+    '12.1.8': 'mislaid',
+    '12.1.9': 'blocked',
+    '12.2.2': 'stain',
+    '12.2.3': 'run out',
+    '12.2.4': 'leak',
+    '12.2.5': 'dent',
+    '12.4.2': 'banged my head',
+    '12.4.3': 'locked myself out',
+    '12.4.4': 'mislaid her number',
+    '12.4.5': 'wont start',
+    '12.4.6': 'cut my foot',
+    '12.4.7': 'they were crushed',
+    'free_1': "I would immediately freeze it via my bank app and then check where I had last used it. If I couldn't find it, I would contact the bank and order a new card.",
+    'free_2': "I would apologise and replace the glass immediately because it could be dangerous and someone might cut themselves.",
+    'free_3': "I would sew the button back on if I had a needle and thread. If not, I would take the coat to a tailor or buy a replacement button.",
+    // В отчёте нет выбранных клеток таблицы, только факт ошибки.
+    'matrix': { saved: false, correct: false }
+  };
+
+  const wrongNums = new Set([
+    '1.1','1.2','1.4','1.7','1.10',
+    '12.1.2','12.1.4','12.1.5','12.1.8','12.1.9',
+    '12.2.3','12.2.4',
+    '12.4.2','12.4.5','12.4.6','12.4.7'
+  ]);
+
+  const validMatrixPairs = [
+    'banged-3','ruined-1','ruined-2','ruined-7',
+    'cracked-1','cracked-2','broken down-1','broken down-5',
+    'dented-1','stopped-4','stopped-5','blocked-6'
+  ];
+
   function norm(s) {
-    return String(s || '').toLowerCase().trim().replace(/[ё]/g,'е').replace(/[\s\.\,\-\!\?']/g,'');
+    return String(s || '').toLowerCase().trim().replace(/[ё]/g,'е').replace(/[\s\.\,\-\!\?'’]/g,'');
   }
 
-  function getInputKey(el, fallback) {
-    if (!el.id) el.id = `auto_${fallback}`;
-    return el.id;
+  function setFieldValue(row, value) {
+    const input = row.querySelector('input[type="text"]');
+    const sel = row.querySelector('select');
+    if (input) input.value = value || '';
+    if (sel) sel.value = value || '';
+    return input || sel;
   }
 
-  function collectAnswers() {
-    const answers = {};
-    document.querySelectorAll('.q-row[data-ans]').forEach(row => {
-      const num = row.getAttribute('data-num');
-      const field = row.querySelector('input[type="text"], select');
-      if (field) answers[getInputKey(field, num.replace(/\W/g,'_'))] = field.value || '';
-    });
-    document.querySelectorAll('textarea').forEach(t => answers[t.id] = t.value || '');
-    answers.matrix = Array.from(document.querySelectorAll('.cb-cell.checked')).map(cell => {
-      return `${cell.parentElement.getAttribute('data-problem')}-${cell.getAttribute('data-col')}`;
-    });
-    return answers;
-  }
-
-  function restoreAnswers(answers = {}) {
-    document.querySelectorAll('.q-row[data-ans]').forEach(row => {
-      const num = row.getAttribute('data-num');
-      const field = row.querySelector('input[type="text"], select');
-      if (!field) return;
-      const key = getInputKey(field, num.replace(/\W/g,'_'));
-      if (answers[key] !== undefined) field.value = answers[key];
-    });
-    document.querySelectorAll('textarea').forEach(t => {
-      if (answers[t.id] !== undefined) t.value = answers[t.id];
-    });
-    if (Array.isArray(answers.matrix)) {
-      document.querySelectorAll('.cb-cell').forEach(cell => {
-        const key = `${cell.parentElement.getAttribute('data-problem')}-${cell.getAttribute('data-col')}`;
-        const checked = answers.matrix.includes(key);
-        cell.classList.toggle('checked', checked);
-        cell.textContent = checked ? '✓' : '';
-      });
+  function markRow(row, isCorrect) {
+    const num = row.getAttribute('data-num');
+    const field = row.querySelector('input[type="text"], select');
+    const fb = row.querySelector('.feedback');
+    const exp = row.querySelector('.explanation');
+    if (field) {
+      field.classList.remove('correct','wrong');
+      field.classList.add(isCorrect ? 'correct' : 'wrong');
+      field.disabled = true;
     }
+    if (fb) {
+      if (isCorrect) {
+        fb.textContent = '✓ Верно';
+        fb.className = 'feedback correct';
+      } else {
+        fb.textContent = '✗ Неверно. Правильно: ' + (correctAnswer[num] || row.getAttribute('data-ans') || '');
+        fb.className = 'feedback wrong';
+      }
+    }
+    if (exp) exp.style.display = isCorrect ? 'none' : 'block';
   }
 
-  function lockForm() {
-    document.querySelectorAll('input, select, textarea').forEach(el => el.disabled = true);
-    document.querySelectorAll('.cb-cell').forEach(cell => cell.style.pointerEvents = 'none');
+  function applyEmbeddedAnswers() {
+    document.querySelectorAll('.q-row[data-ans]').forEach(row => {
+      const num = row.getAttribute('data-num');
+      const value = embeddedAnswers[num] ?? correctAnswer[num] ?? '';
+      setFieldValue(row, value);
+      markRow(row, !wrongNums.has(num));
+    });
+
+    // Свободные ответы
+    ['free_1','free_2','free_3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.value = embeddedAnswers[id] || '';
+      el.disabled = true;
+      el.classList.add('correct');
+    });
+
+    // Таблица: в отчёте нет конкретных выбранных клеток, поэтому фиксируем факт ошибки
+    // и показываем правильные сочетания зелёным для разбора.
+    document.querySelectorAll('.cb-cell').forEach(cell => {
+      cell.classList.remove('checked','correct-cell','wrong-cell');
+      cell.textContent = '';
+      const prob = cell.parentElement.getAttribute('data-problem');
+      const col  = cell.getAttribute('data-col');
+      const key = `${prob}-${col}`;
+      if (validMatrixPairs.includes(key)) {
+        cell.classList.add('checked','correct-cell');
+        cell.textContent = '✓';
+      }
+      cell.style.pointerEvents = 'none';
+    });
+    const mfb = document.getElementById('matrixFeedback');
+    if (mfb) {
+      mfb.textContent = '✗ В отчёте была ошибка в таблице. Выбранные клетки не сохранились в Telegram-отчёте; ниже показан правильный вариант для разбора.';
+      mfb.className = 'feedback wrong';
+    }
+
+    document.getElementById('liveScore').textContent = SAVED_SCORE.replace('/', ' / ');
+    const banner = document.getElementById('scoreBanner');
+    banner.textContent = '💪 Домашка уже сдана. Результат: 12 из 29 (41%). Ответы закреплены.';
+    banner.style.display = 'block';
+
     const submitBtn = document.querySelector('.submit-btn');
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.style.opacity = '0.5';
-      submitBtn.style.cursor = 'not-allowed';
       submitBtn.innerHTML = '<span>✅</span> Домашка уже сдана';
     }
   }
 
-  function updateLiveScore(correct = 0, total = 0) {
-    document.getElementById('liveScore').textContent = `${correct} / ${total}`;
+  function collectAnswersForSupabase() {
+    return { ...embeddedAnswers };
   }
 
-  function checkAllRows() {
-    let correct = 0, total = 0;
-    let errorsReport = '';
-
-    document.querySelectorAll('.q-row[data-ans]').forEach(row => {
-      total++;
-      const num = row.getAttribute('data-num');
-      const field = row.querySelector('input[type="text"], select');
-      const fb = row.querySelector('.feedback');
-      const exp = row.querySelector('.explanation');
-      const val = field ? field.value : '';
-      const answers = row.getAttribute('data-ans').split(',');
-      const ok = answers.some(a => norm(val).includes(norm(a)) && String(val).trim() !== '');
-
-      if (ok) {
-        correct++;
-        if (fb) { fb.textContent = '✓ Верно!'; fb.className = 'feedback correct'; }
-        if (exp) exp.style.display = 'none';
-      } else {
-        if (fb) { fb.textContent = '✗ Не совсем… Правильно: ' + (correctAnswer[num] || answers[0]); fb.className = 'feedback wrong'; }
-        if (exp) exp.style.display = 'block';
-        const label = questionLabels[num] || `Задание ${num}`;
-        errorsReport += `\n❌ *${label}*\n`;
-        errorsReport += `   Ответ Полины: _${val || 'нет ответа'}_\n`;
-        errorsReport += `   Правильно: _${correctAnswer[num] || answers[0]}_\n`;
-      }
-    });
-
-    const validPairs = [
-      'banged-3','ruined-1','ruined-2','ruined-7',
-      'cracked-1','cracked-2','broken down-1','broken down-5',
-      'dented-1','stopped-4','stopped-5','blocked-6'
-    ];
-    let matrixOk = true;
-    document.querySelectorAll('.cb-cell').forEach(cell => {
-      const key = `${cell.parentElement.getAttribute('data-problem')}-${cell.getAttribute('data-col')}`;
-      if (cell.classList.contains('checked') !== validPairs.includes(key)) matrixOk = false;
-    });
-    total++;
-    const mfb = document.getElementById('matrixFeedback');
-    if (matrixOk) {
-      correct++;
-      if (mfb) { mfb.textContent = '✓ Таблица заполнена верно!'; mfb.className = 'feedback correct'; }
-    } else {
-      if (mfb) { mfb.textContent = '✗ Есть ошибки в сочетаемости — перепроверь collocations!'; mfb.className = 'feedback wrong'; }
-      errorsReport += `\n❌ *Ex 12.3 — Collocations Matrix*\n`;
-      errorsReport += `   Правильные сочетания: banged→elbow; ruined→car/vase/meal; cracked→car/vase; broken down→car/printer; dented→car; stopped→clock/printer; blocked→sink\n`;
-    }
-
-    updateLiveScore(correct, total);
-    return { correct, total, errorsReport };
-  }
-
-  async function saveLessonScore(scoreStr, answersObj, bannerEl) {
+  async function syncFixedResultToSupabase() {
     try {
-      const getRes = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers,hw4_score`, {
-        headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
-      });
-      if (!getRes.ok) throw new Error(`Не удалось прочитать прогресс (HTTP ${getRes.status})`);
-      const rows = await getRes.json();
+      const getRes = await fetch(
+        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers`,
+        { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+      );
+      const rows = getRes.ok ? await getRes.json() : [];
       const currentScores  = (rows[0] && rows[0].hw_scores)  || {};
       const currentAnswers = (rows[0] && rows[0].hw_answers) || {};
-      const updatedScores  = { ...currentScores, [LESSON_NUM]: scoreStr };
-      const updatedAnswers = { ...currentAnswers, [LESSON_NUM]: answersObj };
+      const updatedScores  = { ...currentScores,  [LESSON_NUM]: SAVED_SCORE };
+      const updatedAnswers = { ...currentAnswers, [LESSON_NUM]: collectAnswersForSupabase() };
 
-      const putRes = await fetch(`${SB_URL}/rest/v1/progress?on_conflict=student`, {
+      await fetch(`${SB_URL}/rest/v1/progress?on_conflict=student`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`,
-          Prefer: 'resolution=merge-duplicates,return=minimal'
+          'Content-Type': 'application/json',
+          apikey: SB_KEY,
+          Authorization: `Bearer ${SB_KEY}`,
+          Prefer: 'resolution=merge-duplicates,return=minimal',
         },
         body: JSON.stringify({
           student: 'polina',
           hw_scores: updatedScores,
           hw_answers: updatedAnswers,
-          hw4_score: scoreStr,
+          hw4_score: SAVED_SCORE,
           hw4_done: true,
           updated_at: new Date().toISOString(),
         }),
       });
-      if (!putRes.ok) throw new Error(`Не удалось сохранить прогресс (HTTP ${putRes.status})`);
     } catch (e) {
-      console.error('Ошибка сохранения прогресса в Supabase:', e);
-      if (bannerEl) {
-        const warn = document.createElement('div');
-        warn.style.cssText = 'margin-top:10px;font-size:13px;color:#b91c1c;font-weight:600;';
-        warn.textContent = '⚠️ Результат отправлен в Telegram, но не сохранился на сайте. Сообщите учителю.';
-        bannerEl.after(warn);
-      }
+      console.error('Не удалось синхронизировать Lesson 4 с Supabase:', e);
     }
   }
 
-  async function loadAndLockIfDone() {
-    try {
-      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers,hw4_score`, {
-        headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
-      });
-      if (!r.ok) return;
-      const rows = await r.json();
-      const d = rows[0] || {};
-      const scores = d.hw_scores || {};
-      const answers = d.hw_answers || {};
-      const score4 = scores[LESSON_NUM] || d.hw4_score || PRELOADED_SCORES[LESSON_NUM];
-      const isDone = score4 && score4 !== '' && score4 !== '0/0';
-      if (!isDone) return;
-
-      restoreAnswers((answers && answers[LESSON_NUM] && Object.keys(answers[LESSON_NUM]).length ? answers[LESSON_NUM] : PRELOADED_ANSWERS[LESSON_NUM]) || {});
-      const { correct, total } = checkAllRows();
-      const pct = total ? Math.round(correct / total * 100) : 0;
-      const emoji = pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪';
-      const banner = document.getElementById('scoreBanner');
-      banner.textContent = `${emoji} Домашка уже сдана. Результат: ${score4} (${pct}%)`;
-      banner.style.display = 'block';
-      lockForm();
-    } catch (e) {
-      console.error('Не удалось проверить статус домашки:', e);
-    }
-  }
-
-  async function submitHomework() {
-    const { correct, total, errorsReport } = checkAllRows();
-    const pct = total ? Math.round((correct / total) * 100) : 0;
-    const emoji = pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪';
-    const scoreStr = `${correct}/${total}`;
-
-    const banner = document.getElementById('scoreBanner');
-    banner.textContent = `${emoji} Твой результат: ${scoreStr} (${pct}%). Отчёт отправлен преподавателю!`;
-    banner.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    localStorage.setItem('polina_hw4_score', scoreStr);
-    const answersObj = collectAnswers();
-    await saveLessonScore(scoreStr, answersObj, banner);
-    lockForm();
-
-    let fullReport = `📝 *Отчёт по ДЗ Полины*\n`;
-    fullReport += `Тема: Everyday Minor Problems (Lesson 4)\n`;
-    fullReport += `📊 Результат: *${scoreStr} (${pct}%)* ${emoji}\n`;
-    fullReport += errorsReport ? `\n─────────────────\n⚠️ *Ошибки:*${errorsReport}` : `\n✅ Все задания выполнены верно!`;
-
-    const f1 = document.getElementById('free_1').value;
-    const f2 = document.getElementById('free_2').value;
-    const f3 = document.getElementById('free_3').value;
-    if (f1 || f2 || f3) {
-      fullReport += `\n\n─────────────────\n✍️ *Over to you (свободные ответы):*\n`;
-      if (f1) fullReport += `\n1. Mislaid credit card:\n_${f1}_\n`;
-      if (f2) fullReport += `\n2. Chipped glass:\n_${f2}_\n`;
-      if (f3) fullReport += `\n3. Button came off:\n_${f3}_\n`;
-    }
-
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: CHAT_ID, text: fullReport, parse_mode: 'Markdown' })
-    }).catch(console.error);
-  }
-
+  // Клики по таблице отключены после сдачи, но обработчик оставлен безопасным
   document.querySelectorAll('.cb-cell').forEach(cell => {
     cell.addEventListener('click', function() {
       if (this.style.pointerEvents === 'none') return;
@@ -943,7 +902,11 @@
     });
   });
 
-  window.addEventListener('load', loadAndLockIfDone);
+  // Единственная версия логики: без дублей checkAllRows() и submitHomework().
+  window.addEventListener('load', () => {
+    applyEmbeddedAnswers();
+    syncFixedResultToSupabase();
+  });
 </script>
 </body>
 </html>
