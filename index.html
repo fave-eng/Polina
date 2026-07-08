@@ -497,7 +497,7 @@
   <div style="background:#fff; border-radius:16px; border:1.5px solid var(--border); padding:18px 22px; margin-top:12px;">
     <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:8px;">
       <span>📝 Домашние задания</span>
-      <span id="hw-pct" style="color:var(--indigo)">0 / 5</span>
+      <span id="hw-pct" style="color:var(--indigo)">0 / 4</span>
     </div>
     <div style="background:#f1f5f9; border-radius:100px; height:7px; overflow:hidden; margin-bottom:16px;">
       <div id="hw-bar" style="height:100%; border-radius:100px; background:linear-gradient(90deg,#4f46e5,#7c3aed); width:0%; transition:width .8s ease;"></div>
@@ -917,47 +917,56 @@
     const SB_URL = 'https://zqzgarvmpqqqaobeicpc.supabase.co';
     const SB_KEY = 'sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC';
 
-    // Сколько ВСЕГО уроков сейчас доступно — узнаём автоматически,
-    // считая активные карточки на странице homework.html (не нужно
-    // ничего вписывать руками: откроете lesson6.html и поставите
-    // карточке класс "active" на homework.html — это число само вырастет).
-    async function getTotalLessonsCount() {
-      try {
-        const res = await fetch('./homework.html');
-        const html = await res.text();
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        const activeCards = doc.querySelectorAll('.lesson-card.active');
-        if (activeCards.length > 0) return activeCards.length;
-      } catch (e) {
-        console.error('Не удалось определить число уроков из homework.html:', e);
-      }
-      // Если не получилось прочитать homework.html — подстраховка,
-      // чтобы прогресс-бар не сломался визуально
-      return 5;
-    }
+    // Единый источник правды:
+    // published_homeworks = какие уроки открыты
+    // hw_scores = какие уроки уже сданы
+    const DEFAULT_PUBLISHED_HOMEWORKS = {
+      '4': { published:true },
+      '5': { published:true },
+      '6': { published:true },
+      '7': { published:true }
+    };
 
-    // Считаем, сколько уроков реально сдано — по умолчанию 0, если Supabase не ответит
     let hwDone = 0;
+    let hwTotal = 4;
 
-    // Загружаем из Supabase
     try {
       const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=*`, {
         headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
       });
       const data = await r.json();
+
       if (data && data[0]) {
         const d = data[0];
 
-        // hw_scores — единый JSON со всеми домашками: {"4":"12/29","5":"20/29",...}
-        // Считаем сданными те, где результат не пустой и не "0/0"
-        const scores = d.hw_scores || {};
-        const doneLessons = Object.entries(scores)
-          .filter(([num, score]) => score && score !== '' && score !== '0/0')
-          .map(([num]) => num);
+        const publishedHomeworks = {
+          ...DEFAULT_PUBLISHED_HOMEWORKS,
+          ...(d.published_homeworks || {})
+        };
 
-        hwDone = doneLessons.length;
-        localStorage.setItem('polina_hw_scores', JSON.stringify(scores));
+        const publishedLessons = Object.entries(publishedHomeworks)
+          .filter(([num, item]) => item && item.published)
+          .map(([num]) => String(num));
+
+        hwTotal = publishedLessons.length;
+
+        const scores = d.hw_scores || {};
+        const legacyScores = {};
+        if (d.hw4_score) legacyScores['4'] = d.hw4_score;
+        if (d.hw5_score) legacyScores['5'] = d.hw5_score;
+        if (d.hw6_score) legacyScores['6'] = d.hw6_score;
+        if (d.hw7_score) legacyScores['7'] = d.hw7_score;
+
+        const allScores = { ...legacyScores, ...scores };
+
+        hwDone = publishedLessons.filter(num => {
+          const score = allScores[num];
+          return score && score !== '' && score !== '0/0';
+        }).length;
+
+        localStorage.setItem('polina_hw_scores', JSON.stringify(allScores));
         localStorage.setItem('polina_hw_done', String(hwDone));
+        localStorage.setItem('polina_hw_total', String(hwTotal));
 
         if (d.words_learned)     localStorage.setItem('polina_words_learned',    d.words_learned);
         if (d.verbs_learned)     localStorage.setItem('polina_verbs_learned',    d.verbs_learned);
@@ -966,14 +975,11 @@
       }
     } catch(e) {
       console.error('Не удалось загрузить прогресс из Supabase:', e);
-      // Если Supabase недоступен — берём последнее известное значение из localStorage,
-      // чтобы прогресс хотя бы не "обнулился" визуально
       hwDone = parseInt(localStorage.getItem('polina_hw_done') || '0');
+      hwTotal = parseInt(localStorage.getItem('polina_hw_total') || '4');
     }
 
-    // Считаем ДЗ
-    const hwTotal = await getTotalLessonsCount();
-    const hwPct   = Math.round(hwDone / hwTotal * 100);
+    const hwPct = hwTotal ? Math.round(hwDone / hwTotal * 100) : 0;
 
     // Считаем словарь
     const words     = parseInt(localStorage.getItem('polina_words_learned')   || '0');
