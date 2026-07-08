@@ -403,6 +403,7 @@
 <script>
   const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
   const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
+  const PRELOADED_HW_SCORES = { '4': '12/29', '5': '32/35', '6': '12/14' };
 
   // Номера уроков определяются автоматически — по карточкам с классом
   // "lesson-card active" на этой странице (а не вручную через список).
@@ -422,7 +423,12 @@
       const data = await r.json();
       if (data && data[0]) {
         const d = data[0];
-        const scores = d.hw_scores || {};
+        // Основной формат: общий JSON со всеми результатами по урокам.
+        // Legacy fallback нужен для старых страниц, которые сохраняли hw4_score/hw5_score/hw6_score отдельно.
+        const scores = { ...(d.hw_scores || {}) };
+        if (!scores['4'] && d.hw4_score) scores['4'] = d.hw4_score;
+        if (!scores['5'] && d.hw5_score) scores['5'] = d.hw5_score;
+        if (!scores['6'] && d.hw6_score) scores['6'] = d.hw6_score;
         localStorage.setItem('polina_hw_scores', JSON.stringify(scores));
         if (d.words_learned) localStorage.setItem('polina_words_learned', d.words_learned);
       }
@@ -457,7 +463,7 @@
   window.addEventListener('load', async () => {
     await loadFromSupabase();
 
-    const scores = JSON.parse(localStorage.getItem('polina_hw_scores') || '{}');
+    const scores = { ...PRELOADED_HW_SCORES, ...JSON.parse(localStorage.getItem('polina_hw_scores') || '{}') };
     const lessonNums = getAvailableLessonNums();
 
     const doneFlags = lessonNums.map(num => updateCard(num, scores));
@@ -467,7 +473,7 @@
 
     const done  = doneFlags.filter(Boolean).length;
     const total = lessonNums.length; // считаем от количества доступных уроков, а не зашитого числа
-    const pct   = Math.round((done / total) * 100);
+    const pct   = total ? Math.round((done / total) * 100) : 0;
 
     document.getElementById('statDone').textContent     = done;
     document.getElementById('statTotal').textContent    = total;
