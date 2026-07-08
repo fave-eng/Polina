@@ -257,9 +257,9 @@
     <h1>Домашние задания</h1>
     <p>Выполняй и отслеживай прогресс по каждому уроку</p>
     <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="heroProgress" style="width: 20%"></div>
+      <div class="progress-bar-fill" id="heroProgress" style="width: 75%"></div>
     </div>
-    <div class="progress-label" id="heroLabel">1 из 5 выполнено</div>
+    <div class="progress-label" id="heroLabel">3 из 4 выполнено</div>
   </div>
 </div>
 <div class="hero-wave">
@@ -273,15 +273,15 @@
   <!-- STATS -->
   <div class="stats-row">
     <div class="stat-chip done">
-      <div class="sc-num" id="statDone">1</div>
+      <div class="sc-num" id="statDone">3</div>
       <div class="sc-lbl">Выполнено</div>
     </div>
     <div class="stat-chip total">
-      <div class="sc-num" id="statTotal">5</div>
+      <div class="sc-num" id="statTotal">4</div>
       <div class="sc-lbl">Всего уроков</div>
     </div>
     <div class="stat-chip pct">
-      <div class="sc-num" id="statPct">20%</div>
+      <div class="sc-num" id="statPct">75%</div>
       <div class="sc-lbl">Прогресс</div>
     </div>
   </div>
@@ -361,18 +361,25 @@
   </div>
 
   <!-- LESSON 7 -->
-  <div class="lesson-card locked" id="card-7">
-    <div class="lc-main">
-      <div class="lc-num locked-num">7</div>
-      <div class="lc-info">
-        <div class="lc-lesson-label">Lesson 7</div>
-        <div class="lc-title">Coming soon…</div>
-        <div class="lc-meta">
-          <span class="lc-status-pill pill-locked">🔒 Скоро</span>
+  <div class="lesson-card active" id="card-7">
+    <a href="./lesson7.html" style="text-decoration:none; color:inherit;">
+      <div class="lc-main">
+        <div class="lc-num" id="num-7">7</div>
+        <div class="lc-info">
+          <div class="lc-lesson-label">Lesson 7</div>
+          <div class="lc-title">Feelings & Emotions</div>
+          <div class="lc-meta">
+            <span class="lc-status-pill" id="pill-7">📝 Выполнить</span>
+            <span class="lc-score" id="score-7"></span>
+          </div>
         </div>
+        <div class="lc-arrow">→</div>
       </div>
+    </a>
+    <div class="lc-vocab-strip">
+      <div class="lvs-left">😊 <span>Лексика к уроку:</span> Feelings & Emotions</div>
+      <a href="./vocab-feelings.html" class="lvs-link">Тренировать <span>→</span></a>
     </div>
-    <div class="locked-strip">🔒 Задание появится после урока 7</div>
   </div>
 
   <!-- LESSON 8 -->
@@ -415,50 +422,6 @@
       .filter(Boolean);
   }
 
-
-
-  function lessonCardHTML(l) {
-    const num = String(l.lesson);
-    return `
-  <div class="lesson-card active" id="card-${num}">
-    <a href="./${l.homework_url}" style="text-decoration:none; color:inherit;">
-      <div class="lc-main">
-        <div class="lc-num active-num" id="num-${num}">${num}</div>
-        <div class="lc-info">
-          <div class="lc-lesson-label">Lesson ${num}</div>
-          <div class="lc-title">${l.title || 'Homework'}</div>
-          <div class="lc-meta">
-            <span class="lc-status-pill pill-current" id="pill-${num}">📝 Выполнить</span>
-            <span class="lc-score" id="score-${num}"></span>
-          </div>
-        </div>
-        <div class="lc-arrow">→</div>
-      </div>
-    </a>
-    <div class="lc-vocab-strip">
-      <div class="lvs-left">${l.emoji || '💥'} <span>Лексика к уроку:</span> ${l.vocab_title || l.title || 'Vocabulary'}</div>
-      <a href="./${l.vocab_url}" class="lvs-link">Тренировать <span>→</span></a>
-    </div>
-  </div>`;
-  }
-
-  function applyPublishedHomeworks(published) {
-    if (!published || typeof published !== 'object') return;
-    Object.values(published)
-      .filter(l => l && l.published)
-      .sort((a,b) => Number(a.lesson) - Number(b.lesson))
-      .forEach(l => {
-        const num = String(l.lesson);
-        const existing = document.getElementById(`card-${num}`);
-        if (existing) {
-          existing.outerHTML = lessonCardHTML(l);
-        } else {
-          const upcoming = document.getElementById('section-upcoming');
-          if (upcoming) upcoming.insertAdjacentHTML('beforebegin', lessonCardHTML(l));
-        }
-      });
-  }
-
   async function loadFromSupabase() {
     try {
       const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.${STUDENT}&select=*`, {
@@ -467,13 +430,13 @@
       const data = await r.json();
       if (data && data[0]) {
         const d = data[0];
-        applyPublishedHomeworks(d.published_homeworks || {});
         // Основной формат: общий JSON со всеми результатами по урокам.
         // Legacy fallback нужен для старых страниц, которые сохраняли hw4_score/hw5_score/hw6_score отдельно.
         const scores = { ...(d.hw_scores || {}) };
         if (!scores['4'] && d.hw4_score) scores['4'] = d.hw4_score;
         if (!scores['5'] && d.hw5_score) scores['5'] = d.hw5_score;
         if (!scores['6'] && d.hw6_score) scores['6'] = d.hw6_score;
+        if (!scores['7'] && d.hw7_score) scores['7'] = d.hw7_score;
         localStorage.setItem('polina_hw_scores', JSON.stringify(scores));
         if (d.words_learned) localStorage.setItem('polina_words_learned', d.words_learned);
       }
