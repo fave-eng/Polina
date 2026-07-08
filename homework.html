@@ -361,22 +361,21 @@
   </div>
 
   <!-- LESSON 7 -->
-  <div class="lesson-card" id="card-7">
+  <div class="lesson-card locked" id="card-7">
     <div class="lc-main">
-      <div class="lc-num">7</div>
+      <div class="lc-num locked-num">7</div>
       <div class="lc-info">
         <div class="lc-lesson-label">Lesson 7</div>
-        <div class="lc-title">Feelings and Emotions</div>
+        <div class="lc-title">Coming soon…</div>
         <div class="lc-meta">
-          <span class="lc-status-pill" id="pill-7">📝 Выполнить</span>
-          <span class="lc-score" id="score-7"></span>
+          <span class="lc-status-pill pill-locked">🔒 Скоро</span>
         </div>
       </div>
-      <a href="./lesson7.html" class="lesson-btn" id="btn-7">Открыть</a>
     </div>
+    <div class="locked-strip">🔒 Задание появится после урока 7</div>
   </div>
 
-<!-- LESSON 8 -->
+  <!-- LESSON 8 -->
   <div class="lesson-card locked" id="card-8">
     <div class="lc-main">
       <div class="lc-num locked-num">8</div>
@@ -401,9 +400,9 @@
   <a href="vocabulary-hub.html">💥 Vocab</a>
 </div>
 
+<script src="./config.js"></script>
 <script>
-  const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
-  const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
+  const { SB_URL, SB_KEY, STUDENT } = window.APP_CONFIG;
   const PRELOADED_HW_SCORES = { '4': '12/29', '5': '32/35', '6': '12/14' };
 
   // Номера уроков определяются автоматически — по карточкам с классом
@@ -416,14 +415,59 @@
       .filter(Boolean);
   }
 
+
+
+  function lessonCardHTML(l) {
+    const num = String(l.lesson);
+    return `
+  <div class="lesson-card active" id="card-${num}">
+    <a href="./${l.homework_url}" style="text-decoration:none; color:inherit;">
+      <div class="lc-main">
+        <div class="lc-num active-num" id="num-${num}">${num}</div>
+        <div class="lc-info">
+          <div class="lc-lesson-label">Lesson ${num}</div>
+          <div class="lc-title">${l.title || 'Homework'}</div>
+          <div class="lc-meta">
+            <span class="lc-status-pill pill-current" id="pill-${num}">📝 Выполнить</span>
+            <span class="lc-score" id="score-${num}"></span>
+          </div>
+        </div>
+        <div class="lc-arrow">→</div>
+      </div>
+    </a>
+    <div class="lc-vocab-strip">
+      <div class="lvs-left">${l.emoji || '💥'} <span>Лексика к уроку:</span> ${l.vocab_title || l.title || 'Vocabulary'}</div>
+      <a href="./${l.vocab_url}" class="lvs-link">Тренировать <span>→</span></a>
+    </div>
+  </div>`;
+  }
+
+  function applyPublishedHomeworks(published) {
+    if (!published || typeof published !== 'object') return;
+    Object.values(published)
+      .filter(l => l && l.published)
+      .sort((a,b) => Number(a.lesson) - Number(b.lesson))
+      .forEach(l => {
+        const num = String(l.lesson);
+        const existing = document.getElementById(`card-${num}`);
+        if (existing) {
+          existing.outerHTML = lessonCardHTML(l);
+        } else {
+          const upcoming = document.getElementById('section-upcoming');
+          if (upcoming) upcoming.insertAdjacentHTML('beforebegin', lessonCardHTML(l));
+        }
+      });
+  }
+
   async function loadFromSupabase() {
     try {
-      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=*`, {
+      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.${STUDENT}&select=*`, {
         headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
       });
       const data = await r.json();
       if (data && data[0]) {
         const d = data[0];
+        applyPublishedHomeworks(d.published_homeworks || {});
         // Основной формат: общий JSON со всеми результатами по урокам.
         // Legacy fallback нужен для старых страниц, которые сохраняли hw4_score/hw5_score/hw6_score отдельно.
         const scores = { ...(d.hw_scores || {}) };
