@@ -294,6 +294,13 @@
   const SB_URL    = "https://zqzgarvmpqqqaobeicpc.supabase.co";
   const SB_KEY    = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
 
+  const PRELOADED_SCORES = { '4': '12/29', '5': '32/35', '6': '12/14' };
+  const PRELOADED_ANSWERS = {
+    '4': {"q_1_1": "потерянный", "q_1_2": "расколоть/разделить", "q_1_3": "пятно", "q_1_4": "заблокировано ", "q_1_5": "помял", "q_1_6": "перестала работать", "q_1_7": "запер сам себя", "q_1_8": "не заводится", "q_1_9": "разряжен", "q_1_10": "медленно быстро остановился ", "q_12_1_2": "wont start ", "q_12_1_3": "broken", "q_12_1_4": "blocked", "q_12_1_5": "", "q_12_1_6": "flat", "q_12_1_7": "mislaid", "q_12_1_8": "mislaid", "q_12_1_9": "blocked", "q_12_2_2": "stain", "q_12_2_3": "run out", "q_12_2_4": "leak", "q_12_2_5": "dent", "q_12_4_2": "banged my head", "q_12_4_3": "locked myself out", "q_12_4_4": "mislaid her number", "q_12_4_5": "wont start", "q_12_4_6": "cut my foot", "q_12_4_7": "they were crushed", "free_1": "I would immediately freeze it via my bank app and then check where I had last used it. If I couldn't find it, I would contact the bank and order a new card.", "free_2": "I would apologise and replace the glass immediately because it could be dangerous and someone might cut themselves.", "free_3": "I would sew the button back on if I had a needle and thread. If not, I would take the coat to a tailor or buy a replacement button.", "matrix": []},
+    '5': {"q1_1a": "struggled", "q1_1b": "my accent", "q1_2a": "accurate", "q1_2b": "mastering", "q1_3": "get by", "q1_4": "picked it up", "q1_5": "express", "q1_6": "fluently", "q2_1": "phrasal verb", "q2_2": "preposition", "q2_3": "adjective", "q2_4": "adverb", "q2_5": "noun", "q2_6": "verb", "q2_7": "pronoun", "q2_8": "adverb", "q2_9": "verb", "q3_1_1": "hard", "q3_1_2": "fast", "q3_1_3": "unfluent", "q3_1_4": "a large mistake", "q3_1_5": "bad progress", "q3_1_6": "a high level", "q3_2_1": "make", "q3_2_2": "do", "q3_2_3": "make", "q3_2_4": "do", "q3_2_5": "do", "q3_2_6": "make", "q3_2_7": "do", "q3_2_8": "make", "q3_3_1": "about", "q3_3_2": "on", "q3_3_3": "on", "q3_3_4": "with"},
+    '6': {"q7": "a", "q8_1": "Mike", "q8_2": "Alex", "q8_3": "Cerys", "q8_4": "Lydia", "q8_5": "Alex", "q8_6": "Cerys", "q8_7": "Mike", "q9_1": "with", "q9_2": "up", "q9_3": "along to", "q9_4": "up", "q9_5": "up", "q9_6": "out"}
+  };
+
   // Словарь правильных ответов для отчёта (проверено по Answer Key учебника, стр. 115)
   const correctAnswers = {
     '7': 'b) Where\'s the strangest place you\'ve had a language class?',
@@ -339,7 +346,7 @@
   async function saveLessonScore(lessonNum, scoreStr, answersObj, bannerEl) {
     try {
       const getRes = await fetch(
-        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers`,
+        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers,hw6_score`,
         { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
       );
       if (!getRes.ok) throw new Error(`Не удалось прочитать прогресс (HTTP ${getRes.status})`);
@@ -362,6 +369,8 @@
           student: 'polina',
           hw_scores: updatedScores,
           hw_answers: updatedAnswers,
+          hw6_score: scoreStr,
+          hw6_done: true,
           updated_at: new Date().toISOString(),
         }),
       });
@@ -411,18 +420,18 @@
   async function loadAndLockIfDone() {
     try {
       const r = await fetch(
-        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers`,
+        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers,hw6_score`,
         { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
       );
       if (!r.ok) return;
       const rows = await r.json();
       const scores  = (rows[0] && rows[0].hw_scores)  || {};
       const answers = (rows[0] && rows[0].hw_answers) || {};
-      const score6 = scores['6'];
+      const score6 = scores['6'] || rows[0]?.hw6_score || PRELOADED_SCORES['6'];
       const isDone = score6 && score6 !== '' && score6 !== '0/0';
       if (!isDone) return;
 
-      lockFormWithAnswers(answers['6'] || {});
+      lockFormWithAnswers((answers && answers['6'] && Object.keys(answers['6']).length ? answers['6'] : PRELOADED_ANSWERS['6']) || {});
       const { correct, total } = checkAll();
       const pct = Math.round(correct / total * 100);
       const emoji = pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪';
@@ -451,7 +460,7 @@
         fb.textContent = '✓'; fb.className = 'feedback correct';
       } else {
         el.classList.add('wrong'); el.classList.remove('correct');
-        fb.textContent = '✗'; fb.className = 'feedback wrong';
+        fb.textContent = '✗ Правильно: ' + (correctAnswers[q.num] || q.ans[0]); fb.className = 'feedback wrong';
         const label = questionLabels[q.num] || q.num;
         errorsReport += `\n❌ *${label}*\n`;
         errorsReport += `   Ответ: _${val || 'нет ответа'}_\n`;
