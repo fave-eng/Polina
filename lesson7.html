@@ -306,12 +306,9 @@
   <a href="./vocabulary-hub.html">💥 Vocab</a>
 </div>
 
+<script src="./config.js"></script>
 <script>
-  // Конфигурация из предоставленного шаблона
-  const BOT_TOKEN = "8604414786:AAEcyyQxHiYUi80PDZt7ZkQjomLfsm_VjKM";
-  const CHAT_ID   = "-1003908460669";
-  const SB_URL    = "https://zqzgarvmpqqqaobeicpc.supabase.co";
-  const SB_KEY    = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
+  const { BOT_TOKEN, CHAT_ID, SB_URL, SB_KEY, STUDENT } = window.APP_CONFIG;
 
   const correctAnswers = {
     '1.1': 'guilty', '1.2': 'exhausted', '1.3': 'confused', '1.4': 'happy', 
@@ -375,7 +372,7 @@
   async function saveLessonScore(lessonNum, scoreStr, answersObj, bannerEl) {
     try {
       const getRes = await fetch(
-        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers`,
+        `${SB_URL}/rest/v1/progress?student=eq.${STUDENT}&select=hw_scores,hw_answers`,
         { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
       );
       if (!getRes.ok) throw new Error(`Не удалось прочитать прогресс`);
@@ -386,7 +383,7 @@
       const updatedScores  = { ...currentScores,  [lessonNum]: scoreStr };
       const updatedAnswers = { ...currentAnswers, [lessonNum]: answersObj };
 
-      const putRes = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina`, {
+      const putRes = await fetch(`${SB_URL}/rest/v1/progress?student=eq.${STUDENT}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -443,7 +440,7 @@
   async function loadAndLockIfDone() {
     try {
       const r = await fetch(
-        `${SB_URL}/rest/v1/progress?student=eq.polina&select=hw_scores,hw_answers`,
+        `${SB_URL}/rest/v1/progress?student=eq.${STUDENT}&select=hw_scores,hw_answers`,
         { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
       );
       if (!r.ok) return;
