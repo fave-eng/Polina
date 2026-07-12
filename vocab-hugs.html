@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homework Vocabulary — Feelings & Linking Verbs</title>
+  <style>
+    :root{
+      --indigo:#4f46e5; --sky:#0ea5e9; --violet:#7c3aed;
+      --bg:#f1f5f9; --card:#ffffff; --text:#0f172a;
+      --muted:#64748b; --border:#e2e8f0; --green:#059669;
+      --red:#e11d48; --amber:#d97706;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text); min-height:100vh;
+    }
+    button,input{font:inherit}
+    .hero{
+      background:linear-gradient(135deg,var(--sky),var(--indigo) 55%,var(--violet));
+      color:#fff; padding:34px 20px 58px; position:relative; overflow:hidden;
+    }
+    .hero::after{
+      content:""; position:absolute; left:-5%; right:-5%; bottom:-38px; height:76px;
+      background:var(--bg); border-radius:50% 50% 0 0 / 100% 100% 0 0;
+    }
+    .wrap{max-width:940px;margin:0 auto}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;
+      background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+      font-weight:800;font-size:12px
+    }
+    h1{font-size:clamp(28px,5vw,44px);margin:13px 0 8px;letter-spacing:-.7px}
+    .subtitle{margin:0;color:rgba(255,255,255,.82);font-size:14px;line-height:1.55;max-width:720px}
+    .progress-row{display:flex;align-items:center;gap:12px;margin-top:20px;position:relative;z-index:2}
+    .progress-track{width:min(360px,70vw);height:8px;background:rgba(255,255,255,.24);border-radius:99px;overflow:hidden}
+    .progress-fill{height:100%;background:#fff;border-radius:99px;transition:width .25s}
+    .progress-label{font-size:13px;font-weight:800;white-space:nowrap}
+
+    main{max-width:940px;margin:0 auto;padding:22px 20px 90px}
+    .note{
+      background:#fff;border:1px solid var(--border);border-left:5px solid var(--indigo);
+      border-radius:15px;padding:14px 16px;margin:12px 0 18px;color:#334155;
+      line-height:1.5;font-size:14px
+    }
+    .tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:15px}
+    .tab{
+      border:1.5px solid var(--border);background:#fff;color:var(--muted);
+      padding:11px 16px;border-radius:13px;font-weight:800;cursor:pointer;
+    }
+    .tab.active{background:#eef2ff;border-color:#a5b4fc;color:var(--indigo)}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+    .filter{
+      border:1px solid var(--border);background:#fff;color:#475569;
+      padding:8px 12px;border-radius:999px;font-size:12px;font-weight:800;cursor:pointer
+    }
+    .filter.active{background:#0f172a;color:#fff;border-color:#0f172a}
+    .section-title{font-size:22px;margin:24px 0 12px}
+    .count{color:var(--muted);font-size:13px;font-weight:600}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}}
+    .item{
+      background:#fff;border:1px solid var(--border);border-radius:16px;padding:15px;
+      display:grid;grid-template-columns:1fr auto;gap:8px 12px;box-shadow:0 5px 18px rgba(15,23,42,.035)
+    }
+    .word{font-size:17px;font-weight:900;line-height:1.3}
+    .translation{color:#065f46;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:8px 10px;font-weight:800;grid-column:1/-1}
+    .example{color:var(--muted);font-size:13px;line-height:1.5;font-style:italic;grid-column:1/-1}
+    .tag{font-size:10px;text-transform:uppercase;letter-spacing:.8px;font-weight:900;background:#eef2ff;color:var(--indigo);border-radius:999px;padding:5px 9px;height:max-content}
+    .speak{border:1px solid var(--border);background:#f8fafc;border-radius:9px;padding:6px 8px;cursor:pointer;margin-left:6px}
+    .hidden{display:none!important}
+
+    .card-shell{max-width:660px;margin:14px auto 0}
+    .card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px;font-weight:800;color:#475569}
+    .flashcard{
+      background:#fff;border:1px solid var(--border);border-radius:24px;overflow:hidden;
+      box-shadow:0 12px 36px rgba(15,23,42,.08)
+    }
+    .card-banner{min-height:150px;display:flex;align-items:center;justify-content:center;font-size:68px;background:linear-gradient(135deg,#eef2ff,#fff)}
+    .card-body{padding:22px}
+    .card-word{font-size:28px;font-weight:900;margin-bottom:12px}
+    .card-translation{background:#ecfdf5;border:1px solid #86efac;color:#065f46;border-radius:13px;padding:13px 15px;font-size:17px;font-weight:900;margin-bottom:12px}
+    .card-example{background:#f8fafc;border-left:4px solid #cbd5e1;border-radius:10px;padding:11px 13px;color:#475569;line-height:1.55;font-style:italic;font-size:14px}
+    .actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+    .btn{border:none;border-radius:13px;padding:12px 15px;font-weight:900;cursor:pointer}
+    .btn.secondary{background:#e2e8f0;color:#334155}
+    .btn.bad{background:#fff1f2;color:#9f1239;border:1px solid #fecdd3}
+    .btn.good{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+    .btn.next{margin-left:auto;background:#0f172a;color:#fff}
+
+    .test-box{max-width:660px;margin:14px auto;background:#fff;border:1px solid var(--border);border-radius:22px;padding:22px;box-shadow:0 12px 36px rgba(15,23,42,.06)}
+    .test-word{font-size:27px;font-weight:900;margin:6px 0 16px}
+    .test-input{width:100%;padding:13px 14px;border:2px solid var(--border);border-radius:12px;outline:none}
+    .test-input:focus{border-color:#818cf8}
+    .feedback{margin-top:10px;border-radius:11px;padding:10px 12px;font-weight:800}
+    .feedback.ok{background:#ecfdf5;color:#065f46}
+    .feedback.no{background:#fff1f2;color:#9f1239}
+    .nav-pill{
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+      background:#0f172a;border-radius:100px;padding:12px 18px;
+      display:flex;gap:4px;box-shadow:0 8px 32px rgba(15,23,42,.3);
+      z-index:900;white-space:nowrap
+    }
+    .nav-pill a{
+      color:rgba(255,255,255,.62);font-size:12px;font-weight:800;
+      text-decoration:none;padding:7px 13px;border-radius:100px;
+      transition:all .18s
+    }
+    .nav-pill a:hover,.nav-pill a.active{
+      background:var(--indigo);color:#fff
+    }
+    @media(max-width:520px){
+      .nav-pill{padding:9px 10px;gap:2px}
+      .nav-pill a{padding:7px 9px;font-size:11px}
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="badge">📘 Только слова из домашней работы</div>
+      <h1>Feelings & useful phrases</h1>
+      <div class="progress-row">
+        <div class="progress-track"><div id="progressFill" class="progress-fill" style="width:0%"></div></div>
+        <div id="progressLabel" class="progress-label">0 / 26 выучено</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="tabs">
+      <button class="tab active" data-mode="list">📚 Список</button>
+      <button class="tab" data-mode="cards">🃏 Карточки</button>
+      <button class="tab" data-mode="test">✏️ Тест</button>
+    </div>
+
+    <div id="filters" class="filters"></div>
+
+    <section id="listSection">
+      <h2 class="section-title">Словарь <span id="listCount" class="count"></span></h2>
+      <div id="wordGrid" class="grid"></div>
+    </section>
+
+    <section id="cardsSection" class="hidden">
+      <div class="card-shell">
+        <div class="card-top">
+          <span id="cardCounter">1 / 26</span>
+          <span id="cardStatus">○ Не выучено</span>
+        </div>
+        <div class="flashcard">
+          <div id="cardIcon" class="card-banner">💬</div>
+          <div class="card-body">
+            <div>
+              <span id="cardWord" class="card-word"></span>
+              <button id="cardSpeak" class="speak" title="Прослушать">🔊</button>
+            </div>
+            <div id="cardTranslation" class="card-translation hidden"></div>
+            <div id="cardExample" class="card-example"></div>
+            <div class="actions">
+              <button id="prevCard" class="btn secondary">← Назад</button>
+              <button id="hardCard" class="btn bad">Не знаю — показать перевод</button>
+              <button id="knowCard" class="btn good">Знаю</button>
+              <button id="nextCard" class="btn next">Далее →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="testSection" class="hidden">
+      <div class="test-box">
+        <div class="count" id="testCounter">1 / 26</div>
+        <div id="testWord" class="test-word"></div>
+        <input id="testInput" class="test-input" placeholder="Напиши перевод по-русски" autocomplete="off" />
+        <div id="feedback" class="feedback hidden"></div>
+        <div class="actions">
+          <button id="checkAnswer" class="btn good">Проверить</button>
+          <button id="nextTest" class="btn next">Следующее →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="nav-pill" aria-label="Основная навигация">
+  <a href="index.html">🏠 Home</a>
+  <a href="homework.html">📝 HW</a>
+  <a href="grammar.html">📐 Grammar</a>
+  <a href="vocabulary-hub.html" class="active">💥 Vocab</a>
+</nav>
+
+<script>
+const items = [
+
+
+
+
+
+  {id:6, word:"embarrassed", trans:"смущённый; испытывающий неловкость", aliases:["смущенный","смущённый","неловкость"], example:"Maybe she felt embarrassed.", tag:"Чувства", icon:"🫣"},
+
+  {id:8, word:"relaxed", trans:"расслабленный; спокойный", aliases:["расслабленный","спокойный"], example:"You sound a lot more relaxed now.", tag:"Чувства", icon:"😌"},
+
+
+
+  {id:12, word:"awful", trans:"ужасный; отвратительный", aliases:["ужасный","отвратительный"], example:"It tastes awful.", tag:"Описание", icon:"🥴"},
+  {id:13, word:"rude", trans:"грубый; невежливый", aliases:["грубый","невежливый"], example:"Sorry I was rude to you earlier.", tag:"Описание", icon:"🗯️"},
+  {id:14, word:"horrible", trans:"ужасный; отвратительный", aliases:["ужасный","отвратительный"], example:"I said some horrible things.", tag:"Описание", icon:"☁️"},
+  {id:15, word:"formal", trans:"официальный; слишком нарядный", aliases:["официальный","слишком нарядный","нарядный"], example:"He was wearing clothes that were too formal.", tag:"Описание", icon:"👔"},
+  {id:16, word:"elegant", trans:"элегантный; изысканный", aliases:["элегантный","изысканный"], example:"The restaurant was a really elegant place.", tag:"Описание", icon:"✨"},
+  {id:17, word:"ex-girlfriend", trans:"бывшая девушка", aliases:["бывшая девушка"], example:"I saw my ex-girlfriend yesterday.", tag:"Люди", icon:"👤"},
+  {id:18, word:"previous boyfriend", trans:"предыдущий парень; бывший парень", aliases:["предыдущий парень","бывший парень"], example:"Annie’s parents hadn’t liked her previous boyfriends.", tag:"Люди", icon:"👥"},
+  {id:19, word:"have a row with someone", trans:"поссориться с кем-то", aliases:["поссориться с кем-то","поссориться"], example:"I had a row with my mum.", tag:"Фразы", icon:"⚡"},
+  {id:20, word:"to be honest", trans:"если честно; честно говоря", aliases:["если честно","честно говоря"], example:"To be honest, I said some horrible things.", tag:"Фразы", icon:"💬"},
+  {id:21, word:"make it up", trans:"помириться; загладить вину", aliases:["помириться","загладить вину"], example:"I’m sure you’ll make it up soon.", tag:"Фразы", icon:"🤝"},
+  {id:22, word:"get onto the course", trans:"поступить на курс; попасть на курс", aliases:["поступить на курс","попасть на курс"], example:"I didn’t get onto the course I wanted to do.", tag:"Фразы", icon:"📚"},
+  {id:23, word:"more like your old self", trans:"снова похож на себя прежнего", aliases:["снова похож на себя прежнего","похож на себя прежнего"], example:"You sound more like your old self.", tag:"Фразы", icon:"🌤️"},
+  {id:24, word:"give someone a lift", trans:"подвезти кого-то", aliases:["подвезти кого-то","подвезти"], example:"You can give me a lift to work!", tag:"Фразы", icon:"🚗"},
+  {id:25, word:"come out of hospital", trans:"выписаться из больницы", aliases:["выписаться из больницы","выйти из больницы"], example:"My grandmother is coming out of hospital tomorrow.", tag:"Фразы", icon:"🏥"},
+  {id:26, word:"make conversation", trans:"поддерживать разговор; вести беседу", aliases:["поддерживать разговор","вести беседу"], example:"He wasn’t very good at making conversation.", tag:"Фразы", icon:"🗣️"},
+  {id:27, word:"be keen on someone", trans:"любить кого-то; хорошо относиться к кому-то", aliases:["любить кого-то","хорошо относиться к кому-то"], example:"We hadn’t been very keen on most of her boyfriends.", tag:"Фразы", icon:"💛"},
+  {id:28, word:"warn someone about something", trans:"предупредить кого-то о чём-то", aliases:["предупредить кого-то о чем-то","предупредить о чем-то","предупредить"], example:"She hadn’t warned me it was a formal dinner.", tag:"Фразы", icon:"⚠️"},
+  {id:29, word:"What a pain!", trans:"Вот досада!; Какая неприятность!", aliases:["вот досада","какая неприятность"], example:"Oh, no, what a pain!", tag:"Реакции", icon:"😣"},
+  {id:30, word:"What a shame!", trans:"Как жаль!", aliases:["как жаль"], example:"Oh, what a shame!", tag:"Реакции", icon:"😕"},
+  {id:31, word:"That’s a relief!", trans:"Какое облегчение!", aliases:["какое облегчение","облегчение"], example:"Phew, that’s a relief!", tag:"Реакции", icon:"😮‍💨"},
+  {id:32, word:"get married", trans:"пожениться; выйти замуж; жениться", aliases:["пожениться","выйти замуж","жениться"], example:"My sister’s getting married.", tag:"События", icon:"💍"},
+  {id:33, word:"lose a job", trans:"потерять работу", aliases:["потерять работу"], example:"My dad has just lost his job.", tag:"События", icon:"💼"},
+  {id:34, word:"pass a driving test", trans:"сдать экзамен по вождению", aliases:["сдать экзамен по вождению","сдать на права"], example:"I’ve just passed my driving test.", tag:"События", icon:"🚘"},
+  {id:35, word:"be stolen", trans:"быть украденным", aliases:["быть украденным","украсть","украден"], example:"My laptop has been stolen.", tag:"События", icon:"💻"}
+];
+
+const stateKey = "homework_vocab_only_v1";
+let learned = new Set(JSON.parse(localStorage.getItem(stateKey) || "[]"));
+let mode = "list";
+let filter = "Все";
+let deck = [...items];
+let index = 0;
+let testIndex = 0;
+
+const tags = ["Все", ...new Set(items.map(x => x.tag))];
+
+function save(){
+  localStorage.setItem(stateKey, JSON.stringify([...learned]));
+  updateProgress();
+}
+
+function updateProgress(){
+  const n = learned.size;
+  const pct = Math.round(n / items.length * 100);
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressLabel").textContent = `${n} / ${items.length} выучено`;
+}
+
+function filteredItems(){
+  return filter === "Все" ? items : items.filter(x => x.tag === filter);
+}
+
+function speak(text){
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "en-GB";
+  speechSynthesis.speak(u);
+}
+
+function renderFilters(){
+  const box = document.getElementById("filters");
+  box.innerHTML = tags.map(t => `<button class="filter ${t===filter?"active":""}" data-filter="${t}">${t}</button>`).join("");
+  box.querySelectorAll(".filter").forEach(btn => {
+    btn.addEventListener("click", () => {
+      filter = btn.dataset.filter;
+      deck = filteredItems();
+      index = 0;
+      testIndex = 0;
+      renderFilters();
+      renderList();
+      renderCard();
+      renderTest();
+    });
+  });
+}
+
+function renderList(){
+  const data = filteredItems();
+  document.getElementById("listCount").textContent = `· ${data.length}`;
+  document.getElementById("wordGrid").innerHTML = data.map(x => `
+    <article class="item">
+      <div class="word">${x.word}<button class="speak" onclick='speak(${JSON.stringify(x.word)})'>🔊</button></div>
+      <div class="tag">${x.tag}</div>
+      <div class="translation">${x.trans}</div>
+      <div class="example">${x.example}</div>
+    </article>
+  `).join("");
+}
+
+function renderCard(){
+  deck = filteredItems();
+  if(!deck.length) return;
+  index = Math.max(0, Math.min(index, deck.length - 1));
+  const x = deck[index];
+  document.getElementById("cardCounter").textContent = `${index+1} / ${deck.length}`;
+  document.getElementById("cardStatus").textContent = learned.has(x.id) ? "✓ Выучено" : "○ Не выучено";
+  document.getElementById("cardIcon").textContent = x.icon;
+  document.getElementById("cardWord").textContent = x.word;
+  const translation = document.getElementById("cardTranslation");
+  translation.textContent = x.trans;
+  translation.classList.add("hidden");
+  document.getElementById("cardExample").textContent = x.example;
+  document.getElementById("cardSpeak").onclick = () => speak(x.word);
+  document.getElementById("prevCard").disabled = index === 0;
+}
+
+function normalize(s){
+  return s.toLowerCase().trim().replace(/ё/g,"е").replace(/[.,!?;:()]/g,"").replace(/\s+/g," ");
+}
+
+function renderTest(){
+  const data = filteredItems();
+  if(!data.length) return;
+  testIndex = Math.max(0, Math.min(testIndex, data.length - 1));
+  const x = data[testIndex];
+  document.getElementById("testCounter").textContent = `${testIndex+1} / ${data.length}`;
+  document.getElementById("testWord").textContent = x.word;
+  document.getElementById("testInput").value = "";
+  document.getElementById("feedback").className = "feedback hidden";
+  document.getElementById("feedback").textContent = "";
+}
+
+document.querySelectorAll(".tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    mode = btn.dataset.mode;
+    document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b === btn));
+    document.getElementById("listSection").classList.toggle("hidden", mode !== "list");
+    document.getElementById("cardsSection").classList.toggle("hidden", mode !== "cards");
+    document.getElementById("testSection").classList.toggle("hidden", mode !== "test");
+    if(mode === "cards") renderCard();
+    if(mode === "test"){
+      renderTest();
+      setTimeout(() => document.getElementById("testInput").focus(), 50);
+    }
+  });
+});
+
+document.getElementById("prevCard").onclick = () => { if(index>0){index--;renderCard();} };
+document.getElementById("nextCard").onclick = () => { index = (index+1)%filteredItems().length; renderCard(); };
+document.getElementById("hardCard").onclick = () => {
+  const x = filteredItems()[index];
+  learned.delete(x.id);
+  save();
+  document.getElementById("cardTranslation").classList.remove("hidden");
+  document.getElementById("cardStatus").textContent = "○ Повторить";
+};
+document.getElementById("knowCard").onclick = () => { learned.add(filteredItems()[index].id); save(); index = (index+1)%filteredItems().length; renderCard(); };
+
+document.getElementById("checkAnswer").onclick = () => {
+  const data = filteredItems();
+  const x = data[testIndex];
+  const val = normalize(document.getElementById("testInput").value);
+  const ok = val && x.aliases.some(a => {
+    const na = normalize(a);
+    return val === na || val.includes(na) || na.includes(val);
+  });
+  const fb = document.getElementById("feedback");
+  fb.className = "feedback " + (ok ? "ok" : "no");
+  fb.textContent = ok ? "✓ Верно!" : `Правильный перевод: ${x.trans}`;
+  if(ok) learned.add(x.id); else learned.delete(x.id);
+  save();
+};
+document.getElementById("nextTest").onclick = () => {
+  const data = filteredItems();
+  testIndex = (testIndex+1)%data.length;
+  renderTest();
+  document.getElementById("testInput").focus();
+};
+document.getElementById("testInput").addEventListener("keydown", e => {
+  if(e.key === "Enter") document.getElementById("checkAnswer").click();
+});
+
+renderFilters();
+renderList();
+renderCard();
+renderTest();
+updateProgress();
+</script>
+</body>
+</html>
