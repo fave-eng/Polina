@@ -16,16 +16,16 @@
     <div class="card">
       <div class="warn">Важно: эта страница использует Telegram Bot API прямо из браузера. Для личного сайта это быстро и удобно, но токен бота виден в коде. Более безопасный вариант — Supabase Edge Function.</div>
       <div class="row">
-        <div><label>Номер урока</label><input id="lesson" value="7"></div>
-        <div><label>Emoji</label><input id="emoji" value="😊"></div>
+        <div><label>Номер урока</label><input id="lesson" value="8"></div>
+        <div><label>Emoji</label><input id="emoji" value="🔗"></div>
       </div>
-      <label>Название урока</label><input id="title" value="Feelings & Emotions">
+      <label>Название урока</label><input id="title" value="Linking Verbs & Listening">
       <div class="row">
-        <div><label>Ссылка на домашку</label><input id="homeworkUrl" value="lesson7.html"></div>
-        <div><label>Ссылка на словарь</label><input id="vocabUrl" value="vocab-feelings.html"></div>
+        <div><label>Ссылка на домашку</label><input id="homeworkUrl" value="https://fave-eng.github.io/Polina/lesson8.html"></div>
+        <div><label>Ссылка на словарь</label><input id="vocabUrl" value="https://fave-eng.github.io/Polina/vocab-hugs.html"></div>
       </div>
-      <label>Название словаря</label><input id="vocabTitle" value="Feelings & Emotions">
-      <label>Ссылка на сайт целиком (необязательно)</label><input id="baseUrl" placeholder="https://your-site.netlify.app/">
+      <label>Название словаря</label><input id="vocabTitle" value="Linking Verbs & Useful Phrases">
+      <label>Ссылка на сайт целиком</label><input id="baseUrl" value="https://fave-eng.github.io/Polina/">
       <label>Telegram chat_id получателя</label><input id="telegramChatId" value="">
       <p class="small">Сейчас стоит chat_id из твоих страниц. Если нужно писать Полине лично, сюда нужно вставить её личный chat_id.</p>
       <label>Текст сообщения</label><textarea id="message"></textarea>
@@ -133,6 +133,7 @@
     $('publishBtn').disabled = true;
     try{
       $('telegramChatId').value = CHAT_ID;
+  $('baseUrl').value = 'https://fave-eng.github.io/Polina/';
   buildMessage();
       const lesson = $('lesson').value.trim();
       const title = $('title').value.trim();
