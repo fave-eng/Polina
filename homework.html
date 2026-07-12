@@ -89,14 +89,14 @@
 
     <div id="loadWarn" class="small-warn">Не удалось загрузить данные из Supabase. Показаны уроки по умолчанию.</div>
 
+    <div id="activeSection">
+      <div class="section-title">📝 Новые задания</div>
+      <div id="activeList"></div>
+    </div>
+
     <div id="doneSection">
       <div class="section-title">✅ Выполнено</div>
       <div id="doneList"></div>
-    </div>
-
-    <div id="activeSection">
-      <div class="section-title">📝 Доступные задания</div>
-      <div id="activeList"></div>
     </div>
 
     <div id="lockedSection">
@@ -220,9 +220,20 @@
         .sort((a,b) => Number(a.lesson) - Number(b.lesson));
 
       const published = all.filter(l => l.published);
-      const done = published.filter(l => scoreDone(scores[String(l.lesson)]));
-      const active = published.filter(l => !scoreDone(scores[String(l.lesson)]));
-      const locked = all.filter(l => !l.published);
+
+      // Новые задания показываем сверху: самый свежий урок — первым.
+      const active = published
+        .filter(l => !scoreDone(scores[String(l.lesson)]))
+        .sort((a,b) => Number(b.lesson) - Number(a.lesson));
+
+      // Выполненные задания идут ниже, тоже от новых к старым.
+      const done = published
+        .filter(l => scoreDone(scores[String(l.lesson)]))
+        .sort((a,b) => Number(b.lesson) - Number(a.lesson));
+
+      const locked = all
+        .filter(l => !l.published)
+        .sort((a,b) => Number(a.lesson) - Number(b.lesson));
 
       document.getElementById('doneList').innerHTML = done.length
         ? done.map(l => activeCardHTML(l, scores[String(l.lesson)])).join('')
