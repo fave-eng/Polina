@@ -68,21 +68,54 @@
   }
 
   async function getProgress(){
-    const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.${STUDENT}&select=published_homeworks,homework_notifications`, {
-      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
-    });
-    if(!r.ok) throw new Error('Не удалось прочитать progress: HTTP ' + r.status);
-    const rows = await r.json();
-    return rows[0] || { published_homeworks:{}, homework_notifications:{} };
+    const r = await fetch(
+      `${SB_URL}/rest/v1/progress?student=eq.${encodeURIComponent(STUDENT)}&select=student,published_homeworks,homework_notifications`,
+      { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+    );
+
+    const text = await r.text();
+    if(!r.ok){
+      throw new Error(`Не удалось прочитать progress: HTTP ${r.status} ${text}`);
+    }
+
+    const rows = text ? JSON.parse(text) : [];
+    if(!rows.length){
+      throw new Error(`В таблице progress нет строки student=${STUDENT}. Проверь значение STUDENT в config.js и регистр букв.`);
+    }
+
+    return rows[0];
   }
 
   async function saveProgress(published, notifications){
-    const r = await fetch(`${SB_URL}/rest/v1/progress?on_conflict=student`, {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json', apikey:SB_KEY, Authorization:`Bearer ${SB_KEY}`, Prefer:'resolution=merge-duplicates,return=minimal' },
-      body: JSON.stringify({ student: STUDENT, published_homeworks: published, homework_notifications: notifications, updated_at: new Date().toISOString() })
-    });
-    if(!r.ok) throw new Error('Не удалось сохранить progress: HTTP ' + r.status + ' ' + await r.text());
+    // Используем PATCH, а не POST/upsert. В таблице есть обязательный hw4_score,
+    // поэтому INSERT только с JSON-полями нарушает NOT NULL constraint.
+    const r = await fetch(
+      `${SB_URL}/rest/v1/progress?student=eq.${encodeURIComponent(STUDENT)}`,
+      {
+        method:'PATCH',
+        headers:{
+          'Content-Type':'application/json',
+          apikey:SB_KEY,
+          Authorization:`Bearer ${SB_KEY}`,
+          Prefer:'return=representation'
+        },
+        body: JSON.stringify({
+          published_homeworks: published,
+          homework_notifications: notifications,
+          updated_at: new Date().toISOString()
+        })
+      }
+    );
+
+    const text = await r.text();
+    if(!r.ok){
+      throw new Error(`Не удалось сохранить progress: HTTP ${r.status} ${text}`);
+    }
+
+    const rows = text ? JSON.parse(text) : [];
+    if(!rows.length){
+      throw new Error(`Строка student=${STUDENT} не обновлена. Проверь STUDENT в config.js и точное значение student в Supabase.`);
+    }
   }
 
   async function sendTelegram(text){
