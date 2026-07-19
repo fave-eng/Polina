@@ -5,7 +5,7 @@ window.APP_CONFIG = {
     nameEn: "Polina",
     level: "B1",
     textbook: "Outcomes",
-    textbookEdition: "Individual B1 course"
+    textbookEdition: "Intermediate B1 course"
   },
 
   supabase: {
