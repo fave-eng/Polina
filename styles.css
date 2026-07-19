@@ -683,6 +683,18 @@ body[data-view="lesson"] #lesson-root {
   box-shadow: inset 4px 0 0 #94a3b8;
 }
 
+.lesson-block.is-correct {
+  border-color: #86efac;
+  background: #f0fdf4;
+  box-shadow: inset 4px 0 0 #22c55e;
+}
+
+.lesson-block.is-wrong {
+  border-color: #fecdd3;
+  background: #fff7f7;
+  box-shadow: inset 4px 0 0 #fb7185;
+}
+
 .exercise-item-header {
   display: flex;
   gap: 12px;
@@ -907,6 +919,51 @@ body[data-view="lesson"] #lesson-root {
   font-size: .82rem;
 }
 
+.completed-lock-message {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-top: 14px;
+  padding: 16px 18px;
+  border: 1px solid #cbd5e1;
+  border-radius: 15px;
+  background: #f8fafc;
+}
+
+.completed-lock-message h3,
+.completed-lock-message p {
+  margin: 0;
+}
+
+.completed-lock-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 13px;
+  background: #e2e8f0;
+  font-size: 1.15rem;
+}
+
+.lesson-is-locked input[readonly],
+.lesson-is-locked textarea[readonly],
+.lesson-is-locked select:disabled,
+.lesson-is-locked input:disabled {
+  cursor: not-allowed;
+  color: #334155;
+  opacity: 1;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  -webkit-text-fill-color: #334155;
+}
+
+.lesson-is-locked .option:has(input:disabled),
+.lesson-is-locked button[data-word]:disabled {
+  cursor: not-allowed;
+  opacity: .82;
+}
+
 @media (max-width: 720px) {
   .lesson-roadmap-heading {
     display: block;
@@ -1077,4 +1134,3 @@ body[data-view="lesson"] #lesson-root {
   outline-offset: 4px;
   border-radius: 6px;
 }
-
