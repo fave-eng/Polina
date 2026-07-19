@@ -1,4 +1,4 @@
-/** Vocabulary topics for Polina. Generated from the original site. */
+/** Vocabulary topics for Polina. Generated from the original site and extended for Lesson 9. */
 window.VOCABULARY_DATA = [
   {
     "id": "vocab-lesson-4",
@@ -1473,6 +1473,305 @@ window.VOCABULARY_DATA = [
         "transcription": "",
         "exampleEn": "My laptop has been stolen.",
         "exampleRu": "",
+        "audio": ""
+      }
+    ]
+  },
+  {
+    "id": "vocab-lesson-9",
+    "title": "Free Hugs & Human Connection",
+    "label": "Lesson 9",
+    "icon": "🤗",
+    "type": "lesson",
+    "linkedLessonId": "lesson-9",
+    "page": "vocabulary.html?id=vocab-lesson-9",
+    "words": [
+      {
+        "id": "l9-1",
+        "en": "meaningful connections",
+        "ru": "значимые, искренние связи с людьми",
+        "transcription": "",
+        "exampleEn": "It can be difficult to make meaningful connections when you feel lonely.",
+        "exampleRu": "Бывает трудно устанавливать искренние связи с людьми, когда чувствуешь себя одиноко.",
+        "audio": ""
+      },
+      {
+        "id": "l9-2",
+        "en": "feel isolated",
+        "ru": "чувствовать себя изолированным, одиноким",
+        "transcription": "",
+        "exampleEn": "He felt isolated after returning home from Europe.",
+        "exampleRu": "Вернувшись домой из Европы, он чувствовал себя одиноким.",
+        "audio": ""
+      },
+      {
+        "id": "l9-3",
+        "en": "a desperate attempt",
+        "ru": "отчаянная попытка",
+        "transcription": "",
+        "exampleEn": "The campaign began as a desperate attempt to change his life.",
+        "exampleRu": "Кампания началась как отчаянная попытка изменить свою жизнь.",
+        "audio": ""
+      },
+      {
+        "id": "l9-4",
+        "en": "transform someone into",
+        "ru": "превратить кого-либо в кого-либо",
+        "transcription": "",
+        "exampleEn": "The project transformed an unknown man into an international star.",
+        "exampleRu": "Проект превратил неизвестного человека в международную звезду.",
+        "audio": ""
+      },
+      {
+        "id": "l9-5",
+        "en": "true identity",
+        "ru": "настоящая личность; подлинная личность",
+        "transcription": "",
+        "exampleEn": "Juan Mann has always kept his true identity secret.",
+        "exampleRu": "Хуан Манн всегда держал свою настоящую личность в секрете.",
+        "audio": ""
+      },
+      {
+        "id": "l9-6",
+        "en": "a miserable year",
+        "ru": "ужасный, несчастливый год",
+        "transcription": "",
+        "exampleEn": "He had a miserable year and felt lonely and unemployed.",
+        "exampleRu": "У него был ужасный год, и он чувствовал себя одиноким и безработным.",
+        "audio": ""
+      },
+      {
+        "id": "l9-7",
+        "en": "unemployed",
+        "ru": "безработный",
+        "transcription": "",
+        "exampleEn": "He found himself lonely and unemployed.",
+        "exampleRu": "Он оказался одиноким и безработным.",
+        "audio": ""
+      },
+      {
+        "id": "l9-8",
+        "en": "hide away from the world",
+        "ru": "прятаться, отгородиться от мира",
+        "transcription": "",
+        "exampleEn": "For months, he hid away from the world.",
+        "exampleRu": "Несколько месяцев он прятался от всего мира.",
+        "audio": ""
+      },
+      {
+        "id": "l9-9",
+        "en": "feel sorry for yourself",
+        "ru": "жалеть себя",
+        "transcription": "",
+        "exampleEn": "He stopped feeling sorry for himself and decided to act.",
+        "exampleRu": "Он перестал жалеть себя и решил действовать.",
+        "audio": ""
+      },
+      {
+        "id": "l9-10",
+        "en": "a shopping district",
+        "ru": "торговый район",
+        "transcription": "",
+        "exampleEn": "He stood in one of Sydney's main shopping districts.",
+        "exampleRu": "Он стоял в одном из главных торговых районов Сиднея.",
+        "audio": ""
+      },
+      {
+        "id": "l9-11",
+        "en": "a cardboard sign",
+        "ru": "картонная табличка",
+        "transcription": "",
+        "exampleEn": "He held a cardboard sign saying 'Free Hugs'.",
+        "exampleRu": "Он держал картонную табличку с надписью «Бесплатные объятия».",
+        "audio": ""
+      },
+      {
+        "id": "l9-12",
+        "en": "at most",
+        "ru": "максимум; не более",
+        "transcription": "",
+        "exampleEn": "He expected to stay there for an hour at most.",
+        "exampleRu": "Он рассчитывал пробыть там максимум час.",
+        "audio": ""
+      },
+      {
+        "id": "l9-13",
+        "en": "come along",
+        "ru": "прийти вместе; присоединиться",
+        "transcription": "",
+        "exampleEn": "He asked a friend to come along and protect him.",
+        "exampleRu": "Он попросил друга прийти вместе с ним и защитить его.",
+        "audio": ""
+      },
+      {
+        "id": "l9-14",
+        "en": "deliberately",
+        "ru": "намеренно, сознательно",
+        "transcription": "",
+        "exampleEn": "He deliberately left his wallet at home.",
+        "exampleRu": "Он намеренно оставил кошелёк дома.",
+        "audio": ""
+      },
+      {
+        "id": "l9-15",
+        "en": "approach someone",
+        "ru": "подойти к кому-либо",
+        "transcription": "",
+        "exampleEn": "After fifteen minutes, a woman approached him.",
+        "exampleRu": "Через пятнадцать минут к нему подошла женщина.",
+        "audio": ""
+      },
+      {
+        "id": "l9-16",
+        "en": "anniversary",
+        "ru": "годовщина",
+        "transcription": "",
+        "exampleEn": "It was the first anniversary of her daughter's death.",
+        "exampleRu": "Это была первая годовщина смерти её дочери.",
+        "audio": ""
+      },
+      {
+        "id": "l9-17",
+        "en": "a campaign",
+        "ru": "кампания, общественная акция",
+        "transcription": "",
+        "exampleEn": "The Free Hugs campaign continued quietly for several years.",
+        "exampleRu": "Кампания Free Hugs тихо продолжалась несколько лет.",
+        "audio": ""
+      },
+      {
+        "id": "l9-18",
+        "en": "film someone in action",
+        "ru": "снять кого-либо за делом",
+        "transcription": "",
+        "exampleEn": "A songwriter filmed Juan Mann in action.",
+        "exampleRu": "Автор песен снял Хуана Манна за делом.",
+        "audio": ""
+      },
+      {
+        "id": "l9-19",
+        "en": "post a video",
+        "ru": "опубликовать видео",
+        "transcription": "",
+        "exampleEn": "His friend posted the video on YouTube.",
+        "exampleRu": "Его друг опубликовал видео на YouTube.",
+        "audio": ""
+      },
+      {
+        "id": "l9-20",
+        "en": "go viral",
+        "ru": "стать вирусным; быстро распространиться в интернете",
+        "transcription": "",
+        "exampleEn": "The Free Hugs video went viral around the world.",
+        "exampleRu": "Видео Free Hugs стало вирусным по всему миру.",
+        "audio": ""
+      },
+      {
+        "id": "l9-21",
+        "en": "go global",
+        "ru": "распространиться по всему миру; стать международным",
+        "transcription": "",
+        "exampleEn": "The movement went global, with similar groups appearing everywhere.",
+        "exampleRu": "Движение стало международным, и похожие группы появились повсюду.",
+        "audio": ""
+      },
+      {
+        "id": "l9-22",
+        "en": "lack social skills",
+        "ru": "не обладать достаточными социальными навыками",
+        "transcription": "",
+        "exampleEn": "At school, he was told that he lacked social skills.",
+        "exampleRu": "В школе ему говорили, что ему не хватает социальных навыков.",
+        "audio": ""
+      },
+      {
+        "id": "l9-23",
+        "en": "people in need",
+        "ru": "люди, нуждающиеся в помощи",
+        "transcription": "",
+        "exampleEn": "He was told he could not work with people in need.",
+        "exampleRu": "Ему говорили, что он не сможет работать с людьми, нуждающимися в помощи.",
+        "audio": ""
+      },
+      {
+        "id": "l9-24",
+        "en": "be embarrassed to do something",
+        "ru": "стесняться сделать что-либо",
+        "transcription": "",
+        "exampleEn": "Some people are too embarrassed to ask for help.",
+        "exampleRu": "Некоторые люди слишком стесняются попросить о помощи.",
+        "audio": ""
+      },
+      {
+        "id": "l9-25",
+        "en": "a helpline",
+        "ru": "телефон доверия; горячая линия помощи",
+        "transcription": "",
+        "exampleEn": "People may be embarrassed to call a helpline.",
+        "exampleRu": "Люди могут стесняться позвонить на телефон доверия.",
+        "audio": ""
+      },
+      {
+        "id": "l9-26",
+        "en": "seek counselling",
+        "ru": "обратиться за психологической помощью, консультацией",
+        "transcription": "",
+        "exampleEn": "Not everyone feels comfortable seeking counselling.",
+        "exampleRu": "Не всем комфортно обращаться за психологической помощью.",
+        "audio": ""
+      },
+      {
+        "id": "l9-27",
+        "en": "an act of kindness",
+        "ru": "добрый поступок; проявление доброты",
+        "transcription": "",
+        "exampleEn": "A simple hug can be an act of kindness.",
+        "exampleRu": "Простое объятие может быть проявлением доброты.",
+        "audio": ""
+      },
+      {
+        "id": "l9-28",
+        "en": "socially acceptable",
+        "ru": "социально приемлемый; принятый в обществе",
+        "transcription": "",
+        "exampleEn": "Public acts of kindness are becoming more socially acceptable.",
+        "exampleRu": "Публичные проявления доброты становятся более приемлемыми в обществе.",
+        "audio": ""
+      },
+      {
+        "id": "l9-29",
+        "en": "become the norm",
+        "ru": "стать нормой, обычным явлением",
+        "transcription": "",
+        "exampleEn": "Competition and greed have become the norm in many places.",
+        "exampleRu": "Во многих местах конкуренция и жадность стали нормой.",
+        "audio": ""
+      },
+      {
+        "id": "l9-30",
+        "en": "a softer approach",
+        "ru": "более мягкий подход",
+        "transcription": "",
+        "exampleEn": "The movement offers a different, softer approach to life.",
+        "exampleRu": "Движение предлагает другой, более мягкий подход к жизни.",
+        "audio": ""
+      },
+      {
+        "id": "l9-31",
+        "en": "shared experiences",
+        "ru": "общие, совместно пережитые события и впечатления",
+        "transcription": "",
+        "exampleEn": "Shared experiences in the real world can bring people closer.",
+        "exampleRu": "Совместные впечатления в реальном мире могут сближать людей.",
+        "audio": ""
+      },
+      {
+        "id": "l9-32",
+        "en": "a virtual world",
+        "ru": "виртуальный мир",
+        "transcription": "",
+        "exampleEn": "We spend a lot of time in virtual online worlds.",
+        "exampleRu": "Мы проводим много времени в виртуальных онлайн-мирах.",
         "audio": ""
       }
     ]
