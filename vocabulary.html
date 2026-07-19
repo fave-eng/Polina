@@ -104,66 +104,12 @@
       'use strict';
 
       /*
-       * Озвучивание через системный Web Speech API.
-       * Внешние TTS-сервисы не используются: нет сетевых ошибок и CORS-блокировок.
-       * Голос выбирается автоматически из наиболее естественных женских English voices.
+       * Та же озвучка, что использовалась в старых словарях:
+       * системный Web Speech API, британский английский en-GB,
+       * стандартная скорость и высота голоса устройства.
        */
       const speech = window.speechSynthesis;
-      let voices = [];
       let activeButton = null;
-
-      const preferredFemaleNames = [
-        'sonia', 'libby', 'serena', 'samantha', 'ava', 'shelley', 'emma',
-        'jenny', 'aria', 'natasha', 'hazel', 'susan', 'kate', 'moira',
-        'fiona', 'tessa', 'karen', 'victoria', 'zira', 'martha', 'maisie'
-      ];
-      const likelyMaleNames = [
-        'daniel', 'alex', 'oliver', 'arthur', 'george', 'ryan', 'fred',
-        'tom', 'ralph', 'reed', 'rocko', 'eddy', 'guy', 'david', 'james'
-      ];
-
-      function refreshVoices() {
-        voices = speech ? speech.getVoices() : [];
-      }
-
-      refreshVoices();
-      if (speech && 'onvoiceschanged' in speech) {
-        speech.addEventListener('voiceschanged', refreshVoices);
-      }
-
-      function scoreVoice(voice) {
-        const name = String(voice?.name || '').toLowerCase();
-        const lang = String(voice?.lang || '').toLowerCase();
-        let score = 0;
-
-        if (lang === 'en-gb') score += 90;
-        else if (lang.startsWith('en-gb')) score += 85;
-        else if (lang === 'en-ie') score += 70;
-        else if (lang === 'en-au' || lang === 'en-nz') score += 65;
-        else if (lang.startsWith('en-us')) score += 55;
-        else if (lang.startsWith('en')) score += 40;
-        else score -= 200;
-
-        preferredFemaleNames.forEach((candidate, index) => {
-          if (name.includes(candidate)) score += 110 - index;
-        });
-        likelyMaleNames.forEach((candidate) => {
-          if (name.includes(candidate)) score -= 120;
-        });
-
-        if (/natural|neural|premium|enhanced|online/.test(name)) score += 35;
-        if (/female|woman/.test(name)) score += 45;
-        if (voice?.localService) score += 8;
-        if (voice?.default) score += 2;
-        return score;
-      }
-
-      function selectBestVoice() {
-        refreshVoices();
-        return [...voices]
-          .filter((voice) => String(voice.lang || '').toLowerCase().startsWith('en'))
-          .sort((a, b) => scoreVoice(b) - scoreVoice(a))[0] || null;
-      }
 
       function stopAudio() {
         if (speech) speech.cancel();
@@ -181,8 +127,14 @@
         window.setTimeout(() => toast.classList.remove('show'), 2800);
       }
 
+      function prepareSpeechText(text) {
+        return String(text || '')
+          .trim()
+          .replace(/\s*\/\s*/g, ' or ');
+      }
+
       function playPronunciation(text, button = null) {
-        const cleanText = String(text || '').trim();
+        const cleanText = prepareSpeechText(text);
         if (!cleanText || !speech || typeof SpeechSynthesisUtterance === 'undefined') {
           showAudioError();
           return;
@@ -193,13 +145,9 @@
         button?.classList.add('is-speaking');
 
         const utterance = new SpeechSynthesisUtterance(cleanText);
-        const selectedVoice = selectBestVoice();
-        if (selectedVoice) utterance.voice = selectedVoice;
-        utterance.lang = selectedVoice?.lang || 'en-GB';
-
-        const isPhrase = cleanText.includes(' ') || cleanText.length > 18;
-        utterance.rate = isPhrase ? 0.76 : 0.70;
-        utterance.pitch = 1.16;
+        utterance.lang = 'en-GB';
+        utterance.rate = 1;
+        utterance.pitch = 1;
         utterance.volume = 1;
 
         utterance.onend = () => {
