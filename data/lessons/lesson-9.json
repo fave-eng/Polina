@@ -1,0 +1,408 @@
+{
+  "id": "lesson-9",
+  "number": 9,
+  "title": "Hugs and Kisses: Free Hugs",
+  "subtitle": "Reading comprehension, collocations and -ed / -ing adjectives",
+  "status": "available",
+  "grammarIds": [],
+  "publishedAt": "2026-07-19",
+  "totalPoints": 25,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Unit 2 · Feelings",
+      "title": "It Only Takes Juan Mann to Change the World!",
+      "text": "Read the article again and complete Exercises 3, 4 and 7. Then write the optional personal response."
+    },
+    {
+      "type": "reading",
+      "id": "l9-reading",
+      "title": "It Only Takes Juan Mann to Change the World!",
+      "sections": [
+        {
+          "number": 1,
+          "heading": "A desperate attempt",
+          "text": "In the modern world, it is not unusual for people to feel depressed or isolated. It can be hard to make meaningful connections with others. That was certainly how the mysterious Juan Mann (‘One man’) felt – until the day he decided to start giving free hugs to strangers. What started as a desperate attempt to change his own life subsequently transformed him into an international star."
+        },
+        {
+          "number": 2,
+          "heading": "A miserable year",
+          "text": "On returning to Sydney, Australia, in early 2004, after travelling in Europe, Mann (who has always kept his true identity secret) had a miserable year. His parents had divorced and he found himself lonely and unemployed. It was a depressing time as many of his friends were no longer around and his family was also elsewhere. After spending months hiding away from the world, feeling sad and sorry for himself, he decided to change his life and do something completely different."
+        },
+        {
+          "number": 3,
+          "heading": "The first day",
+          "text": "And something different is exactly what he did! Mann went to one of Sydney’s main shopping districts holding a cardboard sign saying ‘Free Hugs’ – and waited. He expected to last an hour at the most and had even asked a friend to come along to protect him. He also very deliberately left his wallet at home."
+        },
+        {
+          "number": 4,
+          "heading": "The first hug",
+          "text": "After fifteen minutes, however, a woman approached him and said that her dog had died that morning and on top of that it was the first anniversary of her daughter’s death, so she could really use a hug. Mann was happy to help!"
+        },
+        {
+          "number": 5,
+          "heading": "Going viral",
+          "text": "His ‘Free Hugs’ campaign continued quietly for a couple of years until a songwriter he knew filmed him in action. This friend then added a song by his own band Sick Puppies and posted the video on YouTube, where it has now had over 75 million hits. Mann quickly became something of a celebrity, was interviewed by legendary American chat show host Oprah Winfrey and saw Free Hugs go global, with similar groups appearing all over the world."
+        },
+        {
+          "number": 6,
+          "heading": "Social skills",
+          "text": "Mann seemed to find the success of his project funny as he had been told at school that he lacked the social skills to work with people in need, yet had ended up as a kind of therapist for a whole city. His explanation was that many people needed someone to listen to their problems, but were too embarrassed to call a helpline or seek counselling."
+        },
+        {
+          "number": 7,
+          "heading": "Why did the movement succeed?",
+          "text": "To some, the growth of the Free Hugs movement is a sign that acts of kindness are becoming more socially acceptable. In an age when nobody expects to get something for nothing and where economic competition and greed have become the norm, perhaps the movement offers a different, softer approach to life. Also, shared experiences in the real world may be more important to us now that we spend so much time in virtual online worlds."
+        },
+        {
+          "number": 8,
+          "heading": "The effect on Juan Mann",
+          "text": "However, the most incredible aspect of Juan Mann’s story has not been the effect it has had on those he shared hugs with or even on those inspired by his story, but actually the effect it has had on himself."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Reading",
+      "title": "Exercise 3 · Answer the questions",
+      "text": "Write short answers in English. Use information from the article."
+    },
+    {
+      "type": "exercise",
+      "id": "l9-ex3",
+      "title": "3. Read the article. Answer the questions.",
+      "instructions": "Короткого ответа достаточно. Проверка не учитывает заглавные буквы и точку в конце.",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "What made Juan Mann start his campaign?",
+          "input": "text",
+          "acceptedAnswers": [
+            "he felt depressed and isolated",
+            "he was depressed and isolated",
+            "he felt lonely and unemployed",
+            "he was lonely and unemployed",
+            "he wanted to change his life",
+            "he decided to change his life",
+            "he wanted to do something completely different",
+            "because he felt depressed and isolated",
+            "because he was lonely and unemployed",
+            "because he wanted to change his life",
+            "feeling depressed and isolated",
+            "loneliness and unemployment"
+          ],
+          "explanation": "Model answer: He felt lonely and depressed and wanted to change his life."
+        },
+        {
+          "id": "2",
+          "prompt": "How did he feel when he went out for the first time?",
+          "input": "text",
+          "acceptedAnswers": [
+            "nervous",
+            "scared",
+            "afraid",
+            "worried",
+            "he felt nervous",
+            "he was nervous",
+            "he felt scared",
+            "he was scared",
+            "he felt afraid",
+            "he was afraid",
+            "he felt worried",
+            "he was worried",
+            "nervous and worried",
+            "scared and nervous",
+            "he was nervous and worried"
+          ],
+          "explanation": "Model answer: He felt nervous or scared; he asked a friend to protect him and left his wallet at home."
+        },
+        {
+          "id": "3",
+          "prompt": "Who first asked for a hug, and why?",
+          "input": "text",
+          "acceptedAnswers": [
+            "a woman whose dog had died and it was the first anniversary of her daughter's death",
+            "a woman whose dog had died that morning and it was the first anniversary of her daughter's death",
+            "a woman because her dog had died and it was the first anniversary of her daughter's death",
+            "a woman. her dog had died and it was the first anniversary of her daughter's death",
+            "a woman whose dog had died and whose daughter had died a year before",
+            "a woman whose dog died that morning and whose daughter died a year before",
+            "a woman because her dog had died and her daughter had died a year before"
+          ],
+          "explanation": "Model answer: A woman asked first because her dog had died that morning and it was the first anniversary of her daughter’s death."
+        },
+        {
+          "id": "4",
+          "prompt": "How did Mann become so famous?",
+          "input": "text",
+          "acceptedAnswers": [
+            "a friend filmed him and posted the video on youtube",
+            "his friend filmed him and posted the video on youtube",
+            "a songwriter filmed him and posted the video on youtube",
+            "his friend made a video and posted it on youtube",
+            "the free hugs video was posted on youtube",
+            "his video went viral on youtube",
+            "a video of him went viral on youtube",
+            "a friend posted a video of him on youtube and it went viral",
+            "his friend filmed the campaign and the video went viral"
+          ],
+          "explanation": "Model answer: A friend filmed the campaign, added music and posted the video on YouTube, where it became very popular."
+        },
+        {
+          "id": "5",
+          "prompt": "What two theories are put forward to explain the success of the Free Hugs movement?",
+          "input": "text",
+          "acceptedAnswers": [
+            "acts of kindness are becoming more socially acceptable and shared real-world experiences are becoming more important",
+            "kindness is becoming more socially acceptable and real-world experiences are becoming more important",
+            "people accept acts of kindness more and need shared experiences in the real world",
+            "acts of kindness are more socially acceptable and people value shared experiences more",
+            "kindness is more acceptable and shared experiences are more important because we spend so much time online",
+            "the movement offers a softer approach to life and people need shared real-world experiences",
+            "people want kindness and real-life shared experiences"
+          ],
+          "explanation": "Model answer: Acts of kindness may be becoming more socially acceptable, and shared real-world experiences may be more important because people spend so much time online."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Vocabulary",
+      "title": "Exercise 4 · Adjective + noun collocations",
+      "text": "Complete the phrases with adjectives from the article."
+    },
+    {
+      "type": "exercise",
+      "id": "l9-ex4",
+      "title": "4. Complete the adjective + noun phrases",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "_____ connections",
+          "input": "text",
+          "acceptedAnswers": [
+            "meaningful"
+          ],
+          "explanation": "meaningful connections"
+        },
+        {
+          "id": "2",
+          "prompt": "a _____ attempt",
+          "input": "text",
+          "acceptedAnswers": [
+            "desperate"
+          ],
+          "explanation": "a desperate attempt"
+        },
+        {
+          "id": "3",
+          "prompt": "an _____ star",
+          "input": "text",
+          "acceptedAnswers": [
+            "international"
+          ],
+          "explanation": "an international star"
+        },
+        {
+          "id": "4",
+          "prompt": "a _____ year",
+          "input": "text",
+          "acceptedAnswers": [
+            "miserable"
+          ],
+          "explanation": "a miserable year"
+        },
+        {
+          "id": "5",
+          "prompt": "his _____ identity",
+          "input": "text",
+          "acceptedAnswers": [
+            "true"
+          ],
+          "explanation": "his true identity"
+        },
+        {
+          "id": "6",
+          "prompt": "one of the _____ shopping districts",
+          "input": "text",
+          "acceptedAnswers": [
+            "main"
+          ],
+          "explanation": "one of the main shopping districts"
+        },
+        {
+          "id": "7",
+          "prompt": "_____ skills",
+          "input": "text",
+          "acceptedAnswers": [
+            "social"
+          ],
+          "explanation": "social skills"
+        },
+        {
+          "id": "8",
+          "prompt": "_____ experiences",
+          "input": "text",
+          "acceptedAnswers": [
+            "shared"
+          ],
+          "explanation": "shared experiences"
+        }
+      ],
+      "instructions": "Write one adjective in each gap."
+    },
+    {
+      "type": "section",
+      "eyebrow": "Grammar and vocabulary",
+      "title": "Exercise 7 · -ed and -ing adjectives",
+      "text": "Use -ed for how a person feels and -ing for the thing or situation that causes the feeling."
+    },
+    {
+      "type": "info",
+      "id": "l9-ed-ing-rule",
+      "title": "Remember",
+      "text": "-ed describes a person’s feeling: I was bored. -ing describes the person, thing or situation that causes the feeling: The lesson was boring."
+    },
+    {
+      "type": "exercise",
+      "id": "l9-ex7",
+      "title": "7. Complete the pairs with the correct adjective form",
+      "instructions": "Verbs: annoy · confuse · bore · depress · shock · disappoint",
+      "items": [
+        {
+          "id": "1a",
+          "prompt": "Can you explain it again? I’m still a bit _____.",
+          "input": "text",
+          "acceptedAnswers": [
+            "confused"
+          ],
+          "explanation": "A person feels confused."
+        },
+        {
+          "id": "1b",
+          "prompt": "The instructions for this camera are really _____.",
+          "input": "text",
+          "acceptedAnswers": [
+            "confusing"
+          ],
+          "explanation": "The instructions cause confusion, so use confusing."
+        },
+        {
+          "id": "2a",
+          "prompt": "He has a really _____ habit of repeating the same stories over and over again.",
+          "input": "text",
+          "acceptedAnswers": [
+            "annoying"
+          ],
+          "explanation": "The habit causes annoyance, so use annoying."
+        },
+        {
+          "id": "2b",
+          "prompt": "I’m a bit _____ that he hasn’t phoned me. He promised to!",
+          "input": "text",
+          "acceptedAnswers": [
+            "annoyed"
+          ],
+          "explanation": "The speaker feels annoyed."
+        },
+        {
+          "id": "3a",
+          "prompt": "He’s been _____ for a while, but he refuses to try counselling.",
+          "input": "text",
+          "acceptedAnswers": [
+            "depressed"
+          ],
+          "explanation": "He feels depressed."
+        },
+        {
+          "id": "3b",
+          "prompt": "This weather’s so _____. It’s so cold and wet!",
+          "input": "text",
+          "acceptedAnswers": [
+            "depressing"
+          ],
+          "explanation": "The weather causes the feeling, so use depressing."
+        },
+        {
+          "id": "4a",
+          "prompt": "I found the violence in the film quite _____, to be honest.",
+          "input": "text",
+          "acceptedAnswers": [
+            "shocking"
+          ],
+          "explanation": "The violence causes shock, so use shocking."
+        },
+        {
+          "id": "4b",
+          "prompt": "I was really _____ to see so many homeless people on the streets there!",
+          "input": "text",
+          "acceptedAnswers": [
+            "shocked"
+          ],
+          "explanation": "The speaker felt shocked."
+        },
+        {
+          "id": "5a",
+          "prompt": "I’m _____. Can’t we go out somewhere?",
+          "input": "text",
+          "acceptedAnswers": [
+            "bored"
+          ],
+          "explanation": "The speaker feels bored."
+        },
+        {
+          "id": "5b",
+          "prompt": "I find her quite _____. All she ever talks about is her children!",
+          "input": "text",
+          "acceptedAnswers": [
+            "boring"
+          ],
+          "explanation": "She causes boredom, so use boring."
+        },
+        {
+          "id": "6a",
+          "prompt": "Obviously, I’m a bit _____ that I didn’t get the job.",
+          "input": "text",
+          "acceptedAnswers": [
+            "disappointed"
+          ],
+          "explanation": "The speaker feels disappointed."
+        },
+        {
+          "id": "6b",
+          "prompt": "I loved her last film, but to be honest I found this one quite _____.",
+          "input": "text",
+          "acceptedAnswers": [
+            "disappointing"
+          ],
+          "explanation": "The film caused disappointment, so use disappointing."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Optional writing",
+      "title": "Free Hugs in Your Town",
+      "text": "This task is saved for the teacher but is not included in the automatic score."
+    },
+    {
+      "type": "exercise",
+      "id": "l9-personal-response",
+      "title": "Bonus. Write 5–6 sentences",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "Would the Free Hugs campaign be popular in your town? Why or why not?",
+          "input": "textarea",
+          "scored": false,
+          "placeholder": "Write 5–6 sentences in English…"
+        }
+      ],
+      "instructions": "Use at least two expressions from the article, for example: meaningful connections, acts of kindness, shared experiences, feel isolated."
+    }
+  ]
+}
