@@ -1,7 +1,30 @@
 window.APP_CONFIG = {
-  BOT_TOKEN: "8604414786:AAEcyyQxHiYUi80PDZt7ZkQjomLfsm_VjKM",
-  CHAT_ID: "-1003908460669",
-  SB_URL: "https://zqzgarvmpqqqaobeicpc.supabase.co",
-  SB_KEY: "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC",
-  STUDENT: "polina"
+  student: {
+    id: "polina",
+    nameRu: "Полина",
+    nameEn: "Polina",
+    level: "B1",
+    textbook: "Outcomes",
+    textbookEdition: "Individual B1 course"
+  },
+
+  supabase: {
+    url: "https://zqzgarvmpqqqaobeicpc.supabase.co",
+    anonKey: "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC",
+    authMode: "none",
+    tables: {
+      homework: "homework_progress",
+      vocabulary: "vocabulary_progress",
+      vocabularyTopics: "vocabulary_topic_progress",
+      grammar: "grammar_progress"
+    }
+  },
+
+  features: {
+    homework: true,
+    vocabulary: true,
+    grammar: true,
+    cloudSync: true,
+    telegramNotifications: false
+  }
 };
