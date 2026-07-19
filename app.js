@@ -625,7 +625,7 @@
               status: row.migrated_from_legacy ? 'migrated-cloud' : 'cloud'
             };
           }
-          if (row.status === 'submitted' || row.migrated_from_legacy || (Number(row.score_total) > 0 && Number(row.score_correct) === Number(row.score_total))) {
+          if (row.status === 'submitted' || row.migrated_from_legacy) {
             homework.completedIds.push(row.lesson_id);
           }
         });
@@ -878,24 +878,62 @@
   function renderHomework() {
     const progress = window.ProgressService.loadHomeworkProgress();
     const published = HOMEWORK_DATA.filter((item) => item.status !== 'draft');
-    const completed = published.filter((item) => progress.completedIds.includes(item.id) || Boolean(progress.submissions[item.id]) || item.status === 'completed').length;
+
+    const isComplete = (item) => progress.completedIds.includes(item.id)
+      || Boolean(progress.submissions[item.id])
+      || item.status === 'completed';
+
+    const completionTime = (item) => {
+      const submission = progress.submissions[item.id] || {};
+      const result = progress.results[item.id] || {};
+      const candidates = [
+        submission.savedAt,
+        submission.submittedAt,
+        result.submittedAt,
+        result.updatedAt,
+        item.completedAt
+      ];
+      for (const value of candidates) {
+        const timestamp = dateMs(value);
+        if (timestamp) return timestamp;
+      }
+      return 0;
+    };
+
+    const newestLessonFirst = (a, b) => dateMs(b.publishedAt) - dateMs(a.publishedAt)
+      || Number(b.number || 0) - Number(a.number || 0);
+
+    const completedNewestFirst = (a, b) => completionTime(b) - completionTime(a)
+      || Number(b.number || 0) - Number(a.number || 0);
+
+    const completed = published.filter(isComplete).length;
     const percent = safePercent(completed, published.length);
     byId('hw-completed').textContent = completed;
     byId('hw-total').textContent = published.length;
     byId('hw-percent').textContent = `${percent}%`;
     byId('hw-overall-progress').innerHTML = progressMarkup('Общий прогресс', completed, published.length);
+
     const root = byId('homework-list');
     if (!published.length) {
       root.innerHTML = emptyState('📝', 'Домашних заданий пока нет', 'После первого урока преподаватель добавит сюда интерактивное задание.');
       return;
     }
-    root.innerHTML = [...published].sort((a,b) => (a.number || 0) - (b.number || 0)).map((item) => {
+
+    const renderCard = (item) => {
       const locked = item.status === 'locked';
-      const complete = progress.completedIds.includes(item.id) || Boolean(progress.submissions[item.id]) || item.status === 'completed';
-      const title = locked ? '🔒 Coming soon' : safeText(item.title, 'Задание');
+      const complete = isComplete(item);
+      const lessonNumber = Number(item.number || 0);
+      const numberPrefix = lessonNumber > 0 ? `Lesson ${lessonNumber} · ` : '';
+      const title = locked
+        ? `🔒 ${numberPrefix}Coming soon`
+        : `${numberPrefix}${safeText(item.title, 'Задание')}`;
       const savedResult = progress.results[item.id];
-      const scoreSuffix = savedResult && Number(savedResult.total || 0) > 0 ? ` · Результат ${Number(savedResult.correct || 0)}/${Number(savedResult.total || 0)}` : '';
-      const subtitle = locked ? 'Материал откроется после публикации преподавателем.' : `${safeText(item.subtitle, 'Интерактивное задание')}${scoreSuffix}`;
+      const scoreSuffix = savedResult && Number(savedResult.total || 0) > 0
+        ? ` · Результат ${Number(savedResult.correct || 0)}/${Number(savedResult.total || 0)}`
+        : '';
+      const subtitle = locked
+        ? 'Материал откроется после публикации преподавателем.'
+        : `${safeText(item.subtitle, 'Интерактивное задание')}${scoreSuffix}`;
       const status = complete ? 'completed' : safeText(item.status, 'available');
       const label = complete ? 'Выполнено' : status === 'available' ? 'Доступно' : status === 'locked' ? 'Закрыто' : 'Черновик';
       const tag = locked ? 'div' : 'a';
@@ -905,7 +943,34 @@
         <div class="item-main"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(subtitle)}</p></div>
         <span class="status-badge status-${escapeHtml(status)}">${escapeHtml(label)}</span>
       </${tag}>`;
-    }).join('');
+    };
+
+    const renderGroup = (title, items, tone = '') => {
+      if (!items.length) return '';
+      return `<section class="homework-group ${tone}" aria-label="${escapeHtml(title)}">
+        <div class="homework-group-heading">
+          <h3>${escapeHtml(title)}</h3>
+          <span>${items.length}</span>
+        </div>
+        <div class="homework-group-list">${items.map(renderCard).join('')}</div>
+      </section>`;
+    };
+
+    const toDo = published
+      .filter((item) => !isComplete(item) && item.status !== 'locked')
+      .sort(newestLessonFirst);
+    const done = published
+      .filter(isComplete)
+      .sort(completedNewestFirst);
+    const comingSoon = published
+      .filter((item) => !isComplete(item) && item.status === 'locked')
+      .sort((a, b) => Number(a.number || 0) - Number(b.number || 0));
+
+    root.innerHTML = [
+      renderGroup('Нужно выполнить', toDo, 'homework-group-todo'),
+      renderGroup('Выполненные', done, 'homework-group-done'),
+      renderGroup('Скоро', comingSoon, 'homework-group-locked')
+    ].join('');
   }
 
   function renderGrammar() {
@@ -1252,6 +1317,48 @@
     });
   }
 
+  function showLessonTaskResult(block, node, result) {
+    if (block.type === 'exercise') return;
+    const total = Number(result.total || 0);
+    const correctCount = Number(result.correctCount || 0);
+    const isCorrect = total > 0 && correctCount === total;
+    node.classList.toggle('is-correct', isCorrect);
+    node.classList.toggle('is-wrong', !isCorrect);
+    const feedback = node.querySelector('.feedback');
+    if (feedback) {
+      feedback.className = `feedback show ${isCorrect ? 'good' : 'bad'}`;
+      feedback.textContent = isCorrect ? 'Верно!' : safeText(block.explanation, 'В ответе есть ошибка.');
+    }
+  }
+
+  function reviewRestoredLesson(root, blocks) {
+    const checkableTypes = ['text','textarea','single','multiple','select','match','reorder','translate','audio','exercise'];
+    blocks
+      .filter((block) => checkableTypes.includes(block.type) && !(block.type === 'audio' && block.response === false))
+      .forEach((block, index) => {
+        const taskId = safeText(block.id, `task-${index}`);
+        const node = root.querySelector(`[data-task="${CSS.escape(taskId)}"]`);
+        if (!node) return;
+        const result = checkLessonTask(block, node);
+        showLessonTaskResult(block, node, result);
+      });
+  }
+
+  function lockCompletedLesson(root) {
+    root.classList.add('lesson-is-locked');
+    root.querySelectorAll('input, textarea').forEach((control) => {
+      if (control.type === 'radio' || control.type === 'checkbox') {
+        control.disabled = true;
+      } else {
+        control.readOnly = true;
+        control.setAttribute('aria-readonly', 'true');
+      }
+    });
+    root.querySelectorAll('select, button[data-word]').forEach((control) => {
+      control.disabled = true;
+    });
+  }
+
   async function renderLesson() {
     const id = queryParam('id');
     const lessonRecord = HOMEWORK_DATA.find((item) => item.id === id && item.status !== 'draft');
@@ -1282,6 +1389,9 @@
 
     const progress = window.ProgressService.loadHomeworkProgress();
     const savedResult = progress.results[lesson.id];
+    const isCompleted = progress.completedIds.includes(lesson.id)
+      || Boolean(progress.submissions[lesson.id])
+      || lessonRecord.status === 'completed';
     const pointsLabel = Number(lesson.totalPoints || 0) > 0 ? `${escapeHtml(lesson.totalPoints)} проверяемых ответов` : 'Без автоматической оценки';
     const hasManualResponses = blocks.some((block) => block.type === 'exercise' && (block.items || []).some((item) => item.scored === false));
     const lessonSections = blocks
@@ -1295,10 +1405,13 @@
       if (block.type === 'section') sectionNumber += 1;
       return renderLessonBlock(block.type === 'section' ? { ...block, __sectionNumber: sectionNumber } : block, blockIndex);
     }).join('');
+    const actionsMarkup = isCompleted
+      ? `<div class="card section lesson-actions lesson-completed-panel"><div id="lesson-result" aria-live="polite"></div><div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Работа выполнена</h3><p class="muted">Ответы проверены и заблокированы. Изменить или стереть их уже нельзя.</p></div></div></div>`
+      : `<div class="card section lesson-actions"><div id="lesson-result" aria-live="polite"></div><div class="button-row"><button class="btn btn-primary" id="check-lesson" type="button">Проверить ответы</button><button class="btn btn-secondary" id="submit-lesson" type="button" ${savedResult ? '' : 'disabled'}>Отправить преподавателю</button></div><p class="muted save-note">После проверки ответы сохраняются на устройстве и сразу синхронизируются с Supabase.</p></div>`;
     root.innerHTML = `<div class="card lesson-intro"><div><span class="eyebrow">Домашнее задание</span><p>${escapeHtml(lesson.subtitle || '')}</p></div><span class="lesson-points">${pointsLabel}</span></div>
       ${roadmap}
       <div id="lesson-blocks">${renderedBlocks}</div>
-      <div class="card section lesson-actions"><div id="lesson-result" aria-live="polite"></div><div class="button-row"><button class="btn btn-primary" id="check-lesson" type="button">Проверить ответы</button><button class="btn btn-secondary" id="submit-lesson" type="button" ${savedResult ? '' : 'disabled'}>Отправить преподавателю</button></div><p class="muted save-note">После проверки ответы сохраняются на устройстве и сразу синхронизируются с Supabase.</p></div>`;
+      ${actionsMarkup}`;
 
     const restoredAnswers = mergeLessonAnswers(
       convertLegacyHomeworkAnswers(lesson.id, savedResult?.legacyAnswers, lesson),
@@ -1308,6 +1421,8 @@
     if (savedResult && Number(savedResult.total) > 0) {
       byId('lesson-result').innerHTML = `<h3>Сохранённый результат: ${Number(savedResult.correct || 0)} из ${Number(savedResult.total || 0)}</h3><p class="muted">${Number(savedResult.percent || 0)}% правильных ответов</p>`;
     }
+    if (savedResult) reviewRestoredLesson(root, blocks);
+    if (isCompleted) lockCompletedLesson(root);
 
     root.querySelectorAll('[data-reorder-source]').forEach((source) => {
       source.addEventListener('click', (event) => {
@@ -1321,7 +1436,8 @@
       });
     });
 
-    byId('check-lesson').addEventListener('click', () => {
+    const checkLessonButton = byId('check-lesson');
+    if (checkLessonButton) checkLessonButton.addEventListener('click', () => {
       const checkableTypes = ['text','textarea','single','multiple','select','match','reorder','translate','audio','exercise'];
       const checkable = blocks.filter((block) => checkableTypes.includes(block.type) && !(block.type === 'audio' && block.response === false));
       let correct = 0;
@@ -1336,12 +1452,7 @@
         correct += Number(result.correctCount || 0);
         total += Number(result.total || 0);
         if (block.type !== 'exercise') {
-          const feedback = node.querySelector('.feedback');
-          const isCorrect = Number(result.correctCount || 0) === Number(result.total || 0);
-          if (feedback) {
-            feedback.className = `feedback show ${isCorrect ? 'good' : 'bad'}`;
-            feedback.textContent = isCorrect ? 'Верно!' : safeText(block.explanation, 'Проверь ответ и попробуй ещё раз.');
-          }
+          showLessonTaskResult(block, node, result);
         }
       });
       const percent = safePercent(correct, total);
@@ -1357,16 +1468,22 @@
         migratedAt: savedResult?.migratedAt || null,
         checkedAt: new Date().toISOString()
       };
-      if (total > 0 && correct === total && !updatedProgress.completedIds.includes(lesson.id)) updatedProgress.completedIds.push(lesson.id);
       window.ProgressService.saveHomeworkProgress(updatedProgress);
       byId('submit-lesson').disabled = false;
     });
-    byId('submit-lesson').addEventListener('click', () => {
+    const submitLessonButton = byId('submit-lesson');
+    if (submitLessonButton) submitLessonButton.addEventListener('click', () => {
       const updatedProgress = window.ProgressService.loadHomeworkProgress();
       updatedProgress.submissions[lesson.id] = { savedAt: new Date().toISOString(), status: CloudService.isConfigured() ? 'pending-cloud' : 'local' };
       if (!updatedProgress.completedIds.includes(lesson.id)) updatedProgress.completedIds.push(lesson.id);
       window.ProgressService.saveHomeworkProgress(updatedProgress);
       showToast(CloudService.isConfigured() ? 'Ответы сохранены и отправляются в Supabase.' : 'Ответы сохранены на устройстве.');
+      lockCompletedLesson(root);
+      const actions = root.querySelector('.lesson-actions');
+      if (actions) {
+        actions.classList.add('lesson-completed-panel');
+        actions.innerHTML = `<div id="lesson-result" aria-live="polite"><h3>Работа отправлена</h3><p class="muted">Ответы сохранены и больше не редактируются.</p></div><div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Работа выполнена</h3><p class="muted">Ответы проверены и заблокированы. Изменить или стереть их уже нельзя.</p></div></div>`;
+      }
     });
   }
 

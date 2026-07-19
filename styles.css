@@ -683,6 +683,18 @@ body[data-view="lesson"] #lesson-root {
   box-shadow: inset 4px 0 0 #94a3b8;
 }
 
+.lesson-block.is-correct {
+  border-color: #86efac;
+  background: #f0fdf4;
+  box-shadow: inset 4px 0 0 #22c55e;
+}
+
+.lesson-block.is-wrong {
+  border-color: #fecdd3;
+  background: #fff7f7;
+  box-shadow: inset 4px 0 0 #fb7185;
+}
+
 .exercise-item-header {
   display: flex;
   gap: 12px;
@@ -907,6 +919,51 @@ body[data-view="lesson"] #lesson-root {
   font-size: .82rem;
 }
 
+.completed-lock-message {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-top: 14px;
+  padding: 16px 18px;
+  border: 1px solid #cbd5e1;
+  border-radius: 15px;
+  background: #f8fafc;
+}
+
+.completed-lock-message h3,
+.completed-lock-message p {
+  margin: 0;
+}
+
+.completed-lock-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 13px;
+  background: #e2e8f0;
+  font-size: 1.15rem;
+}
+
+.lesson-is-locked input[readonly],
+.lesson-is-locked textarea[readonly],
+.lesson-is-locked select:disabled,
+.lesson-is-locked input:disabled {
+  cursor: not-allowed;
+  color: #334155;
+  opacity: 1;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  -webkit-text-fill-color: #334155;
+}
+
+.lesson-is-locked .option:has(input:disabled),
+.lesson-is-locked button[data-word]:disabled {
+  cursor: not-allowed;
+  opacity: .82;
+}
+
 @media (max-width: 720px) {
   .lesson-roadmap-heading {
     display: block;
@@ -1078,3 +1135,55 @@ body[data-view="lesson"] #lesson-root {
   border-radius: 6px;
 }
 
+
+/* Homework list groups: current work first, completed work newest first. */
+.homework-group {
+  display: grid;
+  gap: 12px;
+}
+
+.homework-group + .homework-group {
+  margin-top: 14px;
+}
+
+.homework-group-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 4px;
+}
+
+.homework-group-heading h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.homework-group-heading span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: rgba(79, 70, 229, .10);
+  color: var(--indigo);
+  font-weight: 800;
+  font-size: .85rem;
+}
+
+.homework-group-list {
+  display: grid;
+  gap: 14px;
+}
+
+.homework-group-done .homework-group-heading span {
+  background: rgba(22, 163, 74, .10);
+  color: #15803d;
+}
+
+.homework-group-locked .homework-group-heading span {
+  background: rgba(100, 116, 139, .12);
+  color: #64748b;
+}
