@@ -1,0 +1,468 @@
+{
+  "id": "lesson-5",
+  "number": 5,
+  "title": "Talking My Language",
+  "subtitle": "Reading and vocabulary: learning languages",
+  "status": "available",
+  "vocabularyId": "vocab-lesson-5",
+  "grammarIds": [
+    "a1-1-basics"
+  ],
+  "publishedAt": "2026-07-05",
+  "totalPoints": 35,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Unit 1",
+      "title": "Talking My Language",
+      "text": "Read “The Google Translators in Human Form”, then complete the vocabulary exercises."
+    },
+    {
+      "type": "reading",
+      "id": "l5-reading",
+      "title": "The Google Translators in Human Form",
+      "sections": [
+        {
+          "number": 1,
+          "heading": "Part 1",
+          "text": "The 18th century Italian priest Cardinal Giuseppe Mezzofanti is a legend among linguists. They say he studied 72 languages, 30 of which he mastered . He spoke another nine fluently , though not perfectly, and could hold a basic conversation in at least eleven more. And all that without leaving Italy! One story suggests he picked up Ukrainian in just two weeks, after meeting a visitor from there."
+        },
+        {
+          "number": 2,
+          "heading": "Part 2",
+          "text": "But how far is this true? Certainly, the figure of 72 is too high and some people perhaps exaggerated how fluent he was. He lived at a time when travel was difficult and learning other languages was still unusual. Therefore, many reports of his abilities came from visitors who were probably struggling to express themselves in Italian. There were also those who, while appreciating his good accent and accurate grammar, described him as merely a parrot who said nothing of interest. However, according to Michael Erard, author of the book Mezzofanti's Gift , there is sufficient evidence to believe he could use many languages."
+        },
+        {
+          "number": 3,
+          "heading": "Part 3",
+          "text": "Erard also argues that there are many hyperglots in the world today and that, with globalisation , there will be a growing number in the future. For example, Alexander Arguelles is fluent in around twenty languages and has studied 60. He studies nine hours a day, down from fourteen before he got married! The Hungarian translator Kato Lomb worked with sixteen, and you can watch a YouTube video of Alex Rawling speaking eleven languages at the age of twenty."
+        },
+        {
+          "number": 4,
+          "heading": "Part 4",
+          "text": "A central question of the book is whether hyperglots are born or made. Are their achievements genetic or do hyperglots have secrets that normal language learners can learn from? Erard's conclusions agree with research on highly talented people in other areas such as sport and music. These people generally have advantages they are born with: top athletes may have genes that allow them to get the most from their training; hyperglots seem to possess excellent memories and have brains that are more efficient in processing speech sounds . However, becoming the best also requires a lot of hard work. Some argue that the difference between a top performer and someone who's just 'very good' is that the top performer has practised for 10,000 hours instead of 6,000."
+        },
+        {
+          "number": 5,
+          "heading": "Part 5",
+          "text": "The fact is that most ordinary language learners lack these natural advantages and simply don't have that much time. So is there any hope for us? Erard believes there is and that research on hyperglots can offer some useful lessons. For example, they often have limited ambitions in terms of individual languages: they're happy to get by, or to be only able to read, or not to have a perfect accent. They're practical: if they can't travel, they look for opportunities to use the language closer to home. Some simply imagine conversations in their heads. They also use other techniques like learning words in context . Finally, they're never afraid to make mistakes or appear stupid and so never give up."
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l5-ex1",
+      "title": "1. Replace the underlined words with expressions from the box",
+      "items": [
+        {
+          "id": "1a",
+          "prompt": "At first I really had problems speaking French at work.",
+          "input": "text",
+          "acceptedAnswers": [
+            "struggled",
+            "had problems"
+          ]
+        },
+        {
+          "id": "1b",
+          "prompt": "No-one understood the way I said things.",
+          "input": "text",
+          "acceptedAnswers": [
+            "my accent",
+            "accent"
+          ]
+        },
+        {
+          "id": "2a",
+          "prompt": "It’s hard to be correct all the time.",
+          "input": "text",
+          "acceptedAnswers": [
+            "accurate"
+          ]
+        },
+        {
+          "id": "2b",
+          "prompt": "Getting complete knowledge of a language can take years.",
+          "input": "text",
+          "acceptedAnswers": [
+            "mastering",
+            "getting complete knowledge of"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "I can survive in the language when I travel.",
+          "input": "text",
+          "acceptedAnswers": [
+            "get by"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "I learnt it without formal lessons.",
+          "input": "text",
+          "acceptedAnswers": [
+            "picked it up"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "Sometimes it is difficult to get your meaning across.",
+          "input": "text",
+          "acceptedAnswers": [
+            "express",
+            "get across"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "She speaks the language very well.",
+          "input": "text",
+          "acceptedAnswers": [
+            "fluently"
+          ]
+        }
+      ],
+      "instructions": "Word bank: get by · fluently · express · mastering · my accent · accurate · picked it up · struggled"
+    },
+    {
+      "type": "exercise",
+      "id": "l5-ex2",
+      "title": "2. What type of word is each underlined word?",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "taken up",
+          "input": "select",
+          "answer": 0,
+          "options": [
+            "phrasal verb",
+            "preposition",
+            "adjective",
+            "adverb",
+            "noun",
+            "verb",
+            "pronoun"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "for",
+          "input": "select",
+          "answer": 1,
+          "options": [
+            "phrasal verb",
+            "preposition",
+            "adjective",
+            "adverb",
+            "noun",
+            "verb",
+            "pronoun"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "hard",
+          "input": "select",
+          "answer": 2,
+          "options": [
+            "phrasal verb",
+            "preposition",
+            "adjective",
+            "adverb",
+            "noun",
+            "verb",
+            "pronoun"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "well",
+          "input": "select",
+          "answer": 3,
+          "options": [
+            "phrasal verb",
+            "preposition",
+            "adjective",
+            "adverb",
+            "noun",
+            "verb",
+            "pronoun"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "advice",
+          "input": "select",
+          "answer": 4,
+          "options": [
+            "phrasal verb",
+            "preposition",
+            "adjective",
+            "adverb",
+            "noun",
+            "verb",
+            "pronoun"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "mean",
+          "input": "select",
+          "answer": 5,
+          "options": [
+            "phrasal verb",
+            "preposition",
+            "adjective",
+            "adverb",
+            "noun",
+            "verb",
+            "pronoun"
+          ]
+        },
+        {
+          "id": "7",
+          "prompt": "you",
+          "input": "select",
+          "answer": 6,
+          "options": [
+            "phrasal verb",
+            "preposition",
+            "adjective",
+            "adverb",
+            "noun",
+            "verb",
+            "pronoun"
+          ]
+        },
+        {
+          "id": "8",
+          "prompt": "annoyingly",
+          "input": "select",
+          "answer": 3,
+          "options": [
+            "phrasal verb",
+            "preposition",
+            "adjective",
+            "adverb",
+            "noun",
+            "verb",
+            "pronoun"
+          ]
+        },
+        {
+          "id": "9",
+          "prompt": "take",
+          "input": "select",
+          "answer": 5,
+          "options": [
+            "phrasal verb",
+            "preposition",
+            "adjective",
+            "adverb",
+            "noun",
+            "verb",
+            "pronoun"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l5-ex31",
+      "title": "3.1. Choose the opposite",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "easy",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "hard",
+            "hardly"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "slowly",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "fast",
+            "fastly"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "fluent",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "not very fluent",
+            "unfluent"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "a minor mistake",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "a serious mistake",
+            "a large mistake"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "good progress",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "slow progress",
+            "bad progress"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "a basic level of Japanese",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "a high level",
+            "a tall level"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l5-ex32",
+      "title": "3.2. Make or do?",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "___ a mistake",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "make",
+            "do"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "___ an exercise",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "make",
+            "do"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "___ progress",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "make",
+            "do"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "___ your homework",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "make",
+            "do"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "___ a course",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "make",
+            "do"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "___ a fool of yourself",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "make",
+            "do"
+          ]
+        },
+        {
+          "id": "7",
+          "prompt": "___ a good job",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "make",
+            "do"
+          ]
+        },
+        {
+          "id": "8",
+          "prompt": "___ an effort",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "make",
+            "do"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l5-ex33",
+      "title": "3.3. Write the correct preposition",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "worry ___ your progress",
+          "input": "text",
+          "acceptedAnswers": [
+            "about"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "rely ___ your best friend",
+          "input": "text",
+          "acceptedAnswers": [
+            "on"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "concentrate ___ work",
+          "input": "text",
+          "acceptedAnswers": [
+            "on"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "deal ___ a problem",
+          "input": "text",
+          "acceptedAnswers": [
+            "with"
+          ]
+        }
+      ]
+    }
+  ]
+}

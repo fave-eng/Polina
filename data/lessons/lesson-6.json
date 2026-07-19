@@ -1,0 +1,188 @@
+{
+  "id": "lesson-6",
+  "number": 6,
+  "title": "Putting Your Words to Work",
+  "subtitle": "Reading: unusual places to practise languages",
+  "status": "available",
+  "vocabularyId": "vocab-lesson-6",
+  "grammarIds": [],
+  "publishedAt": "2026-07-06",
+  "totalPoints": 14,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Workbook · page 12",
+      "title": "Putting Your Words to Work",
+      "text": "Read the four posts and complete exercises 7–9."
+    },
+    {
+      "type": "reading",
+      "id": "l6-reading",
+      "title": "Language classes in unusual places",
+      "sections": [
+        {
+          "number": 1,
+          "heading": "Alex, US",
+          "text": "It wasn't really a class but I learnt a lot of words. Many years ago, I was on a cycling holiday in a remote part of Spain and I had an accident . I was taken to the nearest A&E department, where no-one spoke English. I could get by with everyday Spanish, but didn't know any medical words. The staff looked after me and, by the time I left, I knew the words for all the parts of the leg and how to describe pain in Spanish. And it has stayed with me to this day!"
+        },
+        {
+          "number": 2,
+          "heading": "Mike, UK",
+          "text": "On a ferry, of all places. We were on our way to France from the UK and suddenly a French lady appeared and gave us a leaflet about a language class on board. I must admit I was a bit sceptical about how much we could pick up in such a short time. But there was nothing much else to do so we went along. We practised ordering things in a shop and café, and it was great fun. The best thing was actually using the language on the other side of the Channel."
+        },
+        {
+          "number": 3,
+          "heading": "Cerys, Wales",
+          "text": "Not a class in the usual sense but I got a lot of speaking practice in a tunnel in Japan! I was on a packed train using my teach yourself Japanese book and CD. What I really wanted was to speak to a real person but I didn't feel confident to start up a conversation and everyone was very reserved . Suddenly, we broke down in the middle of a long tunnel. It was such an unusual thing that it got everyone talking. I found out that I knew more than I thought."
+        },
+        {
+          "number": 4,
+          "heading": "Lydia, Greece",
+          "text": "Under the stars! A new language school had opened in my town and I was really keen to sign up. I thought learning English with a native speaker would help me top up what I already knew from school. I arrived for the first class and found the place in darkness. The electricity had failed but rather than cancel the classes, the teachers used different spaces outside the school. All the local cafés were full of other students, so we ended up on the beach. It was a strange first lesson but it really broke the ice."
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l6-ex7",
+      "title": "7. What question are the posts answering?",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "Choose the best general question.",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "Where’s the best place to learn a language?",
+            "Where’s the strangest place you’ve had a language class?",
+            "Why do people learn foreign languages?"
+          ],
+          "explanation": "All four people describe an unusual place where they learnt or practised a language."
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l6-ex8",
+      "title": "8. Write the correct names",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "didn’t think they would learn much?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Mike"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "still remembers what they learnt?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Alex"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "was surprised by how much they knew?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Cerys"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "wanted to improve on their current level?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Lydia"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "didn’t know specific vocabulary?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Alex"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "wasn’t learning with a teacher?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Cerys"
+          ]
+        },
+        {
+          "id": "7",
+          "prompt": "practised again soon after the class?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Mike"
+          ]
+        }
+      ],
+      "instructions": "Use: Alex · Mike · Cerys · Lydia"
+    },
+    {
+      "type": "exercise",
+      "id": "l6-ex9",
+      "title": "9. Complete with the missing prepositions",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "It has stayed ___ me to this day.",
+          "input": "text",
+          "acceptedAnswers": [
+            "with"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "I wanted to top ___ my English.",
+          "input": "text",
+          "acceptedAnswers": [
+            "up"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "We went ___ to the class.",
+          "input": "text",
+          "acceptedAnswers": [
+            "off"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "I didn’t feel confident starting ___ a conversation.",
+          "input": "text",
+          "acceptedAnswers": [
+            "up"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "I was keen to sign ___ for the course.",
+          "input": "text",
+          "acceptedAnswers": [
+            "up"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "I found ___ that I knew more than I thought.",
+          "input": "text",
+          "acceptedAnswers": [
+            "out"
+          ]
+        }
+      ]
+    }
+  ]
+}

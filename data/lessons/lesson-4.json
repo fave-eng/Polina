@@ -1,0 +1,431 @@
+{
+  "id": "lesson-4",
+  "number": 4,
+  "title": "Everyday Minor Problems",
+  "subtitle": "Vocabulary and practice: everyday minor problems",
+  "status": "available",
+  "vocabularyId": "vocab-lesson-4",
+  "grammarIds": [],
+  "publishedAt": "2026-07-04",
+  "totalPoints": 29,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Lesson 4",
+      "title": "Everyday Minor Problems",
+      "text": "Повтори ключевую лексику и выполни упражнения."
+    },
+    {
+      "type": "exercise",
+      "id": "l4-key-vocab",
+      "title": "1. Key vocabulary: translate into Russian",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "mislaid",
+          "input": "text",
+          "acceptedAnswers": [
+            "положил не туда",
+            "положила не туда",
+            "временно потерял",
+            "временно потеряла",
+            "потерял",
+            "потеряла"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "spilt",
+          "input": "text",
+          "acceptedAnswers": [
+            "пролил",
+            "пролила",
+            "пролить",
+            "разлил",
+            "разлила",
+            "разлить"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "stain",
+          "input": "text",
+          "acceptedAnswers": [
+            "пятно",
+            "след"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "blocked",
+          "input": "text",
+          "acceptedAnswers": [
+            "засорен",
+            "засорён",
+            "забит",
+            "забился",
+            "засорился"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "dented / dent",
+          "input": "text",
+          "acceptedAnswers": [
+            "вмятина",
+            "помял",
+            "помяла",
+            "поставил вмятину",
+            "поставила вмятину",
+            "сделал вмятину",
+            "сделала вмятину"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "stopped working",
+          "input": "text",
+          "acceptedAnswers": [
+            "перестала работать",
+            "перестал работать",
+            "сломалась",
+            "сломался",
+            "не работает"
+          ]
+        },
+        {
+          "id": "7",
+          "prompt": "locked myself out",
+          "input": "text",
+          "acceptedAnswers": [
+            "заперся снаружи",
+            "заперлась снаружи",
+            "остался без ключей",
+            "осталась без ключей",
+            "запер себя снаружи",
+            "заперла себя снаружи"
+          ]
+        },
+        {
+          "id": "8",
+          "prompt": "won’t start",
+          "input": "text",
+          "acceptedAnswers": [
+            "не заводится",
+            "не запускается",
+            "не заведется",
+            "не заведётся"
+          ]
+        },
+        {
+          "id": "9",
+          "prompt": "flat (battery)",
+          "input": "text",
+          "acceptedAnswers": [
+            "разряжен",
+            "разряжена",
+            "разрядился",
+            "разрядилась",
+            "сел",
+            "села"
+          ]
+        },
+        {
+          "id": "10",
+          "prompt": "slow / fast / stopped (about a clock)",
+          "input": "text",
+          "acceptedAnswers": [
+            "отстают, спешат, остановились",
+            "отстают / спешат / остановились",
+            "медленно идут, быстро идут, остановились",
+            "медленно идут / быстро идут / остановились"
+          ]
+        }
+      ],
+      "instructions": "Переведи выделенные слова и выражения. Допустимы естественные варианты перевода."
+    },
+    {
+      "type": "exercise",
+      "id": "l4-12-1",
+      "title": "12.1. What do you think happened?",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "I had to call out a local mechanic. Maybe the car…",
+          "input": "text",
+          "acceptedAnswers": [
+            "wouldn't start",
+            "won't start",
+            "broke down",
+            "had broken down"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "Our neighbours let us use their washing machine. Perhaps ours had…",
+          "input": "text",
+          "acceptedAnswers": [
+            "broken down",
+            "stopped working",
+            "broken"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "The handle suddenly … when I opened the door.",
+          "input": "text",
+          "acceptedAnswers": [
+            "came off",
+            "fell off",
+            "had come off"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "The skin was broken a bit, but there was no blood. I had … it.",
+          "input": "text",
+          "acceptedAnswers": [
+            "grazed",
+            "scratched"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "The device will not switch on. The batteries must be …",
+          "input": "text",
+          "acceptedAnswers": [
+            "flat",
+            "dead"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "I cannot find it anywhere. Someone has … it.",
+          "input": "text",
+          "acceptedAnswers": [
+            "mislaid",
+            "lost"
+          ]
+        },
+        {
+          "id": "7",
+          "prompt": "The meal was black and tasted terrible. It was …",
+          "input": "text",
+          "acceptedAnswers": [
+            "burnt",
+            "burned"
+          ]
+        },
+        {
+          "id": "8",
+          "prompt": "I lost the document when my computer …",
+          "input": "text",
+          "acceptedAnswers": [
+            "crashed",
+            "had crashed"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l4-12-2",
+      "title": "12.2. Odd one out",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "graze · bruise · stain",
+          "input": "single",
+          "answer": 2,
+          "options": [
+            "graze",
+            "bruise",
+            "stain"
+          ],
+          "explanation": "A stain is a mark on a surface; a graze and a bruise are injuries."
+        },
+        {
+          "id": "2",
+          "prompt": "run out · bump · flat",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "run out",
+            "bump",
+            "flat"
+          ],
+          "explanation": "Bump is an impact/injury; the other two can describe a shortage or lack of power."
+        },
+        {
+          "id": "3",
+          "prompt": "leak · smash · chip",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "leak",
+            "smash",
+            "chip"
+          ],
+          "explanation": "Smash means break violently; leak and chip describe different kinds of damage."
+        },
+        {
+          "id": "4",
+          "prompt": "leak · dent · flood",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "leak",
+            "dent",
+            "flood"
+          ],
+          "explanation": "Dent is damage to a solid surface; leak and flood involve liquid."
+        }
+      ],
+      "instructions": "Выбери лишнее слово."
+    },
+    {
+      "type": "exercise",
+      "id": "l4-collocations",
+      "title": "12.3. Collocations matrix",
+      "items": [
+        {
+          "id": "matrix",
+          "prompt": "Select all the correct collocations.",
+          "input": "multiple",
+          "answer": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "options": [
+            "bang your elbow",
+            "ruin a car",
+            "ruin a vase",
+            "ruin a meal",
+            "crack a car windscreen",
+            "crack a vase",
+            "a car breaks down",
+            "a printer breaks down",
+            "dent a car",
+            "a clock stops",
+            "a printer stops",
+            "a sink is blocked",
+            "block an elbow",
+            "dent a meal",
+            "a vase breaks down",
+            "crack a sink"
+          ],
+          "explanation": "Correct: bang your elbow; ruin a car/vase/meal; crack a car windscreen/vase; a car/printer breaks down; dent a car; a clock/printer stops; a sink is blocked."
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l4-12-4",
+      "title": "12.4. Fill in the gaps",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "I stood up too quickly and … on the shelf.",
+          "input": "text",
+          "acceptedAnswers": [
+            "bumped my head",
+            "hit my head",
+            "banged my head"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "I left my keys inside and …",
+          "input": "text",
+          "acceptedAnswers": [
+            "locked myself out"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "She wanted to call Anna, but she had …",
+          "input": "text",
+          "acceptedAnswers": [
+            "mislaid her number",
+            "lost her number"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "My phone suddenly …, so I took it to the shop.",
+          "input": "text",
+          "acceptedAnswers": [
+            "stopped working",
+            "had stopped working",
+            "broke",
+            "had broken"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "I … and grazed my leg.",
+          "input": "text",
+          "acceptedAnswers": [
+            "fell",
+            "fell over",
+            "fell off my bike",
+            "fell off the bike"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "I put the glasses in my bag and accidentally …",
+          "input": "text",
+          "acceptedAnswers": [
+            "crushed them",
+            "smashed them",
+            "broke them"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l4-over-to-you",
+      "title": "12.5. Over to you",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "What would you do if you mislaid your credit card?",
+          "input": "textarea",
+          "scored": false,
+          "placeholder": "Write 2–4 sentences…"
+        },
+        {
+          "id": "2",
+          "prompt": "What would you do if a guest’s glass was chipped?",
+          "input": "textarea",
+          "scored": false,
+          "placeholder": "Write 2–4 sentences…"
+        },
+        {
+          "id": "3",
+          "prompt": "What would you do if one of the buttons on your coat came off?",
+          "input": "textarea",
+          "scored": false,
+          "placeholder": "Write 2–4 sentences…"
+        }
+      ],
+      "instructions": "Напиши развёрнутые ответы на английском. Они сохраняются, но не оцениваются автоматически."
+    }
+  ]
+}

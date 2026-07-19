@@ -1,0 +1,325 @@
+{
+  "id": "lesson-7",
+  "number": 7,
+  "title": "Feelings & Emotions",
+  "subtitle": "Emotion adjectives, collocations and context",
+  "status": "available",
+  "vocabularyId": "vocab-lesson-7",
+  "grammarIds": [],
+  "publishedAt": "2026-07-07",
+  "totalPoints": 28,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Outcomes & English Vocabulary in Use",
+      "title": "Feelings & Emotions",
+      "text": "Use the vocabulary trainer before completing the exercises."
+    },
+    {
+      "type": "exercise",
+      "id": "l7-ex1",
+      "title": "1. How are these people feeling?",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "Speaker 1",
+          "input": "text",
+          "acceptedAnswers": [
+            "guilty"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "Speaker 2",
+          "input": "text",
+          "acceptedAnswers": [
+            "exhausted"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "Speaker 3",
+          "input": "text",
+          "acceptedAnswers": [
+            "confused"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "Speaker 4",
+          "input": "text",
+          "acceptedAnswers": [
+            "happy"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "Speaker 5",
+          "input": "text",
+          "acceptedAnswers": [
+            "furious"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "Speaker 6",
+          "input": "text",
+          "acceptedAnswers": [
+            "disappointed"
+          ]
+        },
+        {
+          "id": "7",
+          "prompt": "Speaker 7",
+          "input": "text",
+          "acceptedAnswers": [
+            "pleased"
+          ]
+        }
+      ],
+      "instructions": "Use each adjective once: guilty · exhausted · confused · happy · furious · disappointed · pleased."
+    },
+    {
+      "type": "exercise",
+      "id": "l7-ex2",
+      "title": "2. Complete the conversations",
+      "items": [
+        {
+          "id": "1a",
+          "prompt": "Conversation 1: I feel …",
+          "input": "text",
+          "acceptedAnswers": [
+            "terrible"
+          ]
+        },
+        {
+          "id": "1b",
+          "prompt": "Conversation 1: I’m really … at work.",
+          "input": "text",
+          "acceptedAnswers": [
+            "stressed"
+          ]
+        },
+        {
+          "id": "2a",
+          "prompt": "Conversation 2: She was very …",
+          "input": "text",
+          "acceptedAnswers": [
+            "upset"
+          ]
+        },
+        {
+          "id": "2b",
+          "prompt": "Conversation 2: I’m … about her.",
+          "input": "text",
+          "acceptedAnswers": [
+            "worried"
+          ]
+        },
+        {
+          "id": "3a",
+          "prompt": "Conversation 3: Why are you …?",
+          "input": "text",
+          "acceptedAnswers": [
+            "in such a bad mood"
+          ]
+        },
+        {
+          "id": "3b",
+          "prompt": "Conversation 3: I’m absolutely … with him.",
+          "input": "text",
+          "acceptedAnswers": [
+            "furious"
+          ]
+        },
+        {
+          "id": "4a",
+          "prompt": "Conversation 4: You seem a bit …",
+          "input": "text",
+          "acceptedAnswers": [
+            "down"
+          ]
+        },
+        {
+          "id": "4b",
+          "prompt": "Conversation 4: I’m … with this weather.",
+          "input": "text",
+          "acceptedAnswers": [
+            "fed up"
+          ]
+        }
+      ],
+      "instructions": "Use the pairs: terrible / stressed · upset / worried · in such a bad mood / furious · down / fed up."
+    },
+    {
+      "type": "reading",
+      "id": "l7-remarks",
+      "title": "Read the remarks",
+      "sections": [
+        {
+          "number": 1,
+          "heading": "George",
+          "text": "I'm just not feeling very happy today. Everything seems to have gone wrong."
+        },
+        {
+          "number": 2,
+          "heading": "Katie",
+          "text": "I like my life and I have nothing to complain about."
+        },
+        {
+          "number": 3,
+          "heading": "Pilar",
+          "text": "I felt so good that nothing bad had happened. It could have been a disaster."
+        },
+        {
+          "number": 4,
+          "heading": "Max",
+          "text": "I've had enough of all the arguments and the bad atmosphere at work."
+        },
+        {
+          "number": 5,
+          "heading": "Agnes",
+          "text": "I felt very happy when I heard she had an interview for the job."
+        },
+        {
+          "number": 6,
+          "heading": "Sara",
+          "text": "Thank you for helping me today."
+        },
+        {
+          "number": 7,
+          "heading": "Carlos",
+          "text": "I've been so unhappy for a long time. I've been seeing a psychiatrist."
+        },
+        {
+          "number": 8,
+          "heading": "Stefan",
+          "text": "I just don't understand. Was that his wife or his daughter?"
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l7-ex431",
+      "title": "43.1. Who feels…?",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "fed up with something?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Max"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "depressed?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Carlos"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "content?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Katie"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "grateful?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Sara"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "miserable?",
+          "input": "text",
+          "acceptedAnswers": [
+            "George"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "thankful?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Pilar"
+          ]
+        },
+        {
+          "id": "7",
+          "prompt": "confused?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Stefan"
+          ]
+        },
+        {
+          "id": "8",
+          "prompt": "delighted?",
+          "input": "text",
+          "acceptedAnswers": [
+            "Agnes"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l7-ex432",
+      "title": "43.2. Rewrite using an emotion adjective",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "I felt negative excitement before the exam.",
+          "input": "text",
+          "acceptedAnswers": [
+            "nervous"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "She was extremely angry.",
+          "input": "text",
+          "acceptedAnswers": [
+            "furious"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "They were very excited and pleased.",
+          "input": "text",
+          "acceptedAnswers": [
+            "thrilled"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "The news made me feel unhappy.",
+          "input": "text",
+          "acceptedAnswers": [
+            "upset me",
+            "upset"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "He was full of positive feelings about the course.",
+          "input": "text",
+          "acceptedAnswers": [
+            "enthusiastic"
+          ]
+        }
+      ]
+    }
+  ]
+}

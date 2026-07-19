@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Персональное пространство ученика английского языка">
+  <title>Homework lesson</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Lesson images can be stored directly inside lesson JSON as data URLs. */
+    .exercise-card.exercise-layout-media-list .exercise-item.has-item-media {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr);
+      grid-template-areas: "media header" "media control" "media feedback";
+      column-gap: 18px;
+      align-items: start;
+    }
+    .exercise-card.exercise-layout-media-list .exercise-item-media {
+      grid-area: media;
+      width: 118px;
+      margin: 0;
+      align-self: start;
+    }
+    .exercise-card.exercise-layout-media-list .exercise-item-media img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #f1f5f9;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+    .exercise-card.exercise-layout-media-list .exercise-item.has-item-media .exercise-item-header { grid-area: header; }
+    .exercise-card.exercise-layout-media-list .exercise-item.has-item-media .exercise-control { grid-area: control; padding-left: 0; }
+    .exercise-card.exercise-layout-media-list .exercise-item.has-item-media > .feedback { grid-area: feedback; }
+    @media (max-width: 620px) {
+      .exercise-card.exercise-layout-media-list .exercise-item.has-item-media { grid-template-columns: 92px minmax(0, 1fr); column-gap: 12px; }
+      .exercise-card.exercise-layout-media-list .exercise-item-media { width: 92px; }
+    }
+    @media (max-width: 420px) {
+      .exercise-card.exercise-layout-media-list .exercise-item.has-item-media {
+        grid-template-columns: 84px minmax(0, 1fr);
+        grid-template-areas: "media header" "control control" "feedback feedback";
+        row-gap: 12px;
+      }
+      .exercise-card.exercise-layout-media-list .exercise-item-media { width: 84px; }
+      .exercise-card.exercise-layout-media-list .exercise-item.has-item-media .exercise-item-header { margin-bottom: 0; }
+    }
+
+    .lesson-vocabulary-shortcut {
+      margin-bottom: 18px;
+    }
+    .lesson-vocabulary-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 72px;
+      padding: 16px 18px;
+      color: var(--dark);
+      text-decoration: none;
+      background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
+      border: 1.5px solid #ddd6fe;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(79, 70, 229, 0.08);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+    .lesson-vocabulary-link:hover {
+      transform: translateY(-2px);
+      border-color: #a78bfa;
+      box-shadow: 0 14px 34px rgba(79, 70, 229, 0.14);
+    }
+    .lesson-vocabulary-link:focus-visible {
+      outline: 3px solid rgba(124, 58, 237, 0.25);
+      outline-offset: 3px;
+    }
+    .lesson-vocabulary-copy {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
+    .lesson-vocabulary-icon {
+      display: grid;
+      place-items: center;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      font-size: 23px;
+      background: #ede9fe;
+      border-radius: 14px;
+    }
+    .lesson-vocabulary-text strong,
+    .lesson-vocabulary-text span {
+      display: block;
+    }
+    .lesson-vocabulary-text strong {
+      margin-bottom: 3px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 0.98rem;
+    }
+    .lesson-vocabulary-text span {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.4;
+    }
+    .lesson-vocabulary-arrow {
+      flex: 0 0 auto;
+      font-size: 1.45rem;
+      color: var(--violet);
+      transition: transform 180ms ease;
+    }
+    .lesson-vocabulary-link:hover .lesson-vocabulary-arrow {
+      transform: translateX(4px);
+    }
+    @media (max-width: 420px) {
+      .lesson-vocabulary-link {
+        min-height: 66px;
+        padding: 14px;
+      }
+      .lesson-vocabulary-icon {
+        flex-basis: 40px;
+        width: 40px;
+        height: 40px;
+      }
+      .lesson-vocabulary-text span {
+        font-size: 0.78rem;
+      }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="config.js" defer></script>
+  <script src="data/vocabulary-data.js" defer></script>
+  <script src="data/grammar-data.js" defer></script>
+  <script src="app.js?v=3" defer></script>
+</head>
+<body class="has-bottom-nav" data-page="homework" data-view="lesson">
+  <a class="skip-link" href="#main">Перейти к содержанию</a>
+
+  <header class="hero hero-compact">
+    <span class="star one">✦</span><span class="star two">✦</span>
+    <div class="container hero-content reveal">
+      <span class="hero-badge">✦ <span data-config="level"></span> Level · Individual Course</span>
+      <h1><span id="lesson-hero-title">Задание</span></h1>
+      <p><span id="lesson-hero-subtitle">Материал урока</span></p>
+    </div>
+    <svg class="hero-wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true"><path fill="#f8fafc" d="M0,66 C220,102 410,10 696,52 C963,91 1115,99 1440,35 L1440,100 L0,100 Z"></path></svg>
+  </header>
+
+  <main id="main" class="main-content container">
+
+    <a class="lesson-back-link" href="homework.html">
+  <span aria-hidden="true">←</span>
+  Назад к заданиям
+</a>
+
+    <section class="section reveal">
+      <div id="lesson-vocabulary-shortcut" class="lesson-vocabulary-shortcut" hidden></div>
+      <div id="lesson-root"></div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav" aria-label="Основная навигация">
+    <a class="nav-link" data-nav="home" href="index.html"><span class="nav-icon">🏠</span><span>Home</span></a>
+    <a class="nav-link" data-nav="homework" href="homework.html"><span class="nav-icon">📝</span><span>HW</span></a>
+    <a class="nav-link" data-nav="grammar" href="grammar.html"><span class="nav-icon">📐</span><span>Grammar</span></a>
+    <a class="nav-link" data-nav="vocabulary" href="vocabulary-hub.html"><span class="nav-icon">💥</span><span>Vocab</span></a>
+  </nav>
+  <div class="toast" id="app-toast" role="status" aria-live="polite"></div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const root = document.getElementById('lesson-root');
+      const lessonId = new URLSearchParams(location.search).get('id');
+      if (!root || !lessonId || !/^[a-zA-Z0-9_-]+$/.test(lessonId)) return;
+
+      const esc = (value) => window.CSS?.escape
+        ? CSS.escape(String(value))
+        : String(value).replace(/[^a-zA-Z0-9_-]/g, '\\$&');
+
+      let lesson = null;
+      let applying = false;
+
+      const applyImages = () => {
+        if (!lesson || applying) return;
+        applying = true;
+        try {
+          for (const block of Array.isArray(lesson.blocks) ? lesson.blocks : []) {
+            if (block?.type !== 'exercise' || !block.id || !Array.isArray(block.items)) continue;
+            const exercise = root.querySelector(`[data-task="${esc(block.id)}"]`);
+            if (!exercise) continue;
+            if (block.layout === 'media-list') exercise.classList.add('exercise-layout-media-list');
+
+            for (const item of block.items) {
+              if (!item?.id || !item.image) continue;
+              const node = exercise.querySelector(`[data-exercise-item="${esc(item.id)}"]`);
+              if (!node || node.dataset.mediaEnhanced === 'true') continue;
+
+              const figure = document.createElement('figure');
+              figure.className = 'exercise-item-media';
+              const image = document.createElement('img');
+              image.src = item.image;
+              image.alt = item.imageAlt || '';
+              image.loading = 'lazy';
+              image.decoding = 'async';
+              figure.appendChild(image);
+              node.insertBefore(figure, node.firstChild);
+              node.classList.add('has-item-media');
+              node.dataset.mediaEnhanced = 'true';
+            }
+          }
+        } finally {
+          applying = false;
+        }
+      };
+
+      new MutationObserver(applyImages).observe(root, { childList: true, subtree: true });
+      fetch(`data/lessons/${encodeURIComponent(lessonId)}.json?embedded-media=1`, { cache: 'no-store' })
+        .then((response) => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        })
+        .then((data) => {
+          lesson = data;
+          applyImages();
+
+          const shortcut = document.getElementById('lesson-vocabulary-shortcut');
+          const vocabularyId = String(data.vocabularyId || '').trim();
+          if (shortcut && vocabularyId && /^[a-zA-Z0-9_-]+$/.test(vocabularyId)) {
+            const link = document.createElement('a');
+            link.className = 'lesson-vocabulary-link';
+            link.href = `vocabulary.html?id=${encodeURIComponent(vocabularyId)}`;
+            link.setAttribute('aria-label', 'Перейти к словарю этого урока');
+
+            const copy = document.createElement('span');
+            copy.className = 'lesson-vocabulary-copy';
+            const icon = document.createElement('span');
+            icon.className = 'lesson-vocabulary-icon';
+            icon.setAttribute('aria-hidden', 'true');
+            icon.textContent = '💥';
+            const text = document.createElement('span');
+            text.className = 'lesson-vocabulary-text';
+            const title = document.createElement('strong');
+            title.textContent = 'Словарь к уроку';
+            const subtitle = document.createElement('span');
+            subtitle.textContent = 'Сначала повтори ключевые слова и выражения';
+            text.append(title, subtitle);
+            copy.append(icon, text);
+
+            const arrow = document.createElement('span');
+            arrow.className = 'lesson-vocabulary-arrow';
+            arrow.setAttribute('aria-hidden', 'true');
+            arrow.textContent = '→';
+
+            link.append(copy, arrow);
+            shortcut.replaceChildren(link);
+            shortcut.hidden = false;
+          }
+        })
+        .catch((error) => console.warn('Lesson images were not loaded.', error));
+    });
+  </script>
+
+</body>
+</html>

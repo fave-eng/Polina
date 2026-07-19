@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Персональное пространство ученика английского языка">
-  <title>Homework</title>
+  <title>Grammar topic</title>
   <link rel="stylesheet" href="styles.css">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
@@ -13,32 +13,23 @@
   <script src="data/grammar-data.js" defer></script>
   <script src="app.js" defer></script>
 </head>
-<body class="has-bottom-nav" data-page="homework" data-view="homework">
+<body class="has-bottom-nav" data-page="grammar" data-view="grammar-topic">
   <a class="skip-link" href="#main">Перейти к содержанию</a>
 
   <header class="hero hero-compact">
     <span class="star one">✦</span><span class="star two">✦</span>
     <div class="container hero-content reveal">
       <span class="hero-badge">✦ <span data-config="level"></span> Level · Individual Course</span>
-      <h1>Homework</h1>
-      <p>Интерактивные упражнения и задания после уроков.</p>
+      <h1><span id="grammar-hero-title">Грамматика</span></h1>
+      <p><span id="grammar-hero-subtitle">Теория и мини-тест</span></p>
     </div>
     <svg class="hero-wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true"><path fill="#f8fafc" d="M0,66 C220,102 410,10 696,52 C963,91 1115,99 1440,35 L1440,100 L0,100 Z"></path></svg>
   </header>
 
   <main id="main" class="main-content container">
 
-    <section class="section reveal" aria-label="Статистика домашних заданий">
-      <div class="summary-grid">
-        <div class="card summary-card"><strong id="hw-completed">0</strong><span>Выполнено</span></div>
-        <div class="card summary-card"><strong id="hw-total">0</strong><span>Всего</span></div>
-        <div class="card summary-card"><strong id="hw-percent">0%</strong><span>Прогресс</span></div>
-      </div>
-      <div class="card section"><div id="hw-overall-progress"></div></div>
-    </section>
-    <section class="section reveal" aria-labelledby="homework-list-title">
-      <div class="section-heading"><div><span class="eyebrow">Материалы</span><h2 id="homework-list-title">Задания</h2></div></div>
-      <div id="homework-list" class="list"></div>
+    <section class="section reveal">
+      <div id="grammar-topic-root"></div>
     </section>
 
   </main>

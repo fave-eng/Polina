@@ -1,534 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vocabulary Hub — Polina's English Space</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Персональное пространство ученика английского языка">
+  <title>Vocabulary Hub</title>
+  <link rel="stylesheet" href="styles.css">
 
-    :root {
-      --indigo: #4f46e5;
-      --indigo-light: #6366f1;
-      --rose: #f43f5e;
-      --amber: #f59e0b;
-      --emerald: #10b981;
-      --sky: #0ea5e9;
-      --violet: #8b5cf6;
-      --orange: #f97316;
-      --bg: #f1f5f9;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --radius: 20px;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding-bottom: 100px;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, #be185d 0%, #e11d48 45%, #f43f5e 100%);
-      padding: 40px 24px 48px;
-      position: relative;
-    }
-    .hero-dots {
-      position: absolute; inset: 0; pointer-events: none;
-      background: url("data:image/svg+xml,%3Csvg width='52' height='52' viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='26' cy='26' r='3' fill='%23ffffff' fill-opacity='0.06'/%3E%3C/svg%3E");
-    }
-    .hero-wave { display: block; width: 100%; line-height: 0; background: var(--bg); }
-    .hero-wave svg { display: block; width: 100%; }
-    .hero-back {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: rgba(255,255,255,.75); font-size: 13px; font-weight: 600;
-      text-decoration: none; margin-bottom: 20px; transition: color .2s;
-    }
-    .hero-back:hover { color: #fff; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.28);
-      color: #fff; font-size: 12px; font-weight: 600;
-      padding: 5px 14px; border-radius: 100px; margin-bottom: 14px;
-    }
-    .hero h1 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(28px, 5vw, 42px); font-weight: 800;
-      color: #fff; letter-spacing: -.5px; margin-bottom: 6px;
-    }
-    .hero p { color: rgba(255,255,255,.78); font-size: 15px; }
-
-    /* total words strip */
-    .hero-stats {
-      display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;
-    }
-    .hs-item {
-      background: rgba(255,255,255,.15);
-      border: 1px solid rgba(255,255,255,.22);
-      border-radius: 14px; padding: 12px 20px;
-      text-align: center; min-width: 90px;
-    }
-    .hs-num {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 26px; font-weight: 800; color: #fff;
-    }
-    .hs-lbl { font-size: 11px; color: rgba(255,255,255,.7); font-weight: 600; margin-top: 2px; }
-
-    /* ── LAYOUT ── */
-    .page { max-width: 760px; margin: 0 auto; padding: 0 20px; }
-
-    /* ── SECTION LABEL ── */
-    .section-label {
-      font-size: 11px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--muted);
-      margin: 32px 0 14px;
-    }
-
-    /* ── FILTER TABS ── */
-    .filter-row {
-      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
-    }
-    .filter-btn {
-      padding: 7px 16px; border-radius: 100px;
-      border: 1.5px solid var(--border);
-      background: var(--card); color: var(--muted);
-      font-size: 12px; font-weight: 600; cursor: pointer;
-      transition: all .18s;
-    }
-    .filter-btn:hover  { border-color: var(--rose); color: var(--rose); }
-    .filter-btn.active { background: var(--rose); border-color: var(--rose); color: #fff; }
-
-    /* ── VOCAB CARD ── */
-    .vocab-card {
-      background: var(--card);
-      border-radius: 18px;
-      border: 1.5px solid var(--border);
-      margin-bottom: 14px;
-      overflow: hidden;
-      transition: all .2s;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-    .vocab-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(0,0,0,.08);
-      border-color: transparent;
-    }
-    .vocab-card.locked {
-      opacity: .52; pointer-events: none;
-    }
-
-    .vc-inner {
-      display: flex; align-items: center; gap: 16px;
-      padding: 18px 20px;
-    }
-
-    /* colour strip on left */
-    .vc-accent {
-      width: 4px; height: 52px; border-radius: 100px;
-      flex-shrink: 0;
-    }
-
-    /* icon */
-    .vc-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 26px; flex-shrink: 0;
-    }
-
-    .vc-body { flex: 1; min-width: 0; }
-    .vc-tag {
-      font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
-      text-transform: uppercase; margin-bottom: 3px;
-    }
-    .vc-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 16px; font-weight: 700; margin-bottom: 4px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .vc-meta {
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    }
-    .vc-count { font-size: 12px; color: var(--muted); }
-
-    /* progress mini bar */
-    .vc-progress-wrap {
-      width: 80px; height: 5px;
-      background: var(--border); border-radius: 100px; overflow: hidden;
-    }
-    .vc-progress-fill {
-      height: 100%; border-radius: 100px;
-      transition: width .5s ease;
-    }
-
-    .vc-right {
-      display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
-      flex-shrink: 0;
-    }
-    .vc-pill {
-      font-size: 11px; font-weight: 700; padding: 3px 10px;
-      border-radius: 100px;
-    }
-    .pill-linked  { background: #fce7f3; color: #9d174d; }
-    .pill-free    { background: #ede9fe; color: #5b21b6; }
-    .pill-locked  { background: #f1f5f9; color: #94a3b8; }
-    .pill-done    { background: #d1fae5; color: #065f46; }
-
-    .vc-arrow { font-size: 18px; color: var(--muted); }
-
-    /* linked badge on card */
-    .vc-linked-strip {
-      border-top: 1px solid var(--border);
-      background: #fdf2f8;
-      padding: 8px 20px;
-      font-size: 12px; color: #9d174d; font-weight: 600;
-      display: flex; align-items: center; gap: 6px;
-    }
-
-    /* ── TOTAL PROGRESS BAR ── */
-    .total-progress-card {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      border-radius: 18px; padding: 22px 24px; margin-bottom: 4px;
-    }
-    .tpc-top {
-      display: flex; justify-content: space-between;
-      align-items: center; margin-bottom: 12px;
-    }
-    .tpc-label {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 15px; font-weight: 700; color: #fff;
-    }
-    .tpc-count { font-size: 13px; color: #94a3b8; }
-    .tpc-bar-bg {
-      background: #334155; border-radius: 100px; height: 8px; overflow: hidden;
-    }
-    .tpc-bar-fill {
-      height: 100%; border-radius: 100px;
-      background: linear-gradient(90deg, var(--rose), var(--violet));
-      transition: width .8s ease;
-    }
-    .tpc-sublabels {
-      display: flex; justify-content: space-between;
-      margin-top: 8px; font-size: 11px; color: #64748b;
-    }
-
-    /* ── NAV PILL ── */
-    .nav-pill {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      background: #0f172a; border-radius: 100px;
-      padding: 12px 24px; display: flex; gap: 4px;
-      box-shadow: 0 8px 32px rgba(15,23,42,.3); z-index: 900;
-      white-space: nowrap;
-    }
-    .nav-pill a {
-      color: rgba(255,255,255,.6); font-size: 12px; font-weight: 600;
-      text-decoration: none; padding: 6px 14px; border-radius: 100px;
-      transition: all .2s;
-    }
-    .nav-pill a:hover, .nav-pill a.active { background: var(--indigo); color: #fff; }
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="config.js" defer></script>
+  <script src="data/vocabulary-data.js" defer></script>
+  <script src="data/grammar-data.js" defer></script>
+  <script src="app.js" defer></script>
 </head>
-<body>
+<body class="has-bottom-nav" data-page="vocabulary" data-view="vocabulary-hub">
+  <a class="skip-link" href="#main">Перейти к содержанию</a>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-dots"></div>
-  <div class="page" style="position:relative;z-index:1">
-    <a href="./index.html" class="hero-back">← На главную</a>
-    <div class="hero-badge">💥 Vocabulary Hub</div>
-    <h1>Словарный тренажёр</h1>
-    <p>Выбери тему и тренируй слова в своём темпе</p>
-    <div class="hero-stats">
-      <div class="hs-item">
-        <div class="hs-num" id="totalLearned">0</div>
-        <div class="hs-lbl">Выучено слов</div>
-      </div>
-      <div class="hs-item">
-        <div class="hs-num" id="totalWords">160</div>
-        <div class="hs-lbl">Слов всего</div>
-      </div>
-      <div class="hs-item">
-        <div class="hs-num" id="totalTopics">4</div>
-        <div class="hs-lbl">Активных тем</div>
-      </div>
+  <header class="hero hero-compact">
+    <span class="star one">✦</span><span class="star two">✦</span>
+    <div class="container hero-content reveal">
+      <span class="hero-badge">✦ <span data-config="level"></span> Level · Individual Course</span>
+      <h1>Vocabulary Hub</h1>
+      <p>Карточки, тесты и повторение сложных слов.</p>
     </div>
-  </div>
-</div>
-<div class="hero-wave">
-  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:linear-gradient(135deg,#be185d,#e11d48 45%,#f43f5e)">
-    <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
-  </svg>
-</div>
+    <svg class="hero-wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true"><path fill="#f8fafc" d="M0,66 C220,102 410,10 696,52 C963,91 1115,99 1440,35 L1440,100 L0,100 Z"></path></svg>
+  </header>
 
-<div class="page">
+  <main id="main" class="main-content container">
 
-  <!-- TOTAL PROGRESS -->
-  <div style="margin-top: 24px; margin-bottom: 0;">
-    <div class="total-progress-card">
-      <div class="tpc-top">
-        <div class="tpc-label">Общий прогресс</div>
-        <div class="tpc-count" id="progressText">0 / 60 слов</div>
+    <section class="section reveal" aria-label="Статистика словаря">
+      <div class="stats-grid">
+        <div class="card stat-card"><strong id="vocab-known">0</strong><span>Выучено</span></div>
+        <div class="card stat-card"><strong id="vocab-total">0</strong><span>Всего</span></div>
+        <div class="card stat-card"><strong id="vocab-topics">0</strong><span>Тем</span></div>
+        <div class="card stat-card"><strong id="vocab-percent">0%</strong><span>Прогресс</span></div>
       </div>
-      <div class="tpc-bar-bg">
-        <div class="tpc-bar-fill" id="progressFill" style="width: 0%"></div>
+      <div class="card section"><div id="vocab-overall-progress"></div></div>
+    </section>
+    <section class="section reveal" aria-labelledby="vocab-list-title">
+      <div class="section-heading"><div><span class="eyebrow">Тренажёры</span><h2 id="vocab-list-title">Vocabulary Hub</h2></div></div>
+      <div class="filters" id="vocab-filters" aria-label="Фильтры словарных тем">
+        <button class="filter-btn active" type="button" data-filter="all">Все</button>
+        <button class="filter-btn" type="button" data-filter="lesson">По урокам</button>
+        <button class="filter-btn" type="button" data-filter="extra">Дополнительные</button>
+        <button class="filter-btn" type="button" data-filter="completed">Завершённые</button>
       </div>
-      <div class="tpc-sublabels">
-        <span>0%</span>
-        <span id="progressPct">0% выучено</span>
-      </div>
-    </div>
-  </div>
+      <div id="vocabulary-list" class="list section"></div>
+    </section>
 
-  <!-- FILTERS -->
-  <div class="section-label">Все темы</div>
-  <div class="filter-row">
-    <button class="filter-btn active" onclick="filterCards('all', this)">Все темы</button>
-    <button class="filter-btn" onclick="filterCards('done', this)">Завершённые</button>
-  
-  <!-- Lesson 7 vocab -->
-  <a href="./vocab-feelings.html" class="vocab-card" data-type="lesson" data-key="feelings" data-page="vocab-feelings.html" id="vc-feelings">
-    <div class="vc-inner">
-      <div class="vc-accent" style="background:#0ea5e9"></div>
-      <div class="vc-icon" style="background:#eef8ff;">😊</div>
-      <div class="vc-body">
-        <div class="vc-tag" style="color:#0ea5e9">Lesson 7</div>
-        <div class="vc-title">Feelings &amp; Emotions</div>
-        <div class="vc-meta">
-          <span class="vc-count">46 слов и фраз</span>
-          <div class="vc-progress-wrap"><div class="vc-progress-fill" style="background:#0ea5e9;width:0%"></div></div>
-        </div>
-      </div>
-      <div class="vc-right">
-        <div class="vc-pill pill-linked">Homework</div>
-        <div class="vc-arrow">→</div>
-      </div>
-    </div>
-    <div class="vc-linked-strip">😊 Связано с Lesson 7: Feelings &amp; Emotions</div>
-  </a>
-</div>
+  </main>
 
-  <!-- ══ CARDS LINKED TO LESSONS ══ -->
+  <nav class="bottom-nav" aria-label="Основная навигация">
+    <a class="nav-link" data-nav="home" href="index.html"><span class="nav-icon">🏠</span><span>Home</span></a>
+    <a class="nav-link" data-nav="homework" href="homework.html"><span class="nav-icon">📝</span><span>HW</span></a>
+    <a class="nav-link" data-nav="grammar" href="grammar.html"><span class="nav-icon">📐</span><span>Grammar</span></a>
+    <a class="nav-link" data-nav="vocabulary" href="vocabulary-hub.html"><span class="nav-icon">💥</span><span>Vocab</span></a>
+  </nav>
+  <div class="toast" id="app-toast" role="status" aria-live="polite"></div>
 
-  <!-- Lesson 4 vocab -->
-  <a href="./vocab-everyday-problems.html" class="vocab-card" data-type="lesson" data-key="everyday" data-page="vocab-everyday-problems.html" data-field="words_learned" id="vc-everyday">
-    <div class="vc-inner">
-      <div class="vc-accent" style="background: var(--rose)"></div>
-      <div class="vc-icon" style="background: #fff1f2;">🔧</div>
-      <div class="vc-body">
-        <div class="vc-tag" style="color: var(--rose)">Lesson 4</div>
-        <div class="vc-title">Everyday Minor Problems</div>
-        <div class="vc-meta">
-          <span class="vc-count" id="count-everyday">… слов</span>
-          <div class="vc-progress-wrap">
-            <div class="vc-progress-fill" id="prog-everyday" style="background: var(--rose); width: 0%"></div>
-          </div>
-          <span id="pct-everyday" style="font-size:11px; color: var(--muted)">0%</span>
-        </div>
-      </div>
-      <div class="vc-right">
-        <span class="vc-pill pill-linked">📝 Урок 4</span>
-        <span class="vc-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- Languages vocab -->
-  <a href="./vocab-languages.html" class="vocab-card" data-type="lesson" data-key="languages" data-page="vocab-languages.html" data-field="languages_learned" id="vc-languages">
-    <div class="vc-inner">
-      <div class="vc-accent" style="background: var(--sky)"></div>
-      <div class="vc-icon" style="background: #f0f9ff;">🌍</div>
-      <div class="vc-body">
-        <div class="vc-tag" style="color: var(--sky)">Unit 1</div>
-        <div class="vc-title">Talking About Languages</div>
-        <div class="vc-meta">
-          <span class="vc-count" id="count-languages">… слов</span>
-          <div class="vc-progress-wrap">
-            <div class="vc-progress-fill" id="prog-languages" style="background: var(--sky); width: 0%"></div>
-          </div>
-          <span id="pct-languages" style="font-size:11px; color: var(--muted)">0%</span>
-        </div>
-      </div>
-      <div class="vc-right">
-        <span class="vc-pill" style="background:#f0f9ff; color:#0369a1">🌍 Unit 1</span>
-        <span class="vc-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- Language Classes vocab (Lesson 6) -->
-  <a href="./vocab-language-classes.html" class="vocab-card" data-type="lesson" data-key="language_classes" data-page="vocab-language-classes.html" data-field="language_classes_learned" id="vc-language_classes">
-    <div class="vc-inner">
-      <div class="vc-accent" style="background: var(--violet)"></div>
-      <div class="vc-icon" style="background: #f5f3ff;">🗣️</div>
-      <div class="vc-body">
-        <div class="vc-tag" style="color: var(--violet)">Lesson 6</div>
-        <div class="vc-title">Putting Your Words to Work</div>
-        <div class="vc-meta">
-          <span class="vc-count" id="count-language_classes">… слов</span>
-          <div class="vc-progress-wrap">
-            <div class="vc-progress-fill" id="prog-language_classes" style="background: var(--violet); width: 0%"></div>
-          </div>
-          <span id="pct-language_classes" style="font-size:11px; color: var(--muted)">0%</span>
-        </div>
-      </div>
-      <div class="vc-right">
-        <span class="vc-pill pill-linked">📝 Урок 6</span>
-        <span class="vc-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- Irregular Verbs -->
-  <a href="./vocab-irregular-verbs.html" class="vocab-card" data-type="extra" data-key="verbs" data-page="vocab-irregular-verbs.html" data-field="verbs_learned" id="vc-verbs">
-    <div class="vc-inner">
-      <div class="vc-accent" style="background: #0f172a"></div>
-      <div class="vc-icon" style="background: #f1f5f9;">📚</div>
-      <div class="vc-body">
-        <div class="vc-tag" style="color: #0f172a">Грамматика</div>
-        <div class="vc-title">Irregular Verbs</div>
-        <div class="vc-meta">
-          <span class="vc-count" id="count-verbs">… глаголов</span>
-          <div class="vc-progress-wrap">
-            <div class="vc-progress-fill" id="prog-verbs" style="background: #0f172a; width: 0%"></div>
-          </div>
-          <span id="pct-verbs" style="font-size:11px; color: var(--muted)">0%</span>
-        </div>
-        <div style="font-size:11px; color:var(--muted); margin-top:5px;">Таблица · карточки перевода · тест форм · тест перевода · сложные</div>
-      </div>
-      <div class="vc-right">
-        <span class="vc-pill" style="background:#f1f5f9; color:#0f172a; white-space:nowrap">5 режимов</span>
-        <span class="vc-arrow">→</span>
-      </div>
-    </div>
-  </a>
-
-
-
-</div><!-- /.page -->
-
-<!-- FLOATING NAV -->
-<div class="nav-pill">
-  <a href="index.html">🏠 Home</a>
-  <a href="homework.html">📝 HW</a>
-  <a href="grammar.html">📐 Grammar</a>
-  <a href="vocabulary-hub.html" class="active">💥 Vocab</a>
-</div>
-
-<script>
-  const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
-  const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
-
-  // Темы больше не зашиты вручную — читаем их прямо с карточек на этой странице
-  // (data-key / data-page / data-field). Чтобы добавить новую тему, достаточно
-  // добавить новую карточку с этими атрибутами — цифры посчитаются сами.
-  function getTopicsFromDOM() {
-    return Array.from(document.querySelectorAll('.vocab-card[data-key]')).map(card => ({
-      key:   card.dataset.key,
-      page:  card.dataset.page,
-      field: card.dataset.field,
-    }));
-  }
-
-  // Узнаём «всего слов» для темы, скачивая её страницу и считая элементы
-  // массива const vocab = [...] прямо в её коде — никаких чисел руками.
-  async function getTotalForTopic(page) {
-    try {
-      const res = await fetch(`./${page}`);
-      const html = await res.text();
-      const match = html.match(/const\s+vocab\s*=\s*(\[[\s\S]*?\n\]);/);
-      if (!match) return null;
-      // Считаем количество объектов карточек по числу "id:" внутри массива —
-      // надёжнее, чем парсить JSON (в файле используются спецсимволы/кавычки).
-      const idMatches = match[1].match(/\{\s*id\s*:/g);
-      return idMatches ? idMatches.length : null;
-    } catch (e) {
-      console.error(`Не удалось определить количество слов в ${page}:`, e);
-      return null;
-    }
-  }
-
-  async function loadFromSupabase(fields) {
-    try {
-      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=${fields.join(',')}`, {
-        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
-      });
-      const data = await r.json();
-      return (data && data[0]) ? data[0] : {};
-    } catch(e) {
-      console.error('Не удалось загрузить прогресс из Supabase:', e);
-      return {};
-    }
-  }
-
-  let TOPICS = []; // заполняется в init: [{key, page, field, total}]
-
-  async function loadProgress() {
-    const cards = getTopicsFromDOM();
-    const fields = cards.map(c => c.field);
-    const row = await loadFromSupabase(fields);
-
-    // Параллельно подгружаем "всего слов" для каждой темы из самих страниц
-    const totals = await Promise.all(cards.map(c => getTotalForTopic(c.page)));
-
-    TOPICS = cards.map((c, i) => ({ ...c, total: totals[i] || 0 }));
-
-    let grandLearned = 0, grandTotal = 0;
-    TOPICS.forEach(({ key, field, total }) => {
-      const learned = parseInt(row[field] || localStorage.getItem(`polina_vocab_${key}`) || '0');
-      localStorage.setItem(`polina_vocab_${key}`, learned);
-      grandLearned += learned;
-      grandTotal   += total;
-
-      const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
-      const bar   = document.getElementById(`prog-${key}`);
-      const pctEl = document.getElementById(`pct-${key}`);
-      const cntEl = document.getElementById(`count-${key}`);
-      if (bar)   bar.style.width  = pct + '%';
-      if (pctEl) pctEl.textContent = pct + '%';
-      if (cntEl) cntEl.textContent = (total || '…') + (key === 'verbs' ? ' глаголов' : ' слов');
-    });
-
-    document.getElementById('totalLearned').textContent = grandLearned;
-    document.getElementById('totalWords').textContent   = grandTotal;
-    document.getElementById('totalTopics').textContent  = TOPICS.length;
-    document.getElementById('progressText').textContent = `${grandLearned} / ${grandTotal} слов`;
-    const globalPct = grandTotal > 0 ? Math.round((grandLearned / grandTotal) * 100) : 0;
-    document.getElementById('progressFill').style.width = globalPct + '%';
-    document.getElementById('progressPct').textContent  = globalPct + '% выучено';
-
-    // Общий счётчик для других страниц сайта (например, главной)
-    localStorage.setItem('polina_words_learned_total', grandLearned);
-  }
-
-  function filterCards(type, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.vocab-card').forEach(card => {
-      if (type === 'all') {
-        card.style.display = '';
-      } else if (type === 'done') {
-        const key = card.dataset.key;
-        const learned = key ? parseInt(localStorage.getItem(`polina_vocab_${key}`) || '0') : 0;
-        const topicObj = TOPICS.find(t => t.key === key);
-        const total = topicObj ? topicObj.total : 0;
-        card.style.display = (learned >= total && total > 0) ? '' : 'none';
-      } else {
-        card.style.display = (card.dataset.type === type) ? '' : 'none';
-      }
-    });
-  }
-
-  window.addEventListener('load', async () => {
-    await loadProgress();
-  });
-</script>
 </body>
 </html>

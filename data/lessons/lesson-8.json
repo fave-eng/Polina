@@ -1,0 +1,502 @@
+{
+  "id": "lesson-8",
+  "number": 8,
+  "title": "Linking Verbs, Responses & Listening",
+  "subtitle": "Grammar, developing conversations and three audio tracks",
+  "status": "available",
+  "vocabularyId": "vocab-lesson-8",
+  "grammarIds": [
+    "a1-1-basics"
+  ],
+  "publishedAt": "2026-07-08",
+  "totalPoints": 29,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Lesson 8",
+      "title": "Linking Verbs, Responses & Listening",
+      "text": "Read the short theory, complete the language tasks, then listen to the three tracks."
+    },
+    {
+      "type": "info",
+      "id": "l8-theory",
+      "title": "Linking verbs",
+      "text": "Linking verbs connect a person or thing with a state, appearance, sound, smell or taste. Use an adjective after feel, look, sound, seem, smell, taste and be: I feel guilty. You look stressed. He sounded fed up. She seems down. The flowers smell nice. It tastes awful."
+    },
+    {
+      "type": "tip",
+      "id": "l8-tip",
+      "title": "Remember",
+      "text": "Use an adjective, not an adverb, after a linking verb: It tastes awful — not awfully."
+    },
+    {
+      "type": "exercise",
+      "id": "l8-ex3",
+      "title": "3. Complete the chat room messages",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "He … after the argument.",
+          "input": "text",
+          "acceptedAnswers": [
+            "sounded fed up",
+            "sounded really fed up"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "I … about what happened.",
+          "input": "text",
+          "acceptedAnswers": [
+            "feel guilty",
+            "felt guilty"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "She must … about the news.",
+          "input": "text",
+          "acceptedAnswers": [
+            "be upset"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "You … today.",
+          "input": "text",
+          "acceptedAnswers": [
+            "seem down",
+            "seem a bit down"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "She … with the result.",
+          "input": "text",
+          "acceptedAnswers": [
+            "was pleased",
+            "was really pleased"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "I … when everyone looked at me.",
+          "input": "text",
+          "acceptedAnswers": [
+            "felt embarrassed"
+          ]
+        },
+        {
+          "id": "7",
+          "prompt": "He … when he read the message.",
+          "input": "text",
+          "acceptedAnswers": [
+            "looked annoyed",
+            "looked a bit annoyed",
+            "looked stressed",
+            "looked a bit stressed"
+          ]
+        },
+        {
+          "id": "8",
+          "prompt": "They … about the course.",
+          "input": "text",
+          "acceptedAnswers": [
+            "felt disappointed"
+          ]
+        },
+        {
+          "id": "9",
+          "prompt": "You … now.",
+          "input": "text",
+          "acceptedAnswers": [
+            "sound relaxed",
+            "sound a lot more relaxed"
+          ]
+        }
+      ],
+      "instructions": "Complete each gap with a linking verb and adjective. Put the verb in the correct form."
+    },
+    {
+      "type": "exercise",
+      "id": "l8-ex992",
+      "title": "99.2. Verb + adjective",
+      "items": [
+        {
+          "id": "2",
+          "prompt": "This soup …",
+          "input": "text",
+          "acceptedAnswers": [
+            "tastes awful",
+            "tasted awful"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "I always … before an exam.",
+          "input": "text",
+          "acceptedAnswers": [
+            "feel nervous"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "These flowers …",
+          "input": "text",
+          "acceptedAnswers": [
+            "smell nice"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "Your clothes …",
+          "input": "text",
+          "acceptedAnswers": [
+            "look wet"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "The new course …",
+          "input": "text",
+          "acceptedAnswers": [
+            "sounds interesting",
+            "sounded interesting"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l8-ex4",
+      "title": "4. Match the news with the responses",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "My laptop has been stolen.",
+          "input": "select",
+          "answer": 3,
+          "options": [
+            "Congratulations! You can give me a lift to work!",
+            "That’s great. When is the wedding?",
+            "I’m sorry. I’m sure he’ll find a new one soon.",
+            "What a pain! Have you lost all your work?",
+            "That’s a relief! I know how worried you were.",
+            "What a shame! I’ll send you some photos."
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "I’ve just passed my driving test.",
+          "input": "select",
+          "answer": 0,
+          "options": [
+            "Congratulations! You can give me a lift to work!",
+            "That’s great. When is the wedding?",
+            "I’m sorry. I’m sure he’ll find a new one soon.",
+            "What a pain! Have you lost all your work?",
+            "That’s a relief! I know how worried you were.",
+            "What a shame! I’ll send you some photos."
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "I’m afraid I can’t come to your party.",
+          "input": "select",
+          "answer": 5,
+          "options": [
+            "Congratulations! You can give me a lift to work!",
+            "That’s great. When is the wedding?",
+            "I’m sorry. I’m sure he’ll find a new one soon.",
+            "What a pain! Have you lost all your work?",
+            "That’s a relief! I know how worried you were.",
+            "What a shame! I’ll send you some photos."
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "My sister’s getting married.",
+          "input": "select",
+          "answer": 1,
+          "options": [
+            "Congratulations! You can give me a lift to work!",
+            "That’s great. When is the wedding?",
+            "I’m sorry. I’m sure he’ll find a new one soon.",
+            "What a pain! Have you lost all your work?",
+            "That’s a relief! I know how worried you were.",
+            "What a shame! I’ll send you some photos."
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "My dad has just lost his job.",
+          "input": "select",
+          "answer": 2,
+          "options": [
+            "Congratulations! You can give me a lift to work!",
+            "That’s great. When is the wedding?",
+            "I’m sorry. I’m sure he’ll find a new one soon.",
+            "What a pain! Have you lost all your work?",
+            "That’s a relief! I know how worried you were.",
+            "What a shame! I’ll send you some photos."
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "My grandmother is coming out of hospital tomorrow.",
+          "input": "select",
+          "answer": 4,
+          "options": [
+            "Congratulations! You can give me a lift to work!",
+            "That’s great. When is the wedding?",
+            "I’m sorry. I’m sure he’ll find a new one soon.",
+            "What a pain! Have you lost all your work?",
+            "That’s a relief! I know how worried you were.",
+            "What a shame! I’ll send you some photos."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Listening · Round 1",
+      "title": "Your opinion before listening",
+      "text": "Choose True or False. These predictions are saved for comparison and are not graded."
+    },
+    {
+      "type": "exercise",
+      "id": "l8-predictions",
+      "title": "Round 1 — your predictions",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "Before the dinner, Mark felt nervous.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ],
+          "scored": false
+        },
+        {
+          "id": "2",
+          "prompt": "He was wearing clothes that were too formal.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ],
+          "scored": false
+        },
+        {
+          "id": "3",
+          "prompt": "He felt he wasn’t very good at making conversation.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ],
+          "scored": false
+        },
+        {
+          "id": "4",
+          "prompt": "Annie’s parents already knew a lot about him.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ],
+          "scored": false
+        },
+        {
+          "id": "5",
+          "prompt": "Annie’s parents hadn’t liked her previous boyfriends.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ],
+          "scored": false
+        },
+        {
+          "id": "6",
+          "prompt": "Annie had forgotten to warn Mark about clothes.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ],
+          "scored": false
+        },
+        {
+          "id": "7",
+          "prompt": "She didn’t mind that he told some jokes.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ],
+          "scored": false
+        },
+        {
+          "id": "8",
+          "prompt": "She was pleased that Mark had met her parents.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ],
+          "scored": false
+        }
+      ],
+      "instructions": "Do this before listening. There are no right or wrong answers in this round."
+    },
+    {
+      "type": "section",
+      "eyebrow": "Listening",
+      "title": "Three audio tracks",
+      "text": "Listen first to Mark, then Mrs deVere and Annie. You can replay each track."
+    },
+    {
+      "type": "audio",
+      "id": "l8-audio-mark",
+      "title": "1. Mark",
+      "text": "Use this track for exercises 5 and 6.",
+      "audio": "audio/lesson8-mark.mp3",
+      "response": false
+    },
+    {
+      "type": "audio",
+      "id": "l8-audio-mrs",
+      "title": "2. Mrs deVere",
+      "text": "Listen for her opinion about Mark.",
+      "audio": "audio/lesson8-mrs-devere.mp3",
+      "response": false
+    },
+    {
+      "type": "audio",
+      "id": "l8-audio-annie",
+      "title": "3. Annie",
+      "text": "Listen for Annie’s version of the event.",
+      "audio": "audio/lesson8-annie.mp3",
+      "response": false
+    },
+    {
+      "type": "exercise",
+      "id": "l8-ex5",
+      "title": "5. What event is Mark talking about?",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "Choose one answer.",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "a wedding",
+            "meeting his girlfriend’s parents for the first time"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l8-listening",
+      "title": "Round 2 — the speakers’ answers",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "Before the dinner, Mark felt nervous.",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "True",
+            "False"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "He was wearing clothes that were too formal.",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "True",
+            "False"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "He felt he wasn’t very good at making conversation.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "Annie’s parents already knew a lot about him.",
+          "input": "single",
+          "answer": 1,
+          "options": [
+            "True",
+            "False"
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "Annie’s parents hadn’t liked her previous boyfriends.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "Annie had forgotten to warn Mark about clothes.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ]
+        },
+        {
+          "id": "7",
+          "prompt": "She didn’t mind that he told some jokes.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ]
+        },
+        {
+          "id": "8",
+          "prompt": "She was pleased that Mark had met her parents.",
+          "input": "single",
+          "answer": 0,
+          "options": [
+            "True",
+            "False"
+          ]
+        }
+      ],
+      "instructions": "Answer according to the audio."
+    }
+  ]
+}

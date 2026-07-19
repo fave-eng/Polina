@@ -1,240 +1,55 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grammar Path — Polina's English Space</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --indigo: #4f46e5; --indigo-light: #6366f1;
-      --rose: #f43f5e; --amber: #f59e0b; --emerald: #10b981;
-      --violet: #8b5cf6; --sky: #0ea5e9;
-      --bg: #f1f5f9; --card: #ffffff;
-      --text: #0f172a; --muted: #64748b; --border: #e2e8f0;
-    }
-    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding-bottom:100px; }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Персональное пространство ученика английского языка">
+  <title>Grammar</title>
+  <link rel="stylesheet" href="styles.css">
 
-    /* HERO */
-    .hero { background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 50%,#a855f7 100%); padding:40px 24px 48px; position:relative; }
-    .hero-wave { display:block; width:100%; line-height:0; background:var(--bg); }
-    .hero-wave svg { display:block; width:100%; }
-    .hero-back { display:inline-flex; align-items:center; gap:6px; color:rgba(255,255,255,.75); font-size:13px; font-weight:600; text-decoration:none; margin-bottom:20px; transition:color .2s; }
-    .hero-back:hover { color:#fff; }
-    .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.3); color:#fff; font-size:12px; font-weight:600; padding:5px 14px; border-radius:100px; margin-bottom:16px; }
-    .hero h1 { font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(28px,5vw,42px); font-weight:800; color:#fff; letter-spacing:-.5px; margin-bottom:8px; }
-    .hero p { color:rgba(255,255,255,.75); font-size:15px; }
-
-    .page { max-width:700px; margin:0 auto; padding:0 20px; }
-
-    /* OVERALL PROGRESS */
-    .overall-card { background:var(--card); border-radius:20px; border:1.5px solid var(--border); padding:22px 24px; margin:24px 0 8px; box-shadow:0 2px 12px rgba(0,0,0,.05); }
-    .overall-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-    .overall-row h3 { font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:700; }
-    .overall-pct { font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:800; color:var(--indigo); }
-    .overall-bar-bg { height:8px; background:var(--bg); border-radius:100px; overflow:hidden; }
-    .overall-bar-fill { height:100%; background:linear-gradient(90deg,var(--indigo),var(--violet)); border-radius:100px; transition:width .6s ease; }
-    .overall-sub { font-size:12px; color:var(--muted); margin-top:8px; }
-
-    /* LEVEL SECTION */
-    .level-block { margin:34px 0; }
-    .level-head { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
-    .level-badge { width:46px; height:46px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:16px; color:#fff; flex-shrink:0; }
-    .level-info h2 { font-family:'Plus Jakarta Sans',sans-serif; font-size:18px; font-weight:800; }
-    .level-info p  { font-size:12px; color:var(--muted); }
-    .level-line { flex:1; height:2px; background:var(--border); }
-
-    /* TOPIC CARD */
-    .topic-card { display:flex; align-items:center; gap:14px; background:var(--card); border:1.5px solid var(--border); border-radius:16px; padding:15px 18px; margin-bottom:10px; text-decoration:none; color:inherit; transition:all .18s; position:relative; }
-    .topic-card.ready:hover { border-color:var(--indigo-light); box-shadow:0 6px 22px rgba(79,70,229,.1); transform:translateY(-1px); }
-    .topic-card.locked { opacity:.5; cursor:default; }
-    .topic-card.planned { opacity:.45; cursor:default; }
-    .topic-num { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:14px; flex-shrink:0; }
-    .topic-num.done    { background:#d1fae5; color:#065f46; }
-    .topic-num.current { background:linear-gradient(135deg,var(--indigo),var(--violet)); color:#fff; }
-    .topic-num.locked  { background:#f1f5f9; color:#94a3b8; }
-    .topic-body { flex:1; min-width:0; }
-    .topic-title { font-family:'Plus Jakarta Sans',sans-serif; font-size:14.5px; font-weight:700; margin-bottom:2px; }
-    .topic-sub   { font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .topic-pill  { font-size:10.5px; font-weight:700; padding:3px 10px; border-radius:100px; white-space:nowrap; }
-    .pill-done    { background:#d1fae5; color:#065f46; }
-    .pill-current { background:#ede9fe; color:#5b21b6; }
-    .pill-locked  { background:#f1f5f9; color:#94a3b8; }
-    .topic-attempts { font-size:10.5px; color:var(--muted); margin-top:2px; }
-
-    /* LEVEL CARD (collapsed future levels) */
-    .level-soon { background:var(--card); border:1.5px dashed var(--border); border-radius:16px; padding:20px 22px; text-align:center; color:var(--muted); font-size:13px; }
-
-    .nav-pill { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#0f172a; border-radius:100px; padding:12px 24px; display:flex; gap:4px; box-shadow:0 8px 32px rgba(15,23,42,.3); z-index:900; white-space:nowrap; }
-    .nav-pill a { color:rgba(255,255,255,.6); font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border-radius:100px; transition:all .2s; }
-    .nav-pill a:hover, .nav-pill a.active { background:var(--indigo); color:#fff; }
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="config.js" defer></script>
+  <script src="data/vocabulary-data.js" defer></script>
+  <script src="data/grammar-data.js" defer></script>
+  <script src="app.js" defer></script>
 </head>
-<body>
+<body class="has-bottom-nav" data-page="grammar" data-view="grammar">
+  <a class="skip-link" href="#main">Перейти к содержанию</a>
 
-<div class="hero">
-  <div class="page" style="position:relative;z-index:1">
-    <a href="./index.html" class="hero-back">← На главную</a>
-    <div class="hero-badge">📐 Grammar Path</div>
-    <h1>Путь по грамматике</h1>
-    <p>Теория → тест → следующая тема. Без ошибок — тема открыта навсегда.</p>
-  </div>
-</div>
-<div class="hero-wave">
-  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:linear-gradient(135deg,#4f46e5,#7c3aed 50%,#a855f7)">
-    <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f1f5f9"/>
-  </svg>
-</div>
-
-<div class="page">
-
-  <div class="overall-card">
-    <div class="overall-row">
-      <h3>Общий прогресс по грамматике</h3>
-      <div class="overall-pct" id="overallPct">0%</div>
+  <header class="hero hero-compact">
+    <span class="star one">✦</span><span class="star two">✦</span>
+    <div class="container hero-content reveal">
+      <span class="hero-badge">✦ <span data-config="level"></span> Level · Individual Course</span>
+      <h1>Grammar</h1>
+      <p>Понятная теория и практика по опубликованным темам.</p>
     </div>
-    <div class="overall-bar-bg"><div class="overall-bar-fill" id="overallBar" style="width:0%"></div></div>
-    <div class="overall-sub" id="overallSub">0 / 15 тем пройдено</div>
-  </div>
+    <svg class="hero-wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true"><path fill="#f8fafc" d="M0,66 C220,102 410,10 696,52 C963,91 1115,99 1440,35 L1440,100 L0,100 Z"></path></svg>
+  </header>
 
-  <!-- LEVEL A1 -->
-  <div class="level-block">
-    <div class="level-head">
-      <div class="level-badge" style="background:linear-gradient(135deg,#10b981,#34d399)">A1</div>
-      <div class="level-info">
-        <h2>Starter</h2>
-        <p>Базовая грамматика — фундамент языка</p>
+  <main id="main" class="main-content container">
+
+    <section class="section reveal" aria-label="Статистика грамматики">
+      <div class="summary-grid">
+        <div class="card summary-card"><strong id="grammar-passed">0</strong><span>Пройдено</span></div>
+        <div class="card summary-card"><strong id="grammar-total">0</strong><span>Всего</span></div>
+        <div class="card summary-card"><strong data-config="level"></strong><span>Уровень</span></div>
       </div>
-      <div class="level-line"></div>
-    </div>
-    <div id="a1-topics"></div>
-  </div>
+      <div class="card section"><div id="grammar-overall-progress"></div></div>
+    </section>
+    <section class="section reveal" aria-labelledby="grammar-list-title">
+      <div class="section-heading"><div><span class="eyebrow">Маршрут</span><h2 id="grammar-list-title">Грамматические темы</h2></div></div>
+      <div id="grammar-list" class="list"></div>
+    </section>
 
-  <!-- LEVEL A2 -->
-  <div class="level-block">
-    <div class="level-head">
-      <div class="level-badge" style="background:#cbd5e1">A2</div>
-      <div class="level-info">
-        <h2 style="color:var(--muted)">Elementary</h2>
-        <p>Откроется после завершения A1</p>
-      </div>
-      <div class="level-line"></div>
-    </div>
-    <div class="level-soon">🔒 Темы появятся после уровня A1</div>
-  </div>
+  </main>
 
-</div>
+  <nav class="bottom-nav" aria-label="Основная навигация">
+    <a class="nav-link" data-nav="home" href="index.html"><span class="nav-icon">🏠</span><span>Home</span></a>
+    <a class="nav-link" data-nav="homework" href="homework.html"><span class="nav-icon">📝</span><span>HW</span></a>
+    <a class="nav-link" data-nav="grammar" href="grammar.html"><span class="nav-icon">📐</span><span>Grammar</span></a>
+    <a class="nav-link" data-nav="vocabulary" href="vocabulary-hub.html"><span class="nav-icon">💥</span><span>Vocab</span></a>
+  </nav>
+  <div class="toast" id="app-toast" role="status" aria-live="polite"></div>
 
-<div class="nav-pill">
-  <a href="./index.html">🏠 Home</a>
-  <a href="./homework.html">📝 HW</a>
-  <a href="./grammar.html" class="active">📐 Grammar</a>
-  <a href="./vocabulary-hub.html">💥 Vocab</a>
-</div>
-
-<script>
-  const SB_URL = "https://zqzgarvmpqqqaobeicpc.supabase.co";
-  const SB_KEY = "sb_publishable_tLdpYQZSbjxOZGQpee_jMQ_lfOBYZxC";
-
-  // Список тем A1 — единственное место, где нужно дописать новую тему,
-  // когда она будет готова (поменять status на 'ready' и указать page).
-  const A1_TOPICS = [
-    { id:'a1_1',  title:'1. Основы грамматики',      sub:'Части речи: noun, verb, adjective, adverb', page:'grammar-a1-1-basics.html',       status:'ready' },
-    { id:'a1_2',  title:'2. Артикли',                 sub:'a, an, the — когда и почему',                page:'grammar-a1-2-articles.html',     status:'ready' },
-    { id:'a1_3',  title:'3. Местоимения',              sub:'I, you, he… и my, your, his…',               page:'grammar-a1-3-pronouns.html',     status:'ready' },
-    { id:'a1_4',  title:'4. Настоящее время',          sub:'Present Simple и Present Continuous',        page:'grammar-a1-4-present.html',      status:'planned' },
-    { id:'a1_5',  title:'5. Прошедшее время',          sub:'Past Simple',                                page:'grammar-a1-5-past.html',         status:'planned' },
-    { id:'a1_6',  title:'6. Будущее время с will',     sub:'Предсказания и обещания',                    page:'grammar-a1-6-will.html',         status:'planned' },
-    { id:'a1_7',  title:'7. Предлоги времени и места', sub:'in, on, at',                                  page:'grammar-a1-7-prepositions.html', status:'planned' },
-    { id:'a1_8',  title:'8. Вопросительные структуры', sub:'do/does + what, where, when…',               page:'grammar-a1-8-questions.html',    status:'planned' },
-    { id:'a1_9',  title:'9. Краткие ответы',           sub:'Yes/No + вспомогательные глаголы',           page:'grammar-a1-9-short-answers.html', status:'planned' },
-    { id:'a1_10', title:'10. There is / There are',    sub:'Наличие и отсутствие чего-либо',             page:'grammar-a1-10-there-is-are.html', status:'planned' },
-    { id:'a1_11', title:'11. Союзы and, but, because', sub:'Соединение простых предложений',             page:'grammar-a1-11-conjunctions.html', status:'planned' },
-    { id:'a1_12', title:'12. Порядок слов',            sub:'Утверждения, вопросы, отрицания',            page:'grammar-a1-12-word-order.html',  status:'planned' },
-    { id:'a1_13', title:'13. Неправильные глаголы',    sub:'be, beat, become… формы наизусть',           page:'grammar-a1-13-irregular-verbs.html', status:'planned' },
-    { id:'a1_14', title:'14. Множественное число',     sub:'-s/-es и особые случаи',                     page:'grammar-a1-14-plurals.html',     status:'planned' },
-    { id:'a1_15', title:'15. To be going to',          sub:'Планы на будущее',                           page:'grammar-a1-15-going-to.html',    status:'planned' },
-  ];
-
-  async function loadGrammarProgress() {
-    try {
-      const r = await fetch(`${SB_URL}/rest/v1/progress?student=eq.polina&select=grammar_progress`, {
-        headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
-      });
-      const data = await r.json();
-      return (data && data[0] && data[0].grammar_progress) || {};
-    } catch (e) {
-      console.error('Не удалось загрузить прогресс по грамматике:', e);
-      return {};
-    }
-  }
-
-  function renderTopics(progress) {
-    const container = document.getElementById('a1-topics');
-    container.innerHTML = '';
-
-    let unlocked = true; // первая тема всегда открыта
-    let doneCount = 0;
-
-    A1_TOPICS.forEach((topic, i) => {
-      const state = progress[topic.id] || { passed: false, attempts: 0 };
-      const isDone = !!state.passed;
-      if (isDone) doneCount++;
-
-      const isLocked = !unlocked; // заблокирована, если предыдущая не пройдена
-      if (!isDone) unlocked = false; // следующая после первой непройденной — заблокирована
-
-      const notReady = topic.status !== 'ready';
-
-      let cardClass, numClass, numContent, pillClass, pillText, href;
-      if (notReady) {
-        cardClass = 'topic-card planned';
-        numClass  = 'locked'; numContent = '🔒';
-        pillClass = 'pill-locked'; pillText = 'Скоро';
-        href = null;
-      } else if (isDone) {
-        cardClass = 'topic-card ready';
-        numClass  = 'done'; numContent = '✓';
-        pillClass = 'pill-done'; pillText = 'Пройдено';
-        href = topic.page;
-      } else if (isLocked) {
-        cardClass = 'topic-card locked';
-        numClass  = 'locked'; numContent = '🔒';
-        pillClass = 'pill-locked'; pillText = 'Заблокировано';
-        href = null;
-      } else {
-        cardClass = 'topic-card ready';
-        numClass  = 'current'; numContent = (i+1);
-        pillClass = 'pill-current'; pillText = 'Открыто';
-        href = topic.page;
-      }
-
-      const el = document.createElement(href ? 'a' : 'div');
-      if (href) el.href = './' + href;
-      el.className = cardClass;
-      el.innerHTML = `
-        <div class="topic-num ${numClass}">${numContent}</div>
-        <div class="topic-body">
-          <div class="topic-title">${topic.title}</div>
-          <div class="topic-sub">${topic.sub}</div>
-          ${ (!isDone && !notReady && !isLocked && state.attempts > 0) ? `<div class="topic-attempts">Попыток: ${state.attempts}</div>` : '' }
-        </div>
-        <span class="topic-pill ${pillClass}">${pillText}</span>
-      `;
-      container.appendChild(el);
-    });
-
-    const pct = Math.round(doneCount / A1_TOPICS.length * 100);
-    document.getElementById('overallPct').textContent = pct + '%';
-    document.getElementById('overallBar').style.width = pct + '%';
-    document.getElementById('overallSub').textContent = `${doneCount} / ${A1_TOPICS.length} тем пройдено (уровень A1)`;
-  }
-
-  window.addEventListener('load', async () => {
-    const progress = await loadGrammarProgress();
-    renderTopics(progress);
-  });
-</script>
 </body>
 </html>
