@@ -25,6 +25,6 @@ window.APP_CONFIG = {
     vocabulary: true,
     grammar: true,
     cloudSync: true,
-    telegramNotifications: false
+    telegramNotifications: true
   }
 };
