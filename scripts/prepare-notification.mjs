@@ -40,13 +40,9 @@ function pageUrl(baseUrl, page, fallback) {
   return new URL(target, `${baseUrl}/`).toString()
 }
 
-function isPublished(lesson) {
-  if (lesson.status !== 'available') return false
-  if (!lesson.notification?.enabled) return false
-  if (!lesson.publishedAt) return true
-
-  const published = new Date(`${lesson.publishedAt}T00:00:00Z`)
-  return Number.isFinite(published.getTime()) && published.getTime() <= Date.now()
+function isReadyForNotification(lesson) {
+  return lesson.status === 'available'
+    && lesson.notification?.enabled === true
 }
 
 const siteBaseUrl = requiredEnv('SITE_BASE_URL').replace(/\/+$/, '')
@@ -59,11 +55,11 @@ const vocabularyData = loadWindowArray('data/vocabulary-data.js', 'VOCABULARY_DA
 const grammarData = loadWindowArray('data/grammar-data.js', 'GRAMMAR_DATA')
 const lessons = loadLessons().filter((lesson) => {
   if (selectedLessonId && lesson.id !== selectedLessonId) return false
-  return isPublished(lesson)
+  return isReadyForNotification(lesson)
 })
 
 if (selectedLessonId && lessons.length === 0) {
-  throw new Error(`Lesson ${selectedLessonId} was not found or notification.enabled is not true`)
+  throw new Error(`Lesson ${selectedLessonId} was not found, status is not available, or notification.enabled is not true`)
 }
 
 if (lessons.length === 0) {
