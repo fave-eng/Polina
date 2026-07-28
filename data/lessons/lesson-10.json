@@ -1,0 +1,625 @@
+{
+  "id": "lesson-10",
+  "number": 10,
+  "title": "How Food Affects Mood",
+  "subtitle": "-ing / -ed adjectives, vocabulary and reading",
+  "status": "available",
+  "vocabularyId": "vocab-lesson-10",
+  "grammarIds": [
+    "b1-ed-ing-adjectives"
+  ],
+  "publishedAt": "2026-07-29",
+  "totalPoints": 36,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Vocabulary",
+      "title": "-ing / -ed adjectives",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l10-ex1",
+      "title": "1. Cross out two nouns that do not usually go with the –ing adjectives.",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "relaxing",
+          "input": "multiple",
+          "options": [
+            "holiday",
+            "friend",
+            "weekend",
+            "massage",
+            "food"
+          ],
+          "answer": [
+            1,
+            4
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "annoying",
+          "input": "multiple",
+          "options": [
+            "neighbour",
+            "disaster",
+            "mobile phone ring",
+            "success",
+            "habit"
+          ],
+          "answer": [
+            1,
+            3
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "disappointing",
+          "input": "multiple",
+          "options": [
+            "problem",
+            "result",
+            "ending",
+            "exam grade",
+            "clothes"
+          ],
+          "answer": [
+            0,
+            4
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "confusing",
+          "input": "multiple",
+          "options": [
+            "atmosphere",
+            "situation",
+            "idea",
+            "explanation",
+            "skill"
+          ],
+          "answer": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "exciting",
+          "input": "multiple",
+          "options": [
+            "sleep",
+            "development",
+            "help",
+            "news",
+            "story"
+          ],
+          "answer": [
+            0,
+            2
+          ]
+        },
+        {
+          "id": "6",
+          "prompt": "inspiring",
+          "input": "multiple",
+          "options": [
+            "crime",
+            "leader",
+            "speech",
+            "plan",
+            "loss"
+          ],
+          "answer": [
+            0,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l10-ex2",
+      "title": "2. Choose the correct words.",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "",
+          "input": "choice-gaps",
+          "segments": [
+            "You walk out of the place completely ",
+            ". And they don’t play that ",
+            " whale music, which is a relief."
+          ],
+          "choices": [
+            [
+              "relaxed",
+              "relaxing"
+            ],
+            [
+              "boring",
+              "bored"
+            ]
+          ],
+          "answers": [
+            0,
+            0
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "",
+          "input": "choice-gaps",
+          "segments": [
+            "I had to give my height, weight, and my age – it was so ",
+            ". I was a bit ",
+            " when I saw how much weight I’d put on."
+          ],
+          "choices": [
+            [
+              "embarrassed",
+              "embarrassing"
+            ],
+            [
+              "shocked",
+              "shocking"
+            ]
+          ],
+          "answers": [
+            1,
+            0
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "",
+          "input": "choice-gaps",
+          "segments": [
+            "I’m not sure I’m in the correct level. I’m always so ",
+            " at the end of the lesson. And concentrating for an hour is ",
+            "."
+          ],
+          "choices": [
+            [
+              "confused",
+              "confusing"
+            ],
+            [
+              "exhausting",
+              "exhausted"
+            ]
+          ],
+          "answers": [
+            0,
+            0
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "",
+          "input": "choice-gaps",
+          "segments": [
+            "I didn’t expect it to be so beautiful. I was quite ",
+            " when I saw the scenery. But our flight was delayed, which was ",
+            "."
+          ],
+          "choices": [
+            [
+              "surprising",
+              "surprised"
+            ],
+            [
+              "annoyed",
+              "annoying"
+            ]
+          ],
+          "answers": [
+            1,
+            1
+          ]
+        },
+        {
+          "id": "5",
+          "prompt": "",
+          "input": "choice-gaps",
+          "segments": [
+            "I wasn’t very ",
+            " in the characters. And the ending was ",
+            "."
+          ],
+          "choices": [
+            [
+              "interested",
+              "interesting"
+            ],
+            [
+              "disappointed",
+              "disappointing"
+            ]
+          ],
+          "answers": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l10-ex3",
+      "title": "3. What are the people in exercise 2 talking about? Match 1–5 above to a–e.",
+      "wordBank": [
+        "a  a gym",
+        "b  a novel",
+        "c  a trip",
+        "d  a language school",
+        "e  a health spa"
+      ],
+      "items": [
+        {
+          "id": "1",
+          "number": "",
+          "prompt": "1",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ],
+          "answer": 4
+        },
+        {
+          "id": "2",
+          "number": "",
+          "prompt": "2",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "3",
+          "number": "",
+          "prompt": "3",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ],
+          "answer": 3
+        },
+        {
+          "id": "4",
+          "number": "",
+          "prompt": "4",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ],
+          "answer": 2
+        },
+        {
+          "id": "5",
+          "number": "",
+          "prompt": "5",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ],
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l10-ex4",
+      "title": "4. Complete the conversations with the correct form of the verbs in brackets.",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "A: If you don’t mind, I’d like to change channels before the news. There’s an ",
+            " (interest) programme on at 8 p.m.\nB: Go ahead. I don’t want to watch the news. It’s always so ",
+            " (depress)."
+          ],
+          "answers": [
+            "interesting",
+            "depressing"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "A: Can you believe that score – six nil? I’ve never been so ",
+            " (disappoint).\nB: I know. I was so ",
+            " (excite) at the start of the season."
+          ],
+          "answers": [
+            "disappointed",
+            "excited"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "A: Do you fancy coming for a walk? The view over the beach is meant to be ",
+            " (amaze).\nB: Thanks, but I’m not up to it. I feel ",
+            " (exhaust) after that journey."
+          ],
+          "answers": [
+            "amazing",
+            "exhausted"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "A: Only ten people turned up to my party. I don’t think I’ve ever been so ",
+            " (embarrass).\nB: That’s a shame. It’s very ",
+            " (annoy) when people let you down."
+          ],
+          "answers": [
+            "embarrassed",
+            "annoying"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Reading",
+      "title": "How food affects mood",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l10-ex5",
+      "title": "5. Read the article opposite quickly. What is the main reason for writing it?",
+      "items": [
+        {
+          "id": "1",
+          "number": "",
+          "prompt": "",
+          "input": "single",
+          "options": [
+            "a  to advise people on how to improve their diet",
+            "b  to explain that there is a connection between food and how people feel",
+            "c  to describe a series of experiments on food"
+          ],
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l10-ex6",
+      "title": "6. Six parts of the article ‘How food affects mood’ have been removed. Write the correct letter (a–f) in the gaps in the article.",
+      "wordBank": [
+        "a  Research also suggests that the right foods",
+        "b  that activate when people enjoy themselves",
+        "c  if they were eating healthily and taking regular physical exercise.",
+        "d  who wrote a report based on the survey",
+        "e  but felt guilty afterwards.",
+        "f  There is a definite link with food and mood"
+      ],
+      "items": [
+        {
+          "id": "1",
+          "number": "",
+          "prompt": "1",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "2",
+          "number": "",
+          "prompt": "2",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "3",
+          "number": "",
+          "prompt": "3",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f"
+          ],
+          "answer": 5
+        },
+        {
+          "id": "4",
+          "number": "",
+          "prompt": "4",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f"
+          ],
+          "answer": 3
+        },
+        {
+          "id": "5",
+          "number": "",
+          "prompt": "5",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f"
+          ],
+          "answer": 2
+        },
+        {
+          "id": "6",
+          "number": "",
+          "prompt": "6",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f"
+          ],
+          "answer": 4
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l10-ex7",
+      "title": "7. Underline the following parts of the article.",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "four mental health problems",
+          "input": "text",
+          "acceptedAnswers": [
+            "mood swings, 26% in panic attacks and anxiety, and 24% in depression",
+            "mood swings, panic attacks, anxiety and depression",
+            "mood swings, panic attacks, anxiety, depression"
+          ]
+        },
+        {
+          "id": "2",
+          "prompt": "the word the writer uses to describe food / drinks with a positive effect and examples of these",
+          "input": "text",
+          "acceptedAnswers": [
+            "Supporters included water, vegetables, fruit and oil-rich fish",
+            "supporters: water, vegetables, fruit and oil-rich fish",
+            "supporters included water, fruit, vegetables and oily fish",
+            "supporters: water, fruit, vegetables and oily fish"
+          ]
+        },
+        {
+          "id": "3",
+          "prompt": "the word the writer uses to describe food / drinks with a negative effect and examples of these",
+          "input": "text",
+          "acceptedAnswers": [
+            "Stressors included sugar, caffeine, alcohol and chocolate",
+            "stressors: sugar, caffeine, alcohol and chocolate",
+            "stressors included chocolate, sugar, caffeine and alcohol",
+            "stressors: chocolate, sugar, caffeine and alcohol"
+          ]
+        },
+        {
+          "id": "4",
+          "prompt": "the reason why it is important to drink enough fluid",
+          "input": "text",
+          "acceptedAnswers": [
+            "and you must have enough fluid to prevent dehydration",
+            "you must have enough fluid to prevent dehydration",
+            "to prevent dehydration"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l10-ex8",
+      "title": "8. Which adjectives went with these nouns? Look back at the article and sentences a–f in exercise 6.",
+      "items": [
+        {
+          "id": "1",
+          "prompt": "",
+          "number": 1,
+          "example": true,
+          "exampleAnswer": "immediate effect"
+        },
+        {
+          "id": "2",
+          "prompt": "foods",
+          "input": "text",
+          "answer": "right"
+        },
+        {
+          "id": "3",
+          "prompt": "mental health",
+          "input": "text",
+          "answer": "overall"
+        },
+        {
+          "id": "4",
+          "prompt": "improvements",
+          "input": "text",
+          "answer": "marked"
+        },
+        {
+          "id": "5",
+          "prompt": "link",
+          "input": "text",
+          "answer": "definite"
+        },
+        {
+          "id": "6",
+          "prompt": "physical exercise",
+          "input": "text",
+          "answer": "regular"
+        }
+      ]
+    }
+  ]
+}

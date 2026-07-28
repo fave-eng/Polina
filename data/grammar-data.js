@@ -321,6 +321,199 @@ window.GRAMMAR_DATA = [
     ]
   },
   {
+    "id": "b1-ed-ing-adjectives",
+    "order": 1,
+    "category": "lesson",
+    "lessonNumber": 10,
+    "lessonTitle": "How Food Affects Mood",
+    "title": "Прилагательные с -ed и -ing",
+    "level": "B1",
+    "status": "available",
+    "page": "grammar-topic.html?id=b1-ed-ing-adjectives",
+    "explanation": "Прилагательные с окончаниями -ed и -ing часто образуются от одного глагола, но передают разный смысл. Форма с -ed описывает чувство или состояние того, кто испытывает воздействие. Форма с -ing описывает человека, предмет, событие или ситуацию, которые это чувство вызывают.",
+    "formula": "Кто испытывает чувство? → -ed. Кто или что вызывает чувство? → -ing.",
+    "ruleCards": [
+      {
+        "title": "-ed: чувство или состояние",
+        "text": "Используем, когда говорим о том, как человек или другое живое существо себя чувствует.",
+        "example": "I’m bored.",
+        "translation": "Мне скучно."
+      },
+      {
+        "title": "-ing: причина чувства",
+        "text": "Используем, когда описываем того или то, что создаёт впечатление и вызывает чувство.",
+        "example": "This book is boring.",
+        "translation": "Эта книга скучная."
+      }
+    ],
+    "image": {
+      "src": "assets/grammar-ed-ing.png",
+      "alt": "Схема: окончание -ed описывает чувства человека, а -ing — предмет или явление, вызывающее чувство",
+      "caption": "-ed показывает состояние; -ing показывает причину этого состояния."
+    },
+    "sections": [
+      {
+        "title": "Как выбрать окончание",
+        "items": [
+          "Найдите слово, которое нужно описать.",
+          "Спросите: оно испытывает чувство или вызывает его?",
+          "Испытывает чувство или находится под воздействием → -ed. Вызывает чувство или создаёт впечатление → -ing."
+        ]
+      },
+      {
+        "title": "Не только люди и предметы",
+        "paragraphs": [
+          "Правило нельзя сводить к схеме «человек — -ed, предмет — -ing». Важно не то, кем или чем является существительное, а какую роль оно играет в ситуации."
+        ],
+        "items": [
+          "an annoying person — раздражающий человек: человек вызывает раздражение.",
+          "an interested audience — заинтересованная аудитория: люди испытывают интерес.",
+          "The journey was exhausting. — Поездка была изнурительной.",
+          "We were exhausted. — Мы были измотаны."
+        ]
+      },
+      {
+        "title": "Типичные конструкции",
+        "items": [
+          "be / feel / seem / look + -ed: She feels disappointed.",
+          "be + -ing: The result is disappointing.",
+          "-ing + noun: an exciting story, a confusing explanation.",
+          "-ed + preposition: interested in, excited about, surprised by, disappointed with, worried about."
+        ]
+      }
+    ],
+    "tableTitle": "Частые пары и разница в значении",
+    "table": {
+      "headers": [
+        "-ed: состояние",
+        "-ing: причина"
+      ],
+      "rows": [
+        [
+          "bored — испытывающий скуку",
+          "boring — скучный"
+        ],
+        [
+          "interested — заинтересованный",
+          "interesting — интересный"
+        ],
+        [
+          "excited — взволнованный",
+          "exciting — захватывающий"
+        ],
+        [
+          "confused — растерянный",
+          "confusing — запутанный"
+        ],
+        [
+          "surprised — удивлённый",
+          "surprising — удивительный, неожиданный"
+        ],
+        [
+          "annoyed — раздражённый",
+          "annoying — раздражающий"
+        ],
+        [
+          "disappointed — разочарованный",
+          "disappointing — разочаровывающий"
+        ],
+        [
+          "exhausted — измотанный",
+          "exhausting — изнурительный"
+        ],
+        [
+          "embarrassed — смущённый",
+          "embarrassing — неловкий, вызывающий смущение"
+        ],
+        [
+          "shocked — потрясённый",
+          "shocking — шокирующий"
+        ]
+      ]
+    },
+    "examplesTitle": "Сравните предложения",
+    "examples": [
+      "I was surprised when I saw the scenery. — Я удивилась, когда увидела пейзаж.",
+      "The scenery was surprising. — Пейзаж оказался удивительным.",
+      "I’m interested in the characters. — Мне интересны персонажи.",
+      "The characters are interesting. — Персонажи интересные.",
+      "We felt exhausted after the journey. — После поездки мы чувствовали себя измотанными.",
+      "The journey was exhausting. — Поездка была изнурительной."
+    ],
+    "commonMistakesTitle": "Что важно не перепутать",
+    "commonMistakes": [
+      "I am boring означает «я скучный, я вызываю скуку». Чтобы сказать «мне скучно», нужно I am bored.",
+      "I am interesting означает «я интересный». Чтобы сказать «мне интересно», обычно нужно I am interested.",
+      "Окончание выбирают по смыслу предложения, а не просто по тому, говорится ли о человеке или о предмете."
+    ],
+    "quiz": [
+      {
+        "prompt": "I felt very ___ after the long meeting.",
+        "options": [
+          "tiring",
+          "tired"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "The instructions were ___, so nobody knew what to do.",
+        "options": [
+          "confused",
+          "confusing"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "She is ___ in modern art.",
+        "options": [
+          "interested",
+          "interesting"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "It was an ___ match from beginning to end.",
+        "options": [
+          "excited",
+          "exciting"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "We were ___ by the sudden change.",
+        "options": [
+          "surprised",
+          "surprising"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "The noise is really ___.",
+        "options": [
+          "annoyed",
+          "annoying"
+        ],
+        "answer": 1
+      },
+      {
+        "prompt": "He looked ___ when he heard the result.",
+        "options": [
+          "disappointed",
+          "disappointing"
+        ],
+        "answer": 0
+      },
+      {
+        "prompt": "The trip was ___, but the views were beautiful.",
+        "options": [
+          "exhausted",
+          "exhausting"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
     "id": "a1-4-locked",
     "order": 4,
     "title": "Настоящее время",
