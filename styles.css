@@ -1305,3 +1305,38 @@ body[data-view="lesson"] #lesson-root {
   .grammar-rule-grid { grid-template-columns: 1fr; }
   .grammar-group-heading { align-items: center; }
 }
+
+/* Detailed answer states for multi-gap workbook tasks. */
+.gap-input.is-correct-input,
+.gap-select.is-correct-input {
+  border-bottom-color: #22c55e;
+  background: #f0fdf4;
+}
+.gap-input.is-wrong-input,
+.gap-select.is-wrong-input {
+  border-bottom-color: #fb7185;
+  background: #fff7f7;
+}
+
+.grammar-practice-actions { margin-top: 18px; }
+
+/* Workbook-style visible alternatives for “Circle the correct form” tasks. */
+.inline-choice-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px;
+  border-radius: 9px;
+}
+.inline-choice-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-style: italic;
+}
+.inline-choice-option input { margin: 0; }
+.inline-choice-separator { color: var(--muted); }
+.inline-choice-group.is-correct-input { background: #f0fdf4; }
+.inline-choice-group.is-wrong-input { background: #fff7f7; }

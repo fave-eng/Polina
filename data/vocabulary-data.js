@@ -1778,388 +1778,100 @@ window.VOCABULARY_DATA = [
   },
   {
     "id": "vocab-lesson-10",
-    "title": "Food, Mood & Workbook Language",
+    "title": "Collocations & Present Tenses",
     "label": "Lesson 10",
-    "icon": "🥗",
+    "icon": "🗣️",
     "type": "lesson",
     "linkedLessonId": "lesson-10",
     "page": "vocabulary.html?id=vocab-lesson-10",
     "words": [
       {
         "id": "l10-1",
-        "en": "height",
-        "ru": "рост",
+        "en": "a definite link",
+        "ru": "определённая, явная связь",
         "transcription": "",
-        "exampleEn": "Please enter your height on the form.",
+        "exampleEn": "There is a definite link between sleep and concentration.",
         "exampleRu": "",
         "audio": ""
       },
       {
         "id": "l10-2",
-        "en": "weight",
-        "ru": "вес",
+        "en": "right foods",
+        "ru": "подходящие, правильные продукты",
         "transcription": "",
-        "exampleEn": "Her weight has stayed the same this year.",
+        "exampleEn": "Eating the right foods can help you feel better.",
         "exampleRu": "",
         "audio": ""
       },
       {
         "id": "l10-3",
-        "en": "put on weight",
-        "ru": "набрать вес",
+        "en": "straight away",
+        "ru": "сразу, немедленно",
         "transcription": "",
-        "exampleEn": "I put on weight during the winter.",
+        "exampleEn": "The headache disappeared straight away.",
         "exampleRu": "",
         "audio": ""
       },
       {
         "id": "l10-4",
-        "en": "scenery",
-        "ru": "пейзаж; окружающие виды",
+        "en": "deal with stress",
+        "ru": "справляться со стрессом",
         "transcription": "",
-        "exampleEn": "The mountain scenery was beautiful.",
+        "exampleEn": "Walking helps me deal with stress.",
         "exampleRu": "",
         "audio": ""
       },
       {
         "id": "l10-5",
-        "en": "a flight",
-        "ru": "авиарейс; полёт",
+        "en": "on earth",
+        "ru": "же; вообще (для усиления удивления или вопроса)",
         "transcription": "",
-        "exampleEn": "Our flight leaves at seven in the morning.",
+        "exampleEn": "Why on earth are you wearing a coat indoors?",
         "exampleRu": "",
         "audio": ""
       },
       {
         "id": "l10-6",
-        "en": "be delayed",
-        "ru": "быть задержанным",
+        "en": "aggressive",
+        "ru": "агрессивный",
         "transcription": "",
-        "exampleEn": "The train was delayed for thirty minutes.",
+        "exampleEn": "Why are you being so aggressive today?",
         "exampleRu": "",
         "audio": ""
       },
       {
         "id": "l10-7",
-        "en": "a character",
-        "ru": "персонаж",
+        "en": "give a presentation",
+        "ru": "выступать с презентацией, проводить презентацию",
         "transcription": "",
-        "exampleEn": "The main character changes a lot during the story.",
+        "exampleEn": "We’re giving a presentation this afternoon.",
         "exampleRu": "",
         "audio": ""
       },
       {
         "id": "l10-8",
-        "en": "an ending",
-        "ru": "концовка; окончание истории",
+        "en": "cheer up",
+        "ru": "взбодриться; не унывать",
         "transcription": "",
-        "exampleEn": "The film has an unexpected ending.",
+        "exampleEn": "Cheer up — the days will get longer soon.",
         "exampleRu": "",
         "audio": ""
       },
       {
         "id": "l10-9",
-        "en": "change channels",
-        "ru": "переключить канал",
+        "en": "can’t stand",
+        "ru": "терпеть не могу",
         "transcription": "",
-        "exampleEn": "Can we change channels before the news?",
+        "exampleEn": "I can’t stand very short winter days.",
         "exampleRu": "",
         "audio": ""
       },
       {
         "id": "l10-10",
-        "en": "go ahead",
-        "ru": "пожалуйста; продолжай; действуй",
+        "en": "do an exam",
+        "ru": "сдавать, выполнять экзаменационную работу (брит.)",
         "transcription": "",
-        "exampleEn": "Go ahead — I’m listening.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-11",
-        "en": "a score",
-        "ru": "счёт в игре или матче",
-        "transcription": "",
-        "exampleEn": "What was the final score?",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-12",
-        "en": "six nil",
-        "ru": "шесть — ноль",
-        "transcription": "",
-        "exampleEn": "Their team won six nil.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-13",
-        "en": "be up to it",
-        "ru": "быть в состоянии; иметь силы на это",
-        "transcription": "",
-        "exampleEn": "I’m too tired and I’m not up to it today.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-14",
-        "en": "turn up",
-        "ru": "прийти; появиться",
-        "transcription": "",
-        "exampleEn": "Only a few guests turned up.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-15",
-        "en": "let someone down",
-        "ru": "подвести кого-либо",
-        "transcription": "",
-        "exampleEn": "I promised to help, so I won’t let you down.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-16",
-        "en": "whale music",
-        "ru": "музыка с пением китов; расслабляющие звуки китов",
-        "transcription": "",
-        "exampleEn": "The spa played quiet whale music.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-17",
-        "en": "Do you fancy doing something?",
-        "ru": "Хочешь что-нибудь сделать?; Не желаешь…?",
-        "transcription": "",
-        "exampleEn": "Do you fancy going for a walk?",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-18",
-        "en": "be meant to be",
-        "ru": "считаться; предполагаться; как говорят, быть каким-либо",
-        "transcription": "",
-        "exampleEn": "The view is meant to be amazing.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-19",
-        "en": "at the start of the season",
-        "ru": "в начале сезона",
-        "transcription": "",
-        "exampleEn": "The team played well at the start of the season.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-20",
-        "en": "affect",
-        "ru": "влиять на",
-        "transcription": "",
-        "exampleEn": "Lack of sleep can affect your mood.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-21",
-        "en": "diet",
-        "ru": "рацион; питание",
-        "transcription": "",
-        "exampleEn": "A balanced diet includes different kinds of food.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-22",
-        "en": "an immediate effect",
-        "ru": "немедленный эффект",
-        "transcription": "",
-        "exampleEn": "The new routine had an immediate effect.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-23",
-        "en": "overall mental health",
-        "ru": "общее психическое здоровье",
-        "transcription": "",
-        "exampleEn": "Regular rest supports overall mental health.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-24",
-        "en": "a survey",
-        "ru": "опрос; исследование мнений",
-        "transcription": "",
-        "exampleEn": "The survey included two hundred people.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-25",
-        "en": "a marked improvement",
-        "ru": "заметное улучшение",
-        "transcription": "",
-        "exampleEn": "There was a marked improvement after a few weeks.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-26",
-        "en": "mood swings",
-        "ru": "перепады настроения",
-        "transcription": "",
-        "exampleEn": "Stress can sometimes cause mood swings.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-27",
-        "en": "a panic attack",
-        "ru": "паническая атака",
-        "transcription": "",
-        "exampleEn": "A panic attack can feel frightening.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-28",
-        "en": "anxiety",
-        "ru": "тревожность; сильное беспокойство",
-        "transcription": "",
-        "exampleEn": "Exercise may help some people manage anxiety.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-29",
-        "en": "a stressor",
-        "ru": "фактор, вызывающий стресс",
-        "transcription": "",
-        "exampleEn": "Too much caffeine can be a stressor.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-30",
-        "en": "a supporter (of mood)",
-        "ru": "то, что поддерживает хорошее настроение",
-        "transcription": "",
-        "exampleEn": "In the article, water is described as a mood supporter.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-31",
-        "en": "caffeine",
-        "ru": "кофеин",
-        "transcription": "",
-        "exampleEn": "Coffee and some soft drinks contain caffeine.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-32",
-        "en": "oily / oil-rich fish",
-        "ru": "жирная рыба",
-        "transcription": "",
-        "exampleEn": "Oily fish is a useful source of healthy fats.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-33",
-        "en": "skip breakfast",
-        "ru": "пропускать завтрак",
-        "transcription": "",
-        "exampleEn": "I feel tired when I skip breakfast.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-34",
-        "en": "well-being",
-        "ru": "хорошее самочувствие; благополучие",
-        "transcription": "",
-        "exampleEn": "Sleep is important for your well-being.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-35",
-        "en": "be directly linked to",
-        "ru": "быть напрямую связанным с",
-        "transcription": "",
-        "exampleEn": "The result may be directly linked to the change in routine.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-36",
-        "en": "lapse",
-        "ru": "сорваться; временно вернуться к старой привычке",
-        "transcription": "",
-        "exampleEn": "One lapse does not mean that all progress is lost.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-37",
-        "en": "a trigger",
-        "ru": "триггер; провоцирующий фактор",
-        "transcription": "",
-        "exampleEn": "It helps to recognise your personal triggers.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-38",
-        "en": "a dietician",
-        "ru": "диетолог",
-        "transcription": "",
-        "exampleEn": "A dietician can give professional advice about food.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-39",
-        "en": "beneficial",
-        "ru": "полезный; благотворный",
-        "transcription": "",
-        "exampleEn": "Walking every day can be beneficial.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-40",
-        "en": "fluid",
-        "ru": "жидкость",
-        "transcription": "",
-        "exampleEn": "Your body needs enough fluid in hot weather.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-41",
-        "en": "dehydration",
-        "ru": "обезвоживание",
-        "transcription": "",
-        "exampleEn": "Drinking water helps prevent dehydration.",
-        "exampleRu": "",
-        "audio": ""
-      },
-      {
-        "id": "l10-42",
-        "en": "regular physical exercise",
-        "ru": "регулярная физическая активность",
-        "transcription": "",
-        "exampleEn": "Regular physical exercise can improve sleep.",
+        "exampleEn": "My children are doing their exams soon.",
         "exampleRu": "",
         "audio": ""
       }

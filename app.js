@@ -666,6 +666,7 @@
         (grammarResponse.data || []).forEach((row) => {
           const local = grammar.topics[row.topic_id] || {};
           grammar.topics[row.topic_id] = {
+            ...local,
             passed: Boolean(local.passed || row.passed),
             attempts: Math.max(Number(local.attempts || 0), Number(row.attempts || 0)),
             bestScore: Math.max(Number(local.bestScore || 0), Number(row.best_score || 0)),
@@ -1103,6 +1104,11 @@
       control = `<select id="${escapeHtml(inputId)}"><option value="">Choose an answer</option>${(item.options || []).map((option, optionIndex) => `<option value="${optionIndex}">${escapeHtml(option)}</option>`).join('')}</select>`;
     } else if (item.input === 'textarea') {
       control = `<textarea id="${escapeHtml(inputId)}" placeholder="${escapeHtml(item.placeholder || '')}"></textarea>`;
+    } else if (item.input === 'inline-choice-gaps') {
+      const choices = Array.isArray(item.choices) ? item.choices : [];
+      const segments = Array.isArray(item.segments) ? item.segments : [];
+      const segmentMarkup = (value) => escapeHtml(value || '').replaceAll('\n', '<br>');
+      control = `<div class="sentence-gaps inline-choice-gaps" aria-label="${prompt}">${choices.map((options, gapIndex) => `${gapIndex < segments.length ? `<span>${segmentMarkup(segments[gapIndex])}</span>` : ''}<span class="inline-choice-group" data-gap-index="${gapIndex}" role="radiogroup" aria-label="Choice ${gapIndex + 1}">${(options || []).map((option, optionIndex) => `<label class="inline-choice-option"><input type="radio" name="${escapeHtml(inputId)}-gap-${gapIndex}" value="${optionIndex}"><span>${escapeHtml(option)}</span></label>`).join('<span class="inline-choice-separator" aria-hidden="true">/</span>')}</span>`).join('')}${segments.length > choices.length ? `<span>${segmentMarkup(segments[segments.length - 1])}</span>` : ''}</div>`;
     } else if (item.input === 'choice-gaps') {
       const choices = Array.isArray(item.choices) ? item.choices : [];
       const segments = Array.isArray(item.segments) ? item.segments : [];
@@ -1141,7 +1147,7 @@
     if (block.type === 'exercise') {
       const items = Array.isArray(block.items) ? block.items : [];
       const wordBank = Array.isArray(block.wordBank) && block.wordBank.length
-        ? `<div class="word-bank" aria-label="Word bank"><strong class="word-bank-label">Word bank</strong>${block.wordBank.map((word) => `<span>${escapeHtml(word)}</span>`).join('')}</div>`
+        ? `<div class="word-bank" aria-label="${escapeHtml(block.wordBankLabel || 'Word bank')}"><strong class="word-bank-label">${escapeHtml(block.wordBankLabel || 'Word bank')}</strong>${block.wordBank.map((word) => `<span>${escapeHtml(word)}</span>`).join('')}</div>`
         : '';
       const player = block.audio ? `<audio class="audio-player" controls preload="none" src="${escapeHtml(block.audio)}"></audio>` : '';
       return `<article class="card lesson-block exercise-card" data-task="${escapeHtml(id)}" data-type="exercise">
@@ -1199,6 +1205,7 @@
     const inputType = item.input || 'text';
     let actual;
     let correct = false;
+    let gapResults = null;
 
     if (inputType === 'multiple') {
       actual = [...itemNode.querySelectorAll('input:checked')].map((input) => Number(input.value)).sort((a, b) => a - b);
@@ -1210,23 +1217,30 @@
     } else if (inputType === 'select') {
       actual = itemNode.querySelector('select')?.value ?? '';
       correct = actual !== '' && Number(actual) === Number(item.answer);
+    } else if (inputType === 'inline-choice-gaps') {
+      actual = [...itemNode.querySelectorAll('[data-gap-index]')].map((group) => group.querySelector('input:checked')?.value ?? '');
+      const expected = Array.isArray(item.answers) ? item.answers : [];
+      gapResults = expected.map((answer, index) => actual[index] !== '' && Number(actual[index]) === Number(answer));
+      correct = gapResults.length > 0 && gapResults.every(Boolean);
     } else if (inputType === 'choice-gaps') {
       actual = [...itemNode.querySelectorAll('[data-gap-index]')].map((select) => select.value);
       const expected = Array.isArray(item.answers) ? item.answers : [];
-      correct = expected.length > 0 && expected.every((answer, index) => actual[index] !== '' && Number(actual[index]) === Number(answer));
+      gapResults = expected.map((answer, index) => actual[index] !== '' && Number(actual[index]) === Number(answer));
+      correct = gapResults.length > 0 && gapResults.every(Boolean);
     } else if (inputType === 'gaps') {
       actual = [...itemNode.querySelectorAll('[data-gap-index]')].map((input) => input.value);
       const expected = Array.isArray(item.answers) ? item.answers : [];
-      correct = expected.length > 0 && expected.every((answer, index) => {
+      gapResults = expected.map((answer, index) => {
         const accepted = Array.isArray(answer) ? answer : [answer];
         return accepted.some((variant) => normalizeAnswer(variant) === normalizeAnswer(actual[index]));
       });
+      correct = gapResults.length > 0 && gapResults.every(Boolean);
     } else {
       actual = itemNode.querySelector('input, textarea')?.value || '';
       correct = textAnswerMatches(item, actual);
     }
 
-    return { actual, correct };
+    return { actual, correct, gapResults };
   }
 
   function checkExerciseBlock(block, node) {
@@ -1253,8 +1267,18 @@
         return;
       }
 
-      total += 1;
-      if (result.correct) correctCount += 1;
+      const scoreEachGap = item.scoreEachGap === true && Array.isArray(result.gapResults) && result.gapResults.length > 0;
+      if (scoreEachGap) {
+        total += result.gapResults.length;
+        correctCount += result.gapResults.filter(Boolean).length;
+        itemNode.querySelectorAll('[data-gap-index]').forEach((control, gapIndex) => {
+          control.classList.toggle('is-correct-input', Boolean(result.gapResults[gapIndex]));
+          control.classList.toggle('is-wrong-input', !result.gapResults[gapIndex]);
+        });
+      } else {
+        total += 1;
+        if (result.correct) correctCount += 1;
+      }
       itemNode.classList.toggle('is-correct', result.correct);
       itemNode.classList.toggle('is-wrong', !result.correct);
       itemNode.classList.remove('is-saved');
@@ -1311,6 +1335,12 @@
       } else if (inputType === 'select') {
         const select = itemNode.querySelector('select');
         if (select) select.value = safeText(value);
+      } else if (inputType === 'inline-choice-gaps') {
+        const values = Array.isArray(value) ? value : [];
+        itemNode.querySelectorAll('[data-gap-index]').forEach((group, gapIndex) => {
+          const input = group.querySelector(`input[value="${CSS.escape(safeText(values[gapIndex]))}"]`);
+          if (input) input.checked = true;
+        });
       } else if (inputType === 'gaps' || inputType === 'choice-gaps') {
         const values = Array.isArray(value) ? value : [];
         itemNode.querySelectorAll('[data-gap-index]').forEach((input, gapIndex) => { input.value = safeText(values[gapIndex]); });
@@ -1569,7 +1599,9 @@
     byId('grammar-hero-subtitle').textContent = `${lessonPrefix}${safeText(topic.level, student.level)} Level · теория и практика`;
     const examples = Array.isArray(topic.examples) ? topic.examples : [];
     const mistakes = Array.isArray(topic.commonMistakes) ? topic.commonMistakes : [];
+    const practice = Array.isArray(topic.practice) ? topic.practice : [];
     const quiz = Array.isArray(topic.quiz) ? topic.quiz : [];
+    const practiceTitle = practice.length ? safeText(topic.practiceTitle, '4 упражнения · 16 заданий') : 'Мини-тест';
     root.innerHTML = `
       <a class="grammar-back-link" href="grammar.html"><span aria-hidden="true">←</span> Назад к грамматике</a>
       <article class="card"><span class="eyebrow">${topic.category === 'lesson' && topic.lessonNumber ? `Грамматика к уроку ${Number(topic.lessonNumber)}` : 'Объяснение'}</span><h2>${escapeHtml(topic.title)}</h2><p class="muted">${escapeHtml(topic.explanation || '')}</p></article>
@@ -1583,8 +1615,79 @@
       ${topic.table ? `<article class="card lesson-block"><h3>${escapeHtml(topic.tableTitle || 'Таблица')}</h3>${grammarTable(topic.table)}</article>` : ''}
       ${examples.length ? `<article class="card lesson-block"><h3>${escapeHtml(topic.examplesTitle || 'Примеры')}</h3><div class="list">${examples.map((example) => `<p>• ${escapeHtml(example)}</p>`).join('')}</div></article>` : ''}
       ${mistakes.length ? `<article class="card lesson-block info-card"><h3>${escapeHtml(topic.commonMistakesTitle || 'Частые ошибки русскоговорящих')}</h3><div class="list">${mistakes.map((mistake) => `<p>• ${escapeHtml(mistake)}</p>`).join('')}</div></article>` : ''}
-      <section class="section" aria-labelledby="mini-test-title"><div class="section-heading"><div><span class="eyebrow">Практика</span><h2 id="mini-test-title">Мини-тест</h2></div></div><div id="grammar-quiz"></div></section>`;
+      <section class="section" aria-labelledby="mini-test-title"><div class="section-heading"><div><span class="eyebrow">Практика</span><h2 id="mini-test-title">${escapeHtml(practiceTitle)}</h2></div></div><div id="grammar-quiz"></div></section>`;
     const quizRoot = byId('grammar-quiz');
+
+    if (practice.length) {
+      const exerciseBlocks = practice.map((exercise, index) => ({ type: 'exercise', ...exercise, id: safeText(exercise.id, `grammar-practice-${index + 1}`) }));
+      const progress = window.ProgressService.loadGrammarProgress();
+      const saved = progress.topics[topic.id] || {};
+      const totalItems = exerciseBlocks.reduce((sum, block) => sum + (block.items || []).filter((item) => !item.example && item.scored !== false).length, 0);
+      const passed = Boolean(saved.passed) && totalItems === 16;
+      quizRoot.innerHTML = `${exerciseBlocks.map((block, index) => renderLessonBlock(block, index)).join('')}
+        <div class="card section grammar-practice-actions"><div id="grammar-result" aria-live="polite"></div>${passed ? '<div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Тема изучена</h3><p class="muted">16 из 16 правильных ответов. Упражнения заблокированы.</p></div></div>' : '<div class="button-row"><button class="btn btn-primary" type="button" id="check-grammar">Проверить</button></div>'}</div>`;
+
+      const restored = saved.answers && typeof saved.answers === 'object' ? saved.answers : {};
+      exerciseBlocks.forEach((block) => {
+        const node = quizRoot.querySelector(`[data-task="${CSS.escape(block.id)}"]`);
+        if (node) restoreExerciseAnswers(block, node, restored[block.id]);
+      });
+
+      const reviewPractice = () => {
+        let correct = 0;
+        let total = 0;
+        exerciseBlocks.forEach((block) => {
+          const node = quizRoot.querySelector(`[data-task="${CSS.escape(block.id)}"]`);
+          if (!node) return;
+          const result = checkExerciseBlock(block, node);
+          correct += Number(result.correctCount || 0);
+          total += Number(result.total || 0);
+        });
+        return { correct, total };
+      };
+
+      if (saved.answers && Object.keys(restored).length) {
+        const previousResult = reviewPractice();
+        byId('grammar-result').innerHTML = `<h3>Сохранённый результат: ${previousResult.correct} из ${previousResult.total}</h3><p class="muted">${safePercent(previousResult.correct, previousResult.total)}% правильных ответов</p>`;
+      }
+      if (passed) lockCompletedLesson(quizRoot);
+
+      const checkGrammarButton = byId('check-grammar');
+      if (checkGrammarButton) checkGrammarButton.addEventListener('click', () => {
+        let correct = 0;
+        let total = 0;
+        const answers = {};
+        exerciseBlocks.forEach((block) => {
+          const node = quizRoot.querySelector(`[data-task="${CSS.escape(block.id)}"]`);
+          if (!node) return;
+          const result = checkExerciseBlock(block, node);
+          answers[block.id] = result.actual;
+          correct += Number(result.correctCount || 0);
+          total += Number(result.total || 0);
+        });
+        const percent = safePercent(correct, total);
+        byId('grammar-result').innerHTML = `<h3>Результат: ${correct} из ${total}</h3><p class="muted">${percent}% правильных ответов</p>`;
+        const updatedProgress = window.ProgressService.loadGrammarProgress();
+        const previous = updatedProgress.topics[topic.id] || {};
+        const isPassed = total === 16 && correct === 16;
+        updatedProgress.topics[topic.id] = {
+          ...previous,
+          passed: Boolean(previous.passed || isPassed),
+          attempts: Number(previous.attempts || 0) + 1,
+          bestScore: Math.max(Number(previous.bestScore || 0), percent),
+          answers,
+          updatedAt: new Date().toISOString()
+        };
+        window.ProgressService.saveGrammarProgress(updatedProgress);
+        if (isPassed) {
+          lockCompletedLesson(quizRoot);
+          const actions = quizRoot.querySelector('.grammar-practice-actions');
+          if (actions) actions.innerHTML = `<div id="grammar-result" aria-live="polite"><h3>Результат: 16 из 16</h3><p class="muted">100% правильных ответов</p></div><div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Тема изучена</h3><p class="muted">Все 16 заданий выполнены правильно. Ответы заблокированы.</p></div></div>`;
+        }
+      });
+      return;
+    }
+
     if (!quiz.length) {
       quizRoot.innerHTML = emptyState('🧩', 'Мини-тест ещё не добавлен', 'Вопросы появятся вместе с материалом преподавателя.');
       return;
@@ -1606,7 +1709,7 @@
         byId('grammar-result').innerHTML = `<h3>Результат: ${correct} из ${quiz.length}</h3><p class="muted">${percent}% правильных ответов</p>`;
         const progress = window.ProgressService.loadGrammarProgress();
         const previous = progress.topics[topic.id] || {};
-        progress.topics[topic.id] = { passed: percent === 100, attempts: Number(previous.attempts || 0) + 1, bestScore: Math.max(Number(previous.bestScore || 0), percent), updatedAt: new Date().toISOString() };
+        progress.topics[topic.id] = { ...previous, passed: Boolean(previous.passed || percent === 100), attempts: Number(previous.attempts || 0) + 1, bestScore: Math.max(Number(previous.bestScore || 0), percent), updatedAt: new Date().toISOString() };
         window.ProgressService.saveGrammarProgress(progress);
       });
       byId('retry-grammar').addEventListener('click', renderQuiz);
@@ -1674,7 +1777,7 @@
         modeRoot.innerHTML = emptyState(
           isDifficult ? '🌟' : '🎉',
           isDifficult ? 'Сложных слов пока нет' : 'Новые слова в этой теме закончились',
-          isDifficult ? 'Отметьте слово кнопкой «Трудно», и оно появится здесь.' : 'Выученные слова остаются в разделе «Все слова» и не повторяются в режиме новых слов.'
+          isDifficult ? 'Отметьте слово кнопкой «Трудно», и оно появится здесь.' : 'Просмотр карточки не засчитывает слово как выученное. Для этого нужно правильно ответить на него в тесте.'
         );
         return;
       }
@@ -1683,15 +1786,13 @@
       modeRoot.innerHTML = `<div class="flash-counter">Осталось: ${remaining}</div><div class="flashcard-stage"><div class="flashcard" id="flashcard" tabindex="0" role="button" aria-label="Перевернуть карточку">
         <div class="flash-face flash-front"><div class="flash-word">${escapeHtml(word.en)}</div>${word.transcription ? `<div class="flash-transcription">${escapeHtml(word.transcription)}</div>` : ''}<p class="muted">Нажми, чтобы увидеть перевод</p></div>
         <div class="flash-face flash-back"><div class="flash-word">${escapeHtml(word.ru)}</div>${word.exampleEn ? `<p class="flash-example">${escapeHtml(word.exampleEn)}${word.exampleRu ? `<br>${escapeHtml(word.exampleRu)}` : ''}</p>` : ''}${word.audio ? `<audio class="audio-player" controls preload="none" src="${escapeHtml(word.audio)}"></audio>` : ''}</div>
-      </div></div><div class="trainer-actions"><button class="btn btn-danger" id="word-difficult" type="button">Трудно</button><button class="btn btn-success" id="word-known" type="button">Знаю</button></div>`;
+      </div></div><div class="trainer-actions"><button class="btn btn-danger" id="word-difficult" type="button">Трудно</button><button class="btn btn-success" id="word-next" type="button">Дальше</button></div>`;
       const flashcard = byId('flashcard');
       const flip = () => flashcard.classList.toggle('flipped');
       flashcard.addEventListener('click', flip);
       flashcard.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); flip(); } });
-      byId('word-known').addEventListener('click', () => {
-        setWordStatus(progress, word, topic.id, 'known');
+      byId('word-next').addEventListener('click', () => {
         cardQueue.shift();
-        save();
         drawCard();
       });
       byId('word-difficult').addEventListener('click', () => {

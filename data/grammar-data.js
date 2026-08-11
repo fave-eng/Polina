@@ -321,199 +321,6 @@ window.GRAMMAR_DATA = [
     ]
   },
   {
-    "id": "b1-ed-ing-adjectives",
-    "order": 1,
-    "category": "lesson",
-    "lessonNumber": 10,
-    "lessonTitle": "How Food Affects Mood",
-    "title": "Прилагательные с -ed и -ing",
-    "level": "B1",
-    "status": "available",
-    "page": "grammar-topic.html?id=b1-ed-ing-adjectives",
-    "explanation": "Прилагательные с окончаниями -ed и -ing часто образуются от одного глагола, но передают разный смысл. Форма с -ed описывает чувство или состояние того, кто испытывает воздействие. Форма с -ing описывает человека, предмет, событие или ситуацию, которые это чувство вызывают.",
-    "formula": "Кто испытывает чувство? → -ed. Кто или что вызывает чувство? → -ing.",
-    "ruleCards": [
-      {
-        "title": "-ed: чувство или состояние",
-        "text": "Используем, когда говорим о том, как человек или другое живое существо себя чувствует.",
-        "example": "I’m bored.",
-        "translation": "Мне скучно."
-      },
-      {
-        "title": "-ing: причина чувства",
-        "text": "Используем, когда описываем того или то, что создаёт впечатление и вызывает чувство.",
-        "example": "This book is boring.",
-        "translation": "Эта книга скучная."
-      }
-    ],
-    "image": {
-      "src": "assets/grammar-ed-ing.png",
-      "alt": "Схема: окончание -ed описывает чувства человека, а -ing — предмет или явление, вызывающее чувство",
-      "caption": "-ed показывает состояние; -ing показывает причину этого состояния."
-    },
-    "sections": [
-      {
-        "title": "Как выбрать окончание",
-        "items": [
-          "Найдите слово, которое нужно описать.",
-          "Спросите: оно испытывает чувство или вызывает его?",
-          "Испытывает чувство или находится под воздействием → -ed. Вызывает чувство или создаёт впечатление → -ing."
-        ]
-      },
-      {
-        "title": "Не только люди и предметы",
-        "paragraphs": [
-          "Правило нельзя сводить к схеме «человек — -ed, предмет — -ing». Важно не то, кем или чем является существительное, а какую роль оно играет в ситуации."
-        ],
-        "items": [
-          "an annoying person — раздражающий человек: человек вызывает раздражение.",
-          "an interested audience — заинтересованная аудитория: люди испытывают интерес.",
-          "The journey was exhausting. — Поездка была изнурительной.",
-          "We were exhausted. — Мы были измотаны."
-        ]
-      },
-      {
-        "title": "Типичные конструкции",
-        "items": [
-          "be / feel / seem / look + -ed: She feels disappointed.",
-          "be + -ing: The result is disappointing.",
-          "-ing + noun: an exciting story, a confusing explanation.",
-          "-ed + preposition: interested in, excited about, surprised by, disappointed with, worried about."
-        ]
-      }
-    ],
-    "tableTitle": "Частые пары и разница в значении",
-    "table": {
-      "headers": [
-        "-ed: состояние",
-        "-ing: причина"
-      ],
-      "rows": [
-        [
-          "bored — испытывающий скуку",
-          "boring — скучный"
-        ],
-        [
-          "interested — заинтересованный",
-          "interesting — интересный"
-        ],
-        [
-          "excited — взволнованный",
-          "exciting — захватывающий"
-        ],
-        [
-          "confused — растерянный",
-          "confusing — запутанный"
-        ],
-        [
-          "surprised — удивлённый",
-          "surprising — удивительный, неожиданный"
-        ],
-        [
-          "annoyed — раздражённый",
-          "annoying — раздражающий"
-        ],
-        [
-          "disappointed — разочарованный",
-          "disappointing — разочаровывающий"
-        ],
-        [
-          "exhausted — измотанный",
-          "exhausting — изнурительный"
-        ],
-        [
-          "embarrassed — смущённый",
-          "embarrassing — неловкий, вызывающий смущение"
-        ],
-        [
-          "shocked — потрясённый",
-          "shocking — шокирующий"
-        ]
-      ]
-    },
-    "examplesTitle": "Сравните предложения",
-    "examples": [
-      "I was surprised when I saw the scenery. — Я удивилась, когда увидела пейзаж.",
-      "The scenery was surprising. — Пейзаж оказался удивительным.",
-      "I’m interested in the characters. — Мне интересны персонажи.",
-      "The characters are interesting. — Персонажи интересные.",
-      "We felt exhausted after the journey. — После поездки мы чувствовали себя измотанными.",
-      "The journey was exhausting. — Поездка была изнурительной."
-    ],
-    "commonMistakesTitle": "Что важно не перепутать",
-    "commonMistakes": [
-      "I am boring означает «я скучный, я вызываю скуку». Чтобы сказать «мне скучно», нужно I am bored.",
-      "I am interesting означает «я интересный». Чтобы сказать «мне интересно», обычно нужно I am interested.",
-      "Окончание выбирают по смыслу предложения, а не просто по тому, говорится ли о человеке или о предмете."
-    ],
-    "quiz": [
-      {
-        "prompt": "I felt very ___ after the long meeting.",
-        "options": [
-          "tiring",
-          "tired"
-        ],
-        "answer": 1
-      },
-      {
-        "prompt": "The instructions were ___, so nobody knew what to do.",
-        "options": [
-          "confused",
-          "confusing"
-        ],
-        "answer": 1
-      },
-      {
-        "prompt": "She is ___ in modern art.",
-        "options": [
-          "interested",
-          "interesting"
-        ],
-        "answer": 0
-      },
-      {
-        "prompt": "It was an ___ match from beginning to end.",
-        "options": [
-          "excited",
-          "exciting"
-        ],
-        "answer": 1
-      },
-      {
-        "prompt": "We were ___ by the sudden change.",
-        "options": [
-          "surprised",
-          "surprising"
-        ],
-        "answer": 0
-      },
-      {
-        "prompt": "The noise is really ___.",
-        "options": [
-          "annoyed",
-          "annoying"
-        ],
-        "answer": 1
-      },
-      {
-        "prompt": "He looked ___ when he heard the result.",
-        "options": [
-          "disappointed",
-          "disappointing"
-        ],
-        "answer": 0
-      },
-      {
-        "prompt": "The trip was ___, but the views were beautiful.",
-        "options": [
-          "exhausted",
-          "exhausting"
-        ],
-        "answer": 1
-      }
-    ]
-  },
-  {
     "id": "a1-4-locked",
     "order": 4,
     "title": "Настоящее время",
@@ -632,5 +439,354 @@ window.GRAMMAR_DATA = [
     "page": "grammar-topic.html?id=a1-15-locked",
     "explanation": "Материал будет опубликован позже.",
     "quiz": []
+  },
+  {
+    "id": "b1-present-simple-continuous",
+    "order": 2,
+    "category": "lesson",
+    "lessonNumber": 10,
+    "lessonTitle": "How Food Affects Mood · Present simple and continuous",
+    "title": "Present Simple и Present Continuous",
+    "level": "B1",
+    "status": "available",
+    "page": "grammar-topic.html?id=b1-present-simple-continuous",
+    "explanation": "Оба времени говорят о настоящем, но показывают ситуацию по-разному. Present Simple нужен для регулярных действий, фактов, постоянных состояний и расписаний. Present Continuous описывает действие, которое происходит сейчас или вокруг настоящего момента, временную ситуацию, изменение или личную договорённость на ближайшее будущее.",
+    "formula": "Present Simple: subject + base verb / verb-s. Present Continuous: subject + am/is/are + verb-ing.",
+    "ruleCards": [
+      {
+        "title": "Present Simple",
+        "text": "Регулярность, привычка, факт, постоянное состояние или расписание.",
+        "example": "I visit my parents every Saturday.",
+        "translation": "Я навещаю родителей каждую субботу."
+      },
+      {
+        "title": "Present Continuous",
+        "text": "Сейчас, временно, в текущий период или по договорённости в ближайшем будущем.",
+        "example": "I’m meeting my boss later.",
+        "translation": "Я встречаюсь с начальником позже."
+      }
+    ],
+    "affirmative": "Present Simple: I/you/we/they work; he/she/it works. Present Continuous: I am working; you/we/they are working; he/she/it is working. Для he/she/it в Present Simple обычно добавляется -s или -es.",
+    "negative": "Present Simple: I/you/we/they do not (don’t) work; he/she/it does not (doesn’t) work. После does глагол возвращается к начальной форме: doesn’t work, не doesn’t works. Present Continuous: am/is/are + not + verb-ing: I’m not working, she isn’t working, they aren’t working.",
+    "question": "Present Simple: Do/Does + subject + base verb? — Do you work here? Does she work here? Present Continuous: Am/Is/Are + subject + verb-ing? — Are you working now? Is she working today?",
+    "sections": [
+      {
+        "title": "Когда используем Present Simple",
+        "items": [
+          "Привычки и повторяющиеся действия: We normally go on holiday in the winter.",
+          "Факты и постоянные ситуации: She lives in London.",
+          "Состояния и мнения с глаголами состояния: I know what you mean. It looks pretty cool.",
+          "Расписания и официальные графики: The train leaves at 7.30."
+        ]
+      },
+      {
+        "title": "Когда используем Present Continuous",
+        "items": [
+          "Действие прямо сейчас: What are you doing?",
+          "Временная ситуация или текущий проект: I’m working on a really important project.",
+          "Изменение или процесс вокруг настоящего момента: The days are getting longer.",
+          "Личная договорённость на ближайшее будущее: We’re giving a presentation this afternoon."
+        ]
+      },
+      {
+        "title": "Короткие ответы",
+        "items": [
+          "Do you work on Saturdays? — Yes, I do. / No, I don’t.",
+          "Does she live here? — Yes, she does. / No, she doesn’t.",
+          "Are you working now? — Yes, I am. / No, I’m not.",
+          "Is he coming later? — Yes, he is. / No, he isn’t."
+        ]
+      },
+      {
+        "title": "Глаголы состояния",
+        "paragraphs": [
+          "Некоторые глаголы обычно не употребляются в Continuous, когда обозначают состояние, мнение, чувство, владение или восприятие."
+        ],
+        "items": [
+          "know, understand, believe, want, need, like, love, hate, belong, seem обычно используются в Present Simple.",
+          "I know the answer. Не: I’m knowing the answer.",
+          "look может быть состоянием со значением «выглядеть»: It looks good. Но look at — действие: I’m looking at the screen.",
+          "think = «считать, иметь мнение» обычно Simple: I think it looks good. Think = «обдумывать» может быть Continuous: I’m thinking about changing jobs."
+        ]
+      },
+      {
+        "title": "Особый случай: be в Continuous",
+        "paragraphs": [
+          "Глагол be обычно не употребляется в Continuous, но конструкция be + being возможна, когда речь о временном поведении человека, а не о постоянном качестве."
+        ],
+        "items": [
+          "Why are you being so aggressive? — Почему ты сейчас ведёшь себя так агрессивно?",
+          "He is rude. — Он грубый вообще. / He is being rude. — Он сейчас ведёт себя грубо."
+        ]
+      },
+      {
+        "title": "Как образуются окончания",
+        "items": [
+          "Present Simple, he/she/it: work → works; watch → watches; go → goes; study → studies.",
+          "-ing: work → working; make → making; run → running; lie → lying.",
+          "После does/doesn’t окончание -s у смыслового глагола не ставится: Does she work? / She doesn’t work.",
+          "Наречия частотности usually, normally, often, sometimes обычно стоят перед смысловым глаголом, но после be: I usually work at home. / She is often tired."
+        ]
+      },
+      {
+        "title": "Слова-маркеры и контекст",
+        "paragraphs": [
+          "Слова-маркеры помогают, но время выбирается по смыслу ситуации."
+        ],
+        "items": [
+          "Present Simple: every day, usually, normally, often, sometimes, never.",
+          "Present Continuous: now, at the moment, today, this week, currently.",
+          "always + Present Continuous может выражать повторяющееся действие с эмоциональной оценкой: He’s always interrupting me.",
+          "Будущее время само по себе не требует will: Present Continuous часто используется для уже организованной личной договорённости."
+        ]
+      }
+    ],
+    "tableTitle": "Сравнение форм",
+    "table": {
+      "headers": [
+        "",
+        "Present Simple",
+        "Present Continuous"
+      ],
+      "rows": [
+        [
+          "Утверждение",
+          "She works.",
+          "She is working."
+        ],
+        [
+          "Отрицание",
+          "She doesn’t work.",
+          "She isn’t working."
+        ],
+        [
+          "Вопрос",
+          "Does she work?",
+          "Is she working?"
+        ],
+        [
+          "Короткий ответ",
+          "Yes, she does. / No, she doesn’t.",
+          "Yes, she is. / No, she isn’t."
+        ]
+      ]
+    },
+    "examplesTitle": "Сравните смысл",
+    "examples": [
+      "What do you do on Saturdays? — вопрос о привычке. / What are you doing this Saturday? — вопрос о конкретном плане.",
+      "I visit my parents every Saturday. — регулярное действие. / I’m visiting my parents this Saturday. — конкретная договорённость.",
+      "It looks pretty cool. — look означает «выглядеть», поэтому Simple. / I’m looking at the shirt. — действие сейчас, поэтому Continuous.",
+      "We normally go on holiday in winter. — обычная ситуация. / We’re going on holiday next week. — запланированная поездка."
+    ],
+    "commonMistakesTitle": "Типичные ошибки",
+    "commonMistakes": [
+      "He work every day. → He works every day.",
+      "She doesn’t works here. → She doesn’t work here.",
+      "What are you do? → What are you doing?",
+      "I’m knowing the answer. → I know the answer.",
+      "Do you be so aggressive? обычно неверно для временного поведения. В такой ситуации: Why are you being so aggressive?",
+      "Не выбирайте Continuous только потому, что в предложении есть today или this week: сначала определите смысл — действие временное или это обычный факт."
+    ],
+    "practiceTitle": "4 упражнения · 16 заданий",
+    "practice": [
+      {
+        "id": "gpsc-ex1",
+        "title": "1. Choose the correct form.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "I ___ from home most Fridays.",
+            "input": "single",
+            "options": [
+              "work",
+              "am working"
+            ],
+            "answer": 0
+          },
+          {
+            "id": "2",
+            "prompt": "Please be quiet. I ___ to a client.",
+            "input": "single",
+            "options": [
+              "talk",
+              "am talking"
+            ],
+            "answer": 1
+          },
+          {
+            "id": "3",
+            "prompt": "She usually ___ coffee after lunch.",
+            "input": "single",
+            "options": [
+              "doesn’t drink",
+              "isn’t drinking"
+            ],
+            "answer": 0
+          },
+          {
+            "id": "4",
+            "prompt": "We ___ our manager at six this evening.",
+            "input": "single",
+            "options": [
+              "meet",
+              "are meeting"
+            ],
+            "answer": 1
+          }
+        ]
+      },
+      {
+        "id": "gpsc-ex2",
+        "title": "2. Complete the sentences with the correct form of the verbs in brackets.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "He ",
+              " (study) English twice a week."
+            ],
+            "answers": [
+              "studies"
+            ]
+          },
+          {
+            "id": "2",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "I ",
+              " (not / use) the car today because it’s at the garage."
+            ],
+            "answers": [
+              [
+                "am not using",
+                "I'm not using",
+                "I’m not using"
+              ]
+            ]
+          },
+          {
+            "id": "3",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "Why ",
+              " (you / wear) a coat indoors?"
+            ],
+            "answers": [
+              "are you wearing"
+            ]
+          },
+          {
+            "id": "4",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "My sister ",
+              " (not / like) very spicy food."
+            ],
+            "answers": [
+              [
+                "does not like",
+                "doesn't like",
+                "doesn’t like"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "gpsc-ex3",
+        "title": "3. Choose the sentence that fits the context.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "You are talking about a temporary project this month.",
+            "input": "select",
+            "options": [
+              "I work on a new project this month.",
+              "I’m working on a new project this month."
+            ],
+            "answer": 1
+          },
+          {
+            "id": "2",
+            "prompt": "You are describing a fact about your company.",
+            "input": "select",
+            "options": [
+              "The company has offices in three countries.",
+              "The company is having offices in three countries."
+            ],
+            "answer": 0
+          },
+          {
+            "id": "3",
+            "prompt": "You are annoyed because a colleague repeatedly interrupts you.",
+            "input": "select",
+            "options": [
+              "He always interrupts me.",
+              "He’s always interrupting me."
+            ],
+            "answer": 1
+          },
+          {
+            "id": "4",
+            "prompt": "You have arranged to see the dentist tomorrow.",
+            "input": "select",
+            "options": [
+              "I see the dentist tomorrow.",
+              "I’m seeing the dentist tomorrow."
+            ],
+            "answer": 1
+          }
+        ]
+      },
+      {
+        "id": "gpsc-ex4",
+        "title": "4. Write a complete sentence or question from the prompts.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "she / usually / take / the bus to work",
+            "input": "text",
+            "acceptedAnswers": [
+              "She usually takes the bus to work",
+              "She usually takes the bus to work."
+            ]
+          },
+          {
+            "id": "2",
+            "prompt": "what / you / do / at the moment ?",
+            "input": "text",
+            "acceptedAnswers": [
+              "What are you doing at the moment?",
+              "What are you doing at the moment"
+            ]
+          },
+          {
+            "id": "3",
+            "prompt": "I / not work / this week / because I’m on holiday",
+            "input": "text",
+            "acceptedAnswers": [
+              "I’m not working this week because I’m on holiday",
+              "I'm not working this week because I'm on holiday",
+              "I am not working this week because I am on holiday",
+              "I am not working this week because I'm on holiday"
+            ]
+          },
+          {
+            "id": "4",
+            "prompt": "why / he / be / so quiet / today ?",
+            "input": "text",
+            "acceptedAnswers": [
+              "Why is he being so quiet today?",
+              "Why is he being so quiet today"
+            ]
+          }
+        ]
+      }
+    ]
   }
 ];
