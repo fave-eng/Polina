@@ -2328,5 +2328,214 @@ window.VOCABULARY_DATA = [
         "audio": ""
       }
     ]
+  },
+  {
+    "id": "vocab-lesson-11",
+    "title": "Plans, refusals & giving news",
+    "label": "Lesson 11",
+    "icon": "✉️",
+    "type": "lesson",
+    "linkedLessonId": "lesson-11",
+    "page": "vocabulary.html?id=vocab-lesson-11",
+    "words": [
+      {
+        "id": "l11-1",
+        "en": "get together",
+        "ru": "встретиться, собраться вместе",
+        "transcription": "",
+        "exampleEn": "We should get together for coffee next week.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-2",
+        "en": "go away for the weekend",
+        "ru": "уехать куда-нибудь на выходные",
+        "transcription": "",
+        "exampleEn": "They’re going away for the weekend to rest.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-3",
+        "en": "go out",
+        "ru": "пойти куда-нибудь; выйти вечером",
+        "transcription": "",
+        "exampleEn": "We’re going out for dinner this evening.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-4",
+        "en": "join a book group",
+        "ru": "присоединиться к книжному клубу",
+        "transcription": "",
+        "exampleEn": "She joined a book group to meet new people.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-5",
+        "en": "give someone a hand",
+        "ru": "помочь кому-либо",
+        "transcription": "",
+        "exampleEn": "Could you give me a hand with these boxes?",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-6",
+        "en": "set up",
+        "ru": "установить, настроить, организовать",
+        "transcription": "",
+        "exampleEn": "Can you help me set up the new printer?",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-7",
+        "en": "work late",
+        "ru": "работать допоздна",
+        "transcription": "",
+        "exampleEn": "I sometimes work late when we have a deadline.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-8",
+        "en": "I'm afraid ...",
+        "ru": "боюсь, что…; к сожалению…",
+        "transcription": "",
+        "exampleEn": "I’m afraid I can’t come tomorrow.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-9",
+        "en": "have something with me",
+        "ru": "иметь что-либо при себе",
+        "transcription": "",
+        "exampleEn": "I don’t have my passport with me today.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-10",
+        "en": "settle in",
+        "ru": "освоиться, обжиться на новом месте",
+        "transcription": "",
+        "exampleEn": "It took me a few weeks to settle in at my new job.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-11",
+        "en": "give someone a hug",
+        "ru": "обнять кого-либо",
+        "transcription": "",
+        "exampleEn": "She gave her friend a hug before leaving.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-12",
+        "en": "change course",
+        "ru": "сменить учебный курс или направление",
+        "transcription": "",
+        "exampleEn": "He decided to change course after the first term.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-13",
+        "en": "have a feeling",
+        "ru": "иметь предчувствие; чувствовать, подозревать",
+        "transcription": "",
+        "exampleEn": "I have a feeling the meeting will be cancelled.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-14",
+        "en": "sort something out",
+        "ru": "уладить что-либо; разобраться с проблемой",
+        "transcription": "",
+        "exampleEn": "We need to sort this problem out before Friday.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-15",
+        "en": "flatmate",
+        "ru": "сосед или соседка по квартире",
+        "transcription": "",
+        "exampleEn": "My flatmate usually cooks dinner on Fridays.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-16",
+        "en": "be into something",
+        "ru": "увлекаться чем-либо, интересоваться чем-либо",
+        "transcription": "",
+        "exampleEn": "She’s really into photography at the moment.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-17",
+        "en": "adventure sports",
+        "ru": "приключенческие и экстремальные виды спорта",
+        "transcription": "",
+        "exampleEn": "Adventure sports can be exciting but demanding.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-18",
+        "en": "have a go at",
+        "ru": "попробовать сделать что-либо",
+        "transcription": "",
+        "exampleEn": "I’d like to have a go at kayaking this summer.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-19",
+        "en": "be about to",
+        "ru": "вот-вот собираться что-либо сделать",
+        "transcription": "",
+        "exampleEn": "The lesson is about to start.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-20",
+        "en": "put something in the post",
+        "ru": "отправить что-либо по почте",
+        "transcription": "",
+        "exampleEn": "I’ll put the documents in the post this afternoon.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-21",
+        "en": "if you don't mind",
+        "ru": "если вы не против",
+        "transcription": "",
+        "exampleEn": "I’ll open the window, if you don’t mind.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l11-22",
+        "en": "ring someone",
+        "ru": "позвонить кому-либо",
+        "transcription": "",
+        "exampleEn": "I’ll ring you after work.",
+        "exampleRu": "",
+        "audio": ""
+      }
+    ]
   }
 ];

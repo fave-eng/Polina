@@ -50,6 +50,94 @@
       .exercise-card.exercise-layout-media-list .exercise-item.has-item-media .exercise-item-header { margin-bottom: 0; }
     }
 
+    .exercise-prompt {
+      white-space: pre-line;
+    }
+    .exercise-card.exercise-layout-prose-gaps .sentence-gaps {
+      display: block;
+      max-width: 760px;
+      line-height: 2.35;
+    }
+    .exercise-card.exercise-layout-prose-gaps .gap-input {
+      display: inline-block;
+      margin: 3px 2px;
+      vertical-align: middle;
+    }
+    .exercise-card.exercise-layout-wide-gaps .gap-input {
+      width: min(100%, 560px);
+      text-align: left;
+    }
+    .exercise-card.exercise-layout-letter-gaps .exercise-item-header,
+    .exercise-card.exercise-layout-writing-letter .exercise-item-header {
+      display: none;
+    }
+    .exercise-card.exercise-layout-letter-gaps .exercise-control,
+    .exercise-card.exercise-layout-writing-letter .exercise-control {
+      padding-left: 0;
+    }
+    .exercise-card.exercise-layout-letter-gaps .sentence-gaps {
+      max-width: 720px;
+      line-height: 2.2;
+    }
+    .exercise-dependent-context {
+      max-width: 720px;
+      margin: 0 0 18px;
+      padding: 18px 19px;
+      border: 1px solid #dbe3ef;
+      border-radius: 14px;
+      background: #fbfcfe;
+      color: #334155;
+    }
+    .exercise-dependent-context-title {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--dark);
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+    .exercise-dependent-context-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .exercise-dependent-context-bank span {
+      padding: 4px 8px;
+      border: 1px solid #c7d2fe;
+      border-radius: 999px;
+      background: #fff;
+      color: #3730a3;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+    .exercise-dependent-context-copy {
+      white-space: pre-wrap;
+      line-height: 1.9;
+    }
+    .exercise-dependent-context-gap {
+      display: inline-block;
+      min-width: 76px;
+      margin: 0 2px;
+      padding: 0 4px;
+      border-bottom: 1.5px solid #94a3b8;
+      color: #1e293b;
+      font-weight: 700;
+      text-align: center;
+      white-space: normal;
+    }
+    .exercise-dependent-context-gap.is-empty {
+      color: #94a3b8;
+      font-weight: 500;
+    }
+    @media (max-width: 620px) {
+      .exercise-card.exercise-layout-wide-gaps .gap-input {
+        width: 100%;
+      }
+      .exercise-dependent-context {
+        padding: 15px;
+      }
+    }
+
     .lesson-vocabulary-shortcut,
     .lesson-grammar-shortcut {
       margin-bottom: 18px;
@@ -207,13 +295,99 @@
             if (block?.type !== 'exercise' || !block.id || !Array.isArray(block.items)) continue;
             const exercise = root.querySelector(`[data-task="${esc(block.id)}"]`);
             if (!exercise) continue;
-            if (block.layout === 'media-list') exercise.classList.add('exercise-layout-media-list');
+
+            String(block.layout || '')
+              .split(/\s+/)
+              .filter(Boolean)
+              .forEach((layoutName) => {
+                const safeLayout = layoutName.replace(/[^a-zA-Z0-9_-]/g, '');
+                if (safeLayout) exercise.classList.add(`exercise-layout-${safeLayout}`);
+              });
 
             for (const item of block.items) {
-              if (!item?.id || !item.image) continue;
+              if (!item?.id) continue;
               const node = exercise.querySelector(`[data-exercise-item="${esc(item.id)}"]`);
-              if (!node || node.dataset.mediaEnhanced === 'true') continue;
+              if (!node) continue;
 
+              const context = item.contextFrom;
+              if (context && node.dataset.contextEnhanced !== 'true') {
+                const control = node.querySelector('.exercise-control');
+                const segments = Array.isArray(context.segments) ? context.segments : [];
+                const sourceTaskId = String(context.sourceTaskId || '');
+                const sourceItemId = String(context.sourceItemId || '');
+                if (control && segments.length > 0 && sourceTaskId && sourceItemId) {
+                  const contextBox = document.createElement('div');
+                  contextBox.className = 'exercise-dependent-context';
+
+                  if (context.title) {
+                    const contextTitle = document.createElement('strong');
+                    contextTitle.className = 'exercise-dependent-context-title';
+                    contextTitle.textContent = context.title;
+                    contextBox.appendChild(contextTitle);
+                  }
+
+                  if (Array.isArray(context.wordBank) && context.wordBank.length) {
+                    const bank = document.createElement('div');
+                    bank.className = 'exercise-dependent-context-bank';
+                    for (const word of context.wordBank) {
+                      const chip = document.createElement('span');
+                      chip.textContent = String(word);
+                      bank.appendChild(chip);
+                    }
+                    contextBox.appendChild(bank);
+                  }
+
+                  const copy = document.createElement('div');
+                  copy.className = 'exercise-dependent-context-copy';
+                  const gapCount = Math.max(0, segments.length - 1);
+                  segments.forEach((segment, gapIndex) => {
+                    copy.appendChild(document.createTextNode(String(segment || '')));
+                    if (gapIndex < gapCount) {
+                      const gap = document.createElement('span');
+                      gap.className = 'exercise-dependent-context-gap is-empty';
+                      gap.dataset.contextGapIndex = String(gapIndex);
+                      gap.textContent = String(context.emptyPlaceholder || '________');
+                      copy.appendChild(gap);
+                    }
+                  });
+                  contextBox.appendChild(copy);
+                  control.insertBefore(contextBox, control.firstChild);
+                  node.dataset.contextEnhanced = 'true';
+
+                  const sourceTask = root.querySelector(`[data-task="${esc(sourceTaskId)}"]`);
+                  const sourceItem = sourceTask?.querySelector(`[data-exercise-item="${esc(sourceItemId)}"]`);
+                  const sourceControls = sourceItem ? [...sourceItem.querySelectorAll('[data-gap-index]')] : [];
+                  const placeholder = String(context.emptyPlaceholder || '________');
+                  const readSourceValue = (source) => {
+                    if (!source) return '';
+                    if (source.matches?.('select')) {
+                      if (source.value === '') return '';
+                      return String(source.options?.[source.selectedIndex]?.text || '').trim();
+                    }
+                    const checked = source.querySelector?.('input:checked');
+                    if (checked) {
+                      const optionText = checked.closest('label')?.querySelector('span')?.textContent;
+                      return String(optionText || checked.value || '').trim();
+                    }
+                    return 'value' in source ? String(source.value || '').trim() : '';
+                  };
+                  const updateContext = () => {
+                    contextBox.querySelectorAll('[data-context-gap-index]').forEach((gap, gapIndex) => {
+                      const value = readSourceValue(sourceControls[gapIndex]);
+                      gap.textContent = value || placeholder;
+                      gap.classList.toggle('is-empty', !value);
+                    });
+                  };
+                  sourceControls.forEach((source) => {
+                    source.addEventListener('input', updateContext);
+                    source.addEventListener('change', updateContext);
+                  });
+                  updateContext();
+                  setTimeout(updateContext, 0);
+                }
+              }
+
+              if (!item.image || node.dataset.mediaEnhanced === 'true') continue;
               const figure = document.createElement('figure');
               figure.className = 'exercise-item-media';
               const image = document.createElement('img');

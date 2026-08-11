@@ -1,0 +1,493 @@
+{
+  "id": "lesson-11",
+  "number": 11,
+  "title": "Present simple and continuous · A letter – giving news",
+  "subtitle": "Questions, refusing requests and a letter giving news",
+  "status": "available",
+  "vocabularyId": "vocab-lesson-11",
+  "grammarIds": [
+    "b1-present-simple-continuous"
+  ],
+  "publishedAt": "2026-08-11",
+  "totalPoints": 38,
+  "notification": {
+    "enabled": true,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Grammar",
+      "title": "Present simple and continuous",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l11-ex2",
+      "layout": "prose-gaps",
+      "title": "2. Complete the pairs of questions. Use the present continuous or present simple form of the verbs in brackets.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "How’s the match ______ (go)? Who’s ______ (win)?",
+          "example": true,
+          "exampleAnswer": "How’s the match going? Who’s winning?"
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "What ",
+            " you ",
+            " (do) on Friday evenings?\n",
+            " you ",
+            " (fancy) joining our book group?"
+          ],
+          "answers": [
+            "are",
+            "doing",
+            "Do",
+            "fancy"
+          ]
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "Why ",
+            " you ",
+            " (cry)?\n",
+            " you ",
+            " (want) to talk about it?"
+          ],
+          "answers": [
+            "are",
+            "crying",
+            "Do",
+            "want"
+          ]
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "Where ",
+            " you ",
+            " (move) to?\nWhat ",
+            " (be) the new area like?"
+          ],
+          "answers": [
+            "are",
+            "moving",
+            "is"
+          ]
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "Why ",
+            " those people ",
+            " (stand) there?\n",
+            " they ",
+            " (need) help?"
+          ],
+          "answers": [
+            "are",
+            "standing",
+            "Do",
+            "need"
+          ]
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "",
+            " your brother ",
+            " (enjoy) his new job?\nWhat exactly ",
+            " he ",
+            " (do) every day?"
+          ],
+          "answers": [
+            "Is",
+            "enjoying",
+            "does",
+            "do"
+          ]
+        },
+        {
+          "id": "7",
+          "number": 7,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "How ",
+            " your kids ",
+            " (get) to school every day?\nHow long ",
+            " it ",
+            " (take)?"
+          ],
+          "answers": [
+            "do",
+            "get",
+            "does",
+            "take"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l11-ex3",
+      "layout": "prose-gaps wide-gaps",
+      "title": "3. Use the words to write reasons for refusing the requests.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "A: I was wondering if you wanted to get together on Saturday?\nB: (love to / but can’t. go away / for the weekend.)",
+          "example": true,
+          "exampleAnswer": "I’d love to but I can’t. I’m going away for the weekend."
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "A: Can you give me a hand to set up my new computer?\nB: ",
+            " (sorry / can’t. work late / this evening.)"
+          ],
+          "answers": [
+            [
+              "I’m sorry, I can’t. I’m working late this evening.",
+              "I'm sorry, I can't. I'm working late this evening.",
+              "I am sorry, I cannot. I am working late this evening.",
+              "I’m sorry I can’t. I’m working late this evening.",
+              "I'm sorry I can't. I'm working late this evening."
+            ]
+          ]
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "A: Do you think I could use your mobile?\nB: ",
+            " (afraid / can’t. don’t have / with me.)"
+          ],
+          "answers": [
+            [
+              "I’m afraid you can’t. I don’t have it with me.",
+              "I'm afraid you can't. I don't have it with me.",
+              "I am afraid you cannot. I do not have it with me."
+            ]
+          ]
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "A: Do you fancy coming to my party on Friday evening?\nB: ",
+            " (nice / of you to ask me. play in a band / every Friday.)"
+          ],
+          "answers": [
+            [
+              "It’s nice of you to ask me. But I play in a band every Friday.",
+              "It's nice of you to ask me. But I play in a band every Friday.",
+              "It is nice of you to ask me. But I play in a band every Friday."
+            ]
+          ]
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "A: Would you like to meet up some time this weekend?\nB: ",
+            " (kind / of you to ask us. go to London / every weekend.)"
+          ],
+          "answers": [
+            [
+              "It’s kind of you to ask us. But we go to London every weekend.",
+              "It's kind of you to ask us. But we go to London every weekend.",
+              "It is kind of you to ask us. But we go to London every weekend."
+            ]
+          ]
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "A: Can you help me with my homework?\nB: ",
+            " (no / sorry. go out / this evening.)"
+          ],
+          "answers": [
+            [
+              "No, I’m sorry. I’m going out this evening.",
+              "No, I'm sorry. I'm going out this evening.",
+              "No, I am sorry. I am going out this evening."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Developing writing",
+      "title": "A letter – giving news",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l11-ex4",
+      "layout": "prose-gaps letter-gaps",
+      "title": "4. Rani has just started university. Complete the letter to her parents with the words in the box.",
+      "wordBankLabel": "Words in the box",
+      "wordBank": [
+        "pretty",
+        "miss",
+        "settling",
+        "hug",
+        "down",
+        "sorry",
+        "into",
+        "mind",
+        "expect",
+        "out"
+      ],
+      "items": [
+        {
+          "id": "letter",
+          "number": "",
+          "prompt": "",
+          "input": "choice-gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "Dear Mum and Dad\n\n1 ",
+            " I haven’t written before, but I’ve been 2 ",
+            " busy since I started. I’m 3 ",
+            " in to my flat and enjoying the course so far. Lectures have started but I didn’t 4 ",
+            " to be working so hard in the first month!\n\nI’ve been a bit 5 ",
+            " this week. It’s nothing to worry about but Rachel has changed course, so I’m now one of the few girls doing physics! I had a feeling she wasn’t very happy, but I think she’s sorted it 6 ",
+            " now.\n\nI 7 ",
+            " everyone but I’m making a lot of new friends. My flatmates are all 8 ",
+            " adventure sports (my idea of hell), but I had a go at climbing last weekend - exhausting but good fun.\n\nMy next lecture is about to start, so I’ll put this in the post. Give everyone a 9 ",
+            " from me.\n\nLots of love\n\nRani\nxx\n\nP.S. If you don’t 10 ",
+            ", I won’t ring you on my mobile. It’s too expensive - but you can ring me!"
+          ],
+          "answers": [
+            5,
+            0,
+            2,
+            8,
+            4,
+            9,
+            1,
+            6,
+            3,
+            7
+          ],
+          "choices": [
+            [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ],
+            [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ],
+            [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ],
+            [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ],
+            [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ],
+            [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ],
+            [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ],
+            [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ],
+            [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ],
+            [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "type": "info",
+      "id": "l11-language-note",
+      "title": "Language note",
+      "text": "a bit / pretty / not very + adjective\n\nIf you don’t want to sound too negative, you can soften an adjective like this:\nI’m a bit tired.\nIt was pretty disappointing.\nIt wasn’t very easy."
+    },
+    {
+      "type": "exercise",
+      "id": "l11-ex5",
+      "layout": "writing-letter",
+      "title": "5. Imagine you have just left home to start a new job / go on a course. Write a letter home (120–150 words) and give your news. Use the letter in exercise 4 to help you.",
+      "items": [
+        {
+          "id": "letter",
+          "number": "",
+          "prompt": "",
+          "input": "textarea",
+          "scored": false,
+          "contextFrom": {
+            "sourceTaskId": "l11-ex4",
+            "sourceItemId": "letter",
+            "title": "4. Rani has just started university. Complete the letter to her parents with the words in the box.",
+            "wordBank": [
+              "pretty",
+              "miss",
+              "settling",
+              "hug",
+              "down",
+              "sorry",
+              "into",
+              "mind",
+              "expect",
+              "out"
+            ],
+            "segments": [
+              "Dear Mum and Dad\n\n1 ",
+              " I haven’t written before, but I’ve been 2 ",
+              " busy since I started. I’m 3 ",
+              " in to my flat and enjoying the course so far. Lectures have started but I didn’t 4 ",
+              " to be working so hard in the first month!\n\nI’ve been a bit 5 ",
+              " this week. It’s nothing to worry about but Rachel has changed course, so I’m now one of the few girls doing physics! I had a feeling she wasn’t very happy, but I think she’s sorted it 6 ",
+              " now.\n\nI 7 ",
+              " everyone but I’m making a lot of new friends. My flatmates are all 8 ",
+              " adventure sports (my idea of hell), but I had a go at climbing last weekend - exhausting but good fun.\n\nMy next lecture is about to start, so I’ll put this in the post. Give everyone a 9 ",
+              " from me.\n\nLots of love\n\nRani\nxx\n\nP.S. If you don’t 10 ",
+              ", I won’t ring you on my mobile. It’s too expensive - but you can ring me!"
+            ],
+            "emptyPlaceholder": "________"
+          }
+        }
+      ]
+    }
+  ]
+}
