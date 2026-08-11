@@ -1,0 +1,45 @@
+{
+  "id": "lesson-99",
+  "number": 99,
+  "title": "ТЕСТ: отправка отчёта в Telegram",
+  "subtitle": "Проверка отправки отчёта о выполненной домашней работе в тему Telegram",
+  "status": "available",
+  "publishedAt": "2026-08-11",
+  "totalPoints": 1,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Test",
+      "title": "Проверка Telegram-отчёта",
+      "text": "Это временное тестовое задание. Оно нужно только для проверки отправки отчёта преподавателю."
+    },
+    {
+      "type": "exercise",
+      "id": "l99-report-test",
+      "title": "1. Введите TEST в поле ниже.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "Проверка отправки отчёта: ",
+          "input": "gaps",
+          "segments": [
+            "Введите слово ",
+            "."
+          ],
+          "answers": [
+            [
+              "TEST",
+              "test",
+              "Test"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}
