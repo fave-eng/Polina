@@ -1,6 +1,8 @@
 import { withSupabase } from 'npm:@supabase/server'
 
 const encoder = new TextEncoder()
+const DIAGNOSTIC_VERSION = 'polina-diagnostics-v1'
+const DIAGNOSTIC_WINDOW_MS = 30_000
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -442,6 +444,216 @@ async function handleMaterialPublication(req: Request, ctx: any, botToken: strin
   }
 }
 
+
+async function callTelegramApi(token: string, method: string, body: Record<string, unknown> = {}) {
+  const response = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+
+  const result = await response.json().catch(() => null)
+  if (!response.ok || !result?.ok) {
+    const description = result?.description || `Telegram HTTP ${response.status}`
+    return { ok: false, error: description, status: response.status }
+  }
+
+  return { ok: true, result: result.result }
+}
+
+async function handleDiagnosticsHealth(ctx: any, botToken: string, payload: any) {
+  const studentId = typeof payload.studentId === 'string' ? payload.studentId.trim() : ''
+  if (!studentId) return jsonResponse({ ok: false, error: 'Missing studentId' }, 400)
+
+  const output: any = {
+    ok: true,
+    diagnosticVersion: DIAGNOSTIC_VERSION,
+    checkedAt: new Date().toISOString(),
+    database: { ok: false, homeworkRows: 0, suspiciousHomework: [] },
+    recipient: { ok: false, enabled: false, threadId: null },
+    telegram: {
+      bot: { ok: false },
+      chat: { ok: false },
+    },
+  }
+
+  let recipient: any = null
+  try {
+    const { data, error } = await ctx.supabaseAdmin
+      .from('telegram_recipients')
+      .select('chat_id, message_thread_id, enabled')
+      .eq('student_id', studentId)
+      .maybeSingle()
+
+    if (error) throw new Error(error.message)
+    recipient = data
+    if (recipient) {
+      output.recipient = {
+        ok: Boolean(recipient.enabled),
+        enabled: Boolean(recipient.enabled),
+        threadId: recipient.message_thread_id == null ? null : Number(recipient.message_thread_id),
+        error: recipient.enabled ? null : 'Recipient is disabled',
+      }
+    } else {
+      output.recipient.error = 'Recipient not found'
+    }
+  } catch (error) {
+    output.recipient.error = error instanceof Error ? error.message : String(error)
+  }
+
+  try {
+    const { data: rows, error } = await ctx.supabaseAdmin
+      .from('homework_progress')
+      .select('lesson_id, status, checked_at, submitted_at, updated_at')
+      .eq('student_id', studentId)
+      .order('updated_at', { ascending: false })
+      .limit(50)
+
+    if (error) throw new Error(error.message)
+    const homeworkRows = Array.isArray(rows) ? rows : []
+    const suspicious = homeworkRows
+      .filter((row: any) => row?.status !== 'draft' && (!row?.checked_at || !row?.submitted_at))
+      .map((row: any) => String(row.lesson_id || 'unknown'))
+      .slice(0, 10)
+
+    const { data: publications, error: publicationsError } = await ctx.supabaseAdmin
+      .from('material_publications')
+      .select('material_type, material_id, status, error_message, sent_at, created_at')
+      .eq('student_id', studentId)
+      .order('created_at', { ascending: false })
+      .limit(8)
+
+    if (publicationsError) throw new Error(publicationsError.message)
+
+    output.database = {
+      ok: true,
+      homeworkRows: homeworkRows.length,
+      suspiciousHomework: suspicious,
+      recentPublications: publications || [],
+    }
+  } catch (error) {
+    output.database = {
+      ok: false,
+      homeworkRows: 0,
+      suspiciousHomework: [],
+      error: error instanceof Error ? error.message : String(error),
+    }
+  }
+
+  if (!botToken) {
+    output.telegram.bot = { ok: false, error: 'TELEGRAM_BOT_TOKEN is not configured' }
+    output.telegram.chat = { ok: false, error: 'Bot token is missing' }
+    return jsonResponse(output)
+  }
+
+  const botCheck = await callTelegramApi(botToken, 'getMe')
+  output.telegram.bot = botCheck.ok
+    ? { ok: true, username: botCheck.result?.username || null }
+    : { ok: false, error: botCheck.error || 'getMe failed' }
+
+  if (!recipient) {
+    output.telegram.chat = { ok: false, error: 'Recipient is not configured' }
+  } else {
+    const chatCheck = await callTelegramApi(botToken, 'getChat', { chat_id: Number(recipient.chat_id) })
+    output.telegram.chat = chatCheck.ok
+      ? { ok: true, type: chatCheck.result?.type || null, title: chatCheck.result?.title || null }
+      : { ok: false, error: chatCheck.error || 'getChat failed' }
+  }
+
+  return jsonResponse(output)
+}
+
+async function handleDiagnosticsSendReport(req: Request, ctx: any, botToken: string, payload: any) {
+  const origin = req.headers.get('origin') || ''
+  if (origin !== 'https://fave-eng.github.io') {
+    return jsonResponse({ ok: false, error: 'Diagnostic test sending is allowed only from the published English Space site' }, 403)
+  }
+
+  const studentId = typeof payload.studentId === 'string' ? payload.studentId.trim() : ''
+  if (!studentId) return jsonResponse({ ok: false, error: 'Missing studentId' }, 400)
+
+  let recipient
+  try {
+    recipient = await loadRecipient(ctx, studentId)
+  } catch (error) {
+    return jsonResponse({ ok: false, error: error instanceof Error ? error.message : String(error) }, 500)
+  }
+
+  if (!recipient) {
+    return jsonResponse({ ok: false, error: 'Telegram recipient is not connected or is disabled' }, 404)
+  }
+
+  const now = Date.now()
+  const bucket = Math.floor(now / DIAGNOSTIC_WINDOW_MS)
+  const notificationVersion = bucket > 0 ? bucket : 1
+  const retryAfterSeconds = Math.max(1, Math.ceil((DIAGNOSTIC_WINDOW_MS - (now % DIAGNOSTIC_WINDOW_MS)) / 1000))
+  const threadId = recipient.message_thread_id == null ? null : Number(recipient.message_thread_id)
+
+  let claim: any
+  try {
+    claim = await claimPublication(
+      ctx,
+      studentId,
+      'diagnostic',
+      'telegram-report-test',
+      notificationVersion,
+      {
+        kind: 'diagnostics_send_report',
+        diagnosticVersion: DIAGNOSTIC_VERSION,
+        requestedAt: new Date(now).toISOString(),
+        pageUrl: typeof payload.pageUrl === 'string' ? payload.pageUrl.slice(0, 500) : null,
+      },
+    )
+  } catch (error) {
+    return jsonResponse({ ok: false, error: error instanceof Error ? error.message : String(error) }, 500)
+  }
+
+  if (claim.skipped) {
+    return jsonResponse({
+      ok: true,
+      skipped: true,
+      reason: claim.reason,
+      telegramMessageId: claim.telegramMessageId ?? null,
+      threadId,
+      retryAfterSeconds,
+    })
+  }
+
+  const text = [
+    '🧪 <b>ТЕСТОВЫЙ ОТЧЁТ</b>',
+    '',
+    `👤 <b>Ученик:</b> ${escapeTelegramHtml(studentId === 'polina' ? 'Полина' : studentId)}`,
+    '📚 <b>Диагностика подключения</b>',
+    '🧩 <b>Тема:</b> проверка сайта → Supabase → Edge Function → Telegram',
+    `🧵 <b>Telegram thread:</b> ${threadId ?? 'general'}`,
+    '🎯 <b>Результат:</b> тестовое сообщение успешно дошло до Telegram',
+    '',
+    `<code>${escapeTelegramHtml(new Date(now).toISOString())}</code>`,
+  ].join('\n')
+
+  try {
+    const telegramMessage = await sendTelegramMessage(
+      botToken,
+      Number(recipient.chat_id),
+      threadId,
+      text,
+    )
+
+    await markPublicationSent(ctx, claim.publicationId, telegramMessage.message_id)
+    return jsonResponse({
+      ok: true,
+      skipped: false,
+      diagnosticVersion: DIAGNOSTIC_VERSION,
+      telegramMessageId: telegramMessage.message_id,
+      threadId,
+    })
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    await markPublicationFailed(ctx, claim.publicationId, message)
+    return jsonResponse({ ok: false, error: message, threadId }, 502)
+  }
+}
+
 export default {
   fetch: withSupabase({ auth: 'none' }, async (req, ctx) => {
     if (req.method === 'OPTIONS') {
@@ -462,6 +674,14 @@ export default {
       payload = await req.json()
     } catch {
       return jsonResponse({ ok: false, error: 'Invalid JSON' }, 400)
+    }
+
+    if (payload?.kind === 'diagnostics_health') {
+      return handleDiagnosticsHealth(ctx, botToken, payload)
+    }
+
+    if (payload?.kind === 'diagnostics_send_report') {
+      return handleDiagnosticsSendReport(req, ctx, botToken, payload)
     }
 
     if (payload?.kind === 'homework_report') {
