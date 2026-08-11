@@ -262,7 +262,7 @@
       }
       return this.client;
     },
-    async notifyHomeworkReport(lessonId, submittedAt) {
+    async notifyHomeworkReport(lessonId) {
       if (!this.isConfigured() || config.features?.telegramNotifications === false) {
         return { ok: false, skipped: true, reason: 'telegram_disabled' };
       }
@@ -271,12 +271,11 @@
         body: {
           kind: 'homework_report',
           studentId,
-          lessonId,
-          submittedAt
+          lessonId
         }
       });
       if (error) throw error;
-      if (!data?.ok) throw new Error(data?.error || 'Не удалось отправить Telegram-отчёт');
+      if (!data?.ok) throw new Error(data?.error || 'Не удалось завершить отправку домашней работы');
       return data;
     },
     queue(section) {
@@ -624,25 +623,28 @@
       const lesson = HOMEWORK_DATA.find((item) => item.id === lessonId) || {};
       const total = Number(result.total || 0);
       const correct = Number(result.correct || 0);
-      const submittedAt = options.submittedAt || null;
 
+      // The browser only saves editable drafts. Final submission, locking,
+      // report state and technical timestamps are handled server-side by
+      // notify-telegram so the database state machine stays consistent.
       const row = {
         student_id: studentId,
         student_name: safeText(student.nameRu || student.nameEn),
         lesson_id: lessonId,
         lesson_title: safeText(options.lessonTitle || lesson.title, lessonId),
-        status: submittedAt ? 'submitted' : 'draft',
+        status: 'draft',
         answers: result.answers && typeof result.answers === 'object' ? result.answers : {},
         legacy_answers: result.legacyAnswers && typeof result.legacyAnswers === 'object' ? result.legacyAnswers : null,
         migrated_from_legacy: Boolean(result.migratedAt || result.legacyAnswers),
         score_correct: total > 0 ? correct : null,
         score_total: total > 0 ? total : null,
         score_percent: total > 0 ? safePercent(correct, total) : null,
-        // Final dates are deliberately identical on submit. This satisfies the
-        // database final-date invariant regardless of whether it compares order
-        // or only requires both values to be present.
-        checked_at: submittedAt,
-        submitted_at: submittedAt
+        checked_at: result.checkedAt || null,
+        submitted_at: null,
+        locked_at: null,
+        report_status: 'not_sent',
+        report_sent_at: null,
+        report_error: null
       };
 
       const { error } = await CloudService.client
@@ -707,13 +709,13 @@
           } else if (cloudLegacyAnswers && !localResult.legacyAnswers) {
             homework.results[row.lesson_id] = { ...localResult, legacyAnswers: cloudLegacyAnswers };
           }
-          if (row.status === 'submitted' || row.migrated_from_legacy) {
+          if (row.status === 'submitted' || row.status === 'submitted_pending_report' || row.migrated_from_legacy) {
             homework.submissions[row.lesson_id] = {
-              savedAt: row.submitted_at || row.updated_at,
-              status: row.migrated_from_legacy ? 'migrated-cloud' : 'cloud'
+              savedAt: row.submitted_at || row.locked_at || row.updated_at,
+              status: row.migrated_from_legacy
+                ? 'migrated-cloud'
+                : (row.status === 'submitted' ? 'cloud' : (row.report_status === 'failed' ? 'report-failed' : 'pending-report'))
             };
-          }
-          if (row.status === 'submitted' || row.migrated_from_legacy) {
             homework.completedIds.push(row.lesson_id);
           }
         });
@@ -776,10 +778,12 @@
 
       if (sections.includes('homework')) {
         const progress = this.loadHomeworkProgress();
-        const lessonIds = unique([...Object.keys(progress.results), ...Object.keys(progress.submissions)]);
+        // Never upsert final/pending submissions from localStorage. The database
+        // deliberately makes those rows immutable. Background sync only updates
+        // editable drafts.
+        const lessonIds = Object.keys(progress.results).filter((lessonId) => !progress.submissions[lessonId]);
         const rows = lessonIds.map((lessonId) => {
           const result = progress.results[lessonId] || {};
-          const submission = progress.submissions[lessonId];
           const lesson = HOMEWORK_DATA.find((item) => item.id === lessonId) || {};
           const total = Number(result.total || 0);
           const correct = Number(result.correct || 0);
@@ -788,18 +792,19 @@
             student_name: safeText(student.nameRu || student.nameEn),
             lesson_id: lessonId,
             lesson_title: safeText(lesson.title, lessonId),
-            status: submission ? 'submitted' : 'draft',
+            status: 'draft',
             answers: result.answers && typeof result.answers === 'object' ? result.answers : {},
             legacy_answers: result.legacyAnswers && typeof result.legacyAnswers === 'object' ? result.legacyAnswers : null,
             migrated_from_legacy: Boolean(result.migratedAt || result.legacyAnswers),
             score_correct: total > 0 ? correct : null,
             score_total: total > 0 ? total : null,
             score_percent: total > 0 ? safePercent(correct, total) : null,
-            // Draft rows have no final dates. For submitted rows use one
-            // canonical final timestamp for both columns so old local records
-            // cannot violate the database final-date constraint during a batch sync.
-            checked_at: submission ? (submission.savedAt || result.checkedAt || null) : null,
-            submitted_at: submission ? (submission.savedAt || result.checkedAt || null) : null
+            checked_at: result.checkedAt || null,
+            submitted_at: null,
+            locked_at: null,
+            report_status: 'not_sent',
+            report_sent_at: null,
+            report_error: null
           };
         });
         if (rows.length) {
@@ -1590,13 +1595,13 @@
       });
     });
 
-    const checkLessonButton = byId('check-lesson');
-    if (checkLessonButton) checkLessonButton.addEventListener('click', () => {
+    const evaluateLessonNow = (showFeedback = true) => {
       const checkableTypes = ['text','textarea','single','multiple','select','match','reorder','translate','audio','exercise'];
       const checkable = blocks.filter((block) => checkableTypes.includes(block.type) && !(block.type === 'audio' && block.response === false));
       let correct = 0;
       let total = 0;
       const answers = {};
+
       checkable.forEach((block, index) => {
         const taskId = safeText(block.id, `task-${index}`);
         const node = root.querySelector(`[data-task="${CSS.escape(taskId)}"]`);
@@ -1605,28 +1610,38 @@
         answers[taskId] = result.actual;
         correct += Number(result.correctCount || 0);
         total += Number(result.total || 0);
-        if (block.type !== 'exercise') {
+        if (showFeedback && block.type !== 'exercise') {
           showLessonTaskResult(block, node, result);
         }
       });
+
       const percent = safePercent(correct, total);
       const manualNote = hasManualResponses ? ' · развёрнутый ответ сохранён отдельно и не входит в балл' : '';
-      byId('lesson-result').innerHTML = `<h3>Результат: ${correct} из ${total}</h3><p class="muted">${percent}% правильных ответов${manualNote}</p>`;
+      const resultNode = byId('lesson-result');
+      if (resultNode) {
+        resultNode.innerHTML = `<h3>Результат: ${correct} из ${total}</h3><p class="muted">${percent}% правильных ответов${manualNote}</p>`;
+      }
+
       const updatedProgress = window.ProgressService.loadHomeworkProgress();
       updatedProgress.results[lesson.id] = {
         correct,
         total,
         percent,
         answers,
-        legacyAnswers: savedResult?.legacyAnswers || null,
-        migratedAt: savedResult?.migratedAt || null,
+        legacyAnswers: updatedProgress.results[lesson.id]?.legacyAnswers || savedResult?.legacyAnswers || null,
+        migratedAt: updatedProgress.results[lesson.id]?.migratedAt || savedResult?.migratedAt || null,
         checkedAt: new Date().toISOString()
       };
       window.ProgressService.saveHomeworkProgress(updatedProgress, { sync: false });
+      return updatedProgress.results[lesson.id];
+    };
+
+    const checkLessonButton = byId('check-lesson');
+    if (checkLessonButton) checkLessonButton.addEventListener('click', () => {
+      evaluateLessonNow(true);
       byId('submit-lesson').disabled = false;
 
-      // Save only the current draft to Supabase. A broken legacy row from a
-      // different lesson must not prevent this lesson from being checked.
+      // Save only the current editable draft to Supabase.
       if (CloudService.isConfigured()) {
         window.ProgressService.syncHomeworkLessonToCloud(lesson.id, { lessonTitle: lesson.title }).catch((error) => {
           console.error('Ошибка облачного сохранения текущего черновика:', error);
@@ -1636,28 +1651,30 @@
     });
     const submitLessonButton = byId('submit-lesson');
     if (submitLessonButton) submitLessonButton.addEventListener('click', async () => {
-      const updatedProgress = window.ProgressService.loadHomeworkProgress();
-      const submittedAt = new Date().toISOString();
+      submitLessonButton.disabled = true;
 
-      // Store the pending submission locally without starting the old batch
-      // sync. The current lesson is written to Supabase explicitly below.
-      updatedProgress.submissions[lesson.id] = {
-        savedAt: submittedAt,
-        status: CloudService.isConfigured() ? 'pending-cloud' : 'local'
-      };
-      if (!updatedProgress.completedIds.includes(lesson.id)) {
-        updatedProgress.completedIds.push(lesson.id);
-      }
-      window.ProgressService.saveHomeworkProgress(updatedProgress, { sync: false });
+      // Re-read and re-grade the fields at the exact moment of submission so
+      // edits made after the last "Проверить" are never lost.
+      evaluateLessonNow(true);
 
       if (CloudService.isConfigured()) {
         try {
           window.clearTimeout(CloudService.timers.homework);
-          await window.ProgressService.syncHomeworkLessonToCloud(lesson.id, { submittedAt, lessonTitle: lesson.title });
 
-          // Cloud save succeeded: now the submission is final and may be locked.
+          // 1) Save the latest editable draft through the normal anon/RLS path.
+          await window.ProgressService.syncHomeworkLessonToCloud(lesson.id, { lessonTitle: lesson.title });
+
+          // 2) Server performs the state transition:
+          // draft -> submitted_pending_report -> Telegram -> submitted.
+          // It also sets submitted_at / locked_at / report fields internally.
+          const notification = await CloudService.notifyHomeworkReport(lesson.id);
+          const finalizedAt = notification?.submittedAt || notification?.lockedAt || new Date().toISOString();
+
           const confirmedProgress = window.ProgressService.loadHomeworkProgress();
-          confirmedProgress.submissions[lesson.id] = { savedAt: submittedAt, status: 'cloud' };
+          confirmedProgress.submissions[lesson.id] = {
+            savedAt: finalizedAt,
+            status: notification?.reportSent === false ? 'report-failed' : 'cloud'
+          };
           if (!confirmedProgress.completedIds.includes(lesson.id)) {
             confirmedProgress.completedIds.push(lesson.id);
           }
@@ -1667,43 +1684,37 @@
           const actions = root.querySelector('.lesson-actions');
           if (actions) {
             actions.classList.add('lesson-completed-panel');
-            actions.innerHTML = `<div id="lesson-result" aria-live="polite"><h3>Работа отправлена</h3><p class="muted">Ответы сохранены и больше не редактируются.</p></div><div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Работа выполнена</h3><p class="muted">Ответы проверены и заблокированы. Изменить или стереть их уже нельзя.</p></div></div>`;
+            const reportText = notification?.reportSent === false
+              ? `<p class="muted">Работа сохранена и заблокирована. Telegram-отчёт временно не отправлен: ${escapeHtml(notification?.error || 'ошибка Telegram')}.</p>`
+              : '<p class="muted">Ответы сохранены, заблокированы, отчёт отправлен преподавателю.</p>';
+            actions.innerHTML = `<div id="lesson-result" aria-live="polite"><h3>Работа отправлена</h3>${reportText}</div><div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Работа выполнена</h3><p class="muted">Изменить или стереть отправленные ответы уже нельзя.</p></div></div>`;
           }
 
-          showToast('Работа сохранена в Supabase.');
-
-          try {
-            const notification = await CloudService.notifyHomeworkReport(lesson.id, submittedAt);
-            if (!notification?.skipped) {
-              showToast('Отчёт о домашней работе отправлен в Telegram.');
-            }
-          } catch (telegramError) {
-            console.error('Ошибка Telegram-отчёта:', telegramError);
-            showToast(`Работа сохранена в Supabase, но Telegram-отчёт не отправлен: ${telegramError.message || telegramError}`);
+          if (notification?.reportSent === false) {
+            showToast('Работа сохранена в Supabase. Telegram-отчёт временно не отправлен.');
+          } else {
+            showToast('Работа сохранена. Отчёт отправлен в Telegram.');
           }
         } catch (error) {
-          console.error('Ошибка облачной отправки домашней работы:', error);
-
-          // Do not leave a failed submission permanently locked. Keep the
-          // checked answers, but roll back the local final-submission marker so
-          // the user can press "Send" again after the problem is fixed.
-          const retryProgress = window.ProgressService.loadHomeworkProgress();
-          delete retryProgress.submissions[lesson.id];
-          retryProgress.completedIds = retryProgress.completedIds.filter((id) => id !== lesson.id);
-          window.ProgressService.saveHomeworkProgress(retryProgress, { sync: false });
-
-          showToast(`Не удалось отправить работу в Supabase: ${error.message || error}. Можно повторить отправку.`);
+          console.error('Ошибка отправки домашней работы:', error);
+          showToast(`Не удалось отправить работу: ${error.message || error}. Можно повторить отправку.`);
           submitLessonButton.disabled = false;
         }
         return;
       }
 
       // Local-only mode.
+      const localProgress = window.ProgressService.loadHomeworkProgress();
+      const localSavedAt = new Date().toISOString();
+      localProgress.submissions[lesson.id] = { savedAt: localSavedAt, status: 'local' };
+      if (!localProgress.completedIds.includes(lesson.id)) localProgress.completedIds.push(lesson.id);
+      window.ProgressService.saveHomeworkProgress(localProgress, { sync: false });
+
       lockCompletedLesson(root);
       const actions = root.querySelector('.lesson-actions');
       if (actions) {
         actions.classList.add('lesson-completed-panel');
-        actions.innerHTML = `<div id="lesson-result" aria-live="polite"><h3>Работа отправлена</h3><p class="muted">Ответы сохранены и больше не редактируются.</p></div><div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Работа выполнена</h3><p class="muted">Ответы проверены и заблокированы. Изменить или стереть их уже нельзя.</p></div></div>`;
+        actions.innerHTML = `<div id="lesson-result" aria-live="polite"><h3>Работа отправлена</h3><p class="muted">Ответы сохранены на устройстве и больше не редактируются.</p></div><div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Работа выполнена</h3><p class="muted">Изменить или стереть их уже нельзя.</p></div></div>`;
       }
       showToast('Ответы сохранены на устройстве.');
     });

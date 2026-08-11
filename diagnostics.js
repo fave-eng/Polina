@@ -2,7 +2,7 @@
   'use strict';
 
   const EXPECTED_THREAD_ID = 5;
-  const EXPECTED_DIAGNOSTIC_VERSION = 'polina-diagnostics-v1';
+  const EXPECTED_DIAGNOSTIC_VERSION = 'polina-diagnostics-v2';
   const config = window.APP_CONFIG || {};
   const student = config.student || {};
   const studentId = String(student.id || 'polina').trim().toLowerCase();
@@ -101,7 +101,13 @@
     const code = error.code ? `${error.code}: ` : '';
     const message = error.message || error.error_description || String(error);
     if (/homework_progress_final_dates_check/i.test(message)) {
-      return `${code}${message}. Ошибка именно в CHECK-ограничении дат/статуса таблицы homework_progress.`;
+      return `${code}${message}. Нарушено правило финальной отправки: для нечерновой работы Supabase требует submitted_at и locked_at.`;
+    }
+    if (/homework_progress_report_check/i.test(message)) {
+      return `${code}${message}. Нарушено правило статуса Telegram-отчёта: draft/not_sent, pending/pending|failed или submitted/sent.`;
+    }
+    if (/Final homework submission is immutable|Submitted homework cannot be changed|Invalid homework status transition/i.test(message)) {
+      return `${code}${message}. Сработала защита от изменения уже отправленной домашней работы.`;
     }
     if (/row-level security|permission denied|42501/i.test(message)) {
       return `${code}${message}. Ошибка прав доступа / RLS Supabase.`;
@@ -128,7 +134,7 @@
       const homeworkTable = config.supabase?.tables?.homework || 'homework_progress';
       const readResponse = await client
         .from(homeworkTable)
-        .select('student_id,lesson_id,lesson_title,status,checked_at,submitted_at,score_correct,score_total,score_percent,answers,legacy_answers,migrated_from_legacy')
+        .select('student_id,lesson_id,lesson_title,status,checked_at,submitted_at,locked_at,report_status,report_sent_at,report_error,score_correct,score_total,score_percent,answers,legacy_answers,migrated_from_legacy')
         .eq('student_id', studentId)
         .order('lesson_id', { ascending: false })
         .limit(20);
@@ -169,9 +175,9 @@
         addCheck('9. Telegram Bot API / группа', h.telegram?.chat?.ok ? 'ok' : 'bad', h.telegram?.chat?.ok ? `Бот имеет доступ к целевой группе (${h.telegram.chat.type || 'chat'}).` : (h.telegram?.chat?.error || 'Бот не имеет доступа к группе.'));
 
         if (Array.isArray(h.database?.suspiciousHomework) && h.database.suspiciousHomework.length) {
-          addCheck('10. Состояние сохранённых ДЗ', 'warn', `Есть подозрительные финальные записи: ${h.database.suspiciousHomework.join(', ')}. Это не обязательно текущая ошибка, но их стоит проверить.`);
+          addCheck('10. Состояние сохранённых ДЗ', 'warn', `Есть старые/несогласованные записи по текущей state machine: ${h.database.suspiciousHomework.join(', ')}. Это не обязательно текущая ошибка, но их стоит проверить.`);
         } else {
-          addCheck('10. Состояние сохранённых ДЗ', 'ok', 'Явных submitted-записей без checked_at/submitted_at не найдено.');
+          addCheck('10. Состояние сохранённых ДЗ', 'ok', 'Текущие записи соответствуют ожидаемым статусам draft / pending-report / submitted.');
         }
 
         telegramInfoEl.innerHTML = '';
@@ -206,30 +212,71 @@
 
   async function testDatabaseWrite() {
     dbWriteBtn.disabled = true;
-    dbWriteResultEl.innerHTML = '<div class="summary">Проверяю запись…</div>';
+    dbWriteResultEl.innerHTML = '<div class="summary">Проверяю полный путь сохранения ДЗ…</div>';
+
+    const client = getClient();
+    const table = config.supabase?.tables?.homework || 'homework_progress';
+    const probeId = `__diagnostic_probe__${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+
     try {
-      const client = getClient();
-      const table = config.supabase?.tables?.homework || 'homework_progress';
-      const { data: rows, error: readError } = await client
-        .from(table)
-        .select('student_id,student_name,lesson_id,lesson_title,status,answers,legacy_answers,migrated_from_legacy,score_correct,score_total,score_percent,checked_at,submitted_at')
-        .eq('student_id', studentId)
-        .order('updated_at', { ascending: false })
-        .limit(1);
-      if (readError) throw readError;
-      if (!rows?.length) throw new Error('Нет существующей строки homework_progress для безопасного повторного сохранения.');
+      // Stage 1: real browser/anon/RLS insert of a harmless draft.
+      const { error: insertError } = await client.from(table).insert({
+        student_id: studentId,
+        student_name: student.nameRu || student.nameEn || studentId,
+        lesson_id: probeId,
+        lesson_title: 'Diagnostics homework write probe',
+        status: 'draft',
+        answers: {},
+        legacy_answers: null,
+        migrated_from_legacy: false,
+        score_correct: null,
+        score_total: null,
+        score_percent: null,
+        checked_at: null,
+        submitted_at: null,
+        locked_at: null,
+        report_status: 'not_sent',
+        report_sent_at: null,
+        report_error: null
+      });
 
-      const row = rows[0];
-      const { error: writeError } = await client.from(table).upsert(row, { onConflict: 'student_id,lesson_id' });
-      if (writeError) throw writeError;
+      if (insertError) {
+        throw new Error(`browser_draft_insert: ${formatError(insertError)}`);
+      }
 
-      dbWriteResultEl.innerHTML = `<div class="summary ok">✓ Запись работает. Supabase принял повторное сохранение ${esc(row.lesson_id)} без изменения содержания.</div>`;
+      // Stage 2: Edge Function exercises the exact database state machine
+      // without sending Telegram, then deletes the technical row.
+      const probe = await invokeDiagnostic({
+        kind: 'diagnostics_homework_probe',
+        studentId,
+        lessonId: probeId
+      });
+
+      if (!probe.ok || !probe.data?.ok) {
+        throw new Error(probe.data?.error || explainFunctionFailure(probe));
+      }
+
+      dbWriteResultEl.innerHTML = `<div class="summary ok">✓ Полный путь homework_progress работает: browser draft → submitted_pending_report → submitted → cleanup. Реальные ДЗ не изменялись.</div>`;
+      lastReport.databaseWriteProbe = {
+        ok: true,
+        lessonId: probeId,
+        stages: probe.data.stages || null
+      };
     } catch (error) {
       const detail = formatError(error);
-      dbWriteResultEl.innerHTML = `<div class="summary bad">✕ Ошибка записи Supabase: ${esc(detail)}</div>`;
-      lastReport.errors.push({ stage: 'database_write', error: detail });
-      rawEl.textContent = JSON.stringify(lastReport, null, 2);
+      dbWriteResultEl.innerHTML = `<div class="summary bad">✕ Ошибка пути homework_progress: ${esc(detail)}</div>`;
+      lastReport.errors.push({ stage: 'database_write_probe', error: detail, lessonId: probeId });
+
+      // Best-effort cleanup. Server only accepts IDs with the diagnostics prefix.
+      try {
+        await invokeDiagnostic({
+          kind: 'diagnostics_homework_probe',
+          studentId,
+          lessonId: probeId
+        });
+      } catch {}
     } finally {
+      rawEl.textContent = JSON.stringify(lastReport, null, 2);
       dbWriteBtn.disabled = false;
     }
   }

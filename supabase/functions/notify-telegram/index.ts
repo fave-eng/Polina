@@ -1,7 +1,7 @@
 import { withSupabase } from 'npm:@supabase/server'
 
 const encoder = new TextEncoder()
-const DIAGNOSTIC_VERSION = 'polina-diagnostics-v1'
+const DIAGNOSTIC_VERSION = 'polina-diagnostics-v2'
 const DIAGNOSTIC_WINDOW_MS = 30_000
 
 const corsHeaders = {
@@ -236,53 +236,171 @@ async function markPublicationFailed(ctx: any, publicationId: string | undefined
     .eq('id', publicationId)
 }
 
-async function handleHomeworkReport(ctx: any, botToken: string, payload: any) {
+async function handleHomeworkReport(req: Request, ctx: any, botToken: string, payload: any) {
+  const origin = req.headers.get('origin') || ''
+  if (origin !== 'https://fave-eng.github.io') {
+    return jsonResponse({ ok: false, error: 'Homework submission is allowed only from the published English Space site' }, 403)
+  }
+
   const studentId = typeof payload.studentId === 'string' ? payload.studentId.trim() : ''
   const lessonId = typeof payload.lessonId === 'string' ? payload.lessonId.trim() : ''
-  const requestedSubmittedAt = Date.parse(String(payload.submittedAt || ''))
-
-  if (!studentId || !lessonId || !Number.isFinite(requestedSubmittedAt)) {
-    return jsonResponse({ ok: false, error: 'Missing or invalid homework report identity' }, 400)
+  if (!studentId || !lessonId) {
+    return jsonResponse({ ok: false, error: 'Missing homework identity' }, 400)
   }
 
-  const { data: row, error: rowError } = await ctx.supabaseAdmin
-    .from('homework_progress')
-    .select('student_id, student_name, lesson_id, lesson_title, status, score_correct, score_total, score_percent, submitted_at')
-    .eq('student_id', studentId)
-    .eq('lesson_id', lessonId)
-    .maybeSingle()
+  const selectFields = [
+    'student_id',
+    'student_name',
+    'lesson_id',
+    'lesson_title',
+    'status',
+    'submission_id',
+    'score_correct',
+    'score_total',
+    'score_percent',
+    'checked_at',
+    'submitted_at',
+    'locked_at',
+    'report_status',
+    'report_sent_at',
+    'report_error',
+  ].join(',')
 
-  if (rowError) return jsonResponse({ ok: false, error: rowError.message }, 500)
-  if (!row || row.status !== 'submitted' || !row.submitted_at) {
-    return jsonResponse({ ok: false, error: 'Homework is not submitted yet' }, 409)
+  const loadHomework = async () => {
+    const { data, error } = await ctx.supabaseAdmin
+      .from('homework_progress')
+      .select(selectFields)
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .maybeSingle()
+
+    if (error) throw new Error(error.message)
+    return data
   }
 
-  const actualSubmittedAt = Date.parse(String(row.submitted_at))
-  if (!Number.isFinite(actualSubmittedAt) || Math.abs(actualSubmittedAt - requestedSubmittedAt) > 5000) {
-    return jsonResponse({ ok: false, error: 'Submission timestamp does not match the saved homework' }, 409)
+  let row: any
+  try {
+    row = await loadHomework()
+  } catch (error) {
+    return jsonResponse({ ok: false, error: error instanceof Error ? error.message : String(error) }, 500)
   }
 
-  // Browser sends this request immediately after successful cloud save.
-  // This time window prevents old submitted lessons from being replayed through the public endpoint.
-  if (Date.now() - actualSubmittedAt > 2 * 60 * 60 * 1000) {
-    return jsonResponse({ ok: false, error: 'Homework report request is too old' }, 409)
+  if (!row) {
+    return jsonResponse({ ok: false, error: 'Homework draft was not found in Supabase' }, 404)
+  }
+
+  // A completed submission is immutable. If the report was already sent,
+  // repeated clicks are harmless and simply return the final state.
+  if (row.status === 'submitted' && row.report_status === 'sent' && row.report_sent_at) {
+    return jsonResponse({
+      ok: true,
+      skipped: true,
+      reason: 'already_submitted',
+      reportSent: true,
+      reportStatus: 'sent',
+      submittedAt: row.submitted_at,
+      lockedAt: row.locked_at,
+    })
+  }
+
+  // First click: freeze the draft and start report delivery. Technical dates
+  // are server-generated; the browser never has to manage them.
+  if (row.status === 'draft') {
+    const finalAt = new Date().toISOString()
+    const { data: pendingRow, error: pendingError } = await ctx.supabaseAdmin
+      .from('homework_progress')
+      .update({
+        status: 'submitted_pending_report',
+        submitted_at: finalAt,
+        locked_at: finalAt,
+        report_status: 'pending',
+        report_sent_at: null,
+        report_error: null,
+      })
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .eq('status', 'draft')
+      .select(selectFields)
+      .single()
+
+    if (pendingError) {
+      return jsonResponse({ ok: false, error: `Could not lock homework: ${pendingError.message}` }, 409)
+    }
+    row = pendingRow
+  } else if (row.status === 'submitted_pending_report') {
+    // Retry is allowed only for the report. Answers/scores/final dates remain
+    // immutable because prevent_homework_resubmission() protects them.
+    if (!['pending', 'failed'].includes(String(row.report_status || ''))) {
+      return jsonResponse({ ok: false, error: `Invalid report state: ${row.report_status}` }, 409)
+    }
+
+    const { data: retryRow, error: retryError } = await ctx.supabaseAdmin
+      .from('homework_progress')
+      .update({
+        report_status: 'pending',
+        report_sent_at: null,
+        report_error: null,
+      })
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .eq('status', 'submitted_pending_report')
+      .select(selectFields)
+      .single()
+
+    if (retryError) {
+      return jsonResponse({ ok: false, error: `Could not prepare report retry: ${retryError.message}` }, 409)
+    }
+    row = retryRow
+  } else {
+    return jsonResponse({ ok: false, error: `Unsupported homework status: ${row.status}` }, 409)
   }
 
   let recipient
   try {
     recipient = await loadRecipient(ctx, studentId)
   } catch (error) {
-    return jsonResponse({ ok: false, error: error instanceof Error ? error.message : String(error) }, 500)
+    const message = error instanceof Error ? error.message : String(error)
+    await ctx.supabaseAdmin
+      .from('homework_progress')
+      .update({ report_status: 'failed', report_error: message, report_sent_at: null })
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .eq('status', 'submitted_pending_report')
+    return jsonResponse({
+      ok: true,
+      homeworkSaved: true,
+      reportSent: false,
+      reportStatus: 'failed',
+      submittedAt: row.submitted_at,
+      lockedAt: row.locked_at,
+      error: message,
+    })
   }
 
   if (!recipient) {
-    return jsonResponse({ ok: false, error: 'Telegram recipient is not connected or is disabled' }, 404)
+    const message = 'Telegram recipient is not connected or is disabled'
+    await ctx.supabaseAdmin
+      .from('homework_progress')
+      .update({ report_status: 'failed', report_error: message, report_sent_at: null })
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .eq('status', 'submitted_pending_report')
+    return jsonResponse({
+      ok: true,
+      homeworkSaved: true,
+      reportSent: false,
+      reportStatus: 'failed',
+      submittedAt: row.submitted_at,
+      lockedAt: row.locked_at,
+      error: message,
+    })
   }
 
   const reportPayload = {
     kind: 'homework_report',
     studentId,
     lessonId,
+    submissionId: row.submission_id,
     submittedAt: row.submitted_at,
     lessonTitle: row.lesson_title,
     scoreCorrect: row.score_correct,
@@ -301,16 +419,64 @@ async function handleHomeworkReport(ctx: any, botToken: string, payload: any) {
       reportPayload,
     )
   } catch (error) {
-    return jsonResponse({ ok: false, error: error instanceof Error ? error.message : String(error) }, 500)
-  }
-
-  if (claim.skipped) {
+    const message = error instanceof Error ? error.message : String(error)
+    await ctx.supabaseAdmin
+      .from('homework_progress')
+      .update({ report_status: 'failed', report_error: message, report_sent_at: null })
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .eq('status', 'submitted_pending_report')
     return jsonResponse({
       ok: true,
-      skipped: true,
-      reason: claim.reason,
-      telegramMessageId: claim.telegramMessageId ?? null,
+      homeworkSaved: true,
+      reportSent: false,
+      reportStatus: 'failed',
+      submittedAt: row.submitted_at,
+      lockedAt: row.locked_at,
+      error: message,
     })
+  }
+
+  const finalizeHomework = async (telegramMessageId: number | null) => {
+    const reportSentAt = new Date().toISOString()
+    const { data: finalRow, error: finalError } = await ctx.supabaseAdmin
+      .from('homework_progress')
+      .update({
+        status: 'submitted',
+        report_status: 'sent',
+        report_sent_at: reportSentAt,
+        report_error: null,
+      })
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .eq('status', 'submitted_pending_report')
+      .select('submitted_at,locked_at,report_sent_at')
+      .single()
+
+    if (finalError) throw new Error(`Telegram report was sent, but homework finalization failed: ${finalError.message}`)
+    return {
+      submittedAt: finalRow.submitted_at,
+      lockedAt: finalRow.locked_at,
+      reportSentAt: finalRow.report_sent_at,
+      telegramMessageId,
+    }
+  }
+
+  if (claim.skipped && claim.reason === 'already_sent') {
+    try {
+      const finalized = await finalizeHomework(claim.telegramMessageId ?? null)
+      return jsonResponse({
+        ok: true,
+        skipped: true,
+        reason: 'already_sent',
+        homeworkSaved: true,
+        reportSent: true,
+        reportStatus: 'sent',
+        ...finalized,
+      })
+    } catch (error) {
+      return jsonResponse({ ok: false, error: error instanceof Error ? error.message : String(error) }, 500)
+    }
   }
 
   try {
@@ -318,24 +484,69 @@ async function handleHomeworkReport(ctx: any, botToken: string, payload: any) {
       ? null
       : Number(recipient.message_thread_id)
 
-    const telegramMessage = await sendTelegramMessage(
-      botToken,
-      Number(recipient.chat_id),
-      threadId,
-      buildHomeworkReportMessage(row),
-    )
+    let telegramMessage: any = null
+    let lastError: unknown = null
+
+    // A few short retries absorb transient Telegram/network failures without
+    // asking the student to press Submit again.
+    for (let attempt = 1; attempt <= 3; attempt += 1) {
+      try {
+        telegramMessage = await sendTelegramMessage(
+          botToken,
+          Number(recipient.chat_id),
+          threadId,
+          buildHomeworkReportMessage(row),
+        )
+        break
+      } catch (error) {
+        lastError = error
+        if (attempt < 3) {
+          await new Promise((resolve) => setTimeout(resolve, attempt * 700))
+        }
+      }
+    }
+
+    if (!telegramMessage) {
+      throw lastError instanceof Error ? lastError : new Error(String(lastError || 'Telegram delivery failed'))
+    }
 
     await markPublicationSent(ctx, claim.publicationId, telegramMessage.message_id)
+    const finalized = await finalizeHomework(telegramMessage.message_id)
 
     return jsonResponse({
       ok: true,
       skipped: false,
-      telegramMessageId: telegramMessage.message_id,
+      homeworkSaved: true,
+      reportSent: true,
+      reportStatus: 'sent',
+      threadId,
+      ...finalized,
     })
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
     await markPublicationFailed(ctx, claim.publicationId, message)
-    return jsonResponse({ ok: false, error: message }, 502)
+    await ctx.supabaseAdmin
+      .from('homework_progress')
+      .update({
+        report_status: 'failed',
+        report_error: message,
+        report_sent_at: null,
+      })
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .eq('status', 'submitted_pending_report')
+
+    // The homework itself is already final and immutable. A Telegram outage
+    // must not make the student resubmit or lose the work.
+    return jsonResponse({
+      ok: true,
+      homeworkSaved: true,
+      reportSent: false,
+      reportStatus: 'failed',
+      submittedAt: row.submitted_at,
+      lockedAt: row.locked_at,
+      error: message,
+    })
   }
 }
 
@@ -504,7 +715,7 @@ async function handleDiagnosticsHealth(ctx: any, botToken: string, payload: any)
   try {
     const { data: rows, error } = await ctx.supabaseAdmin
       .from('homework_progress')
-      .select('lesson_id, status, checked_at, submitted_at, updated_at')
+      .select('lesson_id, status, checked_at, submitted_at, locked_at, report_status, report_sent_at, report_error, updated_at')
       .eq('student_id', studentId)
       .order('updated_at', { ascending: false })
       .limit(50)
@@ -512,7 +723,18 @@ async function handleDiagnosticsHealth(ctx: any, botToken: string, payload: any)
     if (error) throw new Error(error.message)
     const homeworkRows = Array.isArray(rows) ? rows : []
     const suspicious = homeworkRows
-      .filter((row: any) => row?.status !== 'draft' && (!row?.checked_at || !row?.submitted_at))
+      .filter((row: any) => {
+        if (row?.status === 'draft') {
+          return row?.report_status !== 'not_sent' || row?.report_sent_at != null
+        }
+        if (row?.status === 'submitted_pending_report') {
+          return !row?.submitted_at || !row?.locked_at || !['pending', 'failed'].includes(String(row?.report_status || '')) || row?.report_sent_at != null
+        }
+        if (row?.status === 'submitted') {
+          return !row?.submitted_at || !row?.locked_at || row?.report_status !== 'sent' || !row?.report_sent_at
+        }
+        return true
+      })
       .map((row: any) => String(row.lesson_id || 'unknown'))
       .slice(0, 10)
 
@@ -654,6 +876,100 @@ async function handleDiagnosticsSendReport(req: Request, ctx: any, botToken: str
   }
 }
 
+
+async function handleDiagnosticsHomeworkProbe(ctx: any, payload: any) {
+  const studentId = typeof payload.studentId === 'string' ? payload.studentId.trim() : ''
+  const lessonId = typeof payload.lessonId === 'string' ? payload.lessonId.trim() : ''
+  if (!studentId || !lessonId || !lessonId.startsWith('__diagnostic_probe__')) {
+    return jsonResponse({ ok: false, error: 'Invalid diagnostic homework probe identity' }, 400)
+  }
+
+  const cleanup = async () => {
+    await ctx.supabaseAdmin
+      .from('homework_progress')
+      .delete()
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+  }
+
+  try {
+    const { data: draft, error: draftError } = await ctx.supabaseAdmin
+      .from('homework_progress')
+      .select('status,report_status,submitted_at,locked_at,report_sent_at')
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .single()
+
+    if (draftError) throw new Error(`draft_read: ${draftError.message}`)
+    if (draft.status !== 'draft' || draft.report_status !== 'not_sent' || draft.submitted_at || draft.locked_at || draft.report_sent_at) {
+      throw new Error('draft_shape: diagnostic row does not match the draft invariant')
+    }
+
+    const finalAt = new Date().toISOString()
+    const { data: pending, error: pendingError } = await ctx.supabaseAdmin
+      .from('homework_progress')
+      .update({
+        status: 'submitted_pending_report',
+        submitted_at: finalAt,
+        locked_at: finalAt,
+        report_status: 'pending',
+        report_sent_at: null,
+        report_error: null,
+      })
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .eq('status', 'draft')
+      .select('status,report_status,submitted_at,locked_at,report_sent_at')
+      .single()
+
+    if (pendingError) throw new Error(`pending_transition: ${pendingError.message}`)
+    if (pending.status !== 'submitted_pending_report' || pending.report_status !== 'pending' || !pending.submitted_at || !pending.locked_at || pending.report_sent_at) {
+      throw new Error('pending_shape: pending row does not match the database invariant')
+    }
+
+    const reportSentAt = new Date().toISOString()
+    const { data: submitted, error: submittedError } = await ctx.supabaseAdmin
+      .from('homework_progress')
+      .update({
+        status: 'submitted',
+        report_status: 'sent',
+        report_sent_at: reportSentAt,
+        report_error: null,
+      })
+      .eq('student_id', studentId)
+      .eq('lesson_id', lessonId)
+      .eq('status', 'submitted_pending_report')
+      .select('status,report_status,submitted_at,locked_at,report_sent_at')
+      .single()
+
+    if (submittedError) throw new Error(`submitted_transition: ${submittedError.message}`)
+    if (submitted.status !== 'submitted' || submitted.report_status !== 'sent' || !submitted.submitted_at || !submitted.locked_at || !submitted.report_sent_at) {
+      throw new Error('submitted_shape: final row does not match the database invariant')
+    }
+
+    await cleanup()
+
+    return jsonResponse({
+      ok: true,
+      diagnosticVersion: DIAGNOSTIC_VERSION,
+      stages: {
+        browserDraftInsert: 'ok',
+        draftRead: 'ok',
+        pendingTransition: 'ok',
+        submittedTransition: 'ok',
+        cleanup: 'ok',
+      },
+    })
+  } catch (error) {
+    await cleanup()
+    return jsonResponse({
+      ok: false,
+      diagnosticVersion: DIAGNOSTIC_VERSION,
+      error: error instanceof Error ? error.message : String(error),
+    }, 409)
+  }
+}
+
 export default {
   fetch: withSupabase({ auth: 'none' }, async (req, ctx) => {
     if (req.method === 'OPTIONS') {
@@ -684,8 +1000,12 @@ export default {
       return handleDiagnosticsSendReport(req, ctx, botToken, payload)
     }
 
+    if (payload?.kind === 'diagnostics_homework_probe') {
+      return handleDiagnosticsHomeworkProbe(ctx, payload)
+    }
+
     if (payload?.kind === 'homework_report') {
-      return handleHomeworkReport(ctx, botToken, payload)
+      return handleHomeworkReport(req, ctx, botToken, payload)
     }
 
     return handleMaterialPublication(req, ctx, botToken, payload)
