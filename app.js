@@ -262,6 +262,23 @@
       }
       return this.client;
     },
+    async notifyHomeworkReport(lessonId, submittedAt) {
+      if (!this.isConfigured() || config.features?.telegramNotifications === false) {
+        return { ok: false, skipped: true, reason: 'telegram_disabled' };
+      }
+      if (!this.client) await this.init();
+      const { data, error } = await this.client.functions.invoke('notify-telegram', {
+        body: {
+          kind: 'homework_report',
+          studentId,
+          lessonId,
+          submittedAt
+        }
+      });
+      if (error) throw error;
+      if (!data?.ok) throw new Error(data?.error || 'Не удалось отправить Telegram-отчёт');
+      return data;
+    },
     queue(section) {
       if (!this.isConfigured() || !this.client || this.syncing) return;
       window.clearTimeout(this.timers[section]);
@@ -1570,9 +1587,10 @@
       byId('submit-lesson').disabled = false;
     });
     const submitLessonButton = byId('submit-lesson');
-    if (submitLessonButton) submitLessonButton.addEventListener('click', () => {
+    if (submitLessonButton) submitLessonButton.addEventListener('click', async () => {
       const updatedProgress = window.ProgressService.loadHomeworkProgress();
-      updatedProgress.submissions[lesson.id] = { savedAt: new Date().toISOString(), status: CloudService.isConfigured() ? 'pending-cloud' : 'local' };
+      const submittedAt = new Date().toISOString();
+      updatedProgress.submissions[lesson.id] = { savedAt: submittedAt, status: CloudService.isConfigured() ? 'pending-cloud' : 'local' };
       if (!updatedProgress.completedIds.includes(lesson.id)) updatedProgress.completedIds.push(lesson.id);
       window.ProgressService.saveHomeworkProgress(updatedProgress);
       showToast(CloudService.isConfigured() ? 'Ответы сохранены и отправляются в Supabase.' : 'Ответы сохранены на устройстве.');
@@ -1581,6 +1599,18 @@
       if (actions) {
         actions.classList.add('lesson-completed-panel');
         actions.innerHTML = `<div id="lesson-result" aria-live="polite"><h3>Работа отправлена</h3><p class="muted">Ответы сохранены и больше не редактируются.</p></div><div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Работа выполнена</h3><p class="muted">Ответы проверены и заблокированы. Изменить или стереть их уже нельзя.</p></div></div>`;
+      }
+
+      if (CloudService.isConfigured()) {
+        try {
+          window.clearTimeout(CloudService.timers.homework);
+          await window.ProgressService.syncToCloud('homework');
+          const notification = await CloudService.notifyHomeworkReport(lesson.id, submittedAt);
+          if (!notification?.skipped) showToast('Отчёт о домашней работе отправлен в Telegram.');
+        } catch (error) {
+          console.error('Ошибка отправки Telegram-отчёта:', error);
+          showToast('Работа сохранена на устройстве, но облачная отправка или Telegram-отчёт не завершены.');
+        }
       }
     });
   }
