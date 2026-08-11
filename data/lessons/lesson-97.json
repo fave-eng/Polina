@@ -1,0 +1,45 @@
+{
+  "id": "lesson-97",
+  "number": 97,
+  "title": "ТЕСТ: Telegram-отчёт после исправления",
+  "subtitle": "Проверка Supabase и отправки отчёта в Telegram",
+  "status": "available",
+  "publishedAt": "2026-08-11",
+  "totalPoints": 1,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Test",
+      "title": "Проверка после исправления",
+      "text": "Временное тестовое задание. Оно не добавляется в общий список домашних работ."
+    },
+    {
+      "type": "exercise",
+      "id": "l97-report-test",
+      "title": "1. Введите TEST в поле ниже.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "Проверка отправки отчёта: ",
+          "input": "gaps",
+          "segments": [
+            "Введите слово ",
+            "."
+          ],
+          "answers": [
+            [
+              "TEST",
+              "test",
+              "Test"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

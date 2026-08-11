@@ -759,7 +759,10 @@
             score_correct: total > 0 ? correct : null,
             score_total: total > 0 ? total : null,
             score_percent: total > 0 ? safePercent(correct, total) : null,
-            checked_at: result.checkedAt || null,
+            // Supabase constraint: draft rows must not carry final dates.
+            // Keep checkedAt locally while the work is still a draft; write both
+            // final dates only when the homework is actually submitted.
+            checked_at: submission ? (result.checkedAt || submission.savedAt || null) : null,
             submitted_at: submission?.savedAt || null
           };
         });
