@@ -610,10 +610,46 @@
         submissions: value.submissions && typeof value.submissions === 'object' ? value.submissions : {}
       };
     },
-    saveHomeworkProgress(progress) {
+    saveHomeworkProgress(progress, options = {}) {
       const ok = storage.write(key('homework'), progress || {});
-      CloudService.queue('homework');
+      if (options.sync !== false) CloudService.queue('homework');
       return ok;
+    },
+    async syncHomeworkLessonToCloud(lessonId, options = {}) {
+      if (!CloudService.isConfigured()) return false;
+      if (!CloudService.client) await CloudService.init();
+
+      const progress = this.loadHomeworkProgress();
+      const result = progress.results[lessonId] || {};
+      const lesson = HOMEWORK_DATA.find((item) => item.id === lessonId) || {};
+      const total = Number(result.total || 0);
+      const correct = Number(result.correct || 0);
+      const submittedAt = options.submittedAt || null;
+
+      const row = {
+        student_id: studentId,
+        student_name: safeText(student.nameRu || student.nameEn),
+        lesson_id: lessonId,
+        lesson_title: safeText(options.lessonTitle || lesson.title, lessonId),
+        status: submittedAt ? 'submitted' : 'draft',
+        answers: result.answers && typeof result.answers === 'object' ? result.answers : {},
+        legacy_answers: result.legacyAnswers && typeof result.legacyAnswers === 'object' ? result.legacyAnswers : null,
+        migrated_from_legacy: Boolean(result.migratedAt || result.legacyAnswers),
+        score_correct: total > 0 ? correct : null,
+        score_total: total > 0 ? total : null,
+        score_percent: total > 0 ? safePercent(correct, total) : null,
+        // Final dates are deliberately identical on submit. This satisfies the
+        // database final-date invariant regardless of whether it compares order
+        // or only requires both values to be present.
+        checked_at: submittedAt,
+        submitted_at: submittedAt
+      };
+
+      const { error } = await CloudService.client
+        .from(tables.homework)
+        .upsert(row, { onConflict: 'student_id,lesson_id' });
+      if (error) throw error;
+      return true;
     },
     loadVocabularyProgress() {
       return normalizeVocabularyProgress(storage.read(key('vocabulary'), {}));
@@ -759,11 +795,11 @@
             score_correct: total > 0 ? correct : null,
             score_total: total > 0 ? total : null,
             score_percent: total > 0 ? safePercent(correct, total) : null,
-            // Supabase constraint: draft rows must not carry final dates.
-            // Keep checkedAt locally while the work is still a draft; write both
-            // final dates only when the homework is actually submitted.
-            checked_at: submission ? (result.checkedAt || submission.savedAt || null) : null,
-            submitted_at: submission?.savedAt || null
+            // Draft rows have no final dates. For submitted rows use one
+            // canonical final timestamp for both columns so old local records
+            // cannot violate the database final-date constraint during a batch sync.
+            checked_at: submission ? (submission.savedAt || result.checkedAt || null) : null,
+            submitted_at: submission ? (submission.savedAt || result.checkedAt || null) : null
           };
         });
         if (rows.length) {
@@ -1586,35 +1622,90 @@
         migratedAt: savedResult?.migratedAt || null,
         checkedAt: new Date().toISOString()
       };
-      window.ProgressService.saveHomeworkProgress(updatedProgress);
+      window.ProgressService.saveHomeworkProgress(updatedProgress, { sync: false });
       byId('submit-lesson').disabled = false;
+
+      // Save only the current draft to Supabase. A broken legacy row from a
+      // different lesson must not prevent this lesson from being checked.
+      if (CloudService.isConfigured()) {
+        window.ProgressService.syncHomeworkLessonToCloud(lesson.id, { lessonTitle: lesson.title }).catch((error) => {
+          console.error('Ошибка облачного сохранения текущего черновика:', error);
+          showToast(`Не удалось сохранить черновик в Supabase: ${error.message || error}`);
+        });
+      }
     });
     const submitLessonButton = byId('submit-lesson');
     if (submitLessonButton) submitLessonButton.addEventListener('click', async () => {
       const updatedProgress = window.ProgressService.loadHomeworkProgress();
       const submittedAt = new Date().toISOString();
-      updatedProgress.submissions[lesson.id] = { savedAt: submittedAt, status: CloudService.isConfigured() ? 'pending-cloud' : 'local' };
-      if (!updatedProgress.completedIds.includes(lesson.id)) updatedProgress.completedIds.push(lesson.id);
-      window.ProgressService.saveHomeworkProgress(updatedProgress);
-      showToast(CloudService.isConfigured() ? 'Ответы сохранены и отправляются в Supabase.' : 'Ответы сохранены на устройстве.');
+
+      // Store the pending submission locally without starting the old batch
+      // sync. The current lesson is written to Supabase explicitly below.
+      updatedProgress.submissions[lesson.id] = {
+        savedAt: submittedAt,
+        status: CloudService.isConfigured() ? 'pending-cloud' : 'local'
+      };
+      if (!updatedProgress.completedIds.includes(lesson.id)) {
+        updatedProgress.completedIds.push(lesson.id);
+      }
+      window.ProgressService.saveHomeworkProgress(updatedProgress, { sync: false });
+
+      if (CloudService.isConfigured()) {
+        try {
+          window.clearTimeout(CloudService.timers.homework);
+          await window.ProgressService.syncHomeworkLessonToCloud(lesson.id, { submittedAt, lessonTitle: lesson.title });
+
+          // Cloud save succeeded: now the submission is final and may be locked.
+          const confirmedProgress = window.ProgressService.loadHomeworkProgress();
+          confirmedProgress.submissions[lesson.id] = { savedAt: submittedAt, status: 'cloud' };
+          if (!confirmedProgress.completedIds.includes(lesson.id)) {
+            confirmedProgress.completedIds.push(lesson.id);
+          }
+          window.ProgressService.saveHomeworkProgress(confirmedProgress, { sync: false });
+
+          lockCompletedLesson(root);
+          const actions = root.querySelector('.lesson-actions');
+          if (actions) {
+            actions.classList.add('lesson-completed-panel');
+            actions.innerHTML = `<div id="lesson-result" aria-live="polite"><h3>Работа отправлена</h3><p class="muted">Ответы сохранены и больше не редактируются.</p></div><div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Работа выполнена</h3><p class="muted">Ответы проверены и заблокированы. Изменить или стереть их уже нельзя.</p></div></div>`;
+          }
+
+          showToast('Работа сохранена в Supabase.');
+
+          try {
+            const notification = await CloudService.notifyHomeworkReport(lesson.id, submittedAt);
+            if (!notification?.skipped) {
+              showToast('Отчёт о домашней работе отправлен в Telegram.');
+            }
+          } catch (telegramError) {
+            console.error('Ошибка Telegram-отчёта:', telegramError);
+            showToast(`Работа сохранена в Supabase, но Telegram-отчёт не отправлен: ${telegramError.message || telegramError}`);
+          }
+        } catch (error) {
+          console.error('Ошибка облачной отправки домашней работы:', error);
+
+          // Do not leave a failed submission permanently locked. Keep the
+          // checked answers, but roll back the local final-submission marker so
+          // the user can press "Send" again after the problem is fixed.
+          const retryProgress = window.ProgressService.loadHomeworkProgress();
+          delete retryProgress.submissions[lesson.id];
+          retryProgress.completedIds = retryProgress.completedIds.filter((id) => id !== lesson.id);
+          window.ProgressService.saveHomeworkProgress(retryProgress, { sync: false });
+
+          showToast(`Не удалось отправить работу в Supabase: ${error.message || error}. Можно повторить отправку.`);
+          submitLessonButton.disabled = false;
+        }
+        return;
+      }
+
+      // Local-only mode.
       lockCompletedLesson(root);
       const actions = root.querySelector('.lesson-actions');
       if (actions) {
         actions.classList.add('lesson-completed-panel');
         actions.innerHTML = `<div id="lesson-result" aria-live="polite"><h3>Работа отправлена</h3><p class="muted">Ответы сохранены и больше не редактируются.</p></div><div class="completed-lock-message"><span class="completed-lock-icon" aria-hidden="true">🔒</span><div><h3>Работа выполнена</h3><p class="muted">Ответы проверены и заблокированы. Изменить или стереть их уже нельзя.</p></div></div>`;
       }
-
-      if (CloudService.isConfigured()) {
-        try {
-          window.clearTimeout(CloudService.timers.homework);
-          await window.ProgressService.syncToCloud('homework');
-          const notification = await CloudService.notifyHomeworkReport(lesson.id, submittedAt);
-          if (!notification?.skipped) showToast('Отчёт о домашней работе отправлен в Telegram.');
-        } catch (error) {
-          console.error('Ошибка отправки Telegram-отчёта:', error);
-          showToast('Работа сохранена на устройстве, но облачная отправка или Telegram-отчёт не завершены.');
-        }
-      }
+      showToast('Ответы сохранены на устройстве.');
     });
   }
 
