@@ -549,6 +549,41 @@
     return { words, topics };
   }
 
+  function migrateRenumberedLessonProgress() {
+    const marker = key('lesson_11_to_10_migration_v1');
+    if (window.localStorage.getItem(marker)) return;
+
+    const oldId = 'lesson-11';
+    const newId = 'lesson-10';
+    const publishedIds = new Set(HOMEWORK_DATA.map((item) => item.id));
+
+    // Выполняем перенос только для версии курса, где lesson-10 опубликован,
+    // а lesson-11 отсутствует. Это не затронет будущий настоящий Lesson 11.
+    if (publishedIds.has(newId) && !publishedIds.has(oldId)) {
+      const homework = storage.read(key('homework'), { completedIds: [], results: {}, submissions: {} });
+      homework.results = homework.results && typeof homework.results === 'object' ? homework.results : {};
+      homework.submissions = homework.submissions && typeof homework.submissions === 'object' ? homework.submissions : {};
+      homework.completedIds = unique(homework.completedIds);
+
+      if (homework.results[oldId] && !homework.results[newId]) {
+        homework.results[newId] = homework.results[oldId];
+      }
+      if (homework.submissions[oldId] && !homework.submissions[newId]) {
+        homework.submissions[newId] = homework.submissions[oldId];
+      }
+      if (homework.completedIds.includes(oldId) && !homework.completedIds.includes(newId)) {
+        homework.completedIds.push(newId);
+      }
+
+      delete homework.results[oldId];
+      delete homework.submissions[oldId];
+      homework.completedIds = unique(homework.completedIds.filter((id) => id !== oldId));
+      storage.write(key('homework'), homework);
+    }
+
+    window.localStorage.setItem(marker, new Date().toISOString());
+  }
+
   window.ProgressService = {
     loadHomeworkProgress() {
       const value = storage.read(key('homework'), {});
@@ -700,7 +735,7 @@
             student_name: safeText(student.nameRu || student.nameEn),
             lesson_id: lessonId,
             lesson_title: safeText(lesson.title, lessonId),
-            status: submission ? 'submitted' : 'checked',
+            status: submission ? 'submitted' : 'draft',
             answers: result.answers && typeof result.answers === 'object' ? result.answers : {},
             legacy_answers: result.legacyAnswers && typeof result.legacyAnswers === 'object' ? result.legacyAnswers : null,
             migrated_from_legacy: Boolean(result.migratedAt || result.legacyAnswers),
@@ -1910,6 +1945,7 @@
     markNavigation();
     try {
       await loadHomeworkData();
+      migrateRenumberedLessonProgress();
     } catch (error) {
       console.error('Ошибка загрузки каталога уроков:', error);
       HOMEWORK_DATA = [];
