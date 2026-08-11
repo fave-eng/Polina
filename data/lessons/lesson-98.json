@@ -1,0 +1,45 @@
+{
+  "id": "lesson-98",
+  "number": 98,
+  "title": "ТЕСТ: Telegram-отчёт",
+  "subtitle": "Повторная проверка отправки отчёта о домашней работе",
+  "status": "available",
+  "publishedAt": "2026-08-11",
+  "totalPoints": 1,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Test",
+      "title": "Проверка отправки отчёта",
+      "text": "Временное тестовое задание. Оно не добавляется в общий список домашних работ."
+    },
+    {
+      "type": "exercise",
+      "id": "l98-report-test",
+      "title": "1. Введите TEST в поле ниже.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "Проверка отправки отчёта: ",
+          "input": "gaps",
+          "segments": [
+            "Введите слово ",
+            "."
+          ],
+          "answers": [
+            [
+              "TEST",
+              "test",
+              "Test"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}
