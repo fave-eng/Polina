@@ -612,6 +612,136 @@ body[data-view="lesson"] #lesson-root {
   text-wrap: pretty;
 }
 
+
+/* Article-style heading matching */
+.article-heading-card {
+  overflow: hidden;
+}
+
+.article-heading-title h3 {
+  max-width: 760px;
+  font-size: clamp(1.12rem, 3.6vw, 1.35rem);
+  line-height: 1.4;
+}
+
+.article-lead {
+  padding: 22px 26px;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  color: #1e293b;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.article-heading-sections {
+  display: grid;
+  gap: 0;
+  padding: 0 26px;
+  background: #fff;
+}
+
+.article-heading-section.exercise-item {
+  display: grid;
+  grid-template-columns: minmax(190px, 230px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  margin: 0;
+  padding: 25px 0;
+  border: 0;
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.article-heading-section.exercise-item:last-child {
+  border-bottom: 0;
+}
+
+.article-heading-section.exercise-item:focus-within {
+  transform: none;
+  box-shadow: none;
+}
+
+.article-heading-section.exercise-item.is-correct,
+.article-heading-section.exercise-item.is-wrong {
+  border-color: #e2e8f0;
+  background: transparent;
+}
+
+.article-heading-control {
+  position: relative;
+  padding-left: 46px;
+}
+
+.article-heading-control .reading-number {
+  top: 0;
+  left: 0;
+}
+
+.article-heading-control label {
+  display: block;
+  margin-bottom: 7px;
+  color: #64748b;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.article-heading-control select {
+  width: 100%;
+  min-width: 0;
+}
+
+.article-heading-copy {
+  margin: 0;
+  color: #334155;
+  font-size: 1rem;
+  line-height: 1.82;
+  text-wrap: pretty;
+}
+
+.article-heading-section .feedback {
+  grid-column: 2;
+  margin-top: -10px;
+}
+
+.article-glossary {
+  margin: 0 26px 26px;
+  padding: 18px 20px;
+  border: 1px solid #dbe3ef;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.article-glossary > strong {
+  display: block;
+  margin-bottom: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: .86rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.article-glossary div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 18px;
+}
+
+.article-glossary p {
+  margin: 0;
+  color: #475569;
+  font-size: .9rem;
+  line-height: 1.55;
+}
+
+.mixed-gaps .gap-select {
+  min-width: 130px;
+}
+
 /* Exercises */
 .exercise-card {
   padding: 0;
@@ -1381,3 +1511,50 @@ body[data-view="lesson"] #lesson-root {
 .inline-choice-separator { color: var(--muted); }
 .inline-choice-group.is-correct-input { background: #f0fdf4; }
 .inline-choice-group.is-wrong-input { background: #fff7f7; }
+
+
+@media (max-width: 720px) {
+  .article-heading-title {
+    align-items: flex-start;
+  }
+
+  .article-heading-title .reading-count {
+    display: none;
+  }
+
+  .article-lead {
+    padding: 19px 17px;
+  }
+
+  .article-heading-sections {
+    padding: 0 17px;
+  }
+
+  .article-heading-section.exercise-item {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 21px 0;
+  }
+
+  .article-heading-control {
+    padding-left: 44px;
+  }
+
+  .article-heading-section .feedback {
+    grid-column: 1;
+    margin-top: -4px;
+  }
+
+  .article-glossary {
+    margin: 0 17px 20px;
+  }
+
+  .article-glossary div {
+    grid-template-columns: 1fr;
+  }
+
+  .mixed-gaps .gap-select {
+    min-width: 120px;
+    max-width: 100%;
+  }
+}

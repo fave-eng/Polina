@@ -2,7 +2,7 @@
   "id": "lesson-12",
   "number": 12,
   "title": "Time Off · Holiday problems, travel & future plans",
-  "subtitle": "6 core exercises: holiday problems, reading, weather, present perfect questions, future plans and an email",
+  "subtitle": "6 core exercises with comfortable dropdowns, article-style reading and focused grammar practice",
   "status": "available",
   "vocabularyId": "vocab-lesson-12",
   "grammarIds": [
@@ -41,7 +41,7 @@
           "id": "1",
           "number": 1,
           "prompt": "",
-          "input": "gaps",
+          "input": "mixed-gaps",
           "scoreEachGap": true,
           "segments": [
             "A: Did you have a good holiday?\nB: Not really. We came home early.\nA: How come?\nB: We all ",
@@ -58,13 +58,39 @@
               "spoilt"
             ],
             "trip"
+          ],
+          "gapTypes": [
+            "text",
+            "select",
+            "text",
+            "select"
+          ],
+          "choices": [
+            null,
+            [
+              "passport",
+              "trip",
+              "flight",
+              "camera",
+              "a fortune",
+              "upset stomach"
+            ],
+            null,
+            [
+              "passport",
+              "trip",
+              "flight",
+              "camera",
+              "a fortune",
+              "upset stomach"
+            ]
           ]
         },
         {
           "id": "2",
           "number": 2,
           "prompt": "",
-          "input": "gaps",
+          "input": "mixed-gaps",
           "scoreEachGap": true,
           "segments": [
             "A: I’m exhausted. The journey back was a nightmare.\nB: How come?\nA: Well we ",
@@ -78,13 +104,39 @@
             "flight",
             "charged",
             "a fortune"
+          ],
+          "gapTypes": [
+            "text",
+            "select",
+            "text",
+            "select"
+          ],
+          "choices": [
+            null,
+            [
+              "passport",
+              "trip",
+              "flight",
+              "camera",
+              "a fortune",
+              "upset stomach"
+            ],
+            null,
+            [
+              "passport",
+              "trip",
+              "flight",
+              "camera",
+              "a fortune",
+              "upset stomach"
+            ]
           ]
         },
         {
           "id": "3",
           "number": 3,
           "prompt": "",
-          "input": "gaps",
+          "input": "mixed-gaps",
           "scoreEachGap": true,
           "segments": [
             "A: You seem a bit fed up.\nB: Yeah well, I’ve just had the holiday from hell.\nA: What happened?\nB: Well, I expected a nice relaxing week, but I spent the first night at the police station because someone ",
@@ -98,6 +150,32 @@
             "passport",
             "lost",
             "camera"
+          ],
+          "gapTypes": [
+            "text",
+            "select",
+            "text",
+            "select"
+          ],
+          "choices": [
+            null,
+            [
+              "passport",
+              "trip",
+              "flight",
+              "camera",
+              "a fortune",
+              "upset stomach"
+            ],
+            null,
+            [
+              "passport",
+              "trip",
+              "flight",
+              "camera",
+              "a fortune",
+              "upset stomach"
+            ]
           ]
         }
       ]
@@ -111,22 +189,15 @@
     {
       "type": "exercise",
       "id": "l12-reading-4",
+      "layout": "article-headings",
       "title": "4. Read the webpage quickly and match the headings to the paragraphs. There is one heading that you don’t need.",
-      "wordBankLabel": "Headings",
-      "wordBank": [
-        "a But is it safe?",
-        "b How much does it cost?",
-        "c How long do people stay?",
-        "d Who are these couch-surfers?",
-        "e So what is couch-surfing, exactly?",
-        "f What are the disadvantages?",
-        "g What are the benefits?"
-      ],
+      "articleLead": "Love to travel but hate paying for hotels? Too old for a youth hostel? Then couch-surfing might be right up your street. Check out these FAQs:",
       "items": [
         {
           "id": "1",
-          "number": 1,
-          "prompt": "Paragraph 1",
+          "number": "1",
+          "prompt": "",
+          "articleText": "Couch-surfing is a network of people who offer accommodation to strangers travelling in their area. It’s simple. When you ‘surf a couch’ you are a guest in someone’s house and they are your host. You don’t pay for the room or couch, and your hosts will get the same favour back when they travel. They may stay with you or with another person in the network.",
           "input": "select",
           "options": [
             "a But is it safe?",
@@ -141,8 +212,9 @@
         },
         {
           "id": "2",
-          "number": 2,
-          "prompt": "Paragraph 2",
+          "number": "2",
+          "prompt": "",
+          "articleText": "Of course, there are smaller numbers of surfers in remote locations, but the network covers every continent (including Antarctica!) The top five couch-surfing nations are the United States, Germany, France, Canada and the United Kingdom. The average surfer is 27 years old and just over half the surfers are male.",
           "input": "select",
           "options": [
             "a But is it safe?",
@@ -157,8 +229,9 @@
         },
         {
           "id": "3",
-          "number": 3,
-          "prompt": "Paragraph 3",
+          "number": "3",
+          "prompt": "",
+          "articleText": "Couch-surfing was created so that everyone can travel the world and make meaningful connections, but staying with your host is always free. Many surfers like to take their hosts a gift or treat them to a meal to say thank you. They also thank people in small ways like doing the washing-up or sending a postcard from their next destination.",
           "input": "select",
           "options": [
             "a But is it safe?",
@@ -173,8 +246,9 @@
         },
         {
           "id": "4",
-          "number": 4,
-          "prompt": "Paragraph 4",
+          "number": "4",
+          "prompt": "",
+          "articleText": "Surfers get the advantage of staying with someone who knows the area like the back of their hand. They can tell how not to get ripped off, or what to do when it’s pouring with rain. And when people of different cultures meet, who better than a local to help with social skills? Knowing whether to shake hands, bow, or kiss a person on the cheek can be very confusing!",
           "input": "select",
           "options": [
             "a But is it safe?",
@@ -189,8 +263,9 @@
         },
         {
           "id": "5",
-          "number": 5,
-          "prompt": "Paragraph 5",
+          "number": "5",
+          "prompt": "",
+          "articleText": "It’s entirely up to the host. Some surfers come for a single night, or even just for dinner. The important thing is not to outstay your welcome, so surfers usually check with the host first. In the words of one host, ‘We want surfers to be comfortable, but not too comfortable. Staying two or three nights is cool; longer gets a bit awkward.’ And remember that in Germany they say ‘Guests are like fish – after three days they start to smell ...’",
           "input": "select",
           "options": [
             "a But is it safe?",
@@ -205,8 +280,9 @@
         },
         {
           "id": "6",
-          "number": 6,
-          "prompt": "Paragraph 6",
+          "number": "6",
+          "prompt": "",
+          "articleText": "Well, there are always risks in life, but the majority of surfers never have any problems. Most travel networking sites have their own security systems. Hosts and surfers have to be registered and prove that they are who they say they are. There are reviews posted on the Internet and so surfers can select hosts with a good track record. Mostly, it’s a question of common sense and avoiding anyone who sounds odd.",
           "input": "select",
           "options": [
             "a But is it safe?",
@@ -219,50 +295,25 @@
           ],
           "answer": 0
         }
-      ]
-    },
-    {
-      "type": "reading",
-      "id": "l12-couch-reading",
-      "title": "Love to travel but hate paying for hotels? Too old for a youth hostel? Then couch-surfing might be right up your street. Check out these FAQs:",
-      "sections": [
+      ],
+      "glossary": [
         {
-          "number": "1",
-          "heading": "",
-          "text": "Couch-surfing is a network of people who offer accommodation to strangers travelling in their area. It’s simple. When you ‘surf a couch’ you are a guest in someone’s house and they are your host. You don’t pay for the room or couch, and your hosts will get the same favour back when they travel. They may stay with you or with another person in the network."
+          "term": "FAQs",
+          "definition": "frequently asked questions"
         },
         {
-          "number": "2",
-          "heading": "",
-          "text": "Of course, there are smaller numbers of surfers in remote locations, but the network covers every continent (including Antarctica!) The top five couch-surfing nations are the United States, Germany, France, Canada and the United Kingdom. The average surfer is 27 years old and just over half the surfers are male."
+          "term": "remote",
+          "definition": "hard to get to"
         },
         {
-          "number": "3",
-          "heading": "",
-          "text": "Couch-surfing was created so that everyone can travel the world and make meaningful connections, but staying with your host is always free. Many surfers like to take their hosts a gift or treat them to a meal to say thank you. They also thank people in small ways like doing the washing-up or sending a postcard from their next destination."
+          "term": "common sense",
+          "definition": "the ability to make sensible decisions"
         },
         {
-          "number": "4",
-          "heading": "",
-          "text": "Surfers get the advantage of staying with someone who knows the area like the back of their hand. They can tell how not to get ripped off, or what to do when it’s pouring with rain. And when people of different cultures meet, who better than a local to help with social skills? Knowing whether to shake hands, bow, or kiss a person on the cheek can be very confusing!"
-        },
-        {
-          "number": "5",
-          "heading": "",
-          "text": "It’s entirely up to the host. Some surfers come for a single night, or even just for dinner. The important thing is not to outstay your welcome, so surfers usually check with the host first. In the words of one host, ‘We want surfers to be comfortable, but not too comfortable. Staying two or three nights is cool; longer gets a bit awkward.’ And remember that in Germany they say ‘Guests are like fish – after three days they start to smell ...’"
-        },
-        {
-          "number": "6",
-          "heading": "",
-          "text": "Well, there are always risks in life, but the majority of surfers never have any problems. Most travel networking sites have their own security systems. Hosts and surfers have to be registered and prove that they are who they say they are. There are reviews posted on the Internet and so surfers can select hosts with a good track record. Mostly, it’s a question of common sense and avoiding anyone who sounds odd."
+          "term": "odd",
+          "definition": "strange or unusual"
         }
       ]
-    },
-    {
-      "type": "info",
-      "id": "l12-reading-glossary",
-      "title": "Glossary",
-      "text": "FAQs: frequently asked questions\nremote: hard to get to\ncommon sense: the ability to make sensible decisions\nodd: strange or unusual"
     },
     {
       "type": "section",
@@ -291,7 +342,7 @@
           "id": "1",
           "number": 1,
           "prompt": "",
-          "input": "gaps",
+          "input": "choice-gaps",
           "scoreEachGap": true,
           "segments": [
             "A: Have you heard the weather forecast?\nB: Yes, apparently it’s going to ",
@@ -299,15 +350,37 @@
             " the rain."
           ],
           "answers": [
-            "pour down",
-            "keep out of"
+            1,
+            6
+          ],
+          "choices": [
+            [
+              "wet",
+              "pour down",
+              "drop",
+              "heat",
+              "reached",
+              "clear up",
+              "keep out of",
+              "humid"
+            ],
+            [
+              "wet",
+              "pour down",
+              "drop",
+              "heat",
+              "reached",
+              "clear up",
+              "keep out of",
+              "humid"
+            ]
           ]
         },
         {
           "id": "2",
           "number": 2,
           "prompt": "",
-          "input": "gaps",
+          "input": "choice-gaps",
           "scoreEachGap": true,
           "segments": [
             "A: What’s the forecast for the weekend?\nB: Er, Saturday morning is supposed to be ",
@@ -315,15 +388,37 @@
             " in the afternoon.\nA: Phew! That’s a relief. I’m going to a wedding at 2:30."
           ],
           "answers": [
-            "wet",
-            "clear up"
+            0,
+            5
+          ],
+          "choices": [
+            [
+              "wet",
+              "pour down",
+              "drop",
+              "heat",
+              "reached",
+              "clear up",
+              "keep out of",
+              "humid"
+            ],
+            [
+              "wet",
+              "pour down",
+              "drop",
+              "heat",
+              "reached",
+              "clear up",
+              "keep out of",
+              "humid"
+            ]
           ]
         },
         {
           "id": "3",
           "number": 3,
           "prompt": "",
-          "input": "gaps",
+          "input": "choice-gaps",
           "scoreEachGap": true,
           "segments": [
             "A: I can’t stand this ",
@@ -332,23 +427,67 @@
             " that I can’t sleep.\nB: Yeah, we need a storm to clear the air."
           ],
           "answers": [
-            "heat",
-            "reached",
-            "humid"
+            3,
+            4,
+            7
+          ],
+          "choices": [
+            [
+              "wet",
+              "pour down",
+              "drop",
+              "heat",
+              "reached",
+              "clear up",
+              "keep out of",
+              "humid"
+            ],
+            [
+              "wet",
+              "pour down",
+              "drop",
+              "heat",
+              "reached",
+              "clear up",
+              "keep out of",
+              "humid"
+            ],
+            [
+              "wet",
+              "pour down",
+              "drop",
+              "heat",
+              "reached",
+              "clear up",
+              "keep out of",
+              "humid"
+            ]
           ]
         },
         {
           "id": "4",
           "number": 4,
           "prompt": "",
-          "input": "gaps",
+          "input": "choice-gaps",
           "scoreEachGap": true,
           "segments": [
             "A: What are you up to at the weekend?\nB: It depends on the weather.\nA: Apparently, it’s going to be freezing. They say it could ",
             " to minus 5°.\nB: Time to stay in with a good book, I think."
           ],
           "answers": [
-            "drop"
+            2
+          ],
+          "choices": [
+            [
+              "wet",
+              "pour down",
+              "drop",
+              "heat",
+              "reached",
+              "clear up",
+              "keep out of",
+              "humid"
+            ]
           ]
         }
       ]
@@ -385,7 +524,7 @@
           "id": "1b",
           "number": "1B",
           "prompt": "B: No, never. I love / I’d love to, though.",
-          "input": "single",
+          "input": "select",
           "options": [
             "I love",
             "I’d love to"
@@ -415,7 +554,7 @@
           "id": "2b",
           "number": "2B",
           "prompt": "B: No, I’ve ever / never really fancied it.",
-          "input": "single",
+          "input": "select",
           "options": [
             "I’ve ever",
             "never"
@@ -442,7 +581,7 @@
           "id": "3b",
           "number": "3B",
           "prompt": "B: Yes, lots / several times.",
-          "input": "single",
+          "input": "select",
           "options": [
             "lots",
             "several times"
@@ -469,7 +608,7 @@
           "id": "4b",
           "number": "4B",
           "prompt": "B: No, never. It’s supposed be / to be delicious.",
-          "input": "single",
+          "input": "select",
           "options": [
             "supposed be",
             "to be"
@@ -496,7 +635,7 @@
           "id": "5b",
           "number": "5B",
           "prompt": "B: No, never. Have you? / Did you? I’ve heard it’s quite difficult.",
-          "input": "single",
+          "input": "select",
           "options": [
             "Have you?",
             "Did you?"
@@ -523,7 +662,7 @@
           "id": "6b",
           "number": "6B",
           "prompt": "B: Yes, but I wouldn’t go there if I were you. It’s not worth it / of it.",
-          "input": "single",
+          "input": "select",
           "options": [
             "it",
             "of it"
@@ -550,7 +689,7 @@
           "id": "7b",
           "number": "7B",
           "prompt": "B: No, never. What does / is it like?",
-          "input": "single",
+          "input": "select",
           "options": [
             "does",
             "is"
@@ -580,7 +719,7 @@
           "id": "8b",
           "number": "8B",
           "prompt": "B: Yes, it’s wonderful. You should to go / go.",
-          "input": "single",
+          "input": "select",
           "options": [
             "to go",
             "go"
@@ -605,7 +744,7 @@
           "id": "1",
           "number": 1,
           "prompt": "",
-          "input": "inline-choice-gaps",
+          "input": "choice-gaps",
           "scoreEachGap": true,
           "segments": [
             "A: Where ",
@@ -649,7 +788,7 @@
           "id": "2",
           "number": 2,
           "prompt": "",
-          "input": "inline-choice-gaps",
+          "input": "choice-gaps",
           "scoreEachGap": true,
           "segments": [
             "A: It’s my day off today and ",
@@ -681,7 +820,7 @@
           "id": "3",
           "number": 3,
           "prompt": "",
-          "input": "inline-choice-gaps",
+          "input": "choice-gaps",
           "scoreEachGap": true,
           "segments": [
             "A: I’ve booked an apartment in Barcelona this year. ",

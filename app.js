@@ -1210,11 +1210,20 @@
       const segments = Array.isArray(item.segments) ? item.segments : [];
       const segmentMarkup = (value) => escapeHtml(value || '').replaceAll('\n', '<br>');
       control = `<div class="sentence-gaps choice-gaps" aria-label="${prompt}">${choices.map((options, gapIndex) => `${gapIndex < segments.length ? `<span>${segmentMarkup(segments[gapIndex])}</span>` : ''}<select class="gap-select" data-gap-index="${gapIndex}" aria-label="Gap ${gapIndex + 1}"><option value="">Choose</option>${(options || []).map((option, optionIndex) => `<option value="${optionIndex}">${escapeHtml(option)}</option>`).join('')}</select>`).join('')}${segments.length > choices.length ? `<span>${segmentMarkup(segments[segments.length - 1])}</span>` : ''}</div>`;
-    } else if (item.input === 'gaps') {
+    } else if (item.input === 'mixed-gaps') {
       const answers = Array.isArray(item.answers) ? item.answers : [];
       const segments = Array.isArray(item.segments) ? item.segments : [];
+      const gapTypes = Array.isArray(item.gapTypes) ? item.gapTypes : [];
+      const choices = Array.isArray(item.choices) ? item.choices : [];
       const segmentMarkup = (value) => escapeHtml(value || '').replaceAll('\n', '<br>');
-      control = `<div class="sentence-gaps" aria-label="${prompt}">${answers.map((answer, gapIndex) => `${gapIndex < segments.length ? `<span>${segmentMarkup(segments[gapIndex])}</span>` : ''}<input class="gap-input" data-gap-index="${gapIndex}" aria-label="Gap ${gapIndex + 1}" autocomplete="off">`).join('')}${segments.length > answers.length ? `<span>${segmentMarkup(segments[segments.length - 1])}</span>` : ''}</div>`;
+      control = `<div class="sentence-gaps mixed-gaps" aria-label="${prompt}">${answers.map((answer, gapIndex) => {
+        const before = gapIndex < segments.length ? `<span>${segmentMarkup(segments[gapIndex])}</span>` : '';
+        if (gapTypes[gapIndex] === 'select') {
+          const options = Array.isArray(choices[gapIndex]) ? choices[gapIndex] : [];
+          return `${before}<select class="gap-select" data-gap-index="${gapIndex}" data-gap-kind="select" aria-label="Gap ${gapIndex + 1}"><option value="">Choose</option>${options.map((option) => `<option value="${escapeHtml(option)}">${escapeHtml(option)}</option>`).join('')}</select>`;
+        }
+        return `${before}<input class="gap-input" data-gap-index="${gapIndex}" data-gap-kind="text" aria-label="Gap ${gapIndex + 1}" autocomplete="off">`;
+      }).join('')}${segments.length > answers.length ? `<span>${segmentMarkup(segments[segments.length - 1])}</span>` : ''}</div>`;
     } else {
       control = `<input class="text-field" id="${escapeHtml(inputId)}" autocomplete="off" placeholder="${escapeHtml(item.placeholder || '')}">`;
     }
@@ -1239,6 +1248,34 @@
     if (block.type === 'reading') {
       const sectionCount = Array.isArray(block.sections) ? block.sections.length : 0;
       return `<article class="card lesson-block reading-card"><div class="reading-title"><div><span class="eyebrow">Reading</span><h3>${title}</h3></div>${sectionCount ? `<span class="reading-count">${sectionCount} sections</span>` : ''}</div>${renderReadingSections(block)}</article>`;
+    }
+    if (block.type === 'exercise' && block.layout === 'article-headings') {
+      const items = Array.isArray(block.items) ? block.items : [];
+      const articleLead = escapeHtml(block.articleLead || '');
+      const glossary = Array.isArray(block.glossary) ? block.glossary : [];
+      const articleRows = items.map((item, itemIndex) => {
+        const itemId = safeText(item.id, `${itemIndex + 1}`);
+        const inputId = `exercise-${id}-${itemId}`.replace(/[^a-zA-Z0-9_-]/g, '-');
+        const options = (item.options || []).map((option, optionIndex) => `<option value="${optionIndex}">${escapeHtml(option)}</option>`).join('');
+        return `<section class="article-heading-section exercise-item" data-exercise-item="${escapeHtml(itemId)}" data-input-type="select">
+          <div class="article-heading-control">
+            <span class="reading-number">${escapeHtml(item.number ?? itemIndex + 1)}</span>
+            <label for="${escapeHtml(inputId)}">Heading</label>
+            <select id="${escapeHtml(inputId)}"><option value="">Choose a heading</option>${options}</select>
+          </div>
+          <p class="article-heading-copy">${escapeHtml(item.articleText || item.prompt || '')}</p>
+          <div class="feedback" aria-live="polite"></div>
+        </section>`;
+      }).join('');
+      const glossaryMarkup = glossary.length
+        ? `<aside class="article-glossary"><strong>Glossary</strong><div>${glossary.map((entry) => `<p><b>${escapeHtml(entry.term || '')}:</b> ${escapeHtml(entry.definition || '')}</p>`).join('')}</div></aside>`
+        : '';
+      return `<article class="card lesson-block reading-card article-heading-card" data-task="${escapeHtml(id)}" data-type="exercise">
+        <div class="reading-title article-heading-title"><div><span class="eyebrow">Reading</span><h3>${title}</h3></div><span class="reading-count">${items.length} paragraphs</span></div>
+        ${articleLead ? `<div class="article-lead">${articleLead}</div>` : ''}
+        <div class="article-heading-sections">${articleRows}</div>
+        ${glossaryMarkup}
+      </article>`;
     }
     if (block.type === 'exercise') {
       const items = Array.isArray(block.items) ? block.items : [];
@@ -1326,6 +1363,14 @@
       actual = [...itemNode.querySelectorAll('[data-gap-index]')].map((select) => select.value);
       const expected = Array.isArray(item.answers) ? item.answers : [];
       gapResults = expected.map((answer, index) => actual[index] !== '' && Number(actual[index]) === Number(answer));
+      correct = gapResults.length > 0 && gapResults.every(Boolean);
+    } else if (inputType === 'mixed-gaps') {
+      actual = [...itemNode.querySelectorAll('[data-gap-index]')].map((control) => control.value);
+      const expected = Array.isArray(item.answers) ? item.answers : [];
+      gapResults = expected.map((answer, index) => {
+        const accepted = Array.isArray(answer) ? answer : [answer];
+        return accepted.some((variant) => normalizeAnswer(variant) === normalizeAnswer(actual[index]));
+      });
       correct = gapResults.length > 0 && gapResults.every(Boolean);
     } else if (inputType === 'gaps') {
       actual = [...itemNode.querySelectorAll('[data-gap-index]')].map((input) => input.value);
@@ -1441,7 +1486,7 @@
           const input = group.querySelector(`input[value="${CSS.escape(safeText(values[gapIndex]))}"]`);
           if (input) input.checked = true;
         });
-      } else if (inputType === 'gaps' || inputType === 'choice-gaps') {
+      } else if (inputType === 'gaps' || inputType === 'choice-gaps' || inputType === 'mixed-gaps') {
         const values = Array.isArray(value) ? value : [];
         itemNode.querySelectorAll('[data-gap-index]').forEach((input, gapIndex) => { input.value = safeText(values[gapIndex]); });
       } else {
