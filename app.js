@@ -1246,9 +1246,13 @@
         ? `<div class="word-bank" aria-label="${escapeHtml(block.wordBankLabel || 'Word bank')}"><strong class="word-bank-label">${escapeHtml(block.wordBankLabel || 'Word bank')}</strong>${block.wordBank.map((word) => `<span>${escapeHtml(word)}</span>`).join('')}</div>`
         : '';
       const player = block.audio ? `<audio class="audio-player" controls preload="none" src="${escapeHtml(block.audio)}"></audio>` : '';
+      const visual = block.visual && block.visual.src
+        ? `<figure class="exercise-visual${block.visual.sticky ? ' exercise-visual-sticky' : ''}"><img src="${escapeHtml(block.visual.src)}" alt="${escapeHtml(block.visual.alt || '')}"></figure>`
+        : '';
+      const exerciseItems = `<div class="exercise-items">${items.map((item, itemIndex) => renderExerciseItem(item, id, itemIndex)).join('')}</div>`;
       return `<article class="card lesson-block exercise-card" data-task="${escapeHtml(id)}" data-type="exercise">
         <div class="exercise-heading"><span class="eyebrow">Exercise</span><h3>${title}</h3>${block.instructions ? `<p class="muted exercise-instructions">${escapeHtml(block.instructions)}</p>` : ''}${player}${wordBank}</div>
-        <div class="exercise-items">${items.map((item, itemIndex) => renderExerciseItem(item, id, itemIndex)).join('')}</div>
+        ${visual ? `<div class="exercise-visual-layout">${visual}${exerciseItems}</div>` : exerciseItems}
       </article>`;
     }
     if (block.type === 'text' || block.type === 'translate') return `<article class="card lesson-block" data-task="${escapeHtml(id)}" data-type="${escapeHtml(block.type)}"><label class="field-label" for="${escapeHtml(id)}">${title}</label>${block.source ? `<p class="muted">${escapeHtml(block.source)}</p>` : ''}<input class="text-field" id="${escapeHtml(id)}" name="${escapeHtml(id)}" autocomplete="off"><div class="feedback"></div></article>`;

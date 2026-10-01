@@ -788,5 +788,645 @@ window.GRAMMAR_DATA = [
         ]
       }
     ]
+  },
+  {
+    "id": "b1-present-perfect-questions",
+    "order": 3,
+    "category": "lesson",
+    "lessonNumber": 12,
+    "lessonTitle": "Time Off · Holiday problems, travel & future plans",
+    "linkedLessonId": "lesson-12",
+    "title": "Present Perfect: вопросы об опыте",
+    "level": "B1",
+    "status": "available",
+    "page": "grammar-topic.html?id=b1-present-perfect-questions",
+    "explanation": "Present Perfect часто используется, когда мы спрашиваем о жизненном опыте до настоящего момента. Вопрос не называет законченный момент в прошлом: важен сам факт опыта, а не когда именно это произошло.",
+    "formula": "Have/Has + subject + past participle (V3)?",
+    "ruleCards": [
+      {
+        "title": "Опыт до настоящего момента",
+        "text": "Используем, чтобы спросить, происходило ли что-либо когда-нибудь в жизни человека до сейчас.",
+        "example": "Have you ever been to Spain?",
+        "translation": "Ты когда-нибудь был(а) в Испании?"
+      },
+      {
+        "title": "ever / never",
+        "text": "ever обычно встречается в вопросах со значением «когда-нибудь», never — в отрицательном по смыслу ответе без not.",
+        "example": "No, I’ve never tried it.",
+        "translation": "Нет, я никогда этого не пробовал(а)."
+      }
+    ],
+    "affirmative": "I/You/We/They have + V3. He/She/It has + V3. Например: I have visited Rome. She has tried surfing.",
+    "negative": "have not / haven’t + V3; has not / hasn’t + V3. Например: I haven’t been there. He hasn’t tried it.",
+    "question": "Have I/you/we/they + V3? Has he/she/it + V3? Короткие ответы: Yes, I have. / No, I haven’t. Yes, she has. / No, she hasn’t.",
+    "sections": [
+      {
+        "title": "Когда используем",
+        "items": [
+          "Жизненный опыт без указания конкретного законченного времени: Have you ever flown in a helicopter?",
+          "Недавний результат, который важен сейчас: I’ve lost my passport.",
+          "Период времени, который ещё не закончился: I’ve seen her twice this week."
+        ]
+      },
+      {
+        "title": "Past participle (V3)",
+        "items": [
+          "Правильные глаголы: visit → visited, try → tried.",
+          "Неправильные глаголы нужно учить: see → seen, go → gone/been, eat → eaten, ride → ridden, fly → flown.",
+          "been to = был и вернулся: Have you ever been to Italy? gone to = ушёл/уехал и ещё там: Tom has gone to Italy."
+        ]
+      },
+      {
+        "title": "Present Perfect vs Past Simple",
+        "items": [
+          "Present Perfect: Have you ever been to London? — время не названо.",
+          "Past Simple: When did you go? / I went in 2024. — есть законченный момент в прошлом.",
+          "Не используем Present Perfect с yesterday, last year, in 2020 и другими законченными указателями прошлого."
+        ]
+      },
+      {
+        "title": "Короткие ответы и продолжение разговора",
+        "items": [
+          "Have you ever tried camping? — Yes, I have. / No, I haven’t.",
+          "После Yes можно уточнить Past Simple: When did you go? Where did you stay?",
+          "После No часто используются never и выражения желания: No, never. I’d love to, though."
+        ]
+      }
+    ],
+    "tableTitle": "Формы",
+    "table": {
+      "headers": [
+        "Тип",
+        "Форма",
+        "Пример"
+      ],
+      "rows": [
+        [
+          "Утверждение",
+          "subject + have/has + V3",
+          "She has visited Rome."
+        ],
+        [
+          "Отрицание",
+          "subject + haven’t/hasn’t + V3",
+          "She hasn’t visited Rome."
+        ],
+        [
+          "Вопрос",
+          "Have/Has + subject + V3?",
+          "Has she visited Rome?"
+        ],
+        [
+          "Короткий ответ",
+          "Yes, ... have/has. / No, ... haven’t/hasn’t.",
+          "Yes, she has."
+        ]
+      ]
+    },
+    "examplesTitle": "Примеры",
+    "examples": [
+      "Have you ever eaten Japanese food?",
+      "Have you ever ridden a camel?",
+      "No, I’ve never really fancied it.",
+      "Yes, several times."
+    ],
+    "commonMistakesTitle": "Типичные ошибки",
+    "commonMistakes": [
+      "Have you ever went...? → Have you ever gone/been...?",
+      "Did you ever been...? → Have you ever been...? (когда спрашиваем об опыте до настоящего момента).",
+      "I haven’t never... → I’ve never... / I haven’t ever...",
+      "Have you been there last year? → Did you go there last year?"
+    ],
+    "practiceTitle": "4 упражнения · 16 заданий",
+    "practice": [
+      {
+        "id": "gppq-ex1",
+        "title": "1. Choose the correct form.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "___ you ever been to Portugal?",
+            "input": "single",
+            "options": [
+              "Have",
+              "Did"
+            ],
+            "answer": 0
+          },
+          {
+            "id": "2",
+            "prompt": "Has she ever ___ sushi?",
+            "input": "single",
+            "options": [
+              "eat",
+              "eaten"
+            ],
+            "answer": 1
+          },
+          {
+            "id": "3",
+            "prompt": "No, I’ve ___ tried it.",
+            "input": "single",
+            "options": [
+              "never",
+              "not never"
+            ],
+            "answer": 0
+          },
+          {
+            "id": "4",
+            "prompt": "___ he ever flown in a helicopter?",
+            "input": "single",
+            "options": [
+              "Has",
+              "Did"
+            ],
+            "answer": 0
+          }
+        ]
+      },
+      {
+        "id": "gppq-ex2",
+        "title": "2. Complete the questions with the correct form of the verbs.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "Have you ever ",
+              " (see) the Northern Lights?"
+            ],
+            "answers": [
+              "seen"
+            ]
+          },
+          {
+            "id": "2",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "Has your sister ever ",
+              " (ride) a horse?"
+            ],
+            "answers": [
+              "ridden"
+            ]
+          },
+          {
+            "id": "3",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "Have they ever ",
+              " (try) couch-surfing?"
+            ],
+            "answers": [
+              "tried"
+            ]
+          },
+          {
+            "id": "4",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "Has he ever ",
+              " (eat) octopus?"
+            ],
+            "answers": [
+              "eaten"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "gppq-ex3",
+        "title": "3. Choose the sentence that fits the context.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "You are asking about life experience with no past date.",
+            "input": "select",
+            "options": [
+              "Have you ever been to Paris?",
+              "Did you go to Paris last year?"
+            ],
+            "answer": 0
+          },
+          {
+            "id": "2",
+            "prompt": "You know the trip happened in 2025.",
+            "input": "select",
+            "options": [
+              "Have you gone there in 2025?",
+              "Did you go there in 2025?"
+            ],
+            "answer": 1
+          },
+          {
+            "id": "3",
+            "prompt": "Your friend has not had this experience at any time before now.",
+            "input": "select",
+            "options": [
+              "I’ve never tried it.",
+              "I didn’t never try it."
+            ],
+            "answer": 0
+          },
+          {
+            "id": "4",
+            "prompt": "Tom travelled to Rome and has already returned.",
+            "input": "select",
+            "options": [
+              "Tom has been to Rome.",
+              "Tom has gone to Rome."
+            ],
+            "answer": 0
+          }
+        ]
+      },
+      {
+        "id": "gppq-ex4",
+        "title": "4. Write a complete question or answer.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "you / ever / visit / Scotland ?",
+            "input": "text",
+            "acceptedAnswers": [
+              "Have you ever visited Scotland",
+              "Have you ever visited Scotland?"
+            ]
+          },
+          {
+            "id": "2",
+            "prompt": "she / ever / fly / in a helicopter ?",
+            "input": "text",
+            "acceptedAnswers": [
+              "Has she ever flown in a helicopter",
+              "Has she ever flown in a helicopter?"
+            ]
+          },
+          {
+            "id": "3",
+            "prompt": "No / I / never / be / there",
+            "input": "text",
+            "acceptedAnswers": [
+              "No, I've never been there",
+              "No, I've never been there.",
+              "No, I’ve never been there",
+              "No, I’ve never been there.",
+              "No, I have never been there",
+              "No, I have never been there."
+            ]
+          },
+          {
+            "id": "4",
+            "prompt": "they / ever / eat / Japanese food ?",
+            "input": "text",
+            "acceptedAnswers": [
+              "Have they ever eaten Japanese food",
+              "Have they ever eaten Japanese food?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "b1-future-plans",
+    "order": 4,
+    "category": "lesson",
+    "lessonNumber": 12,
+    "lessonTitle": "Time Off · Holiday problems, travel & future plans",
+    "linkedLessonId": "lesson-12",
+    "title": "Future plans: going to, Present Continuous, might и thinking of",
+    "level": "B1",
+    "status": "available",
+    "page": "grammar-topic.html?id=b1-future-plans",
+    "explanation": "В английском планы на будущее выражаются разными конструкциями. Выбор зависит от того, насколько план определён: от идеи или возможности до твёрдого намерения и уже организованной договорённости.",
+    "formula": "plan/intention: be going to · arrangement: Present Continuous · possibility: might · idea under consideration: be thinking of + -ing · prediction: will + probably/definitely",
+    "ruleCards": [
+      {
+        "title": "be going to",
+        "text": "Намерение или план, который уже существует.",
+        "example": "We’re going to be away in June.",
+        "translation": "Мы собираемся уехать в июне."
+      },
+      {
+        "title": "Present Continuous",
+        "text": "Конкретная личная договорённость, часто с временем или местом.",
+        "example": "I’m having lunch with James today.",
+        "translation": "Сегодня я обедаю с Джеймсом."
+      },
+      {
+        "title": "might",
+        "text": "Возможность, но решение ещё не принято. После might используется начальная форма глагола.",
+        "example": "I might meet some friends.",
+        "translation": "Возможно, я встречусь с друзьями."
+      },
+      {
+        "title": "be thinking of + -ing",
+        "text": "План или идея, которую человек обдумывает.",
+        "example": "I’m thinking of emigrating.",
+        "translation": "Я подумываю об эмиграции."
+      }
+    ],
+    "affirmative": "be going to: I’m going to travel. Present Continuous: I’m meeting Anna tomorrow. might: I might travel. thinking of: I’m thinking of travelling. will + adverb: It’ll probably be hot.",
+    "negative": "I’m not going to travel. / I’m not travelling this weekend. / I might not go away. / I’m not thinking of moving. / They definitely won’t be away in July.",
+    "question": "Are you going to travel? / What are you doing at the weekend? / Might you go? (формально и реже) / Are you thinking of moving? Для обычного вопроса о планах часто используются What are you doing...? и What are you going to do...?",
+    "sections": [
+      {
+        "title": "Степень определённости",
+        "items": [
+          "might = возможно, решение не принято.",
+          "thinking of + -ing = рассматриваем идею.",
+          "be going to = есть намерение или план.",
+          "Present Continuous = договорённость уже организована."
+        ]
+      },
+      {
+        "title": "probably и definitely",
+        "items": [
+          "probably обычно стоит после will и перед смысловым глаголом: I’ll probably go.",
+          "В отрицании probably обычно стоит перед won’t: I probably won’t go.",
+          "definitely усиливает уверенность: We’ll definitely be away. / They definitely won’t be away."
+        ]
+      },
+      {
+        "title": "have got to / have to",
+        "items": [
+          "have got to и have to выражают необходимость, а не план как таковой: I’ve got to study for my exam.",
+          "После have got to используется начальная форма: I’ve got to study, не I’ve got to studying."
+        ]
+      },
+      {
+        "title": "Форма после конструкций",
+        "items": [
+          "going to + base verb: going to travel.",
+          "might + base verb: might go.",
+          "thinking of + verb-ing: thinking of going.",
+          "Present Continuous: am/is/are + verb-ing."
+        ]
+      }
+    ],
+    "tableTitle": "Как выбрать форму",
+    "table": {
+      "headers": [
+        "Смысл",
+        "Конструкция",
+        "Пример"
+      ],
+      "rows": [
+        [
+          "возможность",
+          "might + verb",
+          "I might go."
+        ],
+        [
+          "обдумываем идею",
+          "be thinking of + -ing",
+          "I’m thinking of going."
+        ],
+        [
+          "намерение",
+          "be going to + verb",
+          "I’m going to go."
+        ],
+        [
+          "договорённость",
+          "Present Continuous",
+          "I’m meeting Sam tomorrow."
+        ]
+      ]
+    },
+    "examplesTitle": "Примеры",
+    "examples": [
+      "I might try couch-surfing this year.",
+      "Marek and I are going to a concert on Friday.",
+      "I’m having lunch with James today.",
+      "I’m thinking of emigrating at some point.",
+      "I’ll probably go to my friend’s barbecue."
+    ],
+    "commonMistakesTitle": "Типичные ошибки",
+    "commonMistakes": [
+      "I’m thinking to emigrate. → I’m thinking of emigrating.",
+      "I might to go. → I might go.",
+      "I’m going meet him. → I’m going to meet him.",
+      "It might probably be hot. Обычно выбираем одну стратегию: It might be hot. / It’ll probably be hot.",
+      "I’ve got study. → I’ve got to study."
+    ],
+    "practiceTitle": "4 упражнения · 16 заданий",
+    "practice": [
+      {
+        "id": "gfp-ex1",
+        "title": "1. Choose the correct form.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "I’m not sure yet. I ___ go away this weekend.",
+            "input": "single",
+            "options": [
+              "might",
+              "am going to definitely"
+            ],
+            "answer": 0
+          },
+          {
+            "id": "2",
+            "prompt": "We’ve booked the table. We ___ dinner with them at eight.",
+            "input": "single",
+            "options": [
+              "are having",
+              "might have"
+            ],
+            "answer": 0
+          },
+          {
+            "id": "3",
+            "prompt": "She’s considering a move abroad. She’s thinking ___ in Spain.",
+            "input": "single",
+            "options": [
+              "to live",
+              "of living"
+            ],
+            "answer": 1
+          },
+          {
+            "id": "4",
+            "prompt": "I’ve decided already. I’m ___ start a new course.",
+            "input": "single",
+            "options": [
+              "going to",
+              "might"
+            ],
+            "answer": 0
+          }
+        ]
+      },
+      {
+        "id": "gfp-ex2",
+        "title": "2. Complete the sentences.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "I ",
+              " (meet) Alex tomorrow at 6."
+            ],
+            "answers": [
+              [
+                "am meeting",
+                "’m meeting",
+                "'m meeting"
+              ]
+            ]
+          },
+          {
+            "id": "2",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "We ",
+              " (might / go) camping if the weather is good."
+            ],
+            "answers": [
+              "might go"
+            ]
+          },
+          {
+            "id": "3",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "She is thinking of ",
+              " (move) to another city."
+            ],
+            "answers": [
+              "moving"
+            ]
+          },
+          {
+            "id": "4",
+            "prompt": "",
+            "input": "gaps",
+            "segments": [
+              "They ",
+              " (not / go to) be around next weekend."
+            ],
+            "answers": [
+              [
+                "aren’t going to",
+                "aren't going to",
+                "are not going to"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "gfp-ex3",
+        "title": "3. Choose the sentence that best matches the situation.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "The tickets are already booked.",
+            "input": "select",
+            "options": [
+              "We might fly to Berlin on Friday.",
+              "We’re flying to Berlin on Friday."
+            ],
+            "answer": 1
+          },
+          {
+            "id": "2",
+            "prompt": "You are only considering the idea.",
+            "input": "select",
+            "options": [
+              "I’m thinking of taking a year off.",
+              "I take a year off tomorrow."
+            ],
+            "answer": 0
+          },
+          {
+            "id": "3",
+            "prompt": "You think something is likely, but it is a prediction rather than an arrangement.",
+            "input": "select",
+            "options": [
+              "It’ll probably rain later.",
+              "It’s raining later because I arranged it."
+            ],
+            "answer": 0
+          },
+          {
+            "id": "4",
+            "prompt": "There is a possibility you will stay home.",
+            "input": "select",
+            "options": [
+              "I might stay at home.",
+              "I’m stay at home."
+            ],
+            "answer": 0
+          }
+        ]
+      },
+      {
+        "id": "gfp-ex4",
+        "title": "4. Write a complete sentence from the prompts.",
+        "items": [
+          {
+            "id": "1",
+            "prompt": "I / might / meet / some friends / tonight",
+            "input": "text",
+            "acceptedAnswers": [
+              "I might meet some friends tonight",
+              "I might meet some friends tonight."
+            ]
+          },
+          {
+            "id": "2",
+            "prompt": "we / have lunch / with Marta / tomorrow / arrangement",
+            "input": "text",
+            "acceptedAnswers": [
+              "We are having lunch with Marta tomorrow",
+              "We are having lunch with Marta tomorrow.",
+              "We're having lunch with Marta tomorrow",
+              "We're having lunch with Marta tomorrow.",
+              "We’re having lunch with Marta tomorrow",
+              "We’re having lunch with Marta tomorrow."
+            ]
+          },
+          {
+            "id": "3",
+            "prompt": "she / think of / study / abroad",
+            "input": "text",
+            "acceptedAnswers": [
+              "She is thinking of studying abroad",
+              "She is thinking of studying abroad.",
+              "She's thinking of studying abroad",
+              "She's thinking of studying abroad.",
+              "She’s thinking of studying abroad",
+              "She’s thinking of studying abroad."
+            ]
+          },
+          {
+            "id": "4",
+            "prompt": "they / going to / travel / in June",
+            "input": "text",
+            "acceptedAnswers": [
+              "They are going to travel in June",
+              "They are going to travel in June.",
+              "They're going to travel in June",
+              "They're going to travel in June.",
+              "They’re going to travel in June",
+              "They’re going to travel in June."
+            ]
+          }
+        ]
+      }
+    ]
   }
+
 ];

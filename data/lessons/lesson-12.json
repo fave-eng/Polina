@@ -1,0 +1,1819 @@
+{
+  "id": "lesson-12",
+  "number": 12,
+  "title": "Time Off · Holiday problems, travel & future plans",
+  "subtitle": "Vocabulary, reading, weather, present perfect questions, future plans and an email giving advice",
+  "status": "available",
+  "vocabularyId": "vocab-lesson-12",
+  "grammarIds": [
+    "b1-present-perfect-questions",
+    "b1-future-plans"
+  ],
+  "publishedAt": "2026-10-01",
+  "totalPoints": 130,
+  "notification": {
+    "enabled": true,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "eyebrow": "Vocabulary",
+      "title": "Holiday problems",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l12-holiday-7",
+      "layout": "prose-gaps",
+      "title": "7. Correct the underlined mistakes.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "What a nightmare! Our flight was ",
+            " and we were ",
+            " at the airport for hours."
+          ],
+          "answers": [
+            "delayed",
+            "stuck"
+          ]
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "I’m never going on holiday with my family again. My brother and sister didn’t stop ",
+            " all week."
+          ],
+          "answers": [
+            "arguing"
+          ]
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "We must go somewhere warm next year. It poured ",
+            " rain and it was so ",
+            " all week."
+          ],
+          "answers": [
+            "with",
+            "windy"
+          ]
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "I must look like a tourist. Everywhere we went we got ripped ",
+            "! I paid €15 for a beer!"
+          ],
+          "answers": [
+            "off"
+          ]
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A couple took our ",
+            " on the beach and Jim got really ",
+            " with them. It was so embarrassing!"
+          ],
+          "answers": [
+            "place",
+            "angry"
+          ]
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "Never again! The beach was so ",
+            " you couldn’t even see the sand."
+          ],
+          "answers": [
+            "crowded"
+          ]
+        },
+        {
+          "id": "7",
+          "number": 7,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "The kids were ill on the plane. Jodi threw ",
+            " three times. Poor thing!"
+          ],
+          "answers": [
+            "up"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l12-holiday-8",
+      "layout": "prose-gaps",
+      "title": "8. Complete the conversations with the pairs of words in the box. Put the verbs in the past simple.",
+      "wordBankLabel": "Pairs of words",
+      "wordBank": [
+        "steal / passport",
+        "spoil / trip",
+        "miss / flight",
+        "lose / camera",
+        "charge / a fortune",
+        "have / upset stomach"
+      ],
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: Did you have a good holiday?\nB: Not really. We came home early.\nA: How come?\nB: We all ",
+            " an ",
+            " and couldn’t eat anything. That was our only holiday this year and it really ",
+            " the ",
+            "."
+          ],
+          "answers": [
+            "had",
+            "upset stomach",
+            [
+              "spoiled",
+              "spoilt"
+            ],
+            "trip"
+          ]
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: I’m exhausted. The journey back was a nightmare.\nB: How come?\nA: Well we ",
+            " our ",
+            " to Heathrow and the next plane landed at 3 a.m. The taxi driver ",
+            " us ",
+            " to take us home – over £100.\nB: Oh no, what a pain!"
+          ],
+          "answers": [
+            "missed",
+            "flight",
+            "charged",
+            "a fortune"
+          ]
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: You seem a bit fed up.\nB: Yeah well, I’ve just had the holiday from hell.\nA: What happened?\nB: Well, I expected a nice relaxing week, but I spent the first night at the police station because someone ",
+            " my ",
+            ". I took loads of photos but then I ",
+            " my ",
+            " on the last day. It’s just so disappointing.\nA: Oh, what a shame!"
+          ],
+          "answers": [
+            "stole",
+            "passport",
+            "lost",
+            "camera"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Reading",
+      "title": "Couch-surfing",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l12-reading-4",
+      "title": "4. Read the webpage quickly and match the headings to the paragraphs. There is one heading that you don’t need.",
+      "wordBankLabel": "Headings",
+      "wordBank": [
+        "a But is it safe?",
+        "b How much does it cost?",
+        "c How long do people stay?",
+        "d Who are these couch-surfers?",
+        "e So what is couch-surfing, exactly?",
+        "f What are the disadvantages?",
+        "g What are the benefits?"
+      ],
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "Paragraph 1",
+          "input": "select",
+          "options": [
+            "a But is it safe?",
+            "b How much does it cost?",
+            "c How long do people stay?",
+            "d Who are these couch-surfers?",
+            "e So what is couch-surfing, exactly?",
+            "f What are the disadvantages?",
+            "g What are the benefits?"
+          ],
+          "answer": 4
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "Paragraph 2",
+          "input": "select",
+          "options": [
+            "a But is it safe?",
+            "b How much does it cost?",
+            "c How long do people stay?",
+            "d Who are these couch-surfers?",
+            "e So what is couch-surfing, exactly?",
+            "f What are the disadvantages?",
+            "g What are the benefits?"
+          ],
+          "answer": 3
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "Paragraph 3",
+          "input": "select",
+          "options": [
+            "a But is it safe?",
+            "b How much does it cost?",
+            "c How long do people stay?",
+            "d Who are these couch-surfers?",
+            "e So what is couch-surfing, exactly?",
+            "f What are the disadvantages?",
+            "g What are the benefits?"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "Paragraph 4",
+          "input": "select",
+          "options": [
+            "a But is it safe?",
+            "b How much does it cost?",
+            "c How long do people stay?",
+            "d Who are these couch-surfers?",
+            "e So what is couch-surfing, exactly?",
+            "f What are the disadvantages?",
+            "g What are the benefits?"
+          ],
+          "answer": 6
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "Paragraph 5",
+          "input": "select",
+          "options": [
+            "a But is it safe?",
+            "b How much does it cost?",
+            "c How long do people stay?",
+            "d Who are these couch-surfers?",
+            "e So what is couch-surfing, exactly?",
+            "f What are the disadvantages?",
+            "g What are the benefits?"
+          ],
+          "answer": 2
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "Paragraph 6",
+          "input": "select",
+          "options": [
+            "a But is it safe?",
+            "b How much does it cost?",
+            "c How long do people stay?",
+            "d Who are these couch-surfers?",
+            "e So what is couch-surfing, exactly?",
+            "f What are the disadvantages?",
+            "g What are the benefits?"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "type": "reading",
+      "id": "l12-couch-reading",
+      "title": "Love to travel but hate paying for hotels? Too old for a youth hostel? Then couch-surfing might be right up your street. Check out these FAQs:",
+      "sections": [
+        {
+          "number": "1",
+          "heading": "",
+          "text": "Couch-surfing is a network of people who offer accommodation to strangers travelling in their area. It’s simple. When you ‘surf a couch’ you are a guest in someone’s house and they are your host. You don’t pay for the room or couch, and your hosts will get the same favour back when they travel. They may stay with you or with another person in the network."
+        },
+        {
+          "number": "2",
+          "heading": "",
+          "text": "Of course, there are smaller numbers of surfers in remote locations, but the network covers every continent (including Antarctica!) The top five couch-surfing nations are the United States, Germany, France, Canada and the United Kingdom. The average surfer is 27 years old and just over half the surfers are male."
+        },
+        {
+          "number": "3",
+          "heading": "",
+          "text": "Couch-surfing was created so that everyone can travel the world and make meaningful connections, but staying with your host is always free. Many surfers like to take their hosts a gift or treat them to a meal to say thank you. They also thank people in small ways like doing the washing-up or sending a postcard from their next destination."
+        },
+        {
+          "number": "4",
+          "heading": "",
+          "text": "Surfers get the advantage of staying with someone who knows the area like the back of their hand. They can tell how not to get ripped off, or what to do when it’s pouring with rain. And when people of different cultures meet, who better than a local to help with social skills? Knowing whether to shake hands, bow, or kiss a person on the cheek can be very confusing!"
+        },
+        {
+          "number": "5",
+          "heading": "",
+          "text": "It’s entirely up to the host. Some surfers come for a single night, or even just for dinner. The important thing is not to outstay your welcome, so surfers usually check with the host first. In the words of one host, ‘We want surfers to be comfortable, but not too comfortable. Staying two or three nights is cool; longer gets a bit awkward.’ And remember that in Germany they say ‘Guests are like fish – after three days they start to smell ...’"
+        },
+        {
+          "number": "6",
+          "heading": "",
+          "text": "Well, there are always risks in life, but the majority of surfers never have any problems. Most travel networking sites have their own security systems. Hosts and surfers have to be registered and prove that they are who they say they are. There are reviews posted on the Internet and so surfers can select hosts with a good track record. Mostly, it’s a question of common sense and avoiding anyone who sounds odd."
+        }
+      ]
+    },
+    {
+      "type": "info",
+      "id": "l12-reading-glossary",
+      "title": "Glossary",
+      "text": "FAQs: frequently asked questions\nremote: hard to get to\ncommon sense: the ability to make sensible decisions\nodd: strange or unusual"
+    },
+    {
+      "type": "exercise",
+      "id": "l12-reading-5",
+      "layout": "prose-gaps",
+      "title": "5. Complete the sentences with the words and phrases in bold in the webpage.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "Ask Anna and Paolo for advice about Rome. They know the city ",
+            " ."
+          ],
+          "answers": [
+            "like the back of their hand"
+          ]
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "I don’t mind where we go for the weekend. ",
+            " you."
+          ],
+          "answers": [
+            [
+              "It’s entirely up to",
+              "It's entirely up to",
+              "It is entirely up to"
+            ]
+          ]
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "Don’t ",
+            " when you go to see grandma and granddad. Come home after a couple of hours."
+          ],
+          "answers": [
+            "outstay your welcome"
+          ]
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "It was a ",
+            " when I first met my mother-in-law. I didn’t speak Spanish and she didn’t speak English."
+          ],
+          "answers": [
+            [
+              "bit awkward",
+              "a bit awkward"
+            ]
+          ]
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "I looked at the reviews of a lot of holiday companies. Adventure Tours have ",
+            " ."
+          ],
+          "answers": [
+            "a good track record"
+          ]
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "",
+          "input": "gaps",
+          "segments": [
+            "My teachers were so helpful that I decided to ",
+            " at the end of the course."
+          ],
+          "answers": [
+            [
+              "treat them to a meal",
+              "treat my teachers to a meal"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Vocabulary",
+      "title": "Weather",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l12-weather-1",
+      "title": "1. Write the words and phrases that describe temperature in the correct place on the diagram.",
+      "visual": {
+        "src": "assets/lesson12-weather-scale.svg",
+        "alt": "Temperature scale from 0°C to 100°C with six positions; freezing is the example at the first position.",
+        "sticky": true
+      },
+      "wordBankLabel": "Words and phrases",
+      "wordBank": [
+        "freezing",
+        "cold",
+        "boiling hot",
+        "a bit chilly",
+        "quite warm",
+        "hot"
+      ],
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "Position 1",
+          "example": true,
+          "exampleAnswer": "freezing"
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "Position 2",
+          "input": "text",
+          "answer": "cold"
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "Position 3",
+          "input": "text",
+          "answer": "a bit chilly"
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "Position 4",
+          "input": "text",
+          "answer": "quite warm"
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "Position 5",
+          "input": "text",
+          "answer": "hot"
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "Position 6",
+          "input": "text",
+          "answer": "boiling hot"
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l12-weather-2",
+      "layout": "prose-gaps",
+      "title": "2. Replace the underlined words in the conversations with the words in the box.",
+      "wordBankLabel": "Words in the box",
+      "wordBank": [
+        "wet",
+        "pour down",
+        "drop",
+        "heat",
+        "reached",
+        "clear up",
+        "keep out of",
+        "humid"
+      ],
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: Have you heard the weather forecast?\nB: Yes, apparently it’s going to ",
+            " all weekend.\nA: Oh, no, what a pain. I was thinking of going to the beach.\nB: I’d stay at home if I were you and ",
+            " the rain."
+          ],
+          "answers": [
+            "pour down",
+            "keep out of"
+          ]
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: What’s the forecast for the weekend?\nB: Er, Saturday morning is supposed to be ",
+            ", but then it should ",
+            " in the afternoon.\nA: Phew! That’s a relief. I’m going to a wedding at 2:30."
+          ],
+          "answers": [
+            "wet",
+            "clear up"
+          ]
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: I can’t stand this ",
+            ".\nB: I know what you mean. The air conditioning isn’t working in my office. The temperature ",
+            " 40° yesterday.\nA: Poor you! It’s so hot and ",
+            " that I can’t sleep.\nB: Yeah, we need a storm to clear the air."
+          ],
+          "answers": [
+            "heat",
+            "reached",
+            "humid"
+          ]
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: What are you up to at the weekend?\nB: It depends on the weather.\nA: Apparently, it’s going to be freezing. They say it could ",
+            " to minus 5°.\nB: Time to stay in with a good book, I think."
+          ],
+          "answers": [
+            "drop"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Listening",
+      "title": "Holiday problems",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l12-listening-3",
+      "title": "3. 3.1 You are going to hear five people talking about holiday problems. Match the speakers (1–5) to the letters (a–e).",
+      "wordBankLabel": "Statements",
+      "wordBank": [
+        "a It cost a lot more than we had expected.",
+        "b We had several transport problems.",
+        "c The local attractions were awful.",
+        "d We didn’t get on with each other very well.",
+        "e There were too many other people."
+      ],
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "Speaker 1",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ],
+          "answer": 4,
+          "scored": false
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "Speaker 2",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ],
+          "answer": 0,
+          "scored": false
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "Speaker 3",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ],
+          "answer": 3,
+          "scored": false
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "Speaker 4",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ],
+          "answer": 1,
+          "scored": false
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "Speaker 5",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ],
+          "answer": 2,
+          "scored": false
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Pronunciation",
+      "title": "Same sound or different?",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l12-pronunciation-4",
+      "title": "4. Are the letters in bold the same sound (S) or different (D)?",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "The hotel sounded wonderful. / The terminal was so crowded.",
+          "input": "single",
+          "options": [
+            "S",
+            "D"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "There was only a theme park. / There were queues everywhere.",
+          "input": "single",
+          "options": [
+            "S",
+            "D"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "We had booked a taxi. / I was in such a bad mood.",
+          "input": "single",
+          "options": [
+            "S",
+            "D"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "There was a train strike that day. / It was quieter in the autumn.",
+          "input": "single",
+          "options": [
+            "S",
+            "D"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "My neighbour offered to take us. / I was so relieved to get home.",
+          "input": "single",
+          "options": [
+            "S",
+            "D"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "The bus service was terrible. / The journey was a nightmare.",
+          "input": "single",
+          "options": [
+            "S",
+            "D"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "type": "info",
+      "id": "l12-pronunciation-5",
+      "title": "5. 3.2 Listen and check. Practice saying the sentences.",
+      "text": ""
+    },
+    {
+      "type": "section",
+      "eyebrow": "Grammar",
+      "title": "Present perfect questions",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l12-present-perfect-6",
+      "layout": "prose-gaps",
+      "title": "6. Complete the questions with the correct form of the verbs in brackets. Then choose the correct words in the answers.",
+      "items": [
+        {
+          "id": "1a",
+          "number": "1A",
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: ",
+            " you ever ",
+            " the pyramids? (see)"
+          ],
+          "answers": [
+            "Have",
+            "seen"
+          ]
+        },
+        {
+          "id": "1b",
+          "number": "1B",
+          "prompt": "B: No, never. I love / I’d love to, though.",
+          "input": "single",
+          "options": [
+            "I love",
+            "I’d love to"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "2a",
+          "number": "2A",
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: ",
+            " you ever ",
+            " on holiday by yourself? (go)"
+          ],
+          "answers": [
+            "Have",
+            [
+              "gone",
+              "been"
+            ]
+          ]
+        },
+        {
+          "id": "2b",
+          "number": "2B",
+          "prompt": "B: No, I’ve ever / never really fancied it.",
+          "input": "single",
+          "options": [
+            "I’ve ever",
+            "never"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "3a",
+          "number": "3A",
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: ",
+            " you ever ",
+            " camping? (try)"
+          ],
+          "answers": [
+            "Have",
+            "tried"
+          ]
+        },
+        {
+          "id": "3b",
+          "number": "3B",
+          "prompt": "B: Yes, lots / several times.",
+          "input": "single",
+          "options": [
+            "lots",
+            "several times"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "4a",
+          "number": "4A",
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: ",
+            " you ever ",
+            " Japanese food? (eat)"
+          ],
+          "answers": [
+            "Have",
+            "eaten"
+          ]
+        },
+        {
+          "id": "4b",
+          "number": "4B",
+          "prompt": "B: No, never. It’s supposed be / to be delicious.",
+          "input": "single",
+          "options": [
+            "supposed be",
+            "to be"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "5a",
+          "number": "5A",
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: ",
+            " you ever ",
+            " a camel? (ride)"
+          ],
+          "answers": [
+            "Have",
+            "ridden"
+          ]
+        },
+        {
+          "id": "5b",
+          "number": "5B",
+          "prompt": "B: No, never. Have you? / Did you? I’ve heard it’s quite difficult.",
+          "input": "single",
+          "options": [
+            "Have you?",
+            "Did you?"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "6a",
+          "number": "6A",
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: ",
+            " you ever ",
+            " Disneyland with your kids? (visit)"
+          ],
+          "answers": [
+            "Have",
+            "visited"
+          ]
+        },
+        {
+          "id": "6b",
+          "number": "6B",
+          "prompt": "B: Yes, but I wouldn’t go there if I were you. It’s not worth it / of it.",
+          "input": "single",
+          "options": [
+            "it",
+            "of it"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "7a",
+          "number": "7A",
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: ",
+            " you ever ",
+            " in a helicopter? (fly)"
+          ],
+          "answers": [
+            "Have",
+            "flown"
+          ]
+        },
+        {
+          "id": "7b",
+          "number": "7B",
+          "prompt": "B: No, never. What does / is it like?",
+          "input": "single",
+          "options": [
+            "does",
+            "is"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "8a",
+          "number": "8A",
+          "prompt": "",
+          "input": "gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: ",
+            " you ever ",
+            " to Singapore? (go)"
+          ],
+          "answers": [
+            "Have",
+            [
+              "gone",
+              "been"
+            ]
+          ]
+        },
+        {
+          "id": "8b",
+          "number": "8B",
+          "prompt": "B: Yes, it’s wonderful. You should to go / go.",
+          "input": "single",
+          "options": [
+            "to go",
+            "go"
+          ],
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Grammar",
+      "title": "Future plans",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l12-future-1",
+      "title": "1. Rewrite the sentences with the words in brackets.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "We will definitely be away in June. (going)",
+          "input": "text",
+          "acceptedAnswers": [
+            "We're going to be away in June",
+            "We're going to be away in June.",
+            "We’re going to be away in June",
+            "We’re going to be away in June."
+          ]
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "Perhaps I’ll try couch-surfing this year. (might)",
+          "input": "text",
+          "acceptedAnswers": [
+            "I might try couch-surfing this year",
+            "I might try couch-surfing this year."
+          ]
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "I can’t meet up this weekend. I have to revise for my exams. (got)",
+          "input": "text",
+          "acceptedAnswers": [
+            "I've got to revise for my exams",
+            "I've got to revise for my exams.",
+            "I’ve got to revise for my exams",
+            "I’ve got to revise for my exams."
+          ]
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "Jim might go travelling this summer. (thinking)",
+          "input": "text",
+          "acceptedAnswers": [
+            "Jim is thinking of going travelling this summer",
+            "Jim is thinking of going travelling this summer."
+          ]
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "I think it will be too cold for swimming. (probably)",
+          "input": "text",
+          "acceptedAnswers": [
+            "It will probably be too cold for swimming",
+            "It will probably be too cold for swimming."
+          ]
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "They definitely won’t be on holiday in July. (going)",
+          "input": "text",
+          "acceptedAnswers": [
+            "They definitely aren't going on holiday in July",
+            "They definitely aren't going on holiday in July.",
+            "They definitely aren’t going on holiday in July",
+            "They definitely aren’t going on holiday in July."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l12-future-2",
+      "title": "2. Use the words in 1–7 to complete the students’ replies to the teacher’s question.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "(I / got / study for / my university entrance exam)",
+          "input": "text",
+          "acceptedAnswers": [
+            "I've got to study for my university entrance exam",
+            "I've got to study for my university entrance exam.",
+            "I’ve got to study for my university entrance exam",
+            "I’ve got to study for my university entrance exam."
+          ]
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "I’m not sure yet but (my friends and I / think / go / camping / near the coast)",
+          "input": "text",
+          "acceptedAnswers": [
+            "My friends and I are thinking of going camping near the coast",
+            "My friends and I are thinking of going camping near the coast."
+          ]
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "(Marek and I / go to / a concert / in Manchester on Friday) We need to leave class early to get the train.",
+          "input": "text",
+          "acceptedAnswers": [
+            "Marek and I are going to a concert in Manchester on Friday",
+            "Marek and I are going to a concert in Manchester on Friday."
+          ]
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "I’m not sure. (I / might / meet up with some friends in London)",
+          "input": "text",
+          "acceptedAnswers": [
+            "I might be meeting up with some friends in London",
+            "I might be meeting up with some friends in London."
+          ]
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "(I / got / a free weekend) I’m going to catch up on some sleep.",
+          "input": "text",
+          "acceptedAnswers": [
+            "I've got a free weekend",
+            "I've got a free weekend.",
+            "I’ve got a free weekend",
+            "I’ve got a free weekend."
+          ]
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "(my sister and I / not go / be around) We’ve been invited to a party in Brighton.",
+          "input": "text",
+          "acceptedAnswers": [
+            "My sister and I aren't going to be around",
+            "My sister and I aren't going to be around.",
+            "My sister and I aren’t going to be around",
+            "My sister and I aren’t going to be around."
+          ]
+        },
+        {
+          "id": "7",
+          "number": 7,
+          "prompt": "I haven’t made any plans but (I / probably / go to / my friend’s barbecue)",
+          "input": "text",
+          "acceptedAnswers": [
+            "I'll probably go to my friend's barbecue",
+            "I'll probably go to my friend's barbecue.",
+            "I’ll probably go to my friend’s barbecue",
+            "I’ll probably go to my friend’s barbecue."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l12-future-3",
+      "layout": "prose-gaps",
+      "title": "3. Circle the correct forms in italics.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "",
+          "input": "inline-choice-gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: Where ",
+            " on holiday this year?\nB: I’m not sure. In fact I ",
+            " not go away at all because I’m a bit short of money. My dad lent me some cash for a car and ",
+            " to pay him back. How about you? What are your plans?\nA: Well, it depends on the weather. I’ve only ",
+            " a week’s holiday, so I want to go when it’s hot and sunny.\nB: They say ",
+            " be another very hot summer, so you should be OK."
+          ],
+          "choices": [
+            [
+              "are you going",
+              "do you go"
+            ],
+            [
+              "will",
+              "might"
+            ],
+            [
+              "I’ve got",
+              "I must"
+            ],
+            [
+              "got",
+              "got to"
+            ],
+            [
+              "it’ll",
+              "it might probably"
+            ]
+          ],
+          "answers": [
+            0,
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "",
+          "input": "inline-choice-gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: It’s my day off today and ",
+            " lunch with James and Gary in that new restaurant. Would you like to join us?\nB: I’d love to but I can’t. ",
+            " to the doctor’s.\nA: Oh, nothing serious, I hope.\nB: No, I’m fine, thanks. But ",
+            " ages. The waiting room is always so crowded."
+          ],
+          "choices": [
+            [
+              "I’ll have",
+              "I’m having"
+            ],
+            [
+              "I’m going",
+              "thinking of going"
+            ],
+            [
+              "it’ll probably take",
+              "it’s taking"
+            ]
+          ],
+          "answers": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "",
+          "input": "inline-choice-gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "A: I’ve booked an apartment in Barcelona this year. ",
+            " for two weeks in August. Do you fancy coming with us?\nB: It’s nice of you to ask me but I’m not ",
+            " to be here in the summer. ",
+            " two months in Australia.\nA: Really? That sounds exciting.\nB: Yes, I’m thinking ",
+            " there at some point.\nA: Wow, that’s great."
+          ],
+          "choices": [
+            [
+              "We might go",
+              "We’re going"
+            ],
+            [
+              "going",
+              "thinking"
+            ],
+            [
+              "I’ll spend",
+              "I’m spending"
+            ],
+            [
+              "to emigrate",
+              "of emigrating"
+            ]
+          ],
+          "answers": [
+            1,
+            0,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Developing writing",
+      "title": "An email – giving advice",
+      "text": ""
+    },
+    {
+      "type": "exercise",
+      "id": "l12-writing-3",
+      "title": "3. Dan has emailed his friend, Yuko, with some advice about his home town. Number the content of his message in order.",
+      "items": [
+        {
+          "id": "1",
+          "number": "",
+          "prompt": "suggestions of other things to do",
+          "input": "select",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "answer": 3
+        },
+        {
+          "id": "2",
+          "number": "",
+          "prompt": "ending",
+          "input": "select",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "answer": 5
+        },
+        {
+          "id": "3",
+          "number": "",
+          "prompt": "reason for writing",
+          "input": "select",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "4",
+          "number": "",
+          "prompt": "practical advice",
+          "input": "select",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "answer": 4
+        },
+        {
+          "id": "5",
+          "number": "",
+          "prompt": "greeting",
+          "input": "select",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "6",
+          "number": "",
+          "prompt": "where to go first",
+          "input": "select",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "answer": 2
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l12-writing-4",
+      "layout": "prose-gaps letter-gaps",
+      "title": "4. Complete the email with the words in the box.",
+      "wordBankLabel": "Words in the box",
+      "wordBank": [
+        "time",
+        "quick",
+        "at",
+        "take",
+        "anyway",
+        "straight",
+        "during",
+        "down"
+      ],
+      "items": [
+        {
+          "id": "email",
+          "number": "",
+          "prompt": "",
+          "input": "choice-gaps",
+          "scoreEachGap": true,
+          "segments": [
+            "Hi Yuko,\n\nJust a ",
+            " note to say I’m sorry I can’t see you next week. I’m on a training course, but here are a few ideas of things to do ",
+            " your stay.\n\nThe old town is a good place to start. You can just wander round and soak up the atmosphere. If you want to ",
+            " photos, head to the castle ruins and you’ll find some amazing views.\n\nDon’t miss the parade on Saturday. It’s a great laugh. They have decorated floats, people in fancy dress, and bands playing music. It starts ",
+            " midday in the main square.\n\nI know you’re a fan of roller coasters, so check out the new theme park, Adventure Zone. It’s about an hour outside of town, but you can get a bus ",
+            " there.\n\nDon’t forget to buy a travel card. It’s the cheapest way to get around the area. The best places to eat are ",
+            " by the old canal. They’re pretty cheap but the food is good.\n\n",
+            ", hope this information helps. Have a great ",
+            ".\n\nAll the best,\nDan"
+          ],
+          "choices": [
+            [
+              "time",
+              "quick",
+              "at",
+              "take",
+              "anyway",
+              "straight",
+              "during",
+              "down"
+            ],
+            [
+              "time",
+              "quick",
+              "at",
+              "take",
+              "anyway",
+              "straight",
+              "during",
+              "down"
+            ],
+            [
+              "time",
+              "quick",
+              "at",
+              "take",
+              "anyway",
+              "straight",
+              "during",
+              "down"
+            ],
+            [
+              "time",
+              "quick",
+              "at",
+              "take",
+              "anyway",
+              "straight",
+              "during",
+              "down"
+            ],
+            [
+              "time",
+              "quick",
+              "at",
+              "take",
+              "anyway",
+              "straight",
+              "during",
+              "down"
+            ],
+            [
+              "time",
+              "quick",
+              "at",
+              "take",
+              "anyway",
+              "straight",
+              "during",
+              "down"
+            ],
+            [
+              "time",
+              "quick",
+              "at",
+              "take",
+              "anyway",
+              "straight",
+              "during",
+              "down"
+            ],
+            [
+              "time",
+              "quick",
+              "at",
+              "take",
+              "anyway",
+              "straight",
+              "during",
+              "down"
+            ]
+          ],
+          "answers": [
+            1,
+            6,
+            3,
+            2,
+            5,
+            7,
+            4,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l12-writing-5",
+      "title": "5. Cross out the word or phrase that doesn’t collocate.",
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "Have a great ...",
+          "input": "single",
+          "options": [
+            "week",
+            "time off",
+            "time"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "You can ... a bus to the castle.",
+          "input": "single",
+          "options": [
+            "ride",
+            "get",
+            "take"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "I know you ... old churches.",
+          "input": "single",
+          "options": [
+            "are like",
+            "are into",
+            "are a fan of"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "The festival is ...",
+          "input": "single",
+          "options": [
+            "great fun",
+            "a great laugh",
+            "funny"
+          ],
+          "answer": 2
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "The show starts ...",
+          "input": "single",
+          "options": [
+            "at 2pm",
+            "every day",
+            "on Wednesday"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "The best places ... are in the main square.",
+          "input": "single",
+          "options": [
+            "to eat",
+            "for food",
+            "for eating"
+          ],
+          "answer": 2
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "l12-writing-6",
+      "title": "6. Match the sentence halves.",
+      "wordBankLabel": "Sentence endings",
+      "wordBank": [
+        "a out the new shopping mall.",
+        "b to the new gallery in the main square.",
+        "c round the market on a Sunday morning.",
+        "d forget to send me copies.",
+        "e around after midnight apart from in a taxi.",
+        "f up some sunshine.",
+        "g miss it. It’s a great laugh.",
+        "h expensive and you have to book."
+      ],
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "prompt": "If you’re into art, head ...",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "prompt": "The comedy festival starts on Friday, so don’t ...",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h"
+          ],
+          "answer": 6
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "prompt": "Local transport isn’t great. It’s difficult to get ...",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h"
+          ],
+          "answer": 4
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "prompt": "If you have some spending money, check ...",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "prompt": "When you want to relax, go to the beach and soak ...",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h"
+          ],
+          "answer": 5
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "prompt": "Don’t try the restaurants in the centre. They’re pretty ...",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h"
+          ],
+          "answer": 7
+        },
+        {
+          "id": "7",
+          "number": 7,
+          "prompt": "Take lots of photos and don’t ...",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h"
+          ],
+          "answer": 3
+        },
+        {
+          "id": "8",
+          "number": 8,
+          "prompt": "It’s nice to wander ...",
+          "input": "select",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h"
+          ],
+          "answer": 2
+        }
+      ]
+    },
+    {
+      "type": "info",
+      "id": "l12-writing-tip",
+      "title": "Learner tip",
+      "text": "Try to keep your reader interested when you write. Vary the language you use so that your sentences don’t all sound the same, e.g. instead of saying try or go to all the time, use language like check out, head to, don’t miss, don’t forget to, etc."
+    },
+    {
+      "type": "exercise",
+      "id": "l12-writing-7",
+      "layout": "writing-letter",
+      "title": "7. Write an email in 120–150 words for the following situation. Use the checklist in exercise 3 and the language in this section to help you.",
+      "instructions": "An English-speaking friend is spending a week’s holiday in your home town. You are going to be away, so write an email to your friend giving advice about their stay.",
+      "items": [
+        {
+          "id": "email",
+          "number": "",
+          "prompt": "",
+          "input": "textarea",
+          "placeholder": "120–150 words",
+          "scored": false
+        }
+      ]
+    }
+  ]
+}

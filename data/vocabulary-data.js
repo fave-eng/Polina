@@ -2537,5 +2537,287 @@ window.VOCABULARY_DATA = [
         "audio": ""
       }
     ]
+  },
+  {
+    "id": "vocab-lesson-12",
+    "title": "Travel, holiday problems & weather",
+    "label": "Lesson 12",
+    "icon": "🧳",
+    "type": "lesson",
+    "linkedLessonId": "lesson-12",
+    "page": "vocabulary.html?id=vocab-lesson-12",
+    "words": [
+      {
+        "id": "l12-1",
+        "en": "couch-surfing",
+        "ru": "каучсёрфинг; проживание у местных через гостевую сеть",
+        "transcription": "",
+        "exampleEn": "Couch-surfing can make a trip cheaper and more social.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-2",
+        "en": "accommodation",
+        "ru": "жильё; место для проживания",
+        "transcription": "",
+        "exampleEn": "We found affordable accommodation near the centre.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-3",
+        "en": "host",
+        "ru": "хозяин; принимающая сторона",
+        "transcription": "",
+        "exampleEn": "Our host gave us useful advice about the city.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-4",
+        "en": "remote",
+        "ru": "отдалённый, труднодоступный",
+        "transcription": "",
+        "exampleEn": "They stayed in a remote village in the mountains.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-5",
+        "en": "treat someone to a meal",
+        "ru": "угостить кого-либо едой",
+        "transcription": "",
+        "exampleEn": "We treated our hosts to a meal to say thank you.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-6",
+        "en": "get ripped off",
+        "ru": "быть обманутым; сильно переплатить",
+        "transcription": "",
+        "exampleEn": "Tourists sometimes get ripped off near popular attractions.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-7",
+        "en": "pour with rain",
+        "ru": "лить как из ведра",
+        "transcription": "",
+        "exampleEn": "It was pouring with rain when we arrived.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-8",
+        "en": "like the back of your hand",
+        "ru": "знать как свои пять пальцев",
+        "transcription": "",
+        "exampleEn": "She knows the old town like the back of her hand.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-9",
+        "en": "outstay your welcome",
+        "ru": "задержаться в гостях дольше, чем уместно",
+        "transcription": "",
+        "exampleEn": "We left after two nights because we didn’t want to outstay our welcome.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-10",
+        "en": "a bit awkward",
+        "ru": "немного неловкий, неудобный",
+        "transcription": "",
+        "exampleEn": "The first dinner with my host family was a bit awkward.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-11",
+        "en": "a good track record",
+        "ru": "хорошая репутация; подтверждённая история успеха",
+        "transcription": "",
+        "exampleEn": "Choose a host with a good track record and recent reviews.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-12",
+        "en": "common sense",
+        "ru": "здравый смысл",
+        "transcription": "",
+        "exampleEn": "Use common sense when meeting strangers while travelling.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-13",
+        "en": "delayed",
+        "ru": "задержанный; с задержкой",
+        "transcription": "",
+        "exampleEn": "Our flight was delayed for three hours.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-14",
+        "en": "stuck",
+        "ru": "застрявший; вынужденный оставаться где-либо",
+        "transcription": "",
+        "exampleEn": "We were stuck at the airport overnight.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-15",
+        "en": "argue",
+        "ru": "спорить, ссориться",
+        "transcription": "",
+        "exampleEn": "They argued about money during the trip.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-16",
+        "en": "windy",
+        "ru": "ветреный",
+        "transcription": "",
+        "exampleEn": "It was too windy to sit on the beach.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-17",
+        "en": "crowded",
+        "ru": "переполненный, многолюдный",
+        "transcription": "",
+        "exampleEn": "The beach was crowded in the afternoon.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-18",
+        "en": "throw up",
+        "ru": "тошнить; рвать",
+        "transcription": "",
+        "exampleEn": "He felt sick and threw up on the plane.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-19",
+        "en": "upset stomach",
+        "ru": "расстройство желудка",
+        "transcription": "",
+        "exampleEn": "I had an upset stomach after dinner.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-20",
+        "en": "spoil a trip",
+        "ru": "испортить поездку",
+        "transcription": "",
+        "exampleEn": "Bad weather can spoil a trip.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-21",
+        "en": "miss a flight",
+        "ru": "опоздать на рейс",
+        "transcription": "",
+        "exampleEn": "We missed our flight because the train was late.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-22",
+        "en": "charge a fortune",
+        "ru": "запросить огромную сумму",
+        "transcription": "",
+        "exampleEn": "The taxi driver charged us a fortune.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-23",
+        "en": "steal",
+        "ru": "красть",
+        "transcription": "",
+        "exampleEn": "Someone stole his passport at the station.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-24",
+        "en": "passport",
+        "ru": "паспорт",
+        "transcription": "",
+        "exampleEn": "Keep your passport in a safe place.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-25",
+        "en": "pour down",
+        "ru": "лить как из ведра",
+        "transcription": "",
+        "exampleEn": "It poured down all weekend.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-26",
+        "en": "clear up",
+        "ru": "проясниться, улучшиться о погоде",
+        "transcription": "",
+        "exampleEn": "The weather should clear up in the afternoon.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-27",
+        "en": "humid",
+        "ru": "влажный, душный",
+        "transcription": "",
+        "exampleEn": "It was hot and humid by the sea.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-28",
+        "en": "freezing",
+        "ru": "очень холодный; морозный",
+        "transcription": "",
+        "exampleEn": "It was freezing outside this morning.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-29",
+        "en": "a bit chilly",
+        "ru": "довольно прохладный",
+        "transcription": "",
+        "exampleEn": "It’s a bit chilly, so take a jacket.",
+        "exampleRu": "",
+        "audio": ""
+      },
+      {
+        "id": "l12-30",
+        "en": "boiling hot",
+        "ru": "очень жаркий",
+        "transcription": "",
+        "exampleEn": "The room was boiling hot by midday.",
+        "exampleRu": "",
+        "audio": ""
+      }
+    ]
   }
+
 ];
