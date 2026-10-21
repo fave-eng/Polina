@@ -39,12 +39,8 @@ jobs:
             --project-ref "$SUPABASE_PROJECT_ID" \
             TELEGRAM_BOT_TOKEN="$TELEGRAM_BOT_TOKEN" \
             NOTIFY_WEBHOOK_SECRET="$NOTIFY_WEBHOOK_SECRET"
-
-      - name: Deploy notification function
-        shell: bash
-        run: |
-          set -euo pipefail
-          supabase functions deploy notify-telegram --project-ref "$SUPABASE_PROJECT_ID"
+      - name: Shared notification function
+        run: echo "notify-telegram is managed centrally; this repository does not deploy it."
 
       - name: Done
         run: echo "Telegram notification function is deployed."
